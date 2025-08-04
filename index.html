@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyBmaWxsPSJub25lIiB2aWV3Qm94PSIwIDAgMTAwIDEwMCIgc3Ryb2tlPSJjdXJyZW50Q29sb3IiIHN0cm9rZS13aWR0aD0iMiI+PGNpcmNsZSBjeD0iNTAiIGN5PSI1MCIgcj0iMTAiIC8+PGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNTAsNTApIj48cGF0aCBzdHJva2UtbGluZWNhcD0icm9vdW5kIiBkPSJNMCAxMyB2LTYiIC8+PHBhdGggc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBkPSJNMCAxMyB2NiIgLz48cGF0aCBzdHJva2UtbGluZWNhcD0icm9vdW5kIiBkPSJNLTEzIDAgYS02IiAvPjxwYXRoIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgZD0iTTEzIDAgYSBoNiIgLz48L2c+PHBhdGggZD0iTTUwIDIyIEEgMjggMjggMCAxIDAgNTAgNzgiIC8+PHBhdGggZD0iTTIyIDI4IGwgMS41IC0zIDEuNSAzIC0xLjUgMyB6IiAvPjxwYXRoIGQ9Ik03OCA3MiBsIDEuNSAtMyAxLjUgMyAtMS41IDMgeiIgLz48cGF0aCBkPSJNMjUgNzUgbCAxIC0yIDEgMiAtMSAyIHoiIC8+PC9zdmc+" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- PWA meta tags for better mobile experience -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#96CDB0">
+    <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyBmaWxsPSJub25lIiB2aWV3Qm94PSIwIDAgMTAwIDEwMCIgc3Ryb2tlPSJjdXJyZW50Q29sb3IiIHN0cm9rZS13aWR0aD0iMiI+PGNpcmNsZSBjeD0iNTAiIGN5PSI1MCIgcj0iMTAiIC8+PGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNTAsNTApIj48cGF0aCBzdHJva2UtbGluZWNhcD0icm9vdW5kIiBkPSJNMCAxMyB2LTYiIC8+PHBhdGggc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBkPSJNMCAxMyB2NiIgLz48cGF0aCBzdHJva2UtbGluZWNhcD0icm9vdW5kIiBkPSJNLTEzIDAgYS02IiAvPjxwYXRoIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgZD0iTTEzIDAgYSBoNiIgLz48L2c+PHBhdGggZD0iTTUwIDIyIEEgMjggMjggMCAxIDAgNTAgNzgiIC8+PHBhdGggZD0iTTIyIDI4IGwgMS41IC0zIDEuNSAzIC0xLjUgMyB6IiAvPjxwYXRoIGQ9Ik03OCA3MiBsIDEuNSAtMyAxLjUgMyAtMS41IDMgeiIgLz48cGF0aCBkPSJNMjUgNzUgbCAxIC0yIDEgMiAtMSAyIHoiIC8+PC9zdmc+">
+
+    <title>Biohack Frequencies</title>
+    <link rel="manifest" href="manifest.json">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,700&family=Nunito+Sans:opsz,wght@6..12,300;6..12,400;6..12,600&display=swap" rel="stylesheet">
+    <style>
+      :root {
+        --font-size-xs: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem);
+        --font-size-sm: clamp(0.875rem, 0.8rem + 0.375vw, 1rem);
+        --font-size-base: clamp(1rem, 0.9rem + 0.5vw, 1.125rem);
+        --font-size-lg: clamp(1.125rem, 1rem + 0.625vw, 1.375rem);
+        --font-size-xl: clamp(1.25rem, 1.1rem + 1vw, 1.75rem);
+        --font-size-2xl: clamp(1.5rem, 1.25rem + 1.25vw, 2rem);
+        --font-size-3xl: clamp(1.875rem, 1.5rem + 1.875vw, 2.5rem);
+        --font-size-4xl: clamp(2.25rem, 1.75rem + 2.5vw, 3.25rem);
+        --font-size-5xl: clamp(3rem, 2.25rem + 3.75vw, 4rem);
+      }
+      @keyframes breathing-gradient {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+      }
+      body {
+        font-family: 'Nunito Sans', sans-serif;
+        background-color: transparent;
+        font-size: var(--font-size-base);
+        line-height: 1.6;
+      }
+      .dark body {
+         background-color: var(--dark-bg);
+      }
+      body::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: linear-gradient(135deg, #EEE8B2, #96CDB0);
+        background-size: 400% 400%;
+        animation: breathing-gradient 25s ease infinite;
+        z-index: -1;
+        opacity: 0.7;
+      }
+      .dark body::before {
+        opacity: 0.4;
+        background: linear-gradient(125deg, #081B1B, #203B37, #C18D52, #5A8F76);
+      }
+      input[type=range] {
+        accent-color: var(--thumb-color, #C18D52);
+      }
+      /* Custom slider styles for better mobile experience */
+      .mobile-slider {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 100%;
+        height: 8px;
+        background: #e2e8f0; /* bg-slate-200 */
+        border-radius: 9999px;
+        outline: none;
+        transition: background 0.3s;
+      }
+      .dark .mobile-slider {
+        background: #5A8F76; /* dark-border */
+      }
+
+      .mobile-slider::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 24px;
+        height: 24px;
+        background: var(--thumb-color, #C18D52);
+        border-radius: 50%;
+        cursor: pointer;
+        border: 4px solid #fff;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+        margin-top: -8px; /* (trackHeight - thumbHeight) / 2 */
+      }
+
+      .mobile-slider::-moz-range-thumb {
+        width: 24px;
+        height: 24px;
+        background: var(--thumb-color, #C18D52);
+        border-radius: 50%;
+        cursor: pointer;
+        border: 4px solid #fff;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+      }
+      
+      .mobile-slider:disabled {
+        background: #cbd5e1; /* bg-slate-300 */
+      }
+      .dark .mobile-slider:disabled {
+        background: #334155; /* bg-slate-700 */
+      }
+
+      .mobile-slider:disabled::-webkit-slider-thumb {
+        background: #94a3b8; /* bg-slate-400 */
+        cursor: not-allowed;
+      }
+
+      .mobile-slider:disabled::-moz-range-thumb {
+        background: #94a3b8; /* bg-slate-400 */
+        cursor: not-allowed;
+      }
+    </style>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            colors: {
+              'brand-gold': '#C18D52',
+              'brand-orange': '#fb923c',
+              'dark-bg': '#081B1B',
+              'dark-surface': '#203B37',
+              'dark-border': '#5A8F76',
+              'dark-text-primary': '#EEE8B2',
+              'dark-text-secondary': '#96CDB0',
+              'dark-text-muted': '#5A8F76',
+            },
+            fontFamily: {
+              'sans': ['Nunito Sans', 'sans-serif'],
+              'display': ['Cormorant Garamond', 'serif'],
+            },
+            fontSize: {
+              'xs': 'var(--font-size-xs)',
+              'sm': 'var(--font-size-sm)',
+              'base': 'var(--font-size-base)',
+              'lg': 'var(--font-size-lg)',
+              'xl': 'var(--font-size-xl)',
+              '2xl': 'var(--font-size-2xl)',
+              '3xl': 'var(--font-size-3xl)',
+              '4xl': 'var(--font-size-4xl)',
+              '5xl': 'var(--font-size-5xl)',
+            },
+            animation: {
+              'fade-in': 'fadeIn 0.5s ease-out',
+              'fade-in-up': 'fadeInUp 0.5s ease-out',
+            },
+            keyframes: {
+              fadeIn: { '0%': { opacity: 0 }, '100%': { opacity: 1 } },
+              fadeInUp: { '0%': { opacity: 0, transform: 'translateY(10px)' }, '100%': { opacity: 1, transform: 'translateY(0)' } },
+            }
+          }
+        }
+      }
+    </script>
+<script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@^18.2.0",
+    "react-dom/": "https://esm.sh/react-dom@^18.2.0/",
+    "react/": "https://esm.sh/react@^18.2.0/",
+    "vite": "https://esm.sh/vite@^5.3.4",
+    "@vitejs/plugin-react": "https://esm.sh/@vitejs/plugin-react@^4.3.1",
+    "@capacitor/cli": "https://esm.sh/@capacitor/cli@^6.1.0",
+    "@capacitor/core": "https://esm.sh/@capacitor/core@^6.1.0",
+    "@supabase/supabase-js": "https://esm.sh/@supabase/supabase-js@^2.44.4",
+    "@google/genai": "https://esm.sh/@google/genai@^1.12.0"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+  <body class="text-slate-800 dark:text-dark-text-secondary dark:bg-dark-bg">
+    <div id="root"></div>
+    <script type="module" src="index.tsx"></script>
+  <script type="module" src="/index.tsx"></script>
+</body>
+</html>

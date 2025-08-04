@@ -1,0 +1,355 @@
+import React, { useState, useEffect } from 'react';
+import { BackIcon, BrainwaveIcon, IsochronicIcon, SolfeggioIcon, RifeIcon, NoiseIcon, FocusIcon, SpatialAudioIcon, CelestialIcon, BeautyIcon, AngelIcon, LungsIcon, UserCircleIcon, AtomIcon } from './BohoIcons';
+import { CategoryId, ColorTheme } from '../types';
+
+const ResearchLink: React.FC<{ href: string; children: React.ReactNode }> = ({ href, children }) => (
+  <li><a href={href} target="_blank" rel="noopener noreferrer" className="text-purple-600 dark:text-purple-400 hover:underline">{children}</a></li>
+);
+
+const ScienceSection: React.FC<{
+  id: string;
+  title: string;
+  icon: React.ReactNode;
+  children: React.ReactNode;
+  color: string;
+  researchLinks?: React.ReactNode;
+}> = ({ id, title, icon, children, color, researchLinks }) => (
+  <div id={id} className="p-6 rounded-2xl border scroll-mt-20 dark:bg-slate-800/20" style={{background: `linear-gradient(145deg, ${color}25, transparent 70%)`, borderColor: `${color}50`}}>
+    <div className="flex items-center gap-4 mb-3">
+      {icon}
+      <h3 className="text-2xl font-display font-bold text-slate-800 dark:text-dark-text-primary">{title}</h3>
+    </div>
+    <div className="prose prose-slate dark:prose-invert max-w-none text-slate-700 dark:text-dark-text-secondary leading-relaxed space-y-3">
+      {children}
+    </div>
+    {researchLinks && (
+      <div className="mt-4 pt-4 border-t border-slate-200/80 dark:border-slate-700/80">
+        <h4 className="font-bold text-slate-700 dark:text-dark-text-primary">Supporting Research</h4>
+        <ul className="list-disc list-inside text-sm mt-2 space-y-1 prose prose-slate dark:prose-invert max-w-none">
+            {researchLinks}
+        </ul>
+      </div>
+    )}
+  </div>
+);
+
+interface SciencePageProps {
+    categories: Record<CategoryId, { title: string; description:string; colors: ColorTheme; }>;
+}
+
+export const SciencePage: React.FC<SciencePageProps> = ({ categories }) => {
+    const [backLink, setBackLink] = useState('#/settings');
+    const [backText, setBackText] = useState('Back to Settings');
+
+    useEffect(() => {
+        const returnTo = sessionStorage.getItem('returnTo');
+        if (returnTo) {
+            setBackLink(returnTo);
+            setBackText('Back to Session');
+        }
+    }, []);
+
+    const handleBack = (e: React.MouseEvent<HTMLAnchorElement>) => {
+        e.preventDefault();
+        window.location.hash = backLink;
+        if (sessionStorage.getItem('returnTo')) {
+            sessionStorage.removeItem('returnTo');
+        }
+    };
+
+  return (
+    <div className="animate-fade-in max-w-3xl mx-auto space-y-8">
+      <a href={backLink} onClick={handleBack} className="flex items-center gap-2 text-slate-600 hover:text-slate-900 dark:text-dark-text-muted dark:hover:text-dark-text-primary transition-colors">
+        <BackIcon className="w-6 h-6" />
+        <span className="font-semibold">{backText}</span>
+      </a>
+
+      <div className="text-center">
+        <h2 className="text-4xl font-display font-bold text-slate-800 dark:text-dark-text-primary">The Science Behind The Sound</h2>
+        <p className="mt-2 text-slate-600 dark:text-dark-text-secondary max-w-2xl mx-auto">
+          This application utilizes established principles of neuro-acoustics and bio-resonance to help you guide your mind and body into desired states. Here’s a brief overview of the core technologies.
+        </p>
+      </div>
+
+      <div className="space-y-6">
+        <ScienceSection 
+          id="elements" 
+          title="81 Harmonic Elements Chart" 
+          icon={<AtomIcon className="w-10 h-10 text-slate-700 dark:text-dark-text-secondary" />} 
+          color={categories.elements.colors.primary}
+        >
+          <p>
+              The 81 Harmonic Elements chart is an esoteric system that maps the first 81 chemical elements to a unique harmonic frequency. It's based on a numerological framework, often associated with concepts like Vortex-Based Mathematics and the work of figures like Nikola Tesla.
+          </p>
+          <p>
+              The system organizes elements according to vibrational patterns, with each element assigned a specific frequency derived from numerological calculations (e.g., patterns of 3, 6, 9). The purpose of this system is to provide a tool for vibrational exploration, allowing one to meditatively connect with the energetic signature of the fundamental building blocks of our physical world.
+          </p>
+          <p>
+              While this system is not derived from mainstream chemistry or physics, it offers a fascinating and profound way to experience the relationship between matter and frequency from a holistic perspective.
+          </p>
+        </ScienceSection>
+
+        <ScienceSection 
+          id="habit-tracking" 
+          title="The Power of Habit Tracking" 
+          icon={<UserCircleIcon className="w-10 h-10 text-slate-700 dark:text-dark-text-secondary" />} 
+          color="#96CDB0"
+          researchLinks={
+            <>
+              <ResearchLink href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3505409/">Habit formation and change (PubMed)</ResearchLink>
+              <ResearchLink href="https://jamesclear.com/habit-tracker">The Power of Habit Trackers - by James Clear</ResearchLink>
+            </>
+          }
+        >
+          <p>
+            Consistently tracking your habits is a cornerstone of effective biohacking. The simple act of logging your daily activities provides powerful psychological benefits and actionable data to optimize your life.
+          </p>
+          <ul>
+            <li>
+              <strong>Makes the Invisible Visible:</strong> Tracking reveals patterns and correlations you might otherwise miss. Our analytics tools help you see how your habits influence each other, empowering you to make data-driven decisions about your wellness.
+            </li>
+            <li>
+              <strong>Dopamine Feedback Loop:</strong> Each time you log a completed habit, your brain releases a small amount of dopamine, the "reward" neurotransmitter. This positive reinforcement strengthens the neural pathways associated with that habit, making it easier to repeat.
+            </li>
+            <li>
+              <strong>Builds Momentum:</strong> Seeing a chain of successful days on a heatmap or chart creates a powerful sense of accomplishment. This motivates you to "not break the chain," fostering consistency and long-term change.
+            </li>
+          </ul>
+        </ScienceSection>
+
+        <ScienceSection 
+          id="brainwaves" 
+          title="Neural Entrainment & Binaural Beats" 
+          icon={<BrainwaveIcon className="w-10 h-10 text-slate-700 dark:text-dark-text-secondary" />} 
+          color={categories.brainwaves.colors.primary}
+          researchLinks={
+            <>
+              <ResearchLink href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6165862/">Auditory Beat Stimulation and its Effects on Cognition and Mood States (PubMed)</ResearchLink>
+              <ResearchLink href="https://www.medicalnewstoday.com/articles/320019">What are binaural beats and how do they work?</ResearchLink>
+              <ResearchLink href="https://pmc.ncbi.nlm.nih.gov/articles/PMC7683678/">40Hz Gamma Stimulation for Brain Health (PubMed)</ResearchLink>
+              <ResearchLink href="https://news.mit.edu/2023/40-hz-vibrations-reduce-alzheimers-pathology-symptoms-mouse-models-0605">MIT News on 40 Hz Vibrations for Alzheimer's</ResearchLink>
+              <ResearchLink href="https://pmc.ncbi.nlm.nih.gov/articles/PMC5836039/">Effect of Music on the Gut-Brain Axis (PubMed)</ResearchLink>
+            </>
+          }
+        >
+          <p>
+            Neural entrainment is a process where the brain's electrical activity (brainwaves) synchronizes its frequency to the rhythm of external sensory stimuli, such as sound. Binaural beats are a powerful method to achieve this.
+          </p>
+          <ul>
+            <li>
+              <strong>How it works:</strong> Two slightly different frequencies are presented to each ear (e.g., 100 Hz in the left, 110 Hz in the right). Your brain, in processing these two signals, perceives a third "phantom" frequency—the mathematical difference between the two (in this case, 10 Hz).
+            </li>
+            <li>
+              <strong>The Effect:</strong> This phantom beat is not audible but is registered by the brain. Through a process called the "frequency-following response," your brainwaves begin to align with this new frequency. By targeting specific brainwave states (like Alpha for relaxation or Gamma for focus), we can gently guide your mind into that desired state.
+            </li>
+            <li>
+              <strong>Requirement:</strong> Headphones are essential for binaural beats to work, as each ear must receive its distinct frequency.
+            </li>
+          </ul>
+        </ScienceSection>
+
+        <ScienceSection 
+          id="isochronic" 
+          title="Isochronic Tones" 
+          icon={<IsochronicIcon className="w-10 h-10 text-slate-700 dark:text-dark-text-secondary" />} 
+          color={categories.isochronic.colors.primary}
+          researchLinks={
+            <>
+              <ResearchLink href="https://www.psychologytoday.com/us/blog/sleep-newzzz/202206/can-isochronic-tones-help-your-brain-and-sleep">Can Isochronic Tones Help Your Brain and Sleep? (Psychology Today)</ResearchLink>
+            </>
+          }
+        >
+          <p>
+            Isochronic tones are another potent form of neural entrainment. Unlike the subtle phantom beat of binaurals, isochronic tones are distinct, evenly spaced pulses of a single frequency.
+          </p>
+          <ul>
+            <li>
+              <strong>How it works:</strong> A single tone is rapidly turned on and off with a smooth fade, creating a distinct, rhythmic pulse without harsh "clicking" sounds. The contrast between sound and silence is significant, making it very easy for the brain to follow along.
+            </li>
+            <li>
+              <strong>The Effect:</strong> The brain synchronizes with the rate of these pulses. For example, a tone pulsing 15 times per second (15 Hz) will encourage your brain to enter a Beta state, which is associated with alertness and focus.
+            </li>
+            <li>
+              <strong>Advantage:</strong> Because the entrainment stimulus is a direct rhythmic pulse, headphones are not required for isochronic tones to be effective.
+            </li>
+          </ul>
+        </ScienceSection>
+
+        <ScienceSection 
+          id="solfeggio" 
+          title="Solfeggio Frequencies" 
+          icon={<SolfeggioIcon className="w-10 h-10 text-slate-700 dark:text-dark-text-secondary" />} 
+          color={categories.solfeggio.colors.primary}
+          researchLinks={
+            <>
+              <ResearchLink href="https://www.forbes.com/councils/forbestechcouncil/2022/12/21/think-youve-heard-it-all-new-research-into-the-science-of-sound-proves-otherwise/">Forbes: New Research Into The Science Of Sound</ResearchLink>
+              <ResearchLink href="https://www.researchgate.net/publication/333852911_Sound_Healing_using_Solfeggio_Frequencies">Sound Healing using Solfeggio Frequencies (ResearchGate)</ResearchLink>
+            </>
+          }
+        >
+          <p>
+            The Solfeggio frequencies are a set of ancient tones believed to possess specific spiritual and healing properties. These frequencies are often used in meditative practices to support energetic balance and cellular harmony. Each tone is thought to correspond to a specific aspect of physical, mental, or spiritual well-being, such as 528 Hz for transformation and cellular repair, or 396 Hz for releasing fear.
+          </p>
+        </ScienceSection>
+        
+        <ScienceSection 
+          id="rife" 
+          title="Rife Bio-Resonance" 
+          icon={<RifeIcon className="w-10 h-10 text-slate-700 dark:text-dark-text-secondary" />} 
+          color={categories.rife.colors.primary}
+        >
+           <p>
+            Bio-resonance is a concept based on the idea that every organism and cell has its own natural resonant frequency. Rife frequencies, developed by Dr. Royal Rife, are specific tones intended to match the natural frequencies of the body's systems.
+          </p>
+          <ul>
+            <li>
+              <strong>The Principle:</strong> When a part of the body is "out of tune" due to stress or imbalance, its resonant frequency may be altered. By re-introducing the correct, healthy frequency through sound, it's believed that the body can be encouraged to return to its natural state of homeostatic balance.
+            </li>
+            <li>
+              <strong>Application:</strong> These protocols are used to support the body's innate ability to maintain wellness and equilibrium.
+            </li>
+          </ul>
+        </ScienceSection>
+        
+         <ScienceSection id="beauty" title="Sonic Bio-Regenesis" icon={<BeautyIcon className="w-10 h-10 text-slate-700 dark:text-dark-text-secondary" />} color={categories.beauty.colors.primary}>
+           <p>
+            This category applies the principles of bio-resonance and neural entrainment to support the body's natural regenerative processes. While not a substitute for conventional care, these protocols are designed to create a supportive environment for cellular vitality.
+          </p>
+          <ul>
+            <li>
+              <strong>Frequencies for Vitality:</strong> For example, the 528 Hz frequency is used for its association with cellular repair, while deep Delta waves (2.5 Hz) are included for their role in stimulating the body's natural healing cycles during deep sleep.
+            </li>
+            <li>
+              <strong>The Goal:</strong> To use sound as a tool to encourage relaxation, reduce stress, and support the body's own systems for maintaining a vibrant, healthy appearance.
+            </li>
+          </ul>
+        </ScienceSection>
+
+        <ScienceSection 
+          id="noise" 
+          title="Acoustic Environments (Colored Noise)" 
+          icon={<NoiseIcon className="w-10 h-10 text-slate-700 dark:text-dark-text-secondary" />} 
+          color={categories.noise.colors.primary}
+          researchLinks={
+            <>
+              <ResearchLink href="https://pmc.ncbi.nlm.nih.gov/articles/PMC7986458/">The effects of background noise on cognitive performance (PubMed)</ResearchLink>
+            </>
+          }
+        >
+            <p>
+                Colored noises are steady, random signals that cover the entire sound spectrum. Different "colors" like White, Pink, and Brown Noise emphasize different parts of the spectrum, which has varying psychological effects.
+            </p>
+            <ul>
+                <li><strong>White Noise:</strong> Contains all frequencies at equal intensity. It's excellent at masking distracting background sounds, making it ideal for focus or sleep in noisy environments.</li>
+                <li><strong>Pink Noise:</strong> Has more power in the lower frequencies, making it sound "softer" or more balanced than white noise, similar to steady rain or wind. It's often considered more relaxing and is used for sustained focus.</li>
+                <li><strong>Brown Noise:</strong> Has even more energy at the lowest frequencies, creating a deep, rumbling sound like a distant waterfall. It's highly effective for deep relaxation and blocking out intrusive, low-frequency noises.</li>
+            </ul>
+        </ScienceSection>
+
+        <ScienceSection 
+          id="schumann" 
+          title="The Schumann Resonance & Planetary Harmonics" 
+          icon={<CelestialIcon className="w-10 h-10 text-slate-700 dark:text-dark-text-secondary" />} 
+          color={categories.celestial.colors.primary}
+          researchLinks={
+            <>
+              <ResearchLink href="https://pubmed.ncbi.nlm.nih.gov/38318288/">Effects of Schumann resonance on human psychophysiological states (PubMed Review)</ResearchLink>
+            </>
+          }
+        >
+          <p>
+            This category is based on the concept of cosmic resonance. The Schumann Resonance is the fundamental "heartbeat" of the Earth (approx. 7.83 Hz). Planetary Harmonics are frequencies derived from the orbital periods of celestial bodies, translated into the audible range.
+          </p>
+          <ul>
+            <li>
+              <strong>Biological Significance:</strong> Life on Earth has evolved for millennia within the Schumann resonant field. It's believed that connecting with this frequency has a grounding and stabilizing effect on our biological systems, as our own Alpha/Theta brainwaves operate in this range.
+            </li>
+            <li>
+              <strong>Archetypal Energy:</strong> Listening to a planet's orbital frequency is a meditative practice designed to help you align with the archetypal energy that planet represents (e.g., Mars for drive, Venus for harmony).
+            </li>
+          </ul>
+        </ScienceSection>
+        
+        <ScienceSection id="angel" title="Ascension Codes" icon={<AngelIcon className="w-10 h-10 text-slate-700 dark:text-dark-text-secondary" />} color={categories.angel.colors.primary}>
+           <p>
+            The frequencies in this category, often referred to as "Angel Numbers" in numerology, are used in meditative practices to connect with higher states of awareness and specific spiritual concepts. Each sequence is believed to carry a unique vibrational message.
+          </p>
+          <ul>
+            <li>
+              <strong>Example:</strong> The 444 Hz frequency is associated with protection and environmental shielding, while 999 Hz represents completion and the end of a cycle.
+            </li>
+            <li>
+              <strong>Application:</strong> These protocols are intended for spiritual exploration, helping to clear energetic channels and elevate one's consciousness.
+            </li>
+          </ul>
+        </ScienceSection>
+
+        <ScienceSection id="focus" title="Focus Protocols (Hemi-Sync Inspired)" icon={<FocusIcon className="w-10 h-10 text-slate-700 dark:text-dark-text-secondary" />} color={categories.focus.colors.primary}>
+           <p>
+            Hemi-Sync®, a registered trademark of Interstate Industries Inc., is a patented audio technology designed to synchronize the two hemispheres of your brain. Our "Focus Protocols" are inspired by these principles to help users achieve specific states of consciousness.
+          </p>
+          <ul>
+            <li>
+              <strong>How it works:</strong> By using complex layers of binaural beats and other audio signals, these protocols guide the listener's brainwaves into highly specific states, such as "mind awake, body asleep" (often referred to as Focus 10) or a state of "expanded awareness" (Focus 12).
+            </li>
+            <li>
+              <strong>The Benefit:</strong> Achieving these states can be profoundly beneficial for deep meditation, creative problem-solving, accelerated learning, and exploring expanded states of consciousness. These protocols are structured to prepare the mind and guide it to these specific non-ordinary states.
+            </li>
+          </ul>
+        </ScienceSection>
+
+        <ScienceSection 
+          id="breathing" 
+          title="Breathwork & Coherent Breathing" 
+          icon={<LungsIcon className="w-10 h-10 text-slate-700 dark:text-dark-text-secondary" />} 
+          color="#96CDB0"
+          researchLinks={
+            <>
+              <ResearchLink href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5455070/">The Effect of Coherent Breathing (PubMed)</ResearchLink>
+              <ResearchLink href="https://www.health.harvard.edu/mind-and-mood/relaxation-techniques-breath-control-helps-quell-errant-stress-response">Harvard Health on Breath Control</ResearchLink>
+            </>
+          }
+        >
+          <p>
+            Controlled breathing, or breathwork, is one of the most direct ways to influence your autonomic nervous system (ANS), which controls functions like heart rate, digestion, and stress response. By consciously changing the rhythm and depth of your breath, you can shift from a "fight-or-flight" (sympathetic) state to a "rest-and-digest" (parasympathetic) state.
+          </p>
+          <ul>
+            <li>
+              <strong>Box Breathing:</strong> A simple technique of equal-length inhales, holds, and exhales. It's excellent for calming the nervous system and improving focus under pressure.
+            </li>
+            <li>
+              <strong>4-7-8 Relax:</strong> Developed by Dr. Andrew Weil, this pattern involves a longer exhale, which powerfully activates the parasympathetic nervous system, making it highly effective for reducing anxiety and preparing for sleep.
+            </li>
+            <li>
+              <strong>Coherent Breathing:</strong> Involves breathing at a rate of around 5.5 breaths per minute. This rhythm is believed to create "coherence" in the body, where heart rate, blood pressure, and brainwaves synchronize, leading to a state of calm, balanced alertness.
+            </li>
+          </ul>
+        </ScienceSection>
+
+        <ScienceSection 
+          id="immersive" 
+          title="Immersive Audio (8D Panning)" 
+          icon={<SpatialAudioIcon className="w-10 h-10 text-slate-700 dark:text-dark-text-secondary" />} 
+          color="#96CDB0"
+          researchLinks={
+            <>
+              <ResearchLink href="https://en.wikipedia.org/wiki/Sound_localization">Sound Localization (Wikipedia)</ResearchLink>
+            </>
+          }
+        >
+           <p>
+            Immersive or "8D" audio is an audio processing effect that creates the illusion of sound moving and rotating around the listener's head. It transforms a standard stereo track into a three-dimensional soundscape.
+          </p>
+          <ul>
+            <li>
+              <strong>How it works:</strong> This is achieved using a Web Audio API node called a `PannerNode` with an "HRTF" (Head-Related Transfer Function) model. We use low-frequency oscillators (LFOs) to continuously and smoothly change the virtual X, Y, and Z coordinates of the sound source, making it seem as though it's orbiting you.
+            </li>
+            <li>
+              <strong>The Benefit:</strong> This creates a highly engaging and immersive listening experience. It can make meditation more profound by removing the sense of the sound source being "in your ears" and instead placing it in the space around you. It can also be deeply relaxing, as the moving sound can be a gentle focus point for the mind. Headphones are required to experience the full 3D effect.
+            </li>
+          </ul>
+        </ScienceSection>
+      </div>
+    </div>
+  );
+};

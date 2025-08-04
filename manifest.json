@@ -1,0 +1,9 @@
+{
+  "name": "Biohack Frequencies",
+  "short_name": "Biohack Freq",
+  "description": "Your personal biohacking co-pilot. Use therapeutic sound, AI insights, and advanced habit tracking to optimize your mind and body for peak wellness and performance.",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#EEE8B2",
+  "theme_color": "#96CDB0"
+}
