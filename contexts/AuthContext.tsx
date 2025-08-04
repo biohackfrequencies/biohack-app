@@ -1,3 +1,5 @@
+
+
 import React, { createContext, useState, useEffect, useContext, useCallback } from 'react';
 import { supabase } from '../services/supabaseClient';
 import type { AuthError, Session, User, AuthResponse, UserResponse } from '@supabase/supabase-js';
@@ -60,7 +62,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       email,
       password: pass,
       options: {
-        emailRedirectTo: window.location.origin,
+        emailRedirectTo: 'https://biohackfrequencies.app',
       },
     });
   }, []);
@@ -69,15 +71,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     return supabase.auth.resend({
       type: 'signup',
       email: email,
-      options: {
-        emailRedirectTo: window.location.origin,
-      },
     });
   }, []);
   
   const sendPasswordResetEmail = useCallback(async (email: string) => {
     return supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: window.location.origin,
+      redirectTo: 'https://biohackfrequencies.app',
     });
   }, []);
 
