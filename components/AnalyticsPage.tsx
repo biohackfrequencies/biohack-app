@@ -1,6 +1,8 @@
 
+
 import React, { useState, useMemo } from 'react';
-import { ActivityLogItem, TrackableActivity, TrackableActivityId } from '../types';
+import { ActivityLogItem, TrackableActivityId } from '../types';
+import { TrackableActivity } from '../constants';
 import { BackIcon, FlameIcon, StarIcon } from './BohoIcons';
 
 const getDayKey = (date: Date): number => {

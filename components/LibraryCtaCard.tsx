@@ -1,5 +1,3 @@
-
-
 import React from 'react';
 import { BrainwaveIcon } from './BohoIcons';
 import { getImageUrl } from '../services/imageService';
@@ -18,7 +16,7 @@ export const LibraryCtaCard: React.FC = () => {
                 '--glow-color': '#93c5fd40'
             } as React.CSSProperties}
         >
-            <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-black/20 group-hover:from-black/80 transition-all duration-300"></div>
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-black/10 group-hover:from-black/70 transition-all duration-300"></div>
             <div className="relative z-10">
                 <div className="flex items-center gap-4 mb-4">
                     <BrainwaveIcon className="w-10 h-10 text-white/90" />

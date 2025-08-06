@@ -1,5 +1,3 @@
-
-
 import React, { useState } from 'react';
 import { useSubscription } from '../hooks/useSubscription';
 import { PathfinderIcon, SparklesIcon, BackIcon, CheckmarkCircleIcon, XCircleIcon, GiftIcon, ChevronDownIcon } from './BohoIcons';
@@ -217,10 +215,10 @@ const PricingPage: React.FC<PricingPageProps> = ({ onBack }) => {
     { name: 'Schumann Resonance Protocol', free: true, pro: true },
     { name: 'Guided Protocols', free: 'Limited Selection', pro: 'All Protocols' },
     { name: 'Interactive Breathwork Guide', free: true, pro: true },
-    { name: 'AI Wellness Agent', free: false, pro: true },
     { name: 'AI Personal Insights', free: false, pro: true },
     { name: 'HealthKit / Health Connect', free: true, pro: 'Sync + AI Insights' },
     { name: 'Creator Studio', free: false, pro: true },
+    { name: 'Codex Mod-24 Harmonics', free: false, pro: true },
     { name: '8D Spatial Audio', free: false, pro: true },
     { name: 'Habit Tracking', free: '3 Habits', pro: 'Unlimited' },
     { name: 'Daily Logging', free: '5 Entries/Day', pro: 'Unlimited' },

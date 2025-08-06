@@ -117,6 +117,15 @@
         background: #94a3b8; /* bg-slate-400 */
         cursor: not-allowed;
       }
+      /* Hide number input arrows */
+      input::-webkit-outer-spin-button,
+      input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+      input[type=number] {
+        -moz-appearance: textfield;
+      }
     </style>
     <script>
       tailwind.config = {
@@ -126,6 +135,7 @@
             colors: {
               'brand-gold': '#C18D52',
               'brand-orange': '#fb923c',
+              'brand-sage': '#96CDB0',
               'dark-bg': '#081B1B',
               'dark-surface': '#203B37',
               'dark-border': '#5A8F76',

@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { CustomStack, Frequency, GuidedSession } from '../types';
 import { FrequencyCard } from './FrequencyCard';
 import { GuidedSessionIcon, StackIcon, HeartFilledIcon } from './BohoIcons';
@@ -12,8 +12,6 @@ interface MyLibraryProps {
   customStacks: CustomStack[];
   toggleFavorite: (id: string) => void;
 }
-
-type Tab = 'favorites' | 'sessions';
 
 const SessionCard: React.FC<{
     session: GuidedSession | CustomStack;
@@ -60,7 +58,6 @@ const SessionCard: React.FC<{
 export const MyLibrary: React.FC<MyLibraryProps> = ({ 
   favorites, customStacks, toggleFavorite, allFrequencies, allSessions
 }) => {
-  const [activeTab, setActiveTab] = useState<Tab>('favorites');
   const { isSubscribed } = useSubscription();
   
   const favoriteItems = useMemo(() => {
@@ -71,17 +68,15 @@ export const MyLibrary: React.FC<MyLibraryProps> = ({
   }, [favorites, allFrequencies, allSessions, customStacks]);
 
   const hasFavorites = favoriteItems.length > 0;
-  const hasStacks = customStacks.length > 0;
-  const hasContent = hasFavorites || hasStacks;
 
-  if (!hasContent) {
+  if (!hasFavorites) {
     return (
-        <div className="space-y-6">
+        <div id="my-library" className="space-y-6 scroll-mt-32">
             <h3 className="text-4xl font-display text-center font-semibold text-slate-800 dark:text-dark-text-primary">My Library</h3>
             <div className="text-center text-slate-500 dark:text-dark-text-muted p-8 rounded-2xl bg-slate-500/5 dark:bg-dark-surface/20 backdrop-blur-sm border-2 border-dashed border-slate-500/10 dark:border-dark-border/50 flex flex-col items-center gap-4">
                 <HeartFilledIcon className="w-12 h-12 text-slate-400 dark:text-slate-500" />
-                <h4 className="font-semibold text-slate-700 dark:text-dark-text-secondary">Your Library is a blank canvas.</h4>
-                <p>Favorite a frequency or create a journey to begin your personalized collection.</p>
+                <h4 className="font-semibold text-slate-700 dark:text-dark-text-secondary">Your favorites are a blank canvas.</h4>
+                <p>Tap the heart icon on any frequency or session to add it here.</p>
             </div>
         </div>
     );
@@ -90,7 +85,6 @@ export const MyLibrary: React.FC<MyLibraryProps> = ({
   const handleSelect = (item: Frequency | GuidedSession | CustomStack) => {
     const isCustomStack = customStacks.some(stack => stack.id === item.id);
 
-    // Pro feature checks
     if (isCustomStack && !isSubscribed) {
       window.location.hash = '#/pricing';
       return;
@@ -100,103 +94,51 @@ export const MyLibrary: React.FC<MyLibraryProps> = ({
       return;
     }
 
-    // Routing
-    if ('steps' in item) { // GuidedSession or CustomStack
+    if ('steps' in item) {
       if (isCustomStack) {
         window.location.hash = `#/stack/${item.id}`;
       } else {
         window.location.hash = `#/session/${item.id}`;
       }
-    } else { // Frequency
+    } else {
       window.location.hash = `#/player/${item.id}`;
     }
   };
   
-  const renderContent = () => {
-      switch (activeTab) {
-        case 'favorites':
-          if (!hasFavorites) return <p className="text-center text-slate-600/80 dark:text-dark-text-muted/80 py-4">Your favorite frequencies & sessions will appear here.</p>;
-          return (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {favoriteItems.map(item => {
-                      if (!item) return null;
-                      if ('steps' in item) { // GuidedSession or CustomStack
-                          const sessionItem = item as GuidedSession;
-                          return (
-                            <SessionCard
-                                key={sessionItem.id}
-                                session={sessionItem}
-                                isCustom={false}
-                                onSelect={() => handleSelect(sessionItem)}
-                                isFavorite={true}
-                                onToggleFavorite={() => toggleFavorite(sessionItem.id)}
-                            />
-                          );
-                      } else { // Frequency
-                          const freqItem = item as Frequency;
-                           return (
-                              <FrequencyCard
-                                key={freqItem.id}
-                                frequency={freqItem}
-                                onSelect={() => handleSelect(freqItem)}
-                                isFavorite={true}
-                                onToggleFavorite={() => toggleFavorite(freqItem.id)}
-                              />
-                           );
-                      }
-                  })}
-              </div>
-          );
-        case 'sessions':
-          if (!hasStacks) return <p className="text-center text-slate-600/80 dark:text-dark-text-muted/80 py-4">Your custom created sessions will appear here.</p>;
-           return (
-             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                {customStacks.map(stack => (
-                    <SessionCard
-                        key={stack.id}
-                        session={stack}
-                        isCustom={true}
-                        onSelect={() => handleSelect(stack)}
-                    />
-                ))}
-            </div>
-          );
-      }
-  };
-
-  const TabButton: React.FC<{tab: Tab, icon: React.ReactNode, children: React.ReactNode, onClick: () => void}> = ({ tab, icon, children, onClick }) => {
-    const isActive = activeTab === tab;
-    return (
-      <button
-        onClick={onClick}
-        className={`flex items-center justify-center gap-2 grow px-3 sm:px-4 py-2 text-sm font-semibold rounded-full transition-all duration-200 ${
-          isActive ? 'bg-white dark:bg-slate-700 shadow text-slate-700 dark:text-dark-text-primary' : 'text-slate-600/80 dark:text-dark-text-muted/80 hover:bg-white/50 dark:hover:bg-slate-800/50'
-        }`}
-        aria-label={String(children)}
-      >
-        {icon}
-        <span className="hidden sm:inline">{children}</span>
-      </button>
-    );
-  };
-
   return (
-    <div className="space-y-6">
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-          <h3 className="text-4xl font-display text-center font-semibold text-slate-800 dark:text-dark-text-primary">My Library</h3>
-          <div className="flex items-center gap-1 p-1 w-full sm:w-auto rounded-full bg-slate-200/50 dark:bg-dark-surface/50 border border-slate-300/40 dark:border-dark-border/40">
-            <TabButton tab="favorites" icon={<HeartFilledIcon className="w-5 h-5" />} onClick={() => setActiveTab('favorites')}>Favorites</TabButton>
-            <TabButton 
-              tab="sessions" 
-              icon={<StackIcon className="w-5 h-5" />} 
-              onClick={() => setActiveTab('sessions')}
-            >
-              Sessions
-            </TabButton>
+    <div id="my-library" className="space-y-6 scroll-mt-32">
+        <h3 className="text-4xl font-display text-center font-semibold text-slate-800 dark:text-dark-text-primary">My Favorites</h3>
+        <div className="p-4 sm:p-6 rounded-2xl bg-slate-500/5 dark:bg-dark-surface/20 backdrop-blur-sm border border-slate-500/10 dark:border-dark-border/50">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {favoriteItems.map(item => {
+                  if (!item) return null;
+                  if ('steps' in item) { // GuidedSession or CustomStack
+                      const sessionItem = item as GuidedSession | CustomStack;
+                      const isCustomStack = customStacks.some(s => s.id === sessionItem.id);
+                      return (
+                        <SessionCard
+                            key={sessionItem.id}
+                            session={sessionItem}
+                            isCustom={isCustomStack}
+                            onSelect={() => handleSelect(sessionItem)}
+                            isFavorite={true}
+                            onToggleFavorite={() => toggleFavorite(sessionItem.id)}
+                        />
+                      );
+                  } else { // Frequency
+                      const freqItem = item as Frequency;
+                       return (
+                          <FrequencyCard
+                            key={freqItem.id}
+                            frequency={freqItem}
+                            onSelect={() => handleSelect(freqItem)}
+                            isFavorite={true}
+                            onToggleFavorite={() => toggleFavorite(freqItem.id)}
+                          />
+                       );
+                  }
+              })}
           </div>
-      </div>
-      <div className="p-4 sm:p-6 rounded-2xl bg-slate-500/5 dark:bg-dark-surface/20 backdrop-blur-sm border border-slate-500/10 dark:border-dark-border/50">
-        {renderContent()}
       </div>
     </div>
   );

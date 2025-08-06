@@ -242,7 +242,7 @@ export const useBinauralBeat = () => {
   
   const setupPanning = useCallback((context: AudioContext, source: AudioNode): PanningSetup => {
     const panner = context.createPanner();
-    panner.panningModel = 'HRTF';
+    panner.panningModel = 'equalpower';
     panner.distanceModel = 'linear';
     panner.refDistance = 1;
     panner.maxDistance = 10000;
@@ -400,9 +400,8 @@ export const useBinauralBeat = () => {
         const speedHz = 0.1 + (currentSpeed / 100) * 0.5;
         
         // A gentler, more predictable depth curve. pow(1.5) feels more natural than pow(2).
-        // Capped at a max radius of 25 to avoid extreme panning.
-        const radius = Math.pow(currentDepth / 100, 1.5) * 25;
-        const yRadius = radius * 0.4; // Make vertical movement 40% of horizontal for a more natural feel
+        const radius = Math.pow(currentDepth / 100, 1.5) * 15;
+        const yRadius = radius * 0.8; // Make vertical movement more prominent
         
         const elapsedTime = (now - startTime) / 1000;
         const angle = elapsedTime * 2 * Math.PI * speedHz;

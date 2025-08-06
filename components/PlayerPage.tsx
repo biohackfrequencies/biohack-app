@@ -1,7 +1,7 @@
 
 
 import React, { useState, useCallback, useEffect, useMemo, useRef } from 'react';
-import { Frequency, SoundGenerationMode, CategoryId, BREATHING_PATTERNS, BreathingPattern, ColorTheme, PlayableItem, GuidedSession, CustomStack } from '../types';
+import { Frequency, SoundGenerationMode, CategoryId, BREATHING_PATTERNS, BreathingPattern, ColorTheme, PlayableItem, GuidedSession, CustomStack, BenefitCategory } from '../types';
 import { Visualizer } from './Visualizer';
 import { PlayIcon, PauseIcon, BackIcon, VolumeIcon, HeartIcon, HeartFilledIcon, ClockIcon, LayersIcon, InfoIcon, LungsIcon, ChevronDownIcon, ShareIcon, CheckmarkIcon, BrainwaveIcon } from './BohoIcons';
 import { LayerSelectorModal } from './LayerSelectorModal';
@@ -59,18 +59,43 @@ export const PlayerPage: React.FC<PlayerPageProps> = ({
   const { 
     currentlyPlayingItem, isPlaying, isLayer2Active, analyser, 
     mainVolume, layer2Volume, setMainVolume, setLayer2Volume,
-    setTimer, set8dPanning, startPlayback, pause, resume, toggleLayer,
+    setTimer, startPlayback, pause, resume, toggleLayer, stop,
     activePattern, currentPhase, phaseProgress, phaseTime, startGuide, stopGuide,
     sessionStepIndex, sessionTimeInStep,
+    is8dEnabled, setIs8dEnabled, panningSpeed, setPanningSpeed, panningDepth, setPanningDepth
   } = player;
 
   const { isSubscribed } = useSubscription();
   
   // --- Local State ---
   const [selectedMode, setSelectedMode] = useState<SoundGenerationMode>(('defaultMode' in item) ? item.defaultMode : 'PURE');
-  const [layeredFrequency, setLayeredFrequency] = useState<Frequency | null>(null);
   const [shareState, setShareState] = useState<'idle' | 'copied'>('idle');
   const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false);
+  
+  const [layeredFrequency, setLayeredFrequency] = useState<Frequency | null>(() => {
+    const params = new URLSearchParams(window.location.hash.split('?')[1] || '');
+    const layerFreqParam = params.get('layerFreq');
+    if (item.id.startsWith('custom-') && layerFreqParam) {
+        const layerFreqValue = parseFloat(layerFreqParam);
+        if (!isNaN(layerFreqValue)) {
+            return {
+                id: `custom-layer-${layerFreqValue}`,
+                name: `Custom Layer (${layerFreqValue} Hz)`,
+                range: `${layerFreqValue} Hz`,
+                baseFrequency: layerFreqValue,
+                binauralFrequency: 0,
+                description: `A custom generated layered tone at ${layerFreqValue} Hz.`,
+                category: BenefitCategory.WELLNESS,
+                categoryId: 'isochronic',
+                defaultMode: 'PURE',
+                availableModes: ['PURE', 'BINAURAL', 'ISOCHRONIC'],
+                colors: { primary: '#cbd5e1', secondary: '#e2e8f0', accent: '#94a3b8' },
+                premium: true,
+            };
+        }
+    }
+    return null;
+  });
 
   // UI Modals / Menus
   const [isTimerMenuOpen, setIsTimerMenuOpen] = useState(false);
@@ -80,11 +105,6 @@ export const PlayerPage: React.FC<PlayerPageProps> = ({
   const [isBreathingMenuOpen, setIsBreathingMenuOpen] = useState(false);
   const [selectedPattern, setSelectedPattern] = useLocalStorage<BreathingPattern>('biohack_breathing_pattern', BREATHING_PATTERNS[0]);
 
-  // Spatial Audio
-  const [is8dEnabled, setIs8dEnabled] = useState(false);
-  const [panningSpeed, setPanningSpeed] = useState(30);
-  const [panningDepth, setPanningDepth] = useState(50);
-  
   const timerEndTimeRef = useRef<number | null>(null);
   
   // --- Derived State & Memos ---
@@ -111,6 +131,14 @@ export const PlayerPage: React.FC<PlayerPageProps> = ({
   const prevStepIndexRef = useRef(sessionStepIndex);
 
   // --- Handlers & Effects ---
+
+  // CRITICAL FIX: If another track is playing when this page loads, stop it.
+  useEffect(() => {
+    if (currentlyPlayingItem && currentlyPlayingItem.id !== item.id) {
+      stop();
+    }
+  }, [item.id, currentlyPlayingItem?.id, stop]);
+
   const togglePlayPause = useCallback(() => {
     if (isCurrentItemPlaying && isPlaying) {
       pause();
@@ -118,17 +146,17 @@ export const PlayerPage: React.FC<PlayerPageProps> = ({
       resume();
     } else {
       if (mainFrequencyForPlayback) {
-        startPlayback(item, mainFrequencyForPlayback, selectedMode, layerFrequencyForPlayback || null, layerFrequencyForPlayback?.defaultMode || 'BINAURAL', { isEnabled: is8dEnabled, speed: panningSpeed, depth: panningDepth });
+        startPlayback(item, mainFrequencyForPlayback, selectedMode, layerFrequencyForPlayback || null, layerFrequencyForPlayback?.defaultMode || 'BINAURAL');
       }
     }
-  }, [isCurrentItemPlaying, isPlaying, pause, resume, startPlayback, item, mainFrequencyForPlayback, selectedMode, layerFrequencyForPlayback, is8dEnabled, panningSpeed, panningDepth]);
+  }, [isCurrentItemPlaying, isPlaying, pause, resume, startPlayback, item, mainFrequencyForPlayback, selectedMode, layerFrequencyForPlayback]);
   
   const handleModeChange = useCallback((newMode: SoundGenerationMode) => {
     setSelectedMode(newMode);
     if (isCurrentItemPlaying && isPlaying && mainFrequencyForPlayback) {
-      startPlayback(item, mainFrequencyForPlayback, newMode, layerFrequencyForPlayback || null, layerFrequencyForPlayback?.defaultMode || 'BINAURAL', { isEnabled: is8dEnabled, speed: panningSpeed, depth: panningDepth });
+      startPlayback(item, mainFrequencyForPlayback, newMode, layerFrequencyForPlayback || null, layerFrequencyForPlayback?.defaultMode || 'BINAURAL');
     }
-  }, [isCurrentItemPlaying, isPlaying, startPlayback, item, mainFrequencyForPlayback, layerFrequencyForPlayback, is8dEnabled, panningSpeed, panningDepth]);
+  }, [isCurrentItemPlaying, isPlaying, startPlayback, item, mainFrequencyForPlayback, layerFrequencyForPlayback]);
 
   // Effect to handle session step changes by restarting playback with the new step's frequencies.
   // This uses a ref to ensure it only runs when the step index *actually changes*, preventing an infinite loop.
@@ -145,34 +173,26 @@ export const PlayerPage: React.FC<PlayerPageProps> = ({
             mainFrequencyForPlayback,
             selectedMode,
             layerFrequencyForPlayback || null,
-            layerFrequencyForPlayback?.defaultMode || 'BINAURAL',
-            { isEnabled: is8dEnabled, speed: panningSpeed, depth: panningDepth }
+            layerFrequencyForPlayback?.defaultMode || 'BINAURAL'
         );
     }
     // Always update the ref to the current step index for the next render.
     prevStepIndexRef.current = sessionStepIndex;
   }, [
       sessionStepIndex, isSession, isCurrentItemPlaying, isPlaying, mainFrequencyForPlayback, 
-      item, selectedMode, layerFrequencyForPlayback, is8dEnabled, panningSpeed, panningDepth, startPlayback
+      item, selectedMode, layerFrequencyForPlayback, startPlayback
   ]);
 
   // Effect to reset local UI state when the item being played changes.
   useEffect(() => {
     if (currentlyPlayingItem?.id !== item.id) {
         setSelectedMode(('defaultMode' in item) ? item.defaultMode : 'PURE');
-        setLayeredFrequency(null);
         setIsTimerMenuOpen(false);
         setActiveTimer(0);
         setTimeRemaining(0);
-        setIs8dEnabled(false);
         stopGuide();
     }
   }, [item, currentlyPlayingItem, stopGuide]);
-  
-  useEffect(() => {
-    set8dPanning('main', is8dEnabled, panningSpeed, panningDepth);
-    set8dPanning('layer', is8dEnabled, panningSpeed, panningDepth);
-  }, [is8dEnabled, panningSpeed, panningDepth, set8dPanning]);
   
   // Effect for Timer UI
   useEffect(() => {
@@ -200,7 +220,7 @@ export const PlayerPage: React.FC<PlayerPageProps> = ({
   
   const handleSelectLayer = (newLayerFreq: Frequency) => {
     setLayeredFrequency(newLayerFreq);
-    toggleLayer(newLayerFreq, newLayerFreq.defaultMode, is8dEnabled, panningSpeed, panningDepth);
+    toggleLayer(newLayerFreq, newLayerFreq.defaultMode);
     setIsLayerModalOpen(false);
   }
 

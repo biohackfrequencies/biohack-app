@@ -33,7 +33,7 @@ export const FrequencyCard: React.FC<FrequencyCardProps> = ({ frequency, onSelec
           className="w-full h-full p-6 rounded-2xl text-left transition-all duration-300 shadow-lg hover:-translate-y-1 text-white hover:shadow-[0_8px_30px_-5px_var(--glow-color)] flex flex-col justify-end"
           style={cardStyle}
         >
-          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent group-hover:from-black/80 transition-all duration-300 rounded-2xl"></div>
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent group-hover:from-black/70 transition-all duration-300 rounded-2xl"></div>
           
           <div className="relative z-10">
             <div className="flex justify-between items-start">

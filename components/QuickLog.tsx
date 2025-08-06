@@ -1,6 +1,7 @@
 import React from 'react';
-import { ActivityLogItem, TrackableActivity, TrackableActivityId } from '../types';
+import { ActivityLogItem, TrackableActivityId } from '../types';
 import { XMarkIcon, CustomizeIcon } from './BohoIcons';
+import type { TrackableActivity } from '../constants';
 
 interface QuickLogProps {
   activities: TrackableActivity[];
@@ -30,7 +31,7 @@ export const QuickLog: React.FC<QuickLogProps> = ({
   };
 
   return (
-    <section className="p-6 rounded-3xl shadow-lg bg-gradient-to-br from-[#EEE8B2]/40 to-[#96CDB0]/40 dark:bg-gradient-to-br dark:from-dark-surface/80 dark:to-dark-bg/80">
+    <section className="p-6 rounded-3xl shadow-lg bg-gradient-to-br from-[#EEE8B2]/40 to-[#96CDB0]/40 dark:bg-dark-surface">
         <div className="flex justify-between items-center mb-6">
             <h3 className="font-display text-4xl font-bold text-slate-800 dark:text-dark-text-primary">
                 <span className="italic">Quick</span> Log

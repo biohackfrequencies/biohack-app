@@ -1,6 +1,5 @@
 import React, { useState, useMemo, useEffect, useCallback } from 'react';
 import { ActivityLogItem, TrackableActivityId, Frequency, CustomStack } from '../types';
-import { AIWellnessAgent } from './AIWellnessAgent';
 import { useSubscription } from '../hooks/useSubscription';
 import { LogDetailModal } from './LogDetailModal';
 import { ActivityRings } from './ActivityRings';
@@ -14,9 +13,9 @@ import { getAiInsight } from '../services/geminiService';
 import { AIInsightsCard } from './AIInsightsCard';
 import { SchumannResonanceCard } from './SchumannResonanceCard';
 import { useIntegrations } from '../contexts/IntegrationsContext';
-import { getIntegratedDataSummary } from '../services/integrationsService';
 import { useAuth } from '../contexts/AuthContext';
 import { DailyInspirationCard } from './DailyInspirationCard';
+import { getIntegratedDataSummary } from '../services/integrationsService';
 
 interface DashboardPageProps {
     activityLog: ActivityLogItem[];
@@ -225,11 +224,6 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
                         insight={aiInsight}
                         isLoading={isInsightLoading}
                         isSubscribed={isSubscribed}
-                    />
-                    <AIWellnessAgent 
-                        isSubscribed={isSubscribed}
-                        allFrequencies={allFrequencies}
-                        onPlayAiSession={onPlayAiSession}
                     />
                 </div>
             </div>

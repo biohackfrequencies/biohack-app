@@ -1,7 +1,5 @@
-
-
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
-import { Frequency, CategoryId, CustomStack, GuidedSession, ActivityLogItem, TrackableActivityId, HarmonicElement, BenefitCategory, PlayableItem, AppContentData } from './types';
+import { Frequency, CategoryId, CustomStack, GuidedSession, ActivityLogItem, TrackableActivityId, HarmonicElement, BenefitCategory, PlayableItem, AppContentData, CodexNode } from './types';
 import { Header } from './components/Header';
 import { HomePage } from './components/HomePage';
 import { CategoryPage } from './components/CategoryPage';
@@ -24,12 +22,12 @@ import ResetPasswordPage from './components/ResetPasswordPage';
 import { UserDataProvider, useUserData } from './contexts/UserDataContext';
 import { IntegrationsProvider } from './contexts/IntegrationsContext';
 import { OurMissionPage } from './components/OurMissionPage';
-import { useServiceWorker } from './hooks/useServiceWorker';
-import { UpdatePrompt } from './components/UpdatePrompt';
 import { PlayerProvider } from './contexts/PlayerContext';
 import { GlobalPlayerUI } from './components/GlobalPlayerUI';
 import { appContentData } from './data/content';
 import { harmonicElements } from './data/elements';
+import { ToneGeneratorPage } from './components/ToneGeneratorPage';
+import { codexData } from './data/codex';
 
 const getWeekNumber = (date: Date): number => {
     const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
@@ -67,6 +65,7 @@ const parseRoute = (hash: string): { page: string; id?: string; fragment?: strin
   if (pathname.startsWith('stack/')) return parsed('stack', pathname.substring('stack/'.length));
   if (pathname.startsWith('category/')) return parsed('category', pathname.substring('category/'.length));
   if (pathname === 'create') return parsed('create');
+  if (pathname === 'custom-tone') return parsed('custom-tone');
 
   return parsed('dashboard');
 };
@@ -75,9 +74,8 @@ const App: React.FC<{ content: AppContentData }> = ({ content }) => {
   const [route, setRoute] = useState(window.location.hash);
   const { isSubscribed } = useSubscription();
   const { favorites, setFavorites, customStacks, setCustomStacks, activityLog, setActivityLog, activities } = useUserData();
-  const { isUpdateAvailable, updateAssets } = useServiceWorker();
 
-  const { page, id, fragment } = parseRoute(route);
+  const { page, id, fragment, params } = parseRoute(route);
   
   const { featuredItem, allFrequencies, allSessions, dailyQuote } = useMemo(() => {
     if (!content) return { featuredItem: null, allFrequencies: [], allSessions: [], dailyQuote: null };
@@ -161,12 +159,6 @@ const App: React.FC<{ content: AppContentData }> = ({ content }) => {
     
     // Set initial route
     handleHashChange();
-
-    const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.has('sw_updated')) {
-        const newUrl = window.location.pathname;
-        window.history.replaceState({}, '', newUrl);
-    }
     
     return () => window.removeEventListener('hashchange', handleHashChange);
   }, []);
@@ -211,7 +203,7 @@ const App: React.FC<{ content: AppContentData }> = ({ content }) => {
   };
 
   const renderContent = () => {
-    if ((page === 'create' || page === 'stack') && !isSubscribed) {
+    if ((page === 'create' || page === 'stack' || page === 'custom-tone') && !isSubscribed) {
         return <PricingPage onBack={() => window.location.hash = '#/library'} />;
     }
 
@@ -252,13 +244,35 @@ const App: React.FC<{ content: AppContentData }> = ({ content }) => {
         />;
       case 'create':
         return <CreateStackPage allFrequencies={allFrequencies} categories={content.categories} onSaveStack={handleSaveStack} onBack={() => window.location.hash = '#/library'} />;
+      case 'custom-tone':
+        return <ToneGeneratorPage onBack={() => window.location.hash = '#/library'} onPlayAiSession={handlePlayAiSession} />;
       case 'player':
       case 'session':
       case 'stack': {
         let selectedItem: PlayableItem | undefined;
         let onBack: () => void;
         
-        if (page === 'player') {
+        if (page === 'player' && id === 'custom') {
+            const freqParam = params.get('freq');
+            const freqValue = freqParam ? parseFloat(freqParam) : 432;
+            const layerFreqParam = params.get('layerFreq');
+            
+            selectedItem = {
+                id: `custom-${freqValue}${layerFreqParam ? `-${layerFreqParam}` : ''}`,
+                name: `Custom Tone (${freqValue} Hz)`,
+                range: `${freqValue} Hz`,
+                baseFrequency: freqValue,
+                binauralFrequency: 0,
+                description: `A custom generated pure tone at ${freqValue} Hz. You can experiment with Binaural and Isochronic modes below.`,
+                category: BenefitCategory.WELLNESS,
+                categoryId: 'isochronic',
+                defaultMode: 'PURE',
+                availableModes: ['PURE', 'BINAURAL', 'ISOCHRONIC'],
+                colors: { primary: '#e2e8f0', secondary: '#f1f5f9', accent: '#94a3b8' },
+                premium: true,
+            };
+            onBack = () => window.location.hash = '#/custom-tone';
+        } else if (page === 'player') {
           selectedItem = allFrequencies.find(f => f.id === id);
           onBack = () => window.location.hash = `#/category/${(selectedItem as Frequency)?.categoryId}`;
         } else if (page === 'session') {
@@ -309,13 +323,12 @@ const App: React.FC<{ content: AppContentData }> = ({ content }) => {
 
   return (
     <div className="min-h-screen bg-transparent animate-fade-in dark:bg-transparent">
-      {isUpdateAvailable && <UpdatePrompt onUpdate={updateAssets} />}
       <Header />
-      <main className="container mx-auto px-4 py-8 pb-32 sm:pb-24">
+      <main className="container mx-auto px-4 py-8 pb-24 sm:pb-20">
         {renderContent()}
       </main>
       <GlobalPlayerUI customStacks={customStacks} />
-      <footer className="text-center mt-12 mb-6 text-slate-600 dark:text-dark-text-muted text-sm">
+      <footer className="text-center mt-8 mb-6 text-slate-600 dark:text-dark-text-muted text-sm">
         <div className="flex justify-center items-center gap-6 mb-4">
             <a href="https://www.youtube.com/@BIOHACKFREQUENCIES" target="_blank" rel="noopener noreferrer" aria-label="YouTube" title="YouTube">
               <YouTubeIcon className="w-8 h-8 text-slate-600 hover:text-slate-900 dark:text-dark-text-muted dark:hover:text-dark-text-primary transition-colors" />
@@ -363,9 +376,24 @@ const AppInitializer: React.FC = () => {
             premium: false,
         }));
 
+        const codexFrequencies: Frequency[] = codexData.map((node: CodexNode) => ({
+            id: `codex-${node.modulus}`,
+            name: `${node.note} (${node.archetype})`,
+            range: `${node.frequency.toFixed(2)} Hz`,
+            baseFrequency: node.frequency,
+            binauralFrequency: 0,
+            description: node.archetype,
+            category: BenefitCategory.SPIRITUAL,
+            categoryId: 'codex',
+            defaultMode: 'PURE',
+            availableModes: ['PURE', 'BINAURAL', 'ISOCHRONIC'],
+            colors: appContentData.categories.codex.colors,
+            premium: true,
+        }));
+
         const processedContent: AppContentData = {
             ...appContentData,
-            initial_frequencies: [...appContentData.initial_frequencies, ...elementFrequencies],
+            initial_frequencies: [...appContentData.initial_frequencies, ...elementFrequencies, ...codexFrequencies],
         };
         return processedContent;
     }, []);

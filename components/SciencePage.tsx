@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BackIcon, BrainwaveIcon, IsochronicIcon, SolfeggioIcon, RifeIcon, NoiseIcon, FocusIcon, SpatialAudioIcon, CelestialIcon, BeautyIcon, AngelIcon, LungsIcon, UserCircleIcon, AtomIcon } from './BohoIcons';
+import { BackIcon, BrainwaveIcon, IsochronicIcon, SolfeggioIcon, RifeIcon, NoiseIcon, FocusIcon, SpatialAudioIcon, CelestialIcon, BeautyIcon, AngelIcon, LungsIcon, UserCircleIcon, AtomIcon, PathfinderIcon } from './BohoIcons';
 import { CategoryId, ColorTheme } from '../types';
 
 const ResearchLink: React.FC<{ href: string; children: React.ReactNode }> = ({ href, children }) => (
@@ -86,6 +86,28 @@ export const SciencePage: React.FC<SciencePageProps> = ({ categories }) => {
           </p>
           <p>
               While this system is not derived from mainstream chemistry or physics, it offers a fascinating and profound way to experience the relationship between matter and frequency from a holistic perspective.
+          </p>
+        </ScienceSection>
+        
+        <ScienceSection 
+          id="codex"
+          title="The Mod-24 Codex Wheel"
+          icon={<PathfinderIcon className="w-10 h-10 text-slate-700 dark:text-dark-text-secondary" />}
+          color={categories.codex.colors.primary}
+        >
+          <p>
+            The Codex Harmonics wheel is a living map of 24 harmonic positions — each linked to a musical note, its exact frequency, and a symbolic meaning.
+          </p>
+          <p>
+            Rooted in numerology, sacred geometry, and the musical mathematics of the Circle of Fifths, each position (or Modulus) reveals:
+          </p>
+          <ul>
+            <li>Your note — tuned to A4 = 432 Hz for natural resonance.</li>
+            <li>Your archetype — a symbolic theme like Unity, Expansion, or Illumination.</li>
+            <li>Your journeys — pre‑designed tone sequences (Triads, Arpeggios, Scales) that create resonant pathways for meditation, focus, or deep listening.</li>
+          </ul>
+          <p>
+            When you interact with the wheel, you’re not just playing tones — you’re exploring a system where sound, number, and meaning converge. Each tone is a doorway into your own inner landscape, expressed in the universal language of frequency.
           </p>
         </ScienceSection>
 

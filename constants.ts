@@ -1,7 +1,11 @@
-import { TrackableActivity } from './types';
+import { TrackableActivityBase } from './types';
 import { WorkoutIcon, YogaIcon, RLTIcon, SupplementIcon, MeditationIcon, ColdIcon, SaunaIcon, FastingIcon, SunlightIcon, BrainwaveIcon, SleepIcon, DietIcon, MoodIcon, MoodHappyIcon, MoodNeutralIcon, MoodSadIcon } from './components/BohoIcons';
 import type { IconProps } from './components/BohoIcons';
 import type { FC } from 'react';
+
+export interface TrackableActivity extends TrackableActivityBase {
+    icon?: FC<{ className?: string; style?: React.CSSProperties }>;
+}
 
 export const TRACKABLE_ACTIVITIES: TrackableActivity[] = [
     { id: 'session', name: 'Session', icon: BrainwaveIcon, color: '#c4b5fd' },

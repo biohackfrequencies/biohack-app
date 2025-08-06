@@ -1,4 +1,3 @@
-import React from 'react';
 
 export type SoundGenerationMode = 'PURE' | 'BINAURAL' | 'ISOCHRONIC' | 'AMBIENCE';
 
@@ -13,7 +12,7 @@ export enum BenefitCategory {
   SESSION = 'Session',
 }
 
-export type CategoryId = 'brainwaves' | 'solfeggio' | 'angel' | 'rife' | 'noise' | 'isochronic' | 'beauty' | 'celestial' | 'guided' | 'focus' | 'elements';
+export type CategoryId = 'brainwaves' | 'solfeggio' | 'angel' | 'rife' | 'noise' | 'isochronic' | 'beauty' | 'celestial' | 'guided' | 'focus' | 'elements' | 'codex';
 
 export type ColorTheme = {
   primary: string;
@@ -65,7 +64,7 @@ export interface GuidedSession {
   isFeatured?: boolean;
 }
 
-export interface CustomStack {
+export type CustomStack = {
   id: string;
   title: string;
   description: string;
@@ -75,7 +74,7 @@ export interface CustomStack {
   premium?: boolean;
   isFeatured?: boolean;
   categoryId: 'guided';
-}
+};
 
 export type PlayableItem = Frequency | GuidedSession | CustomStack;
 
@@ -90,7 +89,7 @@ export const BREATHING_PATTERNS: BreathingPattern[] = [
     { name: 'Coherent Breathing', pattern: [5.5, 'Inhale', 5.5, 'Exhale'] },
 ];
 
-export type TrackableActivityId = 'workout' | 'meditation' | 'supplements' | 'rlt' | 'yoga' | 'cold' | 'sauna' | 'fasting' | 'sunlight' | 'session' | 'sleep' | 'diet' | 'mood' | string;
+export type TrackableActivityId = string;
 
 // A base type with only JSON-serializable properties, safe for DB storage.
 export type TrackableActivityBase = {
@@ -99,11 +98,6 @@ export type TrackableActivityBase = {
     color: string;
     custom?: boolean;
 };
-
-// The full type used in the UI, extending the base with the icon component.
-export interface TrackableActivity extends TrackableActivityBase {
-    icon?: React.FC<{ className?: string; style?: React.CSSProperties }>;
-}
 
 export type LogDetail = {
     name?: string;
@@ -170,6 +164,29 @@ export interface HarmonicElement {
   description: string;
 }
 
+// Type for Codex Mod-24 feature
+export interface CodexNode {
+  modulus: number;
+  note: string;
+  frequency: number;
+  archetype: string;
+  journeys: {
+    short: {
+      moduli: number[];
+      notes: string[];
+    };
+    medium: {
+      moduli: number[];
+      notes: string[];
+    };
+    long: {
+      moduli: number[];
+      notes: string[];
+    };
+  };
+}
+
+
 // Type for Supabase 'profiles' table row
 export type ProfileRow = {
   id: string;
@@ -189,3 +206,17 @@ export interface AppContentData {
     featured_candidates: string[];
     inspirational_quotes: { quote: string; author: string; }[];
 }
+
+
+export type ProfileInsert = {
+  id: string;
+  favorites?: string[];
+  custom_stacks?: CustomStack[];
+  activity_log?: ActivityLogItem[];
+  tracked_habits?: TrackableActivityId[];
+  user_goals?: UserGoals;
+  custom_activities?: TrackableActivityBase[];
+  pro_access_expires_at?: string | null;
+};
+
+export type ProfileUpdate = Partial<Omit<ProfileRow, 'id'>>;

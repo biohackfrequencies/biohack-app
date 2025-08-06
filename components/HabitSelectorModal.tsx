@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { TrackableActivity, TrackableActivityId, TrackableActivityBase } from '../types';
+import { TrackableActivityId, TrackableActivityBase } from '../types';
 import { PlusCircleIcon, XMarkIcon, SparklesIcon } from './BohoIcons';
+import type { TrackableActivity } from '../constants';
 
 interface HabitSelectorModalProps {
   currentHabits: TrackableActivityId[];

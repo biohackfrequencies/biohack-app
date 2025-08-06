@@ -1,31 +1,13 @@
 import { createClient } from '@supabase/supabase-js';
-import type { ProfileRow, CustomStack, ActivityLogItem, UserGoals, TrackableActivityBase, TrackableActivityId } from '../types';
+import type { ProfileRow, ProfileInsert, ProfileUpdate } from '../types';
 
 export interface Database {
   public: {
     Tables: {
       profiles: {
-        Row: ProfileRow
-        Insert: {
-          id: string;
-          favorites?: string[];
-          custom_stacks?: CustomStack[];
-          activity_log?: ActivityLogItem[];
-          tracked_habits?: TrackableActivityId[];
-          user_goals?: UserGoals;
-          custom_activities?: TrackableActivityBase[];
-          pro_access_expires_at?: string | null;
-        }
-        Update: {
-          id?: string;
-          favorites?: string[];
-          custom_stacks?: CustomStack[];
-          activity_log?: ActivityLogItem[];
-          tracked_habits?: TrackableActivityId[];
-          user_goals?: UserGoals;
-          custom_activities?: TrackableActivityBase[];
-          pro_access_expires_at?: string | null;
-        }
+        Row: ProfileRow;
+        Insert: ProfileInsert;
+        Update: ProfileUpdate;
       }
     }
     Views: {
@@ -51,4 +33,10 @@ if (!supabaseUrl || !supabaseAnonKey) {
   throw new Error('Supabase URL and Anon Key must be provided.');
 }
 
-export const supabase = createClient<Database>(supabaseUrl, supabaseAnonKey);
+export const supabase = createClient<Database>(supabaseUrl, supabaseAnonKey, {
+  auth: {
+    autoRefreshToken: true,
+    persistSession: true,
+    detectSessionInUrl: true,
+  },
+});

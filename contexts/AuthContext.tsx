@@ -1,8 +1,7 @@
 
-
 import React, { createContext, useState, useEffect, useContext, useCallback } from 'react';
 import { supabase } from '../services/supabaseClient';
-import type { AuthError, Session, User, AuthResponse, UserResponse } from '@supabase/supabase-js';
+import type { AuthChangeEvent, AuthError, Session, User, AuthResponse, UserResponse, AuthOtpResponse } from '@supabase/supabase-js';
 
 interface AuthContextType {
   isAuthenticated: boolean;
@@ -13,7 +12,7 @@ interface AuthContextType {
   login: (email: string, pass: string) => Promise<AuthResponse>;
   signUp: (email: string, pass: string) => Promise<AuthResponse>;
   logout: () => Promise<{ error: AuthError | null }>;
-  resendVerification: (email: string) => Promise<{ data: object; error: AuthError | null; }>;
+  resendVerification: (email: string) => Promise<AuthOtpResponse>;
   sendPasswordResetEmail: (email: string) => Promise<{ data: object | null; error: AuthError | null; }>;
   updateUserPassword: (password: string) => Promise<UserResponse>;
 }
@@ -29,7 +28,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   useEffect(() => {
     // This is a robust way to handle auth state. The listener fires immediately
     // with the current session, and then on any change (login, logout, etc.).
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event: AuthChangeEvent, session: Session | null) => {
       setSession(session);
       setUser(session?.user ?? null);
       
@@ -68,10 +67,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, []);
 
   const resendVerification = useCallback(async (email: string) => {
-    return supabase.auth.resend({
-      type: 'signup',
-      email: email,
-    });
+    return supabase.auth.resend({ type: 'signup', email });
   }, []);
   
   const sendPasswordResetEmail = useCallback(async (email: string) => {

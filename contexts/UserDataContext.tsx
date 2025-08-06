@@ -1,11 +1,8 @@
-
-
-
 import React, { createContext, useContext, useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { supabase } from '../services/supabaseClient';
 import { useAuth } from './AuthContext';
-import { CustomStack, ActivityLogItem, UserGoals, TrackableActivity, TrackableActivityId, TrackableActivityBase, ProfileRow } from '../types';
-import { TRACKABLE_ACTIVITIES } from '../constants';
+import { CustomStack, ActivityLogItem, UserGoals, TrackableActivityId, TrackableActivityBase, ProfileInsert } from '../types';
+import { TRACKABLE_ACTIVITIES, TrackableActivity } from '../constants';
 import { PlusCircleIcon } from '../components/BohoIcons';
 
 const CUSTOM_COLORS = ['#fb923c', '#f472b6', '#34d399', '#60a5fa', '#a78bfa', '#facc15', '#ef4444'];
@@ -102,7 +99,7 @@ export const UserDataProvider: React.FC<{ children: React.ReactNode }> = ({ chil
           const defaultHabits = ['session', 'workout', 'meditation', 'sleep', 'supplements', 'rlt', 'mood'];
           const defaultGoals = { mind: 20, move: 10000 };
 
-          const newProfileData: ProfileRow = {
+          const newProfileData: ProfileInsert = {
               id: user.id,
               favorites: [],
               custom_stacks: [],
@@ -115,7 +112,7 @@ export const UserDataProvider: React.FC<{ children: React.ReactNode }> = ({ chil
 
           const { data: newProfile, error: insertError } = await supabase
             .from('profiles')
-            .insert([newProfileData])
+            .insert(newProfileData)
             .select()
             .single();
 
@@ -155,29 +152,100 @@ export const UserDataProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     bootstrapUserData();
   }, [user, isAuthInitializing]);
   
-  // This effect will watch all user data states and sync them to Supabase
-  useEffect(() => {
-    if (user && !isUserDataLoading) {
-      
-      const dataToSync: Omit<ProfileRow, 'id'> = {
-        favorites,
-        custom_stacks: customStacks,
-        activity_log: activityLog,
-        tracked_habits: trackedHabits,
-        user_goals: userGoals,
-        custom_activities: customActivities,
-        pro_access_expires_at: proAccessExpiresAt ? new Date(proAccessExpiresAt).toISOString() : null,
-      };
-      const timer = setTimeout(() => {
-        const upsertData: ProfileRow = { id: user.id, ...dataToSync };
-        supabase.from('profiles').upsert([upsertData]).then(({ error }) => {
-          if(error) console.error("Error syncing data:", error.message || error);
-        });
-      }, 1500); // Debounce updates
+  // --- Data Syncing ---
+  const syncEnabled = user && !isUserDataLoading;
 
+  useEffect(() => {
+    if (syncEnabled) {
+      const timer = setTimeout(() => {
+        const sync = async () => {
+          const { error } = await supabase.from('profiles').update({ favorites }).eq('id', user.id);
+          if (error) console.error("Network error syncing favorites:", error);
+        };
+        sync();
+      }, 1500);
       return () => clearTimeout(timer);
     }
-  }, [favorites, customStacks, activityLog, trackedHabits, userGoals, customActivities, proAccessExpiresAt, user, isUserDataLoading]);
+  }, [favorites, syncEnabled, user]);
+
+  useEffect(() => {
+    if (syncEnabled) {
+      const timer = setTimeout(() => {
+        const sync = async () => {
+          const { error } = await supabase.from('profiles').update({ custom_stacks: customStacks }).eq('id', user.id);
+          if (error) console.error("Network error syncing custom_stacks:", error);
+        };
+        sync();
+      }, 1500);
+      return () => clearTimeout(timer);
+    }
+  }, [customStacks, syncEnabled, user]);
+
+  useEffect(() => {
+    if (syncEnabled) {
+      const timer = setTimeout(() => {
+         const sync = async () => {
+          const { error } = await supabase.from('profiles').update({ activity_log: activityLog }).eq('id', user.id);
+          if (error) console.error("Network error syncing activity_log:", error);
+        };
+        sync();
+      }, 1500);
+      return () => clearTimeout(timer);
+    }
+  }, [activityLog, syncEnabled, user]);
+  
+  useEffect(() => {
+    if (syncEnabled) {
+      const timer = setTimeout(() => {
+        const sync = async () => {
+          const { error } = await supabase.from('profiles').update({ tracked_habits: trackedHabits }).eq('id', user.id);
+          if (error) console.error("Network error syncing tracked_habits:", error);
+        };
+        sync();
+      }, 1500);
+      return () => clearTimeout(timer);
+    }
+  }, [trackedHabits, syncEnabled, user]);
+
+  useEffect(() => {
+    if (syncEnabled) {
+      const timer = setTimeout(() => {
+        const sync = async () => {
+          const { error } = await supabase.from('profiles').update({ user_goals: userGoals }).eq('id', user.id);
+          if (error) console.error("Network error syncing user_goals:", error);
+        };
+        sync();
+      }, 1500);
+      return () => clearTimeout(timer);
+    }
+  }, [userGoals, syncEnabled, user]);
+
+  useEffect(() => {
+    if (syncEnabled) {
+      const timer = setTimeout(() => {
+        const sync = async () => {
+          const { error } = await supabase.from('profiles').update({ custom_activities: customActivities }).eq('id', user.id);
+          if (error) console.error("Network error syncing custom_activities:", error);
+        };
+        sync();
+      }, 1500);
+      return () => clearTimeout(timer);
+    }
+  }, [customActivities, syncEnabled, user]);
+
+  useEffect(() => {
+    if (syncEnabled) {
+      const timer = setTimeout(() => {
+        const sync = async () => {
+          const isoDate = proAccessExpiresAt ? new Date(proAccessExpiresAt).toISOString() : null;
+          const { error } = await supabase.from('profiles').update({ pro_access_expires_at: isoDate }).eq('id', user.id);
+          if (error) console.error("Network error syncing pro_access_expires_at:", error);
+        };
+        sync();
+      }, 1500);
+      return () => clearTimeout(timer);
+    }
+  }, [proAccessExpiresAt, syncEnabled, user]);
 
   // --- Activities logic (moved from useActivities hook) ---
 

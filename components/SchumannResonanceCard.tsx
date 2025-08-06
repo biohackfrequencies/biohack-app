@@ -22,7 +22,7 @@ export const SchumannResonanceCard: React.FC = () => {
         '--glow-color': `${schumannColors.accent}40`
       } as React.CSSProperties}
     >
-      <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-black/20 group-hover:from-black/80 transition-all duration-300"></div>
+      <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-black/10 group-hover:from-black/70 transition-all duration-300"></div>
       <div className="relative z-10">
         <SchumannIcon className="w-12 h-12 text-white/90 mx-auto" />
         <h3 className="text-2xl font-display font-bold text-white mt-2 drop-shadow-md">Tune into Earth's Heartbeat</h3>

@@ -44,11 +44,9 @@ const iapService = {
      * Sets up the IAP listener.
      */
     initialize: (): Promise<void> => {
-        console.log('[IAP SIMULATOR] Initializing...');
         // In a real app, this would register listeners with the native IAP plugin.
         // We can simulate a delay.
         return new Promise(resolve => setTimeout(() => {
-            console.log('[IAP SIMULATOR] Initialization complete.');
             resolve();
         }, 500));
     },
@@ -64,7 +62,6 @@ const iapService = {
      * Simulates fetching product details from the store.
      */
     getProducts: (productIds: string[]): Promise<Product[]> => {
-        console.log(`[IAP SIMULATOR] Fetching products: ${productIds.join(', ')}`);
         return new Promise(resolve => setTimeout(() => {
             const foundProducts = MOCK_PRODUCTS.filter(p => productIds.includes(p.id));
             resolve(foundProducts);
@@ -76,12 +73,10 @@ const iapService = {
      * Returns a promise that resolves to `true` on success and `false` on cancellation.
      */
     purchase: (productId: string): Promise<boolean> => {
-        console.log(`[IAP SIMULATOR] Initiating purchase for: ${productId}`);
         // This simulates the user seeing a native payment sheet and confirming.
         // We bypass window.confirm as it can be unreliable in some environments.
         return new Promise((resolve) => {
             setTimeout(() => {
-                console.log(`[IAP SIMULATOR] AUTOMATICALLY APPROVED purchase for ${productId}.`);
                 resolve(true); // Always resolve as successful
             }, 1500);
         });
@@ -91,17 +86,14 @@ const iapService = {
      * Simulates restoring previous purchases.
      */
     restorePurchases: (): Promise<RestoreResult> => {
-        console.log('[IAP SIMULATOR] Restoring purchases...');
         return new Promise((resolve) => setTimeout(() => {
             // Check a simulated local flag to see if the user "bought" it before.
             const purchasedId = localStorage.getItem('iap_mock_purchased_id');
             
             if (purchasedId && PRO_IDS.includes(purchasedId) && onPurchaseVerifiedCallback) {
-                console.log(`[IAP SIMULATOR] Found previous purchase (${purchasedId}). Triggering verification listener.`);
                 onPurchaseVerifiedCallback(purchasedId);
                 resolve({ restored: true, message: 'Your previous purchase has been restored!' });
             } else {
-                 console.log('[IAP SIMULATOR] No previous purchases found to restore.');
                  resolve({ restored: false, message: 'No previous purchases were found to restore.' });
             }
         }, 2000));

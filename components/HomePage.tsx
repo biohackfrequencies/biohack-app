@@ -1,6 +1,6 @@
 import React from 'react';
 import { CategoryId, Frequency, CustomStack, GuidedSession, ColorTheme } from '../types';
-import { BrainwaveIcon, SolfeggioIcon, AngelIcon, RifeIcon, NoiseIcon, IsochronicIcon, BeautyIcon, CelestialIcon, GuidedSessionIcon, StackIcon, FocusIcon, ElementIcon, InfoIcon } from './BohoIcons';
+import { BrainwaveIcon, SolfeggioIcon, AngelIcon, RifeIcon, NoiseIcon, IsochronicIcon, BeautyIcon, CelestialIcon, GuidedSessionIcon, StackIcon, FocusIcon, ElementIcon, InfoIcon, PathfinderIcon } from './BohoIcons';
 import { MyLibrary } from './MyLibrary';
 import { useSubscription } from '../hooks/useSubscription';
 import { FeaturedCard } from './FeaturedCard';
@@ -36,7 +36,7 @@ const CategoryCard: React.FC<{
     border: `1px solid ${accent}40`,
   };
   const darkStyle = {
-    background: `linear-gradient(135deg, ${primary}60, ${secondary}60)`,
+    background: `linear-gradient(135deg, ${primary}80, ${secondary}80)`,
     borderColor: accent,
     '--tw-border-opacity': '0.7',
   };
@@ -51,10 +51,10 @@ const CategoryCard: React.FC<{
         '--glow-color': `${accent}80`,
       } as any}
     >
-      <div className="absolute inset-0 bg-white/0 dark:bg-black/20 group-hover:bg-white/30 dark:group-hover:bg-black/30 transition-colors duration-300"></div>
+      <div className="absolute inset-0 bg-white/0 dark:bg-dark-surface/30 group-hover:bg-white/30 dark:group-hover:bg-dark-surface/20 transition-colors duration-300"></div>
       
       <div className="relative z-10 flex flex-col items-center justify-center transition-opacity duration-300 group-hover:opacity-0">
-        {Icon && <Icon className="h-12 w-12 mb-2 text-slate-700/80 dark:text-dark-text-muted/80" />}
+        {Icon && <Icon className="h-12 w-12 mb-2 text-slate-900/[0.85] dark:text-dark-text-primary/[0.95] drop-shadow-[0_1px_2px_rgba(0,0,0,0.3)] dark:drop-shadow-[0_1px_2px_rgba(0,0,0,0.7)]" />}
         <h3 className="text-base font-display font-bold text-slate-800 dark:text-dark-text-primary tracking-wide">{details.title}</h3>
       </div>
       
@@ -103,23 +103,6 @@ export const HomePage: React.FC<HomePageProps> = ({
             </div>
        </section>
 
-       <section>
-        <div className="grid grid-cols-1 md:grid-cols-1 gap-8 max-w-4xl mx-auto">
-           <button
-              onClick={() => handlePremiumFeatureClick(() => window.location.hash = '#/create')}
-              className="group relative w-full p-8 rounded-2xl overflow-hidden text-center flex flex-col items-center justify-center bg-gradient-to-br from-[#EEE8B2]/60 to-[#C18D52]/40 dark:bg-gradient-to-br dark:from-dark-surface dark:to-dark-bg border border-[#C18D52]/30 dark:border-brand-gold/50 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 hover:saturate-125"
-          >
-              <div className="absolute -right-6 -bottom-6 w-28 h-28 text-brand-gold/30 dark:text-brand-gold/10 opacity-80 group-hover:scale-110 transition-transform duration-500">
-                <StackIcon />
-              </div>
-              <div className="relative">
-                <h4 className="text-2xl font-display font-bold text-slate-800 dark:text-dark-text-primary drop-shadow-sm">Creator Studio</h4>
-                <p className="text-slate-700/90 dark:text-dark-text-secondary text-sm mt-1">Design your own sessions with optional layered frequencies.</p>
-              </div>
-          </button>
-        </div>
-      </section>
-       
        {featuredItem && (
         <div className="max-w-2xl mx-auto">
           <FeaturedCard item={featuredItem} />
@@ -129,7 +112,7 @@ export const HomePage: React.FC<HomePageProps> = ({
       <section className="space-y-6">
         <h3 className="text-3xl font-display text-center font-semibold text-slate-800 dark:text-dark-text-primary">All Categories</h3>
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 md:gap-6">
-            {Object.entries(categories).filter(([id]) => id !== 'elements').map(([id, details]) => {
+            {Object.entries(categories).filter(([id]) => id !== 'elements' && id !== 'codex').map(([id, details]) => {
                 const categoryId = id as CategoryId;
                 if (!categoryIcons[categoryId]) return null;
                 return (
@@ -144,8 +127,34 @@ export const HomePage: React.FC<HomePageProps> = ({
         </div>
       </section>
 
-      <section className="max-w-4xl mx-auto">
+      <section className="max-w-4xl mx-auto space-y-8">
         <HarmonicElementsCtaCard />
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-8">
+           <button
+              onClick={() => handlePremiumFeatureClick(() => window.location.hash = '#/create')}
+              className="group relative w-full p-4 sm:p-6 h-40 rounded-2xl overflow-hidden text-center flex flex-col items-center justify-center bg-gradient-to-br from-[#EEE8B2]/60 to-[#C18D52]/40 dark:bg-slate-800/80 border border-[#C18D52]/30 dark:border-brand-gold/50 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 hover:saturate-125"
+          >
+              <div className="absolute -right-4 -bottom-4 w-20 h-20 sm:w-28 sm:h-28 text-brand-gold/30 dark:text-brand-gold/30 opacity-80 group-hover:scale-110 transition-transform duration-500">
+                <StackIcon />
+              </div>
+              <div className="relative">
+                <h4 className="text-xl sm:text-2xl font-display font-bold text-slate-800 dark:text-dark-text-primary drop-shadow-sm">Creator Studio</h4>
+                <p className="text-slate-700/90 dark:text-dark-text-secondary text-xs sm:text-sm mt-1">Design your own sessions.</p>
+              </div>
+          </button>
+           <button
+              onClick={() => handlePremiumFeatureClick(() => window.location.hash = '#/custom-tone')}
+              className="group relative w-full p-4 sm:p-6 h-40 rounded-2xl overflow-hidden text-center flex flex-col items-center justify-center bg-gradient-to-br from-purple-100/60 to-indigo-200/40 dark:bg-slate-800/80 border border-indigo-200/30 dark:border-indigo-500/50 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 hover:saturate-125"
+          >
+              <div className="absolute -right-4 -bottom-4 w-20 h-20 sm:w-28 sm:h-28 text-indigo-500/30 dark:text-indigo-500/30 opacity-80 group-hover:scale-110 transition-transform duration-500">
+                <PathfinderIcon />
+              </div>
+              <div className="relative">
+                <h4 className="text-xl sm:text-2xl font-display font-bold text-slate-800 dark:text-dark-text-primary drop-shadow-sm">Codex Harmonics</h4>
+                <p className="text-slate-700/90 dark:text-dark-text-secondary text-xs sm:text-sm mt-1">Explore the Mod-24 wheel.</p>
+              </div>
+          </button>
+        </div>
       </section>
 
       <MyLibrary

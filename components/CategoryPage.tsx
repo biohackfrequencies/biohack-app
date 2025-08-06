@@ -87,7 +87,7 @@ export const CategoryPage: React.FC<CategoryPageProps> = ({ categoryId, frequenc
   };
 
   const headerStyle = isDarkMode
-    ? { background: `linear-gradient(135deg, ${categoryDetails.colors.primary}30, ${categoryDetails.colors.secondary}30)`, borderColor: `${categoryDetails.colors.accent}50` }
+    ? { background: `linear-gradient(135deg, ${categoryDetails.colors.primary}50, ${categoryDetails.colors.secondary}50)`, borderColor: `${categoryDetails.colors.accent}50` }
     : { background: `linear-gradient(135deg, ${categoryDetails.colors.primary}60, ${categoryDetails.colors.secondary}60)`, borderColor: `${categoryDetails.colors.accent}80` };
 
 

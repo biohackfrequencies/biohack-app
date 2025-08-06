@@ -80,7 +80,6 @@ export const requestAllHealthPermissions = async (): Promise<boolean> => {
  */
 export const getTodaysSteps = async (): Promise<number | null> => {
     if (!isMobileHealthAvailable()) {
-        console.log('Not a native mobile device. Skipping health data fetch.');
         return null;
     }
 
@@ -130,7 +129,6 @@ export const logMindfulMinutes = async (durationInSeconds: number): Promise<void
         if (perms.mindfulness !== 'granted') {
             const result = await Health.requestPermissions({ mindfulness: 'write' });
             if (result.mindfulness !== 'granted') {
-                 console.warn('Mindfulness permissions not granted. Skipping log.');
                  return;
             }
         }
@@ -146,7 +144,6 @@ export const logMindfulMinutes = async (durationInSeconds: number): Promise<void
             value: durationInMinutes,
             sourceName: 'Biohack Frequencies',
         });
-        console.log(`Successfully logged ${durationInMinutes.toFixed(2)} mindful minutes to Health service.`);
     } catch (e) {
         console.error('Error logging mindful minutes:', e);
     }

@@ -36,7 +36,7 @@ export const AnalyticsSummaryCard: React.FC<AnalyticsSummaryCardProps> = ({ acti
     return (
         <div
             className="relative group p-6 rounded-3xl shadow-lg transition-all duration-300
-            bg-gradient-to-br from-[#EEE8B2]/40 to-[#C18D52]/20 dark:bg-gradient-to-br dark:from-dark-surface/80 dark:to-dark-bg/80
+            bg-gradient-to-br from-[#EEE8B2]/40 to-[#C18D52]/20 dark:bg-dark-surface
             hover:-translate-y-1 hover:shadow-2xl dark:hover:shadow-[0_8px_30px_-5px_var(--glow-color)]
             dark:border dark:border-brand-gold/40"
             style={{'--glow-color': '#C18D5240'} as React.CSSProperties}

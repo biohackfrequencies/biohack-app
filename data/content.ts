@@ -8,6 +8,11 @@ export const appContentData: AppContentData = {
       "description": "Explore the resonant frequencies of the first 81 elements, based on the harmonic frequency chart.",
       "colors": { "primary": "#a5f3fc", "secondary": "#e0f2fe", "accent": "#22d3ee" }
     },
+    "codex": {
+      "title": "Codex Harmonics",
+      "description": "Frequencies from the Mod-24 wheel.",
+      "colors": { "primary": "#e9d5ff", "secondary": "#c4b5fd", "accent": "#a855f7" }
+    },
     "beauty": {
       "title": "Sonic Bio-Regenesis",
       "description": "Acoustic protocols designed to support cellular vitality, rejuvenation, and the body's natural regenerative processes.",
@@ -100,13 +105,13 @@ export const appContentData: AppContentData = {
       "id": "neurogenesis-support-protocol", "title": "Neurogenesis Support Protocol", "categoryId": "guided", "description": "A 20-minute session combining 40Hz Gamma waves and specific Rife frequencies to support brain health and the creation of new neural pathways.", "steps": [ { "title": "Gamma Stimulation", "description": "40Hz Gamma waves to stimulate cognitive function and brain activity.", "duration": 600, "frequencyId": "gamma-40hz-precise" }, { "title": "Neural Support", "description": "A Rife frequency (880 Hz) associated with general neural health.", "duration": 600, "frequencyId": "rife-880" } ], "colors": { "primary": "#c4b5fd", "secondary": "#a78bfa", "accent": "#8b5cf6" }, "premium": true
     },
     {
-      "id": "dopamine-release-protocol", "title": "Dopamine Release Protocol", "categoryId": "guided", "description": "A 15-minute session designed to naturally support dopamine production through high-frequency Gamma waves, enhancing motivation, focus, and mood.", "steps": [ { "title": "Gamma Activation", "description": "High-frequency Gamma waves (60-80 Hz) to stimulate brain regions associated with reward and motivation.", "duration": 900, "frequencyId": "gamma" } ], "colors": { "primary": "#fde047", "secondary": "#facc15", "accent": "#eab308" }, "premium": true
+      "id": "dopamine-release-protocol", "title": "Dopamine Release Protocol", "categoryId": "guided", "description": "A 15-minute session to naturally support dopamine production, enhancing motivation, focus, and mood.", "steps": [ { "title": "Cognitive Priming", "description": "Beta waves combined with the driving frequency of Mars to sharpen focus and build motivation.", "duration": 450, "frequencyId": "beta", "layerFrequencyId": "celestial-mars" }, { "title": "Peak State Activation", "description": "High-frequency Gamma waves layered with the Sun's vital energy to stimulate reward centers and elevate mood.", "duration": 450, "frequencyId": "gamma", "layerFrequencyId": "celestial-sun" } ], "colors": { "primary": "#fde047", "secondary": "#facc15", "accent": "#eab308" }, "premium": true
     },
     {
-      "id": "serotonin-boost-protocol", "title": "Serotonin Boost Protocol", "categoryId": "guided", "description": "A 20-minute calming session using Alpha waves to create a relaxed, positive mental state conducive to natural serotonin production.", "steps": [ { "title": "Alpha Relaxation", "description": "A 10 Hz Alpha wave to induce a state of calm and reduce stress, creating an optimal state for serotonin balance.", "duration": 1200, "frequencyId": "alpha" } ], "colors": { "primary": "#93c5fd", "secondary": "#60a5fa", "accent": "#3b82f6" }, "premium": true
+      "id": "serotonin-boost-protocol", "title": "Serotonin Boost Protocol", "categoryId": "guided", "description": "A 20-minute calming session using specific frequencies to create a relaxed, positive mental state conducive to natural serotonin production.", "steps": [ { "title": "Release & Prepare", "description": "Begin with 396 Hz to release subconscious stressors, set to the backdrop of gentle rain.", "duration": 600, "frequencyId": "solfeggio-396-liberation", "layerFrequencyId": "ambient-rain" }, { "title": "Cultivate Calm", "description": "A 10 Hz Alpha wave, layered with Lithium's balancing frequency, induces a state of serene positivity.", "duration": 600, "frequencyId": "alpha", "layerFrequencyId": "lithium" } ], "colors": { "primary": "#93c5fd", "secondary": "#60a5fa", "accent": "#3b82f6" }, "premium": true
     },
     {
-      "id": "oxytocin-love-protocol", "title": "Oxytocin 'Love' Protocol", "categoryId": "guided", "description": "A 15-minute heart-centered session using the 639 Hz Solfeggio frequency to cultivate feelings of connection, empathy, and unconditional love.", "steps": [ { "title": "Heart Coherence", "description": "The 639 Hz frequency for harmonizing relationships and fostering compassion.", "duration": 900, "frequencyId": "solfeggio-639-harmony" } ], "colors": { "primary": "#f9a8d4", "secondary": "#f472b6", "accent": "#ec4899" }, "premium": true
+      "id": "oxytocin-love-protocol", "title": "Oxytocin 'Love' Protocol", "categoryId": "guided", "description": "A 15-minute heart-centered session using specific frequencies to cultivate feelings of connection, empathy, and unconditional love.", "steps": [ { "title": "Opening the Heart", "description": "Gentle Alpha waves layered with the frequency of Venus create a receptive state of peace and harmony.", "duration": 450, "frequencyId": "alpha", "layerFrequencyId": "celestial-venus" }, { "title": "Deepening Connection", "description": "The 639 Hz frequency, grounded by the Earth's Schumann Resonance, fosters profound connection and compassion.", "duration": 450, "frequencyId": "solfeggio-639-harmony", "layerFrequencyId": "schumann-resonance" } ], "colors": { "primary": "#f9a8d4", "secondary": "#f472b6", "accent": "#ec4899" }, "premium": true
     },
     {
       "id": "endorphin-bliss-protocol", "title": "Endorphin Bliss Protocol", "categoryId": "guided", "description": "A 15-minute session that uses Alpha-to-Theta transitions to mimic states of deep relaxation and meditation, which can support the natural release of endorphins.", "steps": [ { "title": "Alpha-Theta Bridge", "description": "Gently guide your mind from a relaxed Alpha state to a deeper, meditative Theta state.", "duration": 900, "frequencyId": "theta" } ], "colors": { "primary": "#a7f3d0", "secondary": "#6ee7b7", "accent": "#34d399" }, "premium": true
@@ -130,10 +135,10 @@ export const appContentData: AppContentData = {
       "id": "focus-12-protocol", "title": "Focus 12 Protocol", "categoryId": "focus", "description": "A 25-minute journey to Focus 12, a state of expanded awareness beyond the five physical senses, used for creative problem solving and insight.", "steps": [ { "title": "Enter Focus 10", "description": "Establish the 'mind awake, body asleep' foundation.", "duration": 600, "frequencyId": "beta", "layerFrequencyId": "theta" }, { "title": "Expanded Awareness", "description": "Introduce specific frequencies to broaden perception and access deeper levels of consciousness.", "duration": 900, "frequencyId": "gamma", "layerFrequencyId": "alpha" } ], "colors": { "primary": "#c4b5fd", "secondary": "#a78bfa", "accent": "#a855f7" }, "premium": true
     },
     {
-      "id": "pineal-gland-activation", "title": "Pineal Gland Activation", "categoryId": "guided", "description": "A 15-minute session using the 963 Hz Solfeggio frequency, often associated with activating the 'third eye' for enhanced intuition and spiritual connection.", "steps": [ { "title": "Oneness Frequency", "description": "The 963 Hz frequency to stimulate the pineal gland and connect to unity consciousness.", "duration": 900, "frequencyId": "solfeggio-963-oneness" } ], "colors": { "primary": "#d8b4fe", "secondary": "#c084fc", "accent": "#a855f7" }, "premium": true
+      "id": "pineal-gland-activation", "title": "Pineal Gland Activation", "categoryId": "guided", "description": "A 15-minute session to enhance intuition and spiritual connection by stimulating the 'third eye' with resonant frequencies.", "steps": [ { "title": "Intuitive Gateway", "description": "Theta waves, paired with the Moon's frequency, open the gateway to deep, intuitive states of mind.", "duration": 450, "frequencyId": "theta", "layerFrequencyId": "celestial-moon" }, { "title": "Oneness Attunement", "description": "The 963 Hz frequency, layered with 852 Hz, works to activate the pineal gland and connect you to unity consciousness.", "duration": 450, "frequencyId": "solfeggio-963-oneness", "layerFrequencyId": "solfeggio-852-intuition" } ], "colors": { "primary": "#d8b4fe", "secondary": "#c084fc", "accent": "#a855f7" }, "premium": true
     },
     {
-      "id": "vision-restoration", "title": "Vision Restoration Protocol", "categoryId": "guided", "description": "A 20-minute protocol using specific Rife frequencies associated with eye health to support and maintain healthy vision.", "steps": [ { "title": "Eye Health Support", "description": "A targeted Rife frequency for general eye wellness.", "duration": 1200, "frequencyId": "rife-eye-health" } ], "colors": { "primary": "#93c5fd", "secondary": "#60a5fa", "accent": "#3b82f6" }, "premium": true
+      "id": "vision-restoration", "title": "Vision Restoration Protocol", "categoryId": "guided", "description": "A 20-minute protocol using specific Rife frequencies associated with eye health to support and maintain healthy vision.", "steps": [ { "title": "Relax & Oxygenate", "description": "Calming Alpha waves reduce eye strain while the frequency of Oxygen supports cellular health in the visual system.", "duration": 600, "frequencyId": "alpha", "layerFrequencyId": "oxygen" }, { "title": "Targeted Support", "description": "A targeted Rife frequency for eye wellness, layered with Selenium's protective resonance, to support visual acuity.", "duration": 600, "frequencyId": "rife-eye-health", "layerFrequencyId": "selenium" } ], "colors": { "primary": "#93c5fd", "secondary": "#60a5fa", "accent": "#3b82f6" }, "premium": true
     },
     {
       "id": "lucid-dream-induction", "title": "Lucid Dream Induction", "categoryId": "guided", "description": "A 25-minute session combining Theta and Gamma waves to create the ideal brain state for lucid dreaming—deeply relaxed yet consciously aware.", "steps": [ { "title": "Relax into Theta", "description": "Enter the dream-like Theta state.", "duration": 900, "frequencyId": "theta" }, { "title": "Awaken Awareness", "description": "Introduce Gamma waves to promote conscious awareness within the dream state.", "duration": 600, "frequencyId": "gamma", "layerFrequencyId": "theta" } ], "colors": { "primary": "#c4b5fd", "secondary": "#a78bfa", "accent": "#8b5cf6" }, "premium": true
@@ -152,6 +157,42 @@ export const appContentData: AppContentData = {
     },
     {
       "id": "systemic-parasite-cleanse", "title": "Systemic Parasite Cleanse", "categoryId": "rife", "description": "A 20-minute Rife protocol using frequencies traditionally associated with addressing systemic parasites to support a healthy internal environment.", "steps": [ { "title": "Parasite Frequency Protocol", "description": "A sequence of Rife frequencies for cleansing.", "duration": 1200, "frequencyId": "rife-parasite-cleanse" } ], "colors": { "primary": "#a7f3d0", "secondary": "#bbf7d0", "accent": "#6ee7b7" }, "premium": true
+    },
+    {
+      "id": "beauty-facelift",
+      "title": "Acoustic Face Lift",
+      "categoryId": "beauty",
+      "description": "A 10-minute session combining frequencies for cellular repair and relational harmony to support facial muscle tone and skin vitality.",
+      "steps": [
+        { "title": "Cellular Preparation", "description": "Begin with the 528 Hz 'Miracle Tone', layered with calming Alpha waves, to prepare skin cells for rejuvenation by reducing stress.", "duration": 300, "frequencyId": "solfeggio-528-repair", "layerFrequencyId": "alpha" },
+        { "title": "Harmonize & Tone", "description": "Introduce 639 Hz to promote intercellular harmony, layered with Delta waves to encourage deep cellular regeneration and toning.", "duration": 300, "frequencyId": "solfeggio-639-harmony", "layerFrequencyId": "delta" }
+      ],
+      "colors": { "primary": "#fda4af", "secondary": "#fca5a5", "accent": "#f9a8d4" },
+      "premium": false
+    },
+    {
+      "id": "beauty-collagen",
+      "title": "Collagen & Elastin Support",
+      "categoryId": "beauty",
+      "description": "A 12-minute protocol using deep Delta waves and bio-resonance frequencies to energetically support the body's natural production of collagen and elastin.",
+      "steps": [
+        { "title": "Deep Relaxation & Priming", "description": "Start with deep Delta waves, layered with the 285 Hz tissue healing frequency, to put the body in an optimal restorative state.", "duration": 360, "frequencyId": "delta", "layerFrequencyId": "solfeggio-285-healing" },
+        { "title": "Structural Resonance", "description": "Introduce the Rife frequency for fascia, layered with Carbon's foundational energy, to support the skin's structural matrix.", "duration": 360, "frequencyId": "rife-fascia", "layerFrequencyId": "carbon" }
+      ],
+      "colors": { "primary": "#fda4af", "secondary": "#fca5a5", "accent": "#f9a8d4" },
+      "premium": false
+    },
+    {
+      "id": "beauty-hair-growth",
+      "title": "Hair Growth & Restoration",
+      "categoryId": "beauty",
+      "description": "A 10-minute session to support scalp circulation and healthy hair follicle function with targeted bio-resonance frequencies.",
+      "steps": [
+        { "title": "Scalp Circulation Support", "description": "Use a Rife frequency for vitality (727 Hz), layered with Iron's magnetic energy, to support healthy blood flow to the scalp.", "duration": 300, "frequencyId": "rife-727", "layerFrequencyId": "iron" },
+        { "title": "Follicle Energizing", "description": "The 528 Hz 'Miracle Tone', paired with Oxygen's purifying resonance, supports cellular repair and energizes hair follicles.", "duration": 300, "frequencyId": "solfeggio-528-repair", "layerFrequencyId": "oxygen" }
+      ],
+      "colors": { "primary": "#fda4af", "secondary": "#fca5a5", "accent": "#f9a8d4" },
+      "premium": true
     }
   ],
   "featured_candidates": [ "vagus-lymph-reset", "metabolic-harmony-protocol", "adhd-focus-protocol", "ultimate-deep-sleep", "chakra-balancing-journey", "solfeggio-528-repair", "beta", "gamma-40hz-precise", "solfeggio-1782-alchemy" ],
@@ -295,6 +336,20 @@ export const appContentData: AppContentData = {
       "availableModes": ["PURE", "BINAURAL", "ISOCHRONIC"],
       "colors": { "primary": "#fcd34d", "secondary": "#fdba74", "accent": "#fde047" },
       "premium": true
+    },
+    {
+      "id": "hz-432-universal-tuning",
+      "name": "432 Hz - Universal Tuning",
+      "range": "432 Hz",
+      "baseFrequency": 432,
+      "binauralFrequency": 8,
+      "description": "Often called 'Verdi's A' or the Universal Tuning, 432 Hz is believed to be mathematically consistent with the universe. It's said to promote a sense of peace and well-being, resonating in harmony with nature.",
+      "category": BenefitCategory.SPIRITUAL,
+      "categoryId": "solfeggio",
+      "defaultMode": "PURE",
+      "availableModes": ["PURE", "BINAURAL", "ISOCHRONIC"],
+      "colors": { "primary": "#fcd34d", "secondary": "#fdba74", "accent": "#fde047" },
+      "premium": false
     },
     {
       "id": "solfeggio-528-repair",
@@ -882,48 +937,6 @@ export const appContentData: AppContentData = {
       "defaultMode": "ISOCHRONIC",
       "availableModes": ["BINAURAL", "ISOCHRONIC"],
       "colors": { "primary": "#c084fc", "secondary": "#e9d5ff", "accent": "#d8b4fe" },
-      "premium": true
-    },
-    {
-      "id": "beauty-facelift",
-      "name": "Acoustic Face Lift",
-      "range": "528 Hz + 639 Hz",
-      "baseFrequency": 528,
-      "binauralFrequency": 111,
-      "description": "A combination of Solfeggio frequencies (528Hz for repair, 639Hz for connection) intended to support facial muscle tone and skin vitality.",
-      "category": BenefitCategory.BEAUTY,
-      "categoryId": "beauty",
-      "defaultMode": "PURE",
-      "availableModes": ["PURE", "BINAURAL", "ISOCHRONIC"],
-      "colors": { "primary": "#fda4af", "secondary": "#fca5a5", "accent": "#f9a8d4" },
-      "premium": false
-    },
-    {
-      "id": "beauty-collagen",
-      "name": "Collagen & Elastin",
-      "range": "2.5 Hz + 465 Hz",
-      "baseFrequency": 465,
-      "binauralFrequency": 2.5,
-      "description": "A frequency protocol using deep Delta waves (2.5Hz) and specific Rife tones to energetically support the body's natural production of collagen and elastin.",
-      "category": BenefitCategory.BEAUTY,
-      "categoryId": "beauty",
-      "defaultMode": "BINAURAL",
-      "availableModes": ["BINAURAL", "ISOCHRONIC"],
-      "colors": { "primary": "#fda4af", "secondary": "#fca5a5", "accent": "#f9a8d4" },
-      "premium": false
-    },
-    {
-      "id": "beauty-hair-growth",
-      "name": "Hair Growth & Restoration",
-      "range": "428 Hz + 646 Hz",
-      "baseFrequency": 428,
-      "binauralFrequency": 218,
-      "description": "A set of frequencies intended to stimulate blood flow to the scalp and support healthy hair follicle function.",
-      "category": BenefitCategory.BEAUTY,
-      "categoryId": "beauty",
-      "defaultMode": "BINAURAL",
-      "availableModes": ["PURE", "BINAURAL", "ISOCHRONIC"],
-      "colors": { "primary": "#fda4af", "secondary": "#fca5a5", "accent": "#f9a8d4" },
       "premium": true
     },
     {

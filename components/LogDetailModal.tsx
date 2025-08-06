@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { ActivityLogItem, TrackableActivity, LogDetail } from '../types';
+import { ActivityLogItem, LogDetail } from '../types';
+import { TrackableActivity } from '../constants';
 import { XMarkIcon, DuplicateIcon } from './BohoIcons';
 import { MOOD_OPTIONS } from '../constants';
 

@@ -78,18 +78,28 @@ export const handler = async (event: { httpMethod: string, body: string | null }
         switch (action) {
             case 'generateCreation': {
                 const { prompt, allFrequencies } = payload;
-                const validFrequencyIds = allFrequencies.map((f: Frequency) => `id: ${f.id}, name: ${f.name}`).join('; ');
-                const systemInstruction = `You are a bio-acoustic expert creating personalized sound therapy sessions.
-- The user will provide a request. Generate a session based on it.
-- Use the provided list of valid frequencies ONLY for the 'frequencyId' and 'layerFrequencyId' fields.
-- The 'duration' for each step must be in seconds (e.g., 5 minutes is 300).
-- Provide helpful advice explaining your choices.
-- Ensure the response strictly adheres to the provided JSON schema.
-- Layering frequencies is a powerful tool; use it thoughtfully for synergistic effects.`;
+                const validFrequenciesString = allFrequencies.map((f: Frequency) => {
+                    return `{ id: "${f.id}", name: "${f.name}", category: "${f.category}", description: "${f.description}" }`;
+                }).join(',\n');
+
+                const systemInstruction = `You are an expert bio-acoustic therapist. Your task is to create a personalized sound therapy session based on the user's request, using ONLY the provided list of available frequencies.
+
+**CRITICAL RULES:**
+1.  **ALWAYS CREATE A SESSION:** You MUST generate a session that strictly follows the JSON schema. Do NOT refuse, apologize, or provide text-based instructions instead of a session.
+2.  **USE PROVIDED FREQUENCIES ONLY:** The 'frequencyId' and 'layerFrequencyId' fields MUST be valid IDs from the provided frequency list. Do not invent frequencies.
+3.  **HANDLE SPECIFIC REQUESTS:** If a user requests a specific sound like "brown noise" or "alpha waves", you MUST find and use the exact corresponding frequency ID (e.g., 'noise-brown', 'alpha').
+4.  **HANDLE LAYERING:** If a user asks to layer two sounds, you MUST use both the 'frequencyId' and 'layerFrequencyId' fields in the relevant step.
+5.  **BE CREATIVE WITH ABSTRACT REQUESTS:** For esoteric or abstract concepts (e.g., 'lions gate portal', 'abundance mindset'), interpret the user's intent creatively. Select frequencies that align thematically with concepts like cosmic energy, intuition, spiritual connection, or empowerment. Use Solfeggio, Planetary Harmonics, and Angelic frequencies for these requests. Your goal is to translate their abstract need into a concrete, effective session.
+
+**Your Process:**
+1.  **Analyze Goal:** Deeply understand the user's desired outcome (e.g., focus, relaxation, spiritual connection).
+2.  **Select Frequencies:** Browse the provided list of frequencies. Choose the most relevant ones based on their name, category, and description.
+3.  **Construct Session:** Create a logical sequence of steps. A session should be between 10 to 30 minutes in total. Each step's duration should be in seconds (e.g., 5 minutes = 300 seconds).
+4.  **Explain Choices:** In the 'advice' field, provide a friendly and helpful explanation for why you chose those specific frequencies and structured the session that way.`;
 
                 const response: GenerateContentResponse = await ai.models.generateContent({
                     model: 'gemini-2.5-flash',
-                    contents: `User Request: "${prompt}". Valid Frequencies: [${validFrequencyIds}]`,
+                    contents: `User Request: "${prompt}".\n\nHere is the list of available frequencies you must choose from:\n[${validFrequenciesString}]`,
                     config: {
                         systemInstruction,
                         responseMimeType: 'application/json',
@@ -102,11 +112,12 @@ export const handler = async (event: { httpMethod: string, body: string | null }
 
             case 'getChatResponse': {
                 const { prompt, history } = payload;
-                const systemInstruction = `You are a friendly and knowledgeable AI Wellness Co-pilot. 
-- Answer user questions about wellness, biohacking, and sound therapy.
-- If the question is about recent events, news, or requires up-to-date info, rely on your search tool.
-- ALWAYS cite your sources when using the search tool by providing the URLs.
-- Keep your tone supportive and encouraging.`;
+                const systemInstruction = `You are a friendly and knowledgeable AI Wellness Co-pilot.
+- Your primary role is to answer user questions about wellness, biohacking, sound therapy, and the app's features.
+- You are a conversational agent. Do NOT attempt to create sessions or output JSON. If a user asks you to create a session, politely guide them to rephrase their request to the AI Wellness Agent, for example by saying "Try asking me to 'create a session for focus'".
+- **Use search for recent information:** If the question relates to recent events, specific scientific studies, or requires up-to-date information that you wouldn't know otherwise, you MUST use your search tool.
+- **Cite your sources:** When Google Search is used, you MUST extract the URLs from groundingChunks and list them for the user.
+- Keep your tone supportive, encouraging, and clear.`;
 
                 const chatHistory = history && history.length > 0 ? { history } : {};
                 

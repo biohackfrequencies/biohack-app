@@ -36,7 +36,7 @@ export const FeaturedCard: React.FC<FeaturedCardProps> = ({ item }) => {
         className="relative p-6 rounded-2xl border overflow-hidden text-center flex flex-col items-center shadow-lg justify-center"
         style={cardStyle}
       >
-        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent transition-all duration-300 rounded-2xl"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent transition-all duration-300 rounded-2xl"></div>
         
         <div className="relative z-10">
           <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-white/50 dark:bg-slate-900/30 backdrop-blur-sm mb-3 mx-auto max-w-max">
