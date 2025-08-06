@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { BackIcon, PathfinderIcon } from './BohoIcons';
+import { BackIcon, PathfinderIcon, VolumeIcon, LayersIcon, InfoIcon } from './BohoIcons';
 import { CustomStack, HarmonicInfluenceMap, HarmonicInfluenceNode, Frequency, BREATHING_PATTERNS, ColorTheme } from '../types';
 import { calculateHarmonicInfluence } from '../services/harmonicInfluenceService';
 import { usePlayer } from '../contexts/PlayerContext';
 import { CodexUniversalisField } from './CodexUniversalisField';
 import { codexData } from '../data/codex';
+import { SpatialAudioController } from './SpatialAudioController';
+import { useSubscription } from '../hooks/useSubscription';
 
 interface ToneGeneratorPageProps {
     onBack: () => void;
@@ -64,7 +66,12 @@ const InfluenceCard: React.FC<{ title: string; node: HarmonicInfluenceNode, onHo
 
 export const ToneGeneratorPage: React.FC<ToneGeneratorPageProps> = ({ onBack, allFrequencies }) => {
     const player = usePlayer();
-    const { startPlayback, startGuide, activePattern, isPlaying, currentlyPlayingItem, sessionStepIndex, sessionTimeInStep } = player;
+    const { 
+        startPlayback, startGuide, activePattern, isPlaying, currentlyPlayingItem, sessionStepIndex, sessionTimeInStep,
+        is8dEnabled, setIs8dEnabled, panningSpeed, setPanningSpeed, panningDepth, setPanningDepth,
+        mainVolume, setMainVolume, layer2Volume, setLayer2Volume, isLayer2Active, toggleLayer
+    } = player;
+    const { isSubscribed } = useSubscription();
 
     const [birthDate, setBirthDate] = useState(() => {
         try {
@@ -88,6 +95,24 @@ export const ToneGeneratorPage: React.FC<ToneGeneratorPageProps> = ({ onBack, al
     const [highlightedModulus, setHighlightedModulus] = useState<number | null>(null);
     const [interactionMode, setInteractionMode] = useState<'static' | 'breathing' | 'rotating'>('static');
 
+    // Local state to track what's playing from the wheel
+    const [mainFrequency, setMainFrequency] = useState<Frequency | null>(null);
+    const [layeredFrequency, setLayeredFrequency] = useState<Frequency | null>(null);
+
+    // Sync local state with player state
+    useEffect(() => {
+        if (!isPlaying) {
+            setMainFrequency(null);
+            setLayeredFrequency(null);
+        } else if (currentlyPlayingItem && currentlyPlayingItem.id.startsWith('codex-')) {
+            // This case handles when the player might be started from another page
+            // and we navigate here. It tries to sync up.
+            const mainFreq = allFrequencies.find(f => f.id === currentlyPlayingItem.id);
+            if (mainFreq) setMainFrequency(mainFreq);
+        }
+    }, [isPlaying, currentlyPlayingItem, allFrequencies]);
+
+
     useEffect(() => {
         sessionStorage.setItem('codexBirthDate', JSON.stringify(birthDate));
     }, [birthDate]);
@@ -104,9 +129,9 @@ export const ToneGeneratorPage: React.FC<ToneGeneratorPageProps> = ({ onBack, al
         const isBreathingPathPlaying = currentlyPlayingItem && currentlyPlayingItem.id.startsWith('path-influence');
         if (isPlaying && isBreathingPathPlaying) {
             setInteractionMode('breathing');
-        } else {
+        } else if (!isBreathingPathPlaying) { // Check ensures it doesn't wrongly switch if another track is playing
             setInteractionMode('static');
-            if(activePattern) player.stopGuide();
+            if (activePattern) player.stopGuide();
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isPlaying, currentlyPlayingItem]);
@@ -119,6 +144,11 @@ export const ToneGeneratorPage: React.FC<ToneGeneratorPageProps> = ({ onBack, al
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
+    const handleNavigateToScience = (e: React.MouseEvent) => {
+        e.preventDefault();
+        sessionStorage.setItem('returnTo', window.location.hash);
+        window.location.hash = '#/science#codex';
+    };
 
     const handleCalculateMap = (showError = true) => {
         if (showError) setDateError(null);
@@ -185,21 +215,6 @@ export const ToneGeneratorPage: React.FC<ToneGeneratorPageProps> = ({ onBack, al
         const boxBreathingPattern = BREATHING_PATTERNS.find(p => p.name === 'Box Breathing');
         if (boxBreathingPattern) startGuide(boxBreathingPattern);
     };
-
-    const handlePlayCoreBlueprint = () => {
-        if (!influenceMap) return;
-        const coreFrequency = allFrequencies.find(f => f.id === `codex-${influenceMap.coreBlueprint.modulus}`);
-        if (coreFrequency) {
-            player.startPlayback(
-                coreFrequency,
-                allFrequencies,
-                coreFrequency,
-                coreFrequency.defaultMode,
-                null,
-                'BINAURAL'
-            );
-        }
-    };
     
     const handleGenerateJourney = (type: 'triad' | 'arpeggio' | 'scale') => {
         if (!influenceMap) return;
@@ -245,9 +260,15 @@ export const ToneGeneratorPage: React.FC<ToneGeneratorPageProps> = ({ onBack, al
         playGeneratedPath(newStack);
     };
     
+    const handleRemoveLayer = () => {
+      toggleLayer(null, 'PURE');
+      setLayeredFrequency(null);
+    }
+    
     const isJourneyPlaying = isPlaying && currentlyPlayingItem && currentlyPlayingItem.id.startsWith('journey-');
     const currentJourneyStep = isJourneyPlaying && 'steps' in currentlyPlayingItem ? currentlyPlayingItem.steps[sessionStepIndex] : null;
 
+    const coreBlueprintColor = influenceMap?.coreBlueprint?.color || '#C18D52';
 
     return (
         <div className="max-w-7xl mx-auto animate-fade-in space-y-8">
@@ -265,7 +286,12 @@ export const ToneGeneratorPage: React.FC<ToneGeneratorPageProps> = ({ onBack, al
             
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
                 <div className="p-6 rounded-2xl bg-white/80 dark:bg-dark-surface/80 border border-slate-200/50 dark:border-slate-700/50 backdrop-blur-lg space-y-4">
-                     <h3 className="text-2xl font-display font-bold text-center text-slate-800 dark:text-dark-text-primary">Your Harmonic Influence Map</h3>
+                    <div className="flex items-center justify-center gap-2">
+                         <h3 className="text-2xl font-display font-bold text-center text-slate-800 dark:text-dark-text-primary">Your Harmonic Influence Map</h3>
+                         <a href="#/science#codex" onClick={handleNavigateToScience} className="text-slate-500 dark:text-dark-text-secondary hover:text-blue-500 dark:hover:text-blue-400 transition-colors" aria-label="Learn more about the Codex">
+                            <InfoIcon className="w-5 h-5" />
+                        </a>
+                    </div>
                     <div className="flex flex-col sm:flex-row items-stretch justify-center gap-2">
                         <input type="text" inputMode="numeric" pattern="\d*" maxLength={4} placeholder="YYYY" value={birthDate.year} onChange={e => setBirthDate({...birthDate, year: e.target.value})} className="w-full sm:w-28 p-2 rounded-md border border-slate-300 dark:bg-slate-700 dark:border-slate-600 text-center" />
                         <input type="text" inputMode="numeric" pattern="\d*" maxLength={2} placeholder="MM" value={birthDate.month} onChange={e => setBirthDate({...birthDate, month: e.target.value})} className="w-full sm:w-20 p-2 rounded-md border border-slate-300 dark:bg-slate-700 dark:border-slate-600 text-center" />
@@ -283,24 +309,23 @@ export const ToneGeneratorPage: React.FC<ToneGeneratorPageProps> = ({ onBack, al
                     )}
                 </div>
                  <div className="p-6 rounded-2xl bg-white/80 dark:bg-dark-surface/80 border border-slate-200/50 dark:border-slate-700/50 backdrop-blur-lg space-y-4">
-                    <CodexUniversalisField nodes={codexData} influenceMap={influenceMap} interactionMode={interactionMode} highlightedModulus={highlightedModulus} allFrequencies={allFrequencies} />
+                    <CodexUniversalisField nodes={codexData} influenceMap={influenceMap} interactionMode={interactionMode} highlightedModulus={highlightedModulus} allFrequencies={allFrequencies} setMainFrequency={setMainFrequency} setLayeredFrequency={setLayeredFrequency} mainFrequency={mainFrequency} layeredFrequency={layeredFrequency} />
                      {influenceMap && (
                          <div className="space-y-3">
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <div className="text-center">
                                 <button
                                     onClick={handlePlayBreathingPath}
                                     disabled={!influenceMap}
-                                    className="w-full py-3 bg-slate-800 dark:bg-slate-200 text-white dark:text-slate-900 font-bold rounded-lg shadow-lg hover:brightness-90 transition-all text-base disabled:opacity-50"
+                                    className="w-full sm:w-auto px-8 py-4 font-bold rounded-full text-white shadow-lg hover:scale-105 transition-all text-lg disabled:opacity-50 disabled:scale-100 disabled:bg-slate-400"
+                                    style={{ 
+                                        backgroundColor: influenceMap ? coreBlueprintColor : undefined
+                                    }}
                                 >
-                                    Harmonic Breathing
+                                    Start Harmonic Breathing
                                 </button>
-                                <button
-                                    onClick={handlePlayCoreBlueprint}
-                                    disabled={!influenceMap}
-                                    className="w-full py-3 bg-slate-800/80 dark:bg-slate-200/80 text-white dark:text-slate-900 font-bold rounded-lg shadow-lg hover:brightness-90 transition-all text-base disabled:opacity-50"
-                                >
-                                    Play Core Tone
-                                </button>
+                                <p className="text-xs text-slate-500 dark:text-dark-text-muted mt-3 max-w-xs mx-auto">
+                                    A guided 64-second journey syncing your breath with your core harmonic frequencies.
+                                </p>
                             </div>
                              <div className="pt-4 mt-2 border-t border-slate-200 dark:border-dark-border text-center">
                                  <h4 className="font-display text-lg font-bold text-slate-700 dark:text-dark-text-secondary">Generate a Custom Journey</h4>
@@ -346,6 +371,57 @@ export const ToneGeneratorPage: React.FC<ToneGeneratorPageProps> = ({ onBack, al
 
                          </div>
                      )}
+
+                      {mainFrequency && (
+                        <div className="space-y-4 mt-4 pt-4 border-t border-slate-200 dark:border-dark-border">
+                            {/* Main Tone Section */}
+                            <div>
+                                <p className="text-xs font-bold uppercase text-slate-500 dark:text-dark-text-muted">Main Tone</p>
+                                <p className="font-semibold" style={{color: mainFrequency.colors.accent}}>{mainFrequency.name}</p>
+                                <div className="grid grid-cols-[auto,1fr] items-center gap-4 mt-1">
+                                    <label htmlFor="main-volume" className="cursor-pointer text-slate-700 dark:text-dark-text-secondary"><VolumeIcon className="w-6 h-6" /></label>
+                                    <input id="main-volume" type="range" min="0" max="100" value={mainVolume} onChange={(e) => setMainVolume(parseInt(e.target.value, 10))} className="mobile-slider" style={{'--thumb-color': mainFrequency?.colors.accent || '#C18D52'} as React.CSSProperties}/>
+                                </div>
+                            </div>
+
+                            {/* Layered Tone Section */}
+                            <div>
+                                <div className="flex justify-between items-center mb-1">
+                                    <p className="text-xs font-bold uppercase text-slate-500 dark:text-dark-text-muted">Layered Tone</p>
+                                    {layeredFrequency && (
+                                        <button onClick={handleRemoveLayer} className="px-2 py-0.5 text-xs font-semibold rounded-full bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300 hover:bg-red-200 dark:hover:bg-red-900/50">Remove</button>
+                                    )}
+                                </div>
+                                
+                                {layeredFrequency ? (
+                                    <>
+                                        <p className="font-semibold" style={{color: layeredFrequency.colors.accent}}>{layeredFrequency.name}</p>
+                                        <div className={`grid grid-cols-[auto,1fr] items-center gap-4 mt-1 transition-opacity ${isLayer2Active ? 'opacity-100' : 'opacity-30'}`}>
+                                            <label htmlFor="layer2-volume" className={`cursor-pointer ${!isLayer2Active && 'cursor-not-allowed'}`}><LayersIcon className="w-6 h-6 text-slate-700 dark:text-dark-text-secondary" /></label>
+                                            <input id="layer2-volume" type="range" min="0" max="100" disabled={!isLayer2Active} value={layer2Volume} onChange={(e) => setLayer2Volume(parseInt(e.target.value, 10))} className={`mobile-slider ${!isLayer2Active && 'cursor-not-allowed'}`} style={{ '--thumb-color': layeredFrequency.colors.accent} as React.CSSProperties} />
+                                        </div>
+                                    </>
+                                ) : (
+                                    <div className="p-3 text-center rounded-lg bg-black/5 dark:bg-dark-bg/30 border border-slate-200/50 dark:border-dark-border/50">
+                                        <p className="text-sm text-slate-600 dark:text-dark-text-secondary">Click another node on the wheel to add a layer.</p>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                      )}
+
+                     <div className="mt-4 pt-4 border-t border-slate-200 dark:border-dark-border">
+                        <SpatialAudioController
+                            isSubscribed={isSubscribed}
+                            isEnabled={is8dEnabled}
+                            onToggle={setIs8dEnabled}
+                            speed={panningSpeed}
+                            onSpeedChange={setPanningSpeed}
+                            depth={panningDepth}
+                            onDepthChange={setPanningDepth}
+                            color={coreBlueprintColor}
+                        />
+                    </div>
                 </div>
             </div>
         </div>

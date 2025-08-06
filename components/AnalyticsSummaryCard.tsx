@@ -58,12 +58,14 @@ export const AnalyticsSummaryCard: React.FC<AnalyticsSummaryCardProps> = ({ acti
                     </div>
                 </div>
                 {isSubscribed ? (
-                    <button
-                        onClick={handleNavigate}
-                        className="mt-4 w-full py-2 bg-black/5 dark:bg-dark-bg/50 text-slate-800 dark:text-dark-text-primary font-bold rounded-lg shadow hover:bg-black/10 dark:hover:bg-dark-bg transition-all"
-                    >
-                        View Full Analytics
-                    </button>
+                    <div className="mt-4 text-center">
+                        <button
+                            onClick={handleNavigate}
+                            className="px-6 py-2 bg-black/5 dark:bg-dark-bg/50 text-slate-800 dark:text-dark-text-primary font-bold rounded-lg shadow hover:bg-black/10 dark:hover:bg-dark-bg transition-all"
+                        >
+                            View Full Analytics
+                        </button>
+                    </div>
                 ) : (
                     <p className="mt-4 text-center text-xs text-slate-600 dark:text-dark-text-secondary">
                         Unlock detailed trend charts and consistency heatmaps with Pro.

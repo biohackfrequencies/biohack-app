@@ -1,3 +1,4 @@
+
 import { useState, useRef, useCallback, useEffect } from 'react';
 import { Frequency, SoundGenerationMode } from '../types';
 
@@ -567,7 +568,6 @@ export const useBinauralBeat = () => {
     const gainNode = layer2GainNodeRef.current;
 
     if (!audioContextRef.current || !gainNode) {
-      console.warn("Audio context not ready for layer toggle.");
       return;
     }
 

@@ -109,6 +109,11 @@ export const SciencePage: React.FC<SciencePageProps> = ({ categories }) => {
           <p>
             When you interact with the wheel, you’re not just playing tones — you’re exploring a system where sound, number, and meaning converge. Each tone is a doorway into your own inner landscape, expressed in the universal language of frequency.
           </p>
+          <blockquote className="border-l-4 border-slate-300 dark:border-slate-600 pl-4 italic my-4">
+            <p>The Codex wheel isn't just generating tones—it’s echoing the memory of you, written in the universal language of frequency.</p>
+            <p>Each harmonic—your Core Blueprint, Yearly Modulation, Monthly Overlay, and Daily Resonance—is a note in your ongoing composition. Together, they create a resonant field that reflects both your current state and your inherent design. When played in sequence, they tell a story across time. When layered, they become a harmonic field—a living chord of your soul's geometry.</p>
+            <p>You’re not just listening to sound.<br />You’re listening to the architecture of your becoming.</p>
+          </blockquote>
         </ScienceSection>
 
         <ScienceSection 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { CategoryId, Frequency, CustomStack, GuidedSession, ColorTheme } from '../types';
-import { BrainwaveIcon, SolfeggioIcon, AngelIcon, RifeIcon, NoiseIcon, BeautyIcon, CelestialIcon, GuidedSessionIcon, StackIcon, ElementIcon, InfoIcon, PathfinderIcon } from './BohoIcons';
+import { BrainwaveIcon, SolfeggioIcon, AngelIcon, RifeIcon, NoiseIcon, BeautyIcon, CelestialIcon, GuidedSessionIcon, StackIcon, ElementIcon, InfoIcon, PathfinderIcon, SparklesIcon } from './BohoIcons';
 import { MyLibrary } from './MyLibrary';
 import { useSubscription } from '../hooks/useSubscription';
 import { FeaturedCard } from './FeaturedCard';
@@ -109,7 +109,7 @@ export const HomePage: React.FC<HomePageProps> = ({
        
       <section className="space-y-6">
         <h3 className="text-3xl font-display text-center font-semibold text-slate-800 dark:text-dark-text-primary">All Categories</h3>
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 md:gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
             {Object.entries(categories).filter(([id]) => id !== 'elements' && id !== 'codex').map(([id, details]) => {
                 const categoryId = id as CategoryId;
                 if (!categoryIcons[categoryId]) return null;
@@ -138,6 +138,12 @@ export const HomePage: React.FC<HomePageProps> = ({
               <div className="relative">
                 <h4 className="text-xl sm:text-2xl font-display font-bold text-slate-800 dark:text-dark-text-primary drop-shadow-sm">Creator Studio</h4>
                 <p className="text-slate-700/90 dark:text-dark-text-secondary text-xs sm:text-sm mt-1">Design your own sessions.</p>
+                {!isSubscribed && (
+                    <div className="mt-3 inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-bold transition-colors bg-brand-orange text-white shadow">
+                        <SparklesIcon className="w-4 h-4" />
+                        <span>Go Pro</span>
+                    </div>
+                )}
               </div>
           </button>
            <button
@@ -150,6 +156,12 @@ export const HomePage: React.FC<HomePageProps> = ({
               <div className="relative">
                 <h4 className="text-xl sm:text-2xl font-display font-bold text-slate-800 dark:text-dark-text-primary drop-shadow-sm">Codex Harmonics</h4>
                 <p className="text-slate-700/90 dark:text-dark-text-secondary text-xs sm:text-sm mt-1">Explore the Mod-24 wheel.</p>
+                 {!isSubscribed && (
+                    <div className="mt-3 inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-bold transition-colors bg-brand-orange text-white shadow">
+                        <SparklesIcon className="w-4 h-4" />
+                        <span>Go Pro</span>
+                    </div>
+                )}
               </div>
           </button>
         </div>

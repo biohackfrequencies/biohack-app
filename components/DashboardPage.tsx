@@ -5,7 +5,6 @@ import { LogDetailModal } from './LogDetailModal';
 import { ActivityRings } from './ActivityRings';
 import { QuickLog } from './QuickLog';
 import { HabitSelectorModal } from './HabitSelectorModal';
-import { AnalyticsSummaryCard } from './AnalyticsSummaryCard';
 import { LibraryCtaCard } from './LibraryCtaCard';
 import { GoalSettingsModal } from './GoalSettingsModal';
 import { useUserData } from '../contexts/UserDataContext';
@@ -196,9 +195,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
                     <ActivityRings 
                         goals={dashboardGoals}
                         onOpenSettings={() => setIsGoalSettingsOpen(true)}
-                    />
-                    <AnalyticsSummaryCard 
-                        activityLog={activityLog} 
+                        activityLog={activityLog}
                         trackedHabits={trackedHabits}
                         isSubscribed={isSubscribed}
                     />

@@ -191,6 +191,7 @@ export interface HarmonicInfluenceMap {
     suggestedPathModuli: number[];
 }
 
+
 // Type for Supabase 'profiles' table row
 export type ProfileRow = {
   id: string;

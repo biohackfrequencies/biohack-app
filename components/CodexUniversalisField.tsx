@@ -8,6 +8,10 @@ interface CodexUniversalisFieldProps {
     interactionMode: 'static' | 'breathing' | 'rotating';
     highlightedModulus: number | null;
     allFrequencies: Frequency[];
+    mainFrequency: Frequency | null;
+    layeredFrequency: Frequency | null;
+    setMainFrequency: (freq: Frequency | null) => void;
+    setLayeredFrequency: (freq: Frequency | null) => void;
 }
 
 const Tooltip: React.FC<{ content: string; x: number; y: number; }> = ({ content, x, y }) => {
@@ -31,22 +35,30 @@ const hexToRgb = (hex: string): string => {
 };
 
 
-export const CodexUniversalisField: React.FC<CodexUniversalisFieldProps> = ({ nodes, influenceMap, interactionMode, highlightedModulus, allFrequencies }) => {
+export const CodexUniversalisField: React.FC<CodexUniversalisFieldProps> = ({ nodes, influenceMap, interactionMode, highlightedModulus, allFrequencies, setMainFrequency, setLayeredFrequency, layeredFrequency }) => {
     const [tooltip, setTooltip] = useState<{ content: string; x: number; y: number } | null>(null);
     const player = usePlayer();
     const fieldRef = useRef<HTMLDivElement>(null);
+    const { isPlaying, currentlyPlayingItem, startPlayback, toggleLayer } = player;
 
     const handleNodeClick = (node: CodexNode) => {
         const frequencyToPlay = allFrequencies.find(f => f.id === `codex-${node.modulus}`);
-        if (frequencyToPlay) {
-            player.startPlayback(
-                frequencyToPlay,
-                allFrequencies,
-                frequencyToPlay,
-                frequencyToPlay.defaultMode,
-                null,
-                'BINAURAL'
-            );
+        if (!frequencyToPlay) return;
+
+        const isCodexTonePlaying = currentlyPlayingItem?.id.startsWith('codex-');
+
+        if (!isPlaying || !isCodexTonePlaying) {
+            // Start new playback if nothing is playing, or if a non-Codex sound is playing
+            startPlayback(frequencyToPlay, allFrequencies, frequencyToPlay, 'PURE', null, 'PURE');
+            setMainFrequency(frequencyToPlay);
+            setLayeredFrequency(null);
+        } else {
+            // If main tone is clicked again, do nothing. User can use global player to stop.
+            if (currentlyPlayingItem?.id === frequencyToPlay.id) return;
+
+            // Layer the new tone
+            toggleLayer(frequencyToPlay, 'PURE');
+            setLayeredFrequency(frequencyToPlay);
         }
     };
 
@@ -133,8 +145,9 @@ export const CodexUniversalisField: React.FC<CodexUniversalisFieldProps> = ({ no
                     {/* Center Node */}
                      {(() => {
                         const isBreathing = !!influenceMap && interactionMode === 'breathing';
+                        const isStatic = interactionMode === 'static';
                         const isCenterHighlighted = highlightedModulus === centerNode.modulus;
-                        const style = isBreathing ? { '--glow-color-rgb': hexToRgb(centerNode.color) } as React.CSSProperties : {};
+                        const style = (isBreathing || isStatic) ? { '--glow-color-rgb': hexToRgb(centerNode.color) } as React.CSSProperties : {};
                         
                         return (
                             <g
@@ -149,7 +162,7 @@ export const CodexUniversalisField: React.FC<CodexUniversalisFieldProps> = ({ no
                                     fill={centerNode.color}
                                     stroke="#fff"
                                     strokeWidth="3"
-                                    className={`${isCenterHighlighted ? 'animate-pulse-strong' : ''} ${isBreathing ? 'breathing' : ''}`}
+                                    className={`${isCenterHighlighted ? 'animate-pulse-strong' : ''} ${isBreathing ? 'breathing' : ''} ${isStatic ? 'pulse-core-animation' : ''}`}
                                     style={style}
                                 />
                                 <text textAnchor="middle" dy=".3em" className="font-bold pointer-events-none" fill="#fff" fontSize="18">

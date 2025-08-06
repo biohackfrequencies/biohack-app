@@ -224,10 +224,7 @@ export const SettingsPage: React.FC = () => {
             <div className="mt-2 space-y-3 text-slate-600 dark:text-dark-text-secondary">
                 <p className="font-semibold text-slate-700 dark:text-dark-text-primary">Unlock the Science & Soul of Sound</p>
                 <p>
-                    Discover how the power of sound frequencies can harmonize your body, mind, and spirit. This app merges cutting-edge science with timeless energy practices to unlock your potential for healing, rejuvenation, and vibrant health.
-                </p>
-                <p>
-                    By combining Quantum Resonance Therapy with our AI Wellness Co-pilot and advanced habit tracking, we help you realign your bio-field, revitalize your energy, and reconnect with your highest self. Forget quick fixes—embrace the natural power of sound and data-driven insights to optimize your life.
+                    The first sound platform that maps your unique harmonic blueprint and transforms it into a living, breathing audio‑visual journey — with 140+ curated frequencies, AI‑powered wellness insights, and immersive 8D soundscapes. Featuring the Creator Studio: your personal lab for building unlimited custom sessions, layering tones, and crafting protocols as unique as your own frequency.
                 </p>
             </div>
         </div>

@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import useLocalStorage from '../hooks/useLocalStorage';
 import { PencilIcon, CheckmarkIcon } from './BohoIcons';
+import { ActivityLogItem, TrackableActivityId } from '../types';
 
 interface ActivityRingsProps {
   goals: {
@@ -14,6 +15,9 @@ interface ActivityRingsProps {
     loggedHabitsCount: number;
   };
   onOpenSettings: () => void;
+  activityLog: ActivityLogItem[];
+  trackedHabits: TrackableActivityId[];
+  isSubscribed: boolean;
 }
 
 const MIND_COLOR = '#96CDB0'; 
@@ -60,11 +64,30 @@ const Ring: React.FC<{
   );
 };
 
-export const ActivityRings: React.FC<ActivityRingsProps> = ({ goals: initialGoals, onOpenSettings }) => {
+export const ActivityRings: React.FC<ActivityRingsProps> = ({ goals: initialGoals, onOpenSettings, activityLog, trackedHabits, isSubscribed }) => {
   const [steps, setSteps] = useLocalStorage('biohack_steps_cache', 3456);
   const [isEditingSteps, setIsEditingSteps] = useState(false);
   const [tempSteps, setTempSteps] = useState(steps.toString());
   
+  const weeklyConsistency = useMemo(() => {
+    const sevenDaysAgo = new Date();
+    sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+    sevenDaysAgo.setHours(0, 0, 0, 0);
+
+    const recentLogs = activityLog.filter(log => log.timestamp >= sevenDaysAgo.getTime() && trackedHabits.includes(log.activityId));
+    
+    const uniqueDaysLogged = new Set(recentLogs.map(log => {
+        const date = new Date(log.timestamp);
+        date.setHours(0, 0, 0, 0);
+        return date.getTime();
+    })).size;
+
+    if (trackedHabits.length === 0) return 0;
+
+    return Math.round((uniqueDaysLogged / 7) * 100);
+
+  }, [activityLog, trackedHabits]);
+
   const goals = {
       ...initialGoals,
       moveProgress: initialGoals.moveGoal > 0 ? Math.min(steps / initialGoals.moveGoal, 1) : 1,
@@ -87,7 +110,7 @@ export const ActivityRings: React.FC<ActivityRingsProps> = ({ goals: initialGoal
 
   return (
     <div
-      className="relative group p-4 rounded-3xl shadow-lg transition-all duration-300 
+      className="relative group p-6 rounded-3xl shadow-lg transition-all duration-300 
       bg-gradient-to-br from-[#EEE8B2]/20 via-[#96CDB0]/20 to-[#EEE8B2]/20 dark:bg-dark-surface
       hover:-translate-y-1 hover:shadow-xl dark:hover:shadow-[0_8px_30px_-5px_var(--glow-color)]
       dark:border dark:border-brand-gold/50"
@@ -170,6 +193,28 @@ export const ActivityRings: React.FC<ActivityRingsProps> = ({ goals: initialGoal
                   </div>
               </div>
           </div>
+        </div>
+        <div className="mt-6 pt-4 border-t border-slate-200/50 dark:border-dark-border/20 text-center">
+            <h4 className="text-xl font-display font-bold text-slate-800 dark:text-dark-text-primary mb-1">
+                Your Progress
+            </h4>
+            <p className="text-4xl font-bold text-slate-800 dark:text-dark-text-primary">{weeklyConsistency}%</p>
+            <p className="text-sm font-semibold text-slate-700/80 dark:text-dark-text-secondary/80">Weekly Consistency</p>
+            
+            {isSubscribed ? (
+                <div className="mt-4">
+                    <button
+                        onClick={() => window.location.hash = '#/analytics'}
+                        className="px-6 py-2 bg-black/5 dark:bg-dark-bg/50 text-slate-800 dark:text-dark-text-primary font-bold rounded-lg shadow hover:bg-black/10 dark:hover:bg-dark-bg transition-all"
+                    >
+                        View Full Analytics
+                    </button>
+                </div>
+            ) : (
+                <p className="mt-3 text-xs text-slate-600 dark:text-dark-text-secondary max-w-xs mx-auto">
+                    Unlock detailed trend charts and consistency heatmaps with Pro.
+                </p>
+            )}
         </div>
       </div>
     </div>
