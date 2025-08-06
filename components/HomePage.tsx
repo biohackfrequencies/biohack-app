@@ -143,7 +143,7 @@ export const HomePage: React.FC<HomePageProps> = ({
               </div>
           </button>
            <button
-              onClick={() => handlePremiumFeatureClick(() => window.location.hash = '#/custom-tone')}
+              onClick={() => handlePremiumFeatureClick(() => window.location.hash = '#/codex-breathing-path')}
               className="group relative w-full p-4 sm:p-6 h-40 rounded-2xl overflow-hidden text-center flex flex-col items-center justify-center bg-gradient-to-br from-purple-100/60 to-indigo-200/40 dark:bg-slate-800/80 border border-indigo-200/30 dark:border-indigo-500/50 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 hover:saturate-125"
           >
               <div className="absolute -right-4 -bottom-4 w-20 h-20 sm:w-28 sm:h-28 text-indigo-500/30 dark:text-indigo-500/30 opacity-80 group-hover:scale-110 transition-transform duration-500">

@@ -13,10 +13,12 @@ interface PlayerContextType extends Omit<UseBinauralBeatReturn, 'startPlayback' 
   currentlyPlayingItem: PlayableItem | null;
   startPlayback: (
     itemToPlay: PlayableItem,
+    allFrequenciesData: Frequency[],
     mainAudioFreq: Frequency,
     mainMode: SoundGenerationMode,
     layerFreq: Frequency | null,
     layerMode: SoundGenerationMode,
+    options?: { enableBreathPanner?: boolean }
   ) => void;
   pause: () => void;
   resume: () => void;
@@ -40,15 +42,16 @@ export const PlayerProvider: React.FC<{ children: ReactNode }> = ({ children }) 
   const [sessionTimeInStep, setSessionTimeInStep] = useState(0);
   const [activeLogItem, setActiveLogItem] = useState<ActivityLogItem | null>(null);
 
-  // 8D Audio state is now centralized here
   const [is8dEnabled, setIs8dEnabled] = useState(false);
   const [panningSpeed, setPanningSpeed] = useState(30);
   const [panningDepth, setPanningDepth] = useState(50);
+  const [isBreathPanningActive, setIsBreathPanningActive] = useState(false);
 
   const audioHook = useBinauralBeat();
   const breathingHook = useBreathingGuide();
   const { setActivityLog } = useUserData();
 
+  const allFrequenciesRef = useRef<Frequency[]>([]);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const activeLogItemRef = useRef(activeLogItem);
   activeLogItemRef.current = activeLogItem;
@@ -97,13 +100,14 @@ export const PlayerProvider: React.FC<{ children: ReactNode }> = ({ children }) 
     finalizeLogItem();
     audioHook.stop();
     breathingHook.stopGuide();
+    if(isBreathPanningActive) audioHook.disableBreathPanner();
+    setIsBreathPanningActive(false);
     setCurrentlyPlayingItem(null);
     setSessionStepIndex(0);
     setSessionTimeInStep(0);
     totalSessionTimeElapsedRef.current = 0;
-    // Reset 8D state on stop
     setIs8dEnabled(false);
-  }, [audioHook, breathingHook, finalizeLogItem]);
+  }, [audioHook, breathingHook, finalizeLogItem, isBreathPanningActive]);
 
   const pause = useCallback(() => {
     finalizeLogItem();
@@ -120,10 +124,12 @@ export const PlayerProvider: React.FC<{ children: ReactNode }> = ({ children }) 
 
   const startPlayback = useCallback((
     itemToPlay: PlayableItem,
+    allFrequenciesData: Frequency[],
     mainAudioFreq: Frequency,
     mainMode: SoundGenerationMode,
     layerFreq: Frequency | null,
-    layerMode: SoundGenerationMode
+    layerMode: SoundGenerationMode,
+    options?: { enableBreathPanner?: boolean }
   ) => {
     const isNewItem = currentlyPlayingItem?.id !== itemToPlay.id;
 
@@ -140,64 +146,112 @@ export const PlayerProvider: React.FC<{ children: ReactNode }> = ({ children }) 
     }
     
     setCurrentlyPlayingItem(itemToPlay);
+    allFrequenciesRef.current = allFrequenciesData;
     
-    audioHook.startPlayback(mainAudioFreq, mainMode, layerFreq, layerMode, { isEnabled: is8dEnabled, speed: panningSpeed, depth: panningDepth });
+    const panningConfig = is8dEnabled && !options?.enableBreathPanner 
+        ? { isEnabled: true, speed: panningSpeed, depth: panningDepth }
+        : { isEnabled: false, speed: 0, depth: 0 };
 
-  }, [audioHook, breathingHook, currentlyPlayingItem?.id, logSessionActivity, finalizeLogItem, is8dEnabled, panningSpeed, panningDepth]);
+    if(options?.enableBreathPanner) {
+        audioHook.enableBreathPanner('main', 5); // pan main tone with radius 5
+        setIsBreathPanningActive(true);
+    } else {
+        if(isBreathPanningActive) audioHook.disableBreathPanner();
+        setIsBreathPanningActive(false);
+    }
+    
+    audioHook.startPlayback(mainAudioFreq, mainMode, layerFreq, layerMode, panningConfig);
+
+  }, [audioHook, breathingHook, currentlyPlayingItem?.id, logSessionActivity, finalizeLogItem, is8dEnabled, panningSpeed, panningDepth, isBreathPanningActive]);
 
   const toggleLayer = useCallback((freq: Frequency | null, mode: SoundGenerationMode) => {
     audioHook.toggleLayer(freq, mode, is8dEnabled, panningSpeed, panningDepth);
   }, [audioHook, is8dEnabled, panningSpeed, panningDepth]);
-
+  
   useEffect(() => {
     if (audioHook.isPlaying && currentlyPlayingItem && 'steps' in currentlyPlayingItem) {
       const session = currentlyPlayingItem;
-      
-      intervalRef.current = setInterval(() => {
-        let elapsedBeforeStep = 0;
-        for (let i = 0; i < sessionStepIndex; i++) {
-          elapsedBeforeStep += session.steps[i].duration;
-        }
+      const stepIndex = sessionStepIndex;
+      const currentStep = session.steps[stepIndex];
 
-        setSessionTimeInStep((prevTime) => {
-          const currentStep = session.steps[sessionStepIndex];
-          if (!currentStep) {
-            stop();
-            return 0;
-          }
-          const newTime = prevTime + 1;
-          totalSessionTimeElapsedRef.current = elapsedBeforeStep + newTime;
+      if (!currentStep) {
+        stop();
+        return;
+      }
 
-          if (newTime >= currentStep.duration) {
-            if (sessionStepIndex < session.steps.length - 1) {
-              setSessionStepIndex(prevIndex => prevIndex + 1);
-              return 0;
-            } else {
-              stop();
-              return prevTime;
+      // Clear any existing timers before setting new ones
+      if (intervalRef.current) clearInterval(intervalRef.current);
+
+      // Interval for UI timer update
+      const uiTimer = setInterval(() => {
+        setSessionTimeInStep(t => {
+            let elapsedBeforeStep = 0;
+            for (let i = 0; i < stepIndex; i++) {
+                elapsedBeforeStep += session.steps[i].duration;
             }
-          }
-          return newTime;
+            totalSessionTimeElapsedRef.current = elapsedBeforeStep + t + 1;
+            return t + 1;
         });
       }, 1000);
-    }
 
-    return () => {
+      // Timeout for the actual step transition
+      const transitionTimer = setTimeout(() => {
+        const nextStepIndex = stepIndex + 1;
+        if (nextStepIndex < session.steps.length) {
+          const nextStep = session.steps[nextStepIndex];
+          const mainFreq = allFrequenciesRef.current.find(f => f.id === nextStep.frequencyId);
+          const layerFreq = nextStep.layerFrequencyId ? allFrequenciesRef.current.find(f => f.id === nextStep.layerFrequencyId) : null;
+          
+          if (mainFreq) {
+            const panningConfig = is8dEnabled && !isBreathPanningActive 
+                ? { isEnabled: true, speed: panningSpeed, depth: panningDepth }
+                : { isEnabled: false, speed: 0, depth: 0 };
+
+            audioHook.startPlayback(
+              mainFreq, mainFreq.defaultMode, layerFreq, layerFreq?.defaultMode || 'BINAURAL',
+              panningConfig
+            );
+            setSessionStepIndex(nextStepIndex);
+            setSessionTimeInStep(0);
+          } else {
+            stop();
+          }
+        } else {
+          stop();
+        }
+      }, (currentStep.duration - sessionTimeInStep) * 1000);
+
+      intervalRef.current = uiTimer; // Store the interval ID to clear it
+
+      return () => {
+        clearInterval(uiTimer);
+        clearTimeout(transitionTimer);
+      };
+    } else {
+      // Clean up if not playing a session
       if (intervalRef.current) clearInterval(intervalRef.current);
-    };
-  }, [audioHook.isPlaying, currentlyPlayingItem, sessionStepIndex, stop]);
+    }
+  }, [audioHook.isPlaying, currentlyPlayingItem, sessionStepIndex, audioHook, stop, is8dEnabled, panningSpeed, panningDepth, sessionTimeInStep, isBreathPanningActive]);
+
 
   useEffect(() => {
-    if (audioHook.isPlaying) {
+    if (audioHook.isPlaying && !isBreathPanningActive) {
       audioHook.set8dPanning('main', is8dEnabled, panningSpeed, panningDepth);
       if(audioHook.isLayer2Active) {
         audioHook.set8dPanning('layer', is8dEnabled, panningSpeed, panningDepth);
       }
-    } else {
+    } else if (!isBreathPanningActive) {
       audioHook.set8dPanning('main', false, 0, 0);
       audioHook.set8dPanning('layer', false, 0, 0);
     }
-  }, [is8dEnabled, panningSpeed, panningDepth, audioHook.isPlaying, audioHook.isLayer2Active, audioHook.set8dPanning]);
+  }, [is8dEnabled, panningSpeed, panningDepth, audioHook.isPlaying, audioHook.isLayer2Active, audioHook.set8dPanning, isBreathPanningActive]);
+
+  // Effect to sync breath panner
+  useEffect(() => {
+    if (isBreathPanningActive && audioHook.isPlaying && breathingHook.activePattern) {
+        audioHook.updateBreathPanner('main', breathingHook.currentPhase, breathingHook.phaseProgress);
+    }
+  }, [isBreathPanningActive, audioHook.isPlaying, breathingHook.activePattern, breathingHook.currentPhase, breathingHook.phaseProgress, audioHook.updateBreathPanner]);
 
 
   const value: PlayerContextType = {

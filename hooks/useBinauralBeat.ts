@@ -57,6 +57,8 @@ export const useBinauralBeat = () => {
   const layer2SourceRef = useRef<AudioSource | null>(null);
   const layer2GainNodeRef = useRef<GainNode | null>(null);
   const layer2PanningControlRef = useRef<PanningControl | null>(null);
+
+  const breathPannerStateRef = useRef<{ enabled: boolean; channel: 'main' | 'layer' | null; radius: number }>({ enabled: false, channel: null, radius: 5 });
   
   const stopOscillators = useCallback((nodes?: SourceNodes | null) => {
     if (!nodes) return;
@@ -368,7 +370,7 @@ export const useBinauralBeat = () => {
 
   const set8dPanning = useCallback((channel: 'main' | 'layer', enabled: boolean, speed: number, depth: number) => {
     const controlRef = channel === 'main' ? mainPanningControlRef : layer2PanningControlRef;
-    if (!controlRef.current || !audioContextRef.current) return;
+    if (!controlRef.current || !audioContextRef.current || breathPannerStateRef.current.enabled) return;
 
     const control = controlRef.current;
     
@@ -609,6 +611,46 @@ export const useBinauralBeat = () => {
     }
   }, []);
   
+  // --- Breath Panner Logic ---
+  const enableBreathPanner = useCallback((channel: 'main' | 'layer', radius: number) => {
+    const controlRef = channel === 'main' ? mainPanningControlRef : layer2PanningControlRef;
+    breathPannerStateRef.current = { enabled: true, channel, radius };
+    if (controlRef.current) {
+        controlRef.current.settings.current.enabled = false;
+        if(controlRef.current.animationFrameId.current) {
+            cancelAnimationFrame(controlRef.current.animationFrameId.current);
+            controlRef.current.animationFrameId.current = null;
+        }
+    }
+  }, []);
+
+  const disableBreathPanner = useCallback(() => {
+    breathPannerStateRef.current = { enabled: false, channel: null, radius: 5 };
+  }, []);
+
+  const updateBreathPanner = useCallback((channel: 'main' | 'layer', phase: string, progress: number) => {
+    const state = breathPannerStateRef.current;
+    if (!state.enabled || state.channel !== channel) return;
+    
+    const controlRef = channel === 'main' ? mainPanningControlRef : layer2PanningControlRef;
+    if (!controlRef.current || !audioContextRef.current) return;
+
+    const panner = controlRef.current.panner;
+    const now = audioContextRef.current.currentTime;
+    const radius = state.radius;
+    const SMOOTHING_TIME_CONSTANT = 0.1;
+
+    // Semicircle path from right (angle 0) to left (angle PI)
+    const angle = progress * Math.PI;
+    const x = radius * Math.cos(angle);
+    const z = radius * Math.sin(angle) * 0.5; // less depth change for a flatter arc
+    
+    panner.positionX.setTargetAtTime(x, now, SMOOTHING_TIME_CONSTANT);
+    panner.positionZ.setTargetAtTime(z, now, SMOOTHING_TIME_CONSTANT);
+    panner.positionY.setTargetAtTime(0, now, SMOOTHING_TIME_CONSTANT);
+  }, []);
+
+
   // Handle browser tab visibility changes
   useEffect(() => {
     const handleVisibilityChange = () => {
@@ -644,5 +686,8 @@ export const useBinauralBeat = () => {
     layer2Volume,
     setLayer2Volume,
     set8dPanning,
+    enableBreathPanner,
+    disableBreathPanner,
+    updateBreathPanner,
   };
 };

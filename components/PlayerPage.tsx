@@ -127,8 +127,6 @@ export const PlayerPage: React.FC<PlayerPageProps> = ({
     elapsed += sessionTimeInStep;
     return elapsed;
   }, [sessionStepIndex, sessionTimeInStep, sessionData, isCurrentItemPlaying]);
-  
-  const prevStepIndexRef = useRef(sessionStepIndex);
 
   // --- Handlers & Effects ---
 
@@ -146,42 +144,17 @@ export const PlayerPage: React.FC<PlayerPageProps> = ({
       resume();
     } else {
       if (mainFrequencyForPlayback) {
-        startPlayback(item, mainFrequencyForPlayback, selectedMode, layerFrequencyForPlayback || null, layerFrequencyForPlayback?.defaultMode || 'BINAURAL');
+        startPlayback(item, allFrequencies, mainFrequencyForPlayback, selectedMode, layerFrequencyForPlayback || null, layerFrequencyForPlayback?.defaultMode || 'BINAURAL');
       }
     }
-  }, [isCurrentItemPlaying, isPlaying, pause, resume, startPlayback, item, mainFrequencyForPlayback, selectedMode, layerFrequencyForPlayback]);
+  }, [isCurrentItemPlaying, isPlaying, pause, resume, startPlayback, item, mainFrequencyForPlayback, selectedMode, layerFrequencyForPlayback, allFrequencies]);
   
   const handleModeChange = useCallback((newMode: SoundGenerationMode) => {
     setSelectedMode(newMode);
     if (isCurrentItemPlaying && isPlaying && mainFrequencyForPlayback) {
-      startPlayback(item, mainFrequencyForPlayback, newMode, layerFrequencyForPlayback || null, layerFrequencyForPlayback?.defaultMode || 'BINAURAL');
+      startPlayback(item, allFrequencies, mainFrequencyForPlayback, newMode, layerFrequencyForPlayback || null, layerFrequencyForPlayback?.defaultMode || 'BINAURAL');
     }
-  }, [isCurrentItemPlaying, isPlaying, startPlayback, item, mainFrequencyForPlayback, layerFrequencyForPlayback]);
-
-  // Effect to handle session step changes by restarting playback with the new step's frequencies.
-  // This uses a ref to ensure it only runs when the step index *actually changes*, preventing an infinite loop.
-  useEffect(() => {
-    if (
-        isSession &&
-        isCurrentItemPlaying &&
-        isPlaying &&
-        prevStepIndexRef.current !== sessionStepIndex &&
-        mainFrequencyForPlayback
-    ) {
-        startPlayback(
-            item,
-            mainFrequencyForPlayback,
-            selectedMode,
-            layerFrequencyForPlayback || null,
-            layerFrequencyForPlayback?.defaultMode || 'BINAURAL'
-        );
-    }
-    // Always update the ref to the current step index for the next render.
-    prevStepIndexRef.current = sessionStepIndex;
-  }, [
-      sessionStepIndex, isSession, isCurrentItemPlaying, isPlaying, mainFrequencyForPlayback, 
-      item, selectedMode, layerFrequencyForPlayback, startPlayback
-  ]);
+  }, [isCurrentItemPlaying, isPlaying, startPlayback, item, mainFrequencyForPlayback, layerFrequencyForPlayback, allFrequencies]);
 
   // Effect to reset local UI state when the item being played changes.
   useEffect(() => {

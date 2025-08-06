@@ -67,7 +67,7 @@ const parseRoute = (hash: string): { page: string; id?: string; fragment?: strin
   if (pathname.startsWith('stack/')) return parsed('stack', pathname.substring('stack/'.length));
   if (pathname.startsWith('category/')) return parsed('category', pathname.substring('category/'.length));
   if (pathname === 'create') return parsed('create');
-  if (pathname === 'custom-tone') return parsed('custom-tone');
+  if (pathname === 'codex-breathing-path') return parsed('codex-breathing-path');
 
   return parsed('dashboard');
 };
@@ -195,7 +195,7 @@ const App: React.FC<{ content: AppContentData }> = ({ content }) => {
   };
 
   const renderContent = () => {
-    if ((page === 'create' || page === 'stack' || page === 'custom-tone') && !isSubscribed) {
+    if ((page === 'create' || page === 'stack' || page === 'codex-breathing-path') && !isSubscribed) {
         return <PricingPage onBack={() => window.location.hash = '#/library'} />;
     }
 
@@ -236,7 +236,7 @@ const App: React.FC<{ content: AppContentData }> = ({ content }) => {
         />;
       case 'create':
         return <CreateStackPage allFrequencies={allFrequencies} categories={content.categories} onSaveStack={handleSaveStack} onBack={() => window.location.hash = '#/library'} />;
-      case 'custom-tone':
+      case 'codex-breathing-path':
         return <ToneGeneratorPage onBack={() => window.location.hash = '#/library'} allFrequencies={allFrequencies} />;
       case 'player':
       case 'session':
@@ -244,27 +244,7 @@ const App: React.FC<{ content: AppContentData }> = ({ content }) => {
         let selectedItem: PlayableItem | undefined;
         let onBack: () => void;
         
-        if (page === 'player' && id === 'custom') {
-            const freqParam = params.get('freq');
-            const freqValue = freqParam ? parseFloat(freqParam) : 432;
-            const layerFreqParam = params.get('layerFreq');
-            
-            selectedItem = {
-                id: `custom-${freqValue}${layerFreqParam ? `-${layerFreqParam}` : ''}`,
-                name: `Custom Tone (${freqValue} Hz)`,
-                range: `${freqValue} Hz`,
-                baseFrequency: freqValue,
-                binauralFrequency: 0,
-                description: `A custom generated pure tone at ${freqValue} Hz. You can experiment with Binaural and Isochronic modes below.`,
-                category: BenefitCategory.WELLNESS,
-                categoryId: 'isochronic',
-                defaultMode: 'PURE',
-                availableModes: ['PURE', 'BINAURAL', 'ISOCHRONIC'],
-                colors: { primary: '#e2e8f0', secondary: '#f1f5f9', accent: '#94a3b8' },
-                premium: true,
-            };
-            onBack = () => window.location.hash = '#/custom-tone';
-        } else if (page === 'player') {
+        if (page === 'player') {
           selectedItem = allFrequencies.find(f => f.id === id);
           onBack = () => window.location.hash = `#/category/${(selectedItem as Frequency)?.categoryId}`;
         } else if (page === 'session') {

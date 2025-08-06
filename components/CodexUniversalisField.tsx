@@ -41,6 +41,7 @@ export const CodexUniversalisField: React.FC<CodexUniversalisFieldProps> = ({ no
         if (frequencyToPlay) {
             player.startPlayback(
                 frequencyToPlay,
+                allFrequencies,
                 frequencyToPlay,
                 frequencyToPlay.defaultMode,
                 null,
@@ -69,7 +70,7 @@ export const CodexUniversalisField: React.FC<CodexUniversalisFieldProps> = ({ no
     const viewSize = 350;
 
     return (
-        <div ref={fieldRef} className="relative w-full max-w-[350px] aspect-square">
+        <div ref={fieldRef} className="relative w-full max-w-[350px] mx-auto aspect-square">
             {tooltip && <Tooltip {...tooltip} />}
             <svg viewBox={`0 0 ${viewSize} ${viewSize}`} className={`w-full h-full ${interactionMode === 'rotating' ? 'animate-spin-slow' : ''}`}>
                 <g transform={`translate(${viewSize / 2}, ${viewSize / 2})`}>
