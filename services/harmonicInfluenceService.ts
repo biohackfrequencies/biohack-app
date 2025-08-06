@@ -1,8 +1,6 @@
-
-
 import { codexData } from '../data/codex';
 import { dailyGuidance } from '../data/dailyGuidance';
-import { CodexNode, HarmonicInfluenceMap, HarmonicInfluenceNode } from '../types';
+import { HarmonicInfluenceMap } from '../types';
 
 /**
  * Sums the digits of a number (e.g., 1968 becomes 1+9+6+8=24).

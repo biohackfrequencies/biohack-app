@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BackIcon, PathfinderIcon, CheckmarkIcon } from './BohoIcons';
 import { codexData } from '../data/codex';
 import { CustomStack, HarmonicInfluenceMap, HarmonicInfluenceNode, Frequency } from '../types';
@@ -26,9 +26,9 @@ const ModeSelector: React.FC<{
     };
 
     const modes: { id: PlaybackMode; label: string; description: string }[] = [
-        { id: 'short', label: 'Short', description: `Core + Daily (${2} steps, ${formatDuration(2 * 30)})` },
-        { id: 'medium', label: 'Medium', description: `All four tones (${4} steps, ${formatDuration(4 * 30)})` },
-        { id: 'long', label: 'Long', description: `All four as arpeggios (${12} steps, ${formatDuration(12 * 10)})` },
+        { id: 'short', label: 'Short', description: `Core + Daily (2 steps, ${formatDuration(2 * 30)})` },
+        { id: 'medium', label: 'Medium', description: `All four tones (4 steps, ${formatDuration(4 * 30)})` },
+        { id: 'long', label: 'Long', description: `All four as arpeggios (12 steps, ${formatDuration(12 * 10)})` },
     ];
     return (
         <div className="flex justify-center p-1 rounded-full bg-slate-200/50 dark:bg-dark-surface">
