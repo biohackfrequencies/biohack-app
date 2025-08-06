@@ -1,5 +1,6 @@
 
 
+
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { Frequency, CategoryId, CustomStack, GuidedSession, ActivityLogItem, TrackableActivityId, HarmonicElement, BenefitCategory, PlayableItem, AppContentData, CodexNode } from './types';
 import { Header } from './components/Header';
@@ -77,7 +78,7 @@ const App: React.FC<{ content: AppContentData }> = ({ content }) => {
   const { isSubscribed } = useSubscription();
   const { favorites, setFavorites, customStacks, setCustomStacks, activityLog, setActivityLog, activities } = useUserData();
 
-  const { page, id, fragment, params } = parseRoute(route);
+  const { page, id, fragment } = parseRoute(route);
   
   const { featuredItem, allFrequencies, allSessions, dailyQuote } = useMemo(() => {
     if (!content) return { featuredItem: null, allFrequencies: [], allSessions: [], dailyQuote: null };

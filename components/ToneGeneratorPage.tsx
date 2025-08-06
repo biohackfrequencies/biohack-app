@@ -3,7 +3,6 @@ import { BackIcon, PathfinderIcon } from './BohoIcons';
 import { CustomStack, HarmonicInfluenceMap, HarmonicInfluenceNode, Frequency, BREATHING_PATTERNS, ColorTheme } from '../types';
 import { calculateHarmonicInfluence } from '../services/harmonicInfluenceService';
 import { usePlayer } from '../contexts/PlayerContext';
-import { BreathingGuideVisualizer } from './BreathingGuideVisualizer';
 import { CodexUniversalisField } from './CodexUniversalisField';
 import { codexData } from '../data/codex';
 
@@ -102,7 +101,7 @@ export const ToneGeneratorPage: React.FC<ToneGeneratorPageProps> = ({ onBack, al
     }, [influenceMap]);
     
     useEffect(() => {
-        const isBreathingPathPlaying = currentlyPlayingItem?.id.startsWith('path-influence');
+        const isBreathingPathPlaying = currentlyPlayingItem && currentlyPlayingItem.id.startsWith('path-influence');
         if (isPlaying && isBreathingPathPlaying) {
             setInteractionMode('breathing');
         } else {
@@ -246,7 +245,7 @@ export const ToneGeneratorPage: React.FC<ToneGeneratorPageProps> = ({ onBack, al
         playGeneratedPath(newStack);
     };
     
-    const isJourneyPlaying = isPlaying && currentlyPlayingItem?.id.startsWith('journey-');
+    const isJourneyPlaying = isPlaying && currentlyPlayingItem && currentlyPlayingItem.id.startsWith('journey-');
     const currentJourneyStep = isJourneyPlaying && 'steps' in currentlyPlayingItem ? currentlyPlayingItem.steps[sessionStepIndex] : null;
 
 

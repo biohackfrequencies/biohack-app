@@ -628,7 +628,7 @@ export const useBinauralBeat = () => {
     breathPannerStateRef.current = { enabled: false, channel: null, radius: 5 };
   }, []);
 
-  const updateBreathPanner = useCallback((channel: 'main' | 'layer', phase: string, progress: number) => {
+  const updateBreathPanner = useCallback((channel: 'main' | 'layer', progress: number) => {
     const state = breathPannerStateRef.current;
     if (!state.enabled || state.channel !== channel) return;
     

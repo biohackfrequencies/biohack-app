@@ -200,7 +200,7 @@ export const PlayerProvider: React.FC<{ children: ReactNode }> = ({ children }) 
         if (nextStepIndex < session.steps.length) {
           const nextStep = session.steps[nextStepIndex];
           const mainFreq = allFrequenciesRef.current.find(f => f.id === nextStep.frequencyId);
-          const layerFreq = nextStep.layerFrequencyId ? allFrequenciesRef.current.find(f => f.id === nextStep.layerFrequencyId) : null;
+          const layerFreq = nextStep.layerFrequencyId ? allFrequenciesRef.current.find(f => f.id === nextStep.layerFrequencyId) ?? null : null;
           
           if (mainFreq) {
             const panningConfig = is8dEnabled && !isBreathPanningActive 
@@ -249,7 +249,7 @@ export const PlayerProvider: React.FC<{ children: ReactNode }> = ({ children }) 
   // Effect to sync breath panner
   useEffect(() => {
     if (isBreathPanningActive && audioHook.isPlaying && breathingHook.activePattern) {
-        audioHook.updateBreathPanner('main', breathingHook.currentPhase, breathingHook.phaseProgress);
+        audioHook.updateBreathPanner('main', breathingHook.phaseProgress);
     }
   }, [isBreathPanningActive, audioHook.isPlaying, breathingHook.activePattern, breathingHook.currentPhase, breathingHook.phaseProgress, audioHook.updateBreathPanner]);
 
