@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useEffect, useCallback } from 'react';
-import { ActivityLogItem, TrackableActivityId, Frequency, CustomStack } from '../types';
+import { ActivityLogItem, TrackableActivityId } from '../types';
 import { useSubscription } from '../hooks/useSubscription';
 import { LogDetailModal } from './LogDetailModal';
 import { ActivityRings } from './ActivityRings';
@@ -23,8 +23,6 @@ interface DashboardPageProps {
     updateActivityLogItem: (item: ActivityLogItem) => void;
     deleteActivityLogItem: (itemId: string) => void;
     duplicateActivityLogItem: (itemId: string) => ActivityLogItem | null;
-    allFrequencies: Frequency[];
-    onPlayAiSession: (session: CustomStack) => void;
     dailyQuote: { quote: string; author: string; } | null;
 }
 
@@ -34,7 +32,7 @@ const HABIT_LIMIT_FREE = 3;
 
 export const DashboardPage: React.FC<DashboardPageProps> = ({ 
     activityLog, addActivityLogItem, updateActivityLogItem, deleteActivityLogItem, duplicateActivityLogItem,
-    allFrequencies, onPlayAiSession, dailyQuote
+    dailyQuote
 }) => {
     const { isSubscribed } = useSubscription();
     const [editingItem, setEditingItem] = useState<ActivityLogItem | null>(null);

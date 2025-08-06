@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useCallback, ReactNode, useEffect, useRef } from 'react';
-import { Frequency, GuidedSession, CustomStack, SoundGenerationMode, ActivityLogItem, BreathingPattern } from '../types';
+import { Frequency, GuidedSession, CustomStack, SoundGenerationMode, ActivityLogItem } from '../types';
 import { useBinauralBeat } from '../hooks/useBinauralBeat';
 import { useBreathingGuide } from '../hooks/useBreathingGuide';
 import { useUserData } from './UserDataContext';

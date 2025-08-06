@@ -314,8 +314,6 @@ const App: React.FC<{ content: AppContentData }> = ({ content }) => {
             updateActivityLogItem={updateActivityLogItem}
             deleteActivityLogItem={deleteActivityLogItem}
             duplicateActivityLogItem={duplicateActivityLogItem}
-            allFrequencies={allFrequencies}
-            onPlayAiSession={handlePlayAiSession}
             dailyQuote={dailyQuote}
         />;
     }

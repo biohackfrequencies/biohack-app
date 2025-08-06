@@ -72,7 +72,7 @@ const iapService = {
      * Simulates initiating a purchase flow.
      * Returns a promise that resolves to `true` on success and `false` on cancellation.
      */
-    purchase: (productId: string): Promise<boolean> => {
+    purchase: (_productId: string): Promise<boolean> => {
         // This simulates the user seeing a native payment sheet and confirming.
         // We bypass window.confirm as it can be unreliable in some environments.
         return new Promise((resolve) => {
