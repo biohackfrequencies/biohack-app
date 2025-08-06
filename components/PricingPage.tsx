@@ -223,7 +223,6 @@ const PricingPage: React.FC<PricingPageProps> = ({ onBack }) => {
     { name: 'Habit Tracking', free: '3 Habits', pro: 'Unlimited' },
     { name: 'Daily Logging', free: '5 Entries/Day', pro: 'Unlimited' },
     { name: 'Advanced Analytics', free: false, pro: true },
-    { name: 'Wellness Courses', free: false, pro: true },
     { name: 'Oura, Calendar & CGM Integrations', free: false, pro: true },
   ];
   

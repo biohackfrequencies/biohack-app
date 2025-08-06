@@ -356,12 +356,12 @@ export const useBinauralBeat = () => {
     const now = audioContextRef.current.currentTime;
     
     if (gainNodeRef.current) {
-      const newGain = MAX_GAIN * Math.pow(mainVolume / 100, 2);
+      const newGain = MAX_GAIN * (mainVolume / 100);
       gainNodeRef.current.gain.cancelScheduledValues(now);
       gainNodeRef.current.gain.setTargetAtTime(newGain, now, 0.1);
     }
     if (layer2GainNodeRef.current && isLayer2Active) {
-      const newGain = MAX_LAYER2_GAIN * Math.pow(layer2Volume / 100, 2);
+      const newGain = MAX_LAYER2_GAIN * (layer2Volume / 100);
       layer2GainNodeRef.current.gain.cancelScheduledValues(now);
       layer2GainNodeRef.current.gain.setTargetAtTime(newGain, now, 0.1);
     }
@@ -499,11 +499,18 @@ export const useBinauralBeat = () => {
     const mainSource = createAudioSource(context, mainFreq, mainMode);
     if (mainSource) {
       sourceNodeRef.current = mainSource;
-      const { outputNode, panningControl } = setupPanning(context, mainSource.source);
-      mainPanningControlRef.current = panningControl;
-      outputNode.connect(mainGain);
-      if (panningConfig?.isEnabled) {
-        set8dPanning('main', true, panningConfig.speed, panningConfig.depth);
+      if (mainMode === 'BINAURAL') {
+        // For BINAURAL mode, connect directly to the gain node, bypassing the panner.
+        // This preserves the stereo separation required for the effect.
+        mainSource.source.connect(mainGain);
+        mainPanningControlRef.current = null;
+      } else {
+        const { outputNode, panningControl } = setupPanning(context, mainSource.source);
+        mainPanningControlRef.current = panningControl;
+        outputNode.connect(mainGain);
+        if (panningConfig?.isEnabled) {
+          set8dPanning('main', true, panningConfig.speed, panningConfig.depth);
+        }
       }
     }
 
@@ -511,13 +518,18 @@ export const useBinauralBeat = () => {
       const layer2Source = createAudioSource(context, layerFreq, layerMode);
       if(layer2Source) {
         layer2SourceRef.current = layer2Source;
-        const { outputNode, panningControl } = setupPanning(context, layer2Source.source);
-        layer2PanningControlRef.current = panningControl;
-        outputNode.connect(layer2Gain);
-        setIsLayer2Active(true);
-        if (panningConfig?.isEnabled) {
-          set8dPanning('layer', true, panningConfig.speed, panningConfig.depth);
+        if (layerMode === 'BINAURAL') {
+          layer2Source.source.connect(layer2Gain);
+          layer2PanningControlRef.current = null;
+        } else {
+          const { outputNode, panningControl } = setupPanning(context, layer2Source.source);
+          layer2PanningControlRef.current = panningControl;
+          outputNode.connect(layer2Gain);
+          if (panningConfig?.isEnabled) {
+            set8dPanning('layer', true, panningConfig.speed, panningConfig.depth);
+          }
         }
+        setIsLayer2Active(true);
       } else {
         setIsLayer2Active(false);
       }
@@ -526,9 +538,9 @@ export const useBinauralBeat = () => {
     }
     
     // Fade in the volume
-    mainGain.gain.linearRampToValueAtTime(MAX_GAIN * Math.pow(mainVolume / 100, 2), context.currentTime + 0.5);
+    mainGain.gain.linearRampToValueAtTime(MAX_GAIN * (mainVolume / 100), context.currentTime + 0.5);
     if (layerFreq && layer2Gain.gain) {
-        layer2Gain.gain.linearRampToValueAtTime(MAX_LAYER2_GAIN * Math.pow(layer2Volume / 100, 2), context.currentTime + 0.5);
+        layer2Gain.gain.linearRampToValueAtTime(MAX_LAYER2_GAIN * (layer2Volume / 100), context.currentTime + 0.5);
     }
 
     setIsPlaying(true);
@@ -576,18 +588,21 @@ export const useBinauralBeat = () => {
             const newLayerSource = createAudioSource(audioContextRef.current, freq, mode);
             if (newLayerSource) {
                 layer2SourceRef.current = newLayerSource;
-                const { outputNode, panningControl } = setupPanning(audioContextRef.current, newLayerSource.source);
-                layer2PanningControlRef.current = panningControl;
-                outputNode.connect(gainNode);
-                setIsLayer2Active(true);
-                
-                // Set initial panning for the new layer if 8D is active
-                if (is8dAudioEnabled && typeof panningSpeed === 'number' && typeof panningDepth === 'number') {
-                    set8dPanning('layer', true, panningSpeed, panningDepth);
+                if (mode === 'BINAURAL') {
+                    newLayerSource.source.connect(gainNode);
+                    layer2PanningControlRef.current = null;
+                } else {
+                    const { outputNode, panningControl } = setupPanning(audioContextRef.current, newLayerSource.source);
+                    layer2PanningControlRef.current = panningControl;
+                    outputNode.connect(gainNode);
+                    if (is8dAudioEnabled && typeof panningSpeed === 'number' && typeof panningDepth === 'number') {
+                        set8dPanning('layer', true, panningSpeed, panningDepth);
+                    }
                 }
+                setIsLayer2Active(true);
 
                 // Fade in
-                gainNode.gain.linearRampToValueAtTime(MAX_LAYER2_GAIN * Math.pow(layer2Volume / 100, 2), audioContextRef.current.currentTime + 0.3);
+                gainNode.gain.linearRampToValueAtTime(MAX_LAYER2_GAIN * (layer2Volume / 100), audioContextRef.current.currentTime + 0.3);
             }
         } else {
             setIsLayer2Active(false);
@@ -598,7 +613,7 @@ export const useBinauralBeat = () => {
   const setMainVolume = useCallback((value: number) => {
     setMainVolumeState(value);
     if (gainNodeRef.current && audioContextRef.current) {
-      const newGain = MAX_GAIN * Math.pow(value / 100, 2);
+      const newGain = MAX_GAIN * (value / 100);
       gainNodeRef.current.gain.setTargetAtTime(newGain, audioContextRef.current.currentTime, 0.01);
     }
   }, []);
@@ -606,7 +621,7 @@ export const useBinauralBeat = () => {
   const setLayer2Volume = useCallback((value: number) => {
     setLayer2VolumeState(value);
     if (layer2GainNodeRef.current && audioContextRef.current) {
-      const newGain = MAX_LAYER2_GAIN * Math.pow(value / 100, 2);
+      const newGain = MAX_LAYER2_GAIN * (value / 100);
       layer2GainNodeRef.current.gain.setTargetAtTime(newGain, audioContextRef.current.currentTime, 0.01);
     }
   }, []);

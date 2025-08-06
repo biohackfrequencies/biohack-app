@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BackIcon, BrainwaveIcon, IsochronicIcon, SolfeggioIcon, RifeIcon, NoiseIcon, FocusIcon, SpatialAudioIcon, CelestialIcon, BeautyIcon, AngelIcon, LungsIcon, UserCircleIcon, AtomIcon, PathfinderIcon } from './BohoIcons';
+import { BackIcon, BrainwaveIcon, SolfeggioIcon, RifeIcon, NoiseIcon, SpatialAudioIcon, CelestialIcon, BeautyIcon, AngelIcon, LungsIcon, UserCircleIcon, AtomIcon, PathfinderIcon } from './BohoIcons';
 import { CategoryId, ColorTheme } from '../types';
 
 const ResearchLink: React.FC<{ href: string; children: React.ReactNode }> = ({ href, children }) => (
@@ -171,33 +171,6 @@ export const SciencePage: React.FC<SciencePageProps> = ({ categories }) => {
         </ScienceSection>
 
         <ScienceSection 
-          id="isochronic" 
-          title="Isochronic Tones" 
-          icon={<IsochronicIcon className="w-10 h-10 text-slate-700 dark:text-dark-text-secondary" />} 
-          color={categories.isochronic.colors.primary}
-          researchLinks={
-            <>
-              <ResearchLink href="https://www.psychologytoday.com/us/blog/sleep-newzzz/202206/can-isochronic-tones-help-your-brain-and-sleep">Can Isochronic Tones Help Your Brain and Sleep? (Psychology Today)</ResearchLink>
-            </>
-          }
-        >
-          <p>
-            Isochronic tones are another potent form of neural entrainment. Unlike the subtle phantom beat of binaurals, isochronic tones are distinct, evenly spaced pulses of a single frequency.
-          </p>
-          <ul>
-            <li>
-              <strong>How it works:</strong> A single tone is rapidly turned on and off with a smooth fade, creating a distinct, rhythmic pulse without harsh "clicking" sounds. The contrast between sound and silence is significant, making it very easy for the brain to follow along.
-            </li>
-            <li>
-              <strong>The Effect:</strong> The brain synchronizes with the rate of these pulses. For example, a tone pulsing 15 times per second (15 Hz) will encourage your brain to enter a Beta state, which is associated with alertness and focus.
-            </li>
-            <li>
-              <strong>Advantage:</strong> Because the entrainment stimulus is a direct rhythmic pulse, headphones are not required for isochronic tones to be effective.
-            </li>
-          </ul>
-        </ScienceSection>
-
-        <ScienceSection 
           id="solfeggio" 
           title="Solfeggio Frequencies" 
           icon={<SolfeggioIcon className="w-10 h-10 text-slate-700 dark:text-dark-text-secondary" />} 
@@ -302,20 +275,6 @@ export const SciencePage: React.FC<SciencePageProps> = ({ categories }) => {
             </li>
             <li>
               <strong>Application:</strong> These protocols are intended for spiritual exploration, helping to clear energetic channels and elevate one's consciousness.
-            </li>
-          </ul>
-        </ScienceSection>
-
-        <ScienceSection id="focus" title="Focus Protocols (Hemi-Sync Inspired)" icon={<FocusIcon className="w-10 h-10 text-slate-700 dark:text-dark-text-secondary" />} color={categories.focus.colors.primary}>
-           <p>
-            Hemi-Sync®, a registered trademark of Interstate Industries Inc., is a patented audio technology designed to synchronize the two hemispheres of your brain. Our "Focus Protocols" are inspired by these principles to help users achieve specific states of consciousness.
-          </p>
-          <ul>
-            <li>
-              <strong>How it works:</strong> By using complex layers of binaural beats and other audio signals, these protocols guide the listener's brainwaves into highly specific states, such as "mind awake, body asleep" (often referred to as Focus 10) or a state of "expanded awareness" (Focus 12).
-            </li>
-            <li>
-              <strong>The Benefit:</strong> Achieving these states can be profoundly beneficial for deep meditation, creative problem-solving, accelerated learning, and exploring expanded states of consciousness. These protocols are structured to prepare the mind and guide it to these specific non-ordinary states.
             </li>
           </ul>
         </ScienceSection>

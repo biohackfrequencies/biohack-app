@@ -1,6 +1,6 @@
 import React from 'react';
 import { CategoryId, Frequency, CustomStack, GuidedSession, ColorTheme } from '../types';
-import { BrainwaveIcon, SolfeggioIcon, AngelIcon, RifeIcon, NoiseIcon, IsochronicIcon, BeautyIcon, CelestialIcon, GuidedSessionIcon, StackIcon, FocusIcon, ElementIcon, InfoIcon, PathfinderIcon } from './BohoIcons';
+import { BrainwaveIcon, SolfeggioIcon, AngelIcon, RifeIcon, NoiseIcon, BeautyIcon, CelestialIcon, GuidedSessionIcon, StackIcon, ElementIcon, InfoIcon, PathfinderIcon } from './BohoIcons';
 import { MyLibrary } from './MyLibrary';
 import { useSubscription } from '../hooks/useSubscription';
 import { FeaturedCard } from './FeaturedCard';
@@ -16,9 +16,7 @@ export const categoryIcons: Record<string, React.FC<{ className?: string }>> = {
   angel: AngelIcon,
   celestial: CelestialIcon,
   rife: RifeIcon,
-  isochronic: IsochronicIcon,
   noise: NoiseIcon,
-  focus: FocusIcon,
 };
 
 const CategoryCard: React.FC<{

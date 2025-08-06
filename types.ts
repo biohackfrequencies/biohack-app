@@ -13,7 +13,7 @@ export enum BenefitCategory {
   SESSION = 'Session',
 }
 
-export type CategoryId = 'brainwaves' | 'solfeggio' | 'angel' | 'rife' | 'noise' | 'isochronic' | 'beauty' | 'celestial' | 'guided' | 'focus' | 'elements' | 'codex';
+export type CategoryId = 'brainwaves' | 'solfeggio' | 'angel' | 'rife' | 'noise' | 'beauty' | 'celestial' | 'guided' | 'elements' | 'codex';
 
 export type ColorTheme = {
   primary: string;

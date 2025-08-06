@@ -160,7 +160,7 @@ export const UserDataProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       const timer = setTimeout(() => {
         const sync = async () => {
           const { error } = await supabase.from('profiles').update({ favorites }).eq('id', user.id);
-          if (error) console.error("Network error syncing favorites:", error);
+          if (error) console.error("Network error syncing favorites:", error.message || error);
         };
         sync();
       }, 1500);
@@ -173,7 +173,7 @@ export const UserDataProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       const timer = setTimeout(() => {
         const sync = async () => {
           const { error } = await supabase.from('profiles').update({ custom_stacks: customStacks }).eq('id', user.id);
-          if (error) console.error("Network error syncing custom_stacks:", error);
+          if (error) console.error("Network error syncing custom_stacks:", error.message || error);
         };
         sync();
       }, 1500);
@@ -186,7 +186,7 @@ export const UserDataProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       const timer = setTimeout(() => {
          const sync = async () => {
           const { error } = await supabase.from('profiles').update({ activity_log: activityLog }).eq('id', user.id);
-          if (error) console.error("Network error syncing activity_log:", error);
+          if (error) console.error("Network error syncing activity_log:", error.message || error);
         };
         sync();
       }, 1500);
@@ -199,7 +199,7 @@ export const UserDataProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       const timer = setTimeout(() => {
         const sync = async () => {
           const { error } = await supabase.from('profiles').update({ tracked_habits: trackedHabits }).eq('id', user.id);
-          if (error) console.error("Network error syncing tracked_habits:", error);
+          if (error) console.error("Network error syncing tracked_habits:", error.message || error);
         };
         sync();
       }, 1500);
@@ -212,7 +212,7 @@ export const UserDataProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       const timer = setTimeout(() => {
         const sync = async () => {
           const { error } = await supabase.from('profiles').update({ user_goals: userGoals }).eq('id', user.id);
-          if (error) console.error("Network error syncing user_goals:", error);
+          if (error) console.error("Network error syncing user_goals:", error.message || error);
         };
         sync();
       }, 1500);
@@ -225,7 +225,7 @@ export const UserDataProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       const timer = setTimeout(() => {
         const sync = async () => {
           const { error } = await supabase.from('profiles').update({ custom_activities: customActivities }).eq('id', user.id);
-          if (error) console.error("Network error syncing custom_activities:", error);
+          if (error) console.error("Network error syncing custom_activities:", error.message || error);
         };
         sync();
       }, 1500);
@@ -239,7 +239,7 @@ export const UserDataProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         const sync = async () => {
           const isoDate = proAccessExpiresAt ? new Date(proAccessExpiresAt).toISOString() : null;
           const { error } = await supabase.from('profiles').update({ pro_access_expires_at: isoDate }).eq('id', user.id);
-          if (error) console.error("Network error syncing pro_access_expires_at:", error);
+          if (error) console.error("Network error syncing pro_access_expires_at:", error.message || error);
         };
         sync();
       }, 1500);

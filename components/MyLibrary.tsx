@@ -19,7 +19,8 @@ const SessionCard: React.FC<{
     onSelect: () => void;
     isFavorite?: boolean;
     onToggleFavorite?: () => void;
-}> = ({ session, isCustom, onSelect, isFavorite, onToggleFavorite }) => {
+    allFrequencies: Frequency[];
+}> = ({ session, isCustom, onSelect, isFavorite, onToggleFavorite, allFrequencies }) => {
     const imageUrl = getImageUrl(session.id);
     
     const cardStyle = {
@@ -29,6 +30,26 @@ const SessionCard: React.FC<{
         backgroundPosition: 'center',
         minHeight: isCustom ? '128px' : 'auto'
     } as React.CSSProperties;
+    
+    const totalDuration = session.steps.reduce((sum, step) => sum + step.duration, 0);
+    const durationInMinutes = Math.round(totalDuration / 60);
+
+    const frequencyString = useMemo(() => {
+        const uniqueIds = [...new Set(session.steps.flatMap(step => [step.frequencyId, step.layerFrequencyId]).filter(Boolean) as string[])];
+        if (uniqueIds.length === 0) return '';
+        const displayIds = uniqueIds.slice(0, 2);
+        const freqRanges = displayIds.map(id => {
+            const freq = allFrequencies.find(f => f.id === id);
+            return freq ? freq.range : '';
+        }).filter(Boolean);
+        let text = freqRanges.join(' & ');
+        if (uniqueIds.length > 2) text += '...';
+        return text;
+    }, [session.steps, allFrequencies]);
+    
+    const subtitle = isCustom 
+      ? `Custom • ${frequencyString}`
+      : `${durationInMinutes} Min • ${frequencyString}`;
 
     return (
         <div className="relative group h-full">
@@ -37,7 +58,7 @@ const SessionCard: React.FC<{
                 <div className="relative z-10">
                     <div className='flex items-center gap-3 mb-2'>
                         {isCustom ? <StackIcon className="w-6 h-6 text-white/80"/> : <GuidedSessionIcon className="w-6 h-6 text-white/80"/>}
-                        <p className='text-xs font-bold uppercase tracking-wider text-white/80'>{isCustom ? 'Custom Session' : 'Protocol'}</p>
+                        <p className='text-xs font-bold uppercase tracking-wider text-white/80'>{subtitle}</p>
                     </div>
                     <p className="font-display font-bold text-white drop-shadow-md truncate">{session.title}</p>
                 </div>
@@ -123,6 +144,7 @@ export const MyLibrary: React.FC<MyLibraryProps> = ({
                             onSelect={() => handleSelect(sessionItem)}
                             isFavorite={true}
                             onToggleFavorite={() => toggleFavorite(sessionItem.id)}
+                            allFrequencies={allFrequencies}
                         />
                       );
                   } else { // Frequency

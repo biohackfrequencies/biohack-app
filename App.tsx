@@ -1,6 +1,3 @@
-
-
-
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { Frequency, CategoryId, CustomStack, GuidedSession, ActivityLogItem, TrackableActivityId, HarmonicElement, BenefitCategory, PlayableItem, AppContentData, CodexNode } from './types';
 import { Header } from './components/Header';
@@ -273,9 +270,13 @@ const App: React.FC<{ content: AppContentData }> = ({ content }) => {
       case 'category': {
         if (!id || !(id in content.categories)) { window.location.hash = '#/library'; return null; }
         return <CategoryPage 
-          categoryId={id as CategoryId} frequencies={allFrequencies.filter(f => f.categoryId === id)}
-          sessions={allSessions} onBack={() => window.location.hash = '#/library'}
-          favorites={favorites} toggleFavorite={toggleFavorite}
+          categoryId={id as CategoryId} 
+          frequenciesInCategory={allFrequencies.filter(f => f.categoryId === id)}
+          allFrequencies={allFrequencies}
+          sessions={allSessions} 
+          onBack={() => window.location.hash = '#/library'}
+          favorites={favorites} 
+          toggleFavorite={toggleFavorite}
           categories={content.categories}
         />;
       }
@@ -337,7 +338,8 @@ const AppInitializer: React.FC = () => {
             name: el.name,
             range: `${el.frequency} Hz`,
             baseFrequency: el.frequency,
-            binauralFrequency: el.row,
+            // Map the row number (1-9) to a more pleasant beat frequency range (4Hz-12Hz)
+            binauralFrequency: 4 + (el.row - 1),
             description: el.description,
             category: BenefitCategory.SPIRITUAL,
             categoryId: 'elements',

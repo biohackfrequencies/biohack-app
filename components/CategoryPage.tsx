@@ -9,7 +9,8 @@ import { SessionCard } from './SessionCard';
 
 interface CategoryPageProps {
   categoryId: CategoryId;
-  frequencies: Frequency[];
+  frequenciesInCategory: Frequency[];
+  allFrequencies: Frequency[];
   sessions: GuidedSession[];
   onBack: () => void;
   favorites: string[];
@@ -17,7 +18,7 @@ interface CategoryPageProps {
   categories: Record<CategoryId, { title: string; description:string; colors: ColorTheme; }>;
 }
 
-export const CategoryPage: React.FC<CategoryPageProps> = ({ categoryId, frequencies, sessions, onBack, favorites, toggleFavorite, categories }) => {
+export const CategoryPage: React.FC<CategoryPageProps> = ({ categoryId, frequenciesInCategory, allFrequencies, sessions, onBack, favorites, toggleFavorite, categories }) => {
   const categoryDetails = categories[categoryId];
   const { isSubscribed } = useSubscription();
   const { theme } = useTheme();
@@ -45,7 +46,7 @@ export const CategoryPage: React.FC<CategoryPageProps> = ({ categoryId, frequenc
         return 1;                      // Then premium items
     };
     
-    const sortedFrequencies = [...frequencies].sort((a, b) => {
+    const sortedFrequencies = [...frequenciesInCategory].sort((a, b) => {
         const scoreA = getSortScore(a);
         const scoreB = getSortScore(b);
         if (scoreA !== scoreB) {
@@ -71,6 +72,7 @@ export const CategoryPage: React.FC<CategoryPageProps> = ({ categoryId, frequenc
                     isFavorite={favorites.includes(session.id)}
                     onToggleFavorite={() => toggleFavorite(session.id)}
                     isLocked={!!session.premium && !isSubscribed}
+                    allFrequencies={allFrequencies}
                 />
             ))}
             {sortedFrequencies.map(freq => (

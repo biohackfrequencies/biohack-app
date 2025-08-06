@@ -1,5 +1,5 @@
-import React from 'react';
-import { GuidedSession, CustomStack } from '../types';
+import React, { useMemo } from 'react';
+import { GuidedSession, CustomStack, Frequency } from '../types';
 import { ProBadge } from './ProBadge';
 import { HeartIcon, HeartFilledIcon } from './BohoIcons';
 import { getImageUrl } from '../services/imageService';
@@ -10,9 +10,10 @@ interface SessionCardProps {
     isFavorite: boolean;
     onToggleFavorite: () => void;
     isLocked: boolean;
+    allFrequencies: Frequency[];
 }
 
-export const SessionCard: React.FC<SessionCardProps> = ({ session, onSelect, isFavorite, onToggleFavorite, isLocked }) => {
+export const SessionCard: React.FC<SessionCardProps> = ({ session, onSelect, isFavorite, onToggleFavorite, isLocked, allFrequencies }) => {
     const imageUrl = getImageUrl(session.id);
 
     const cardStyle = {
@@ -22,6 +23,28 @@ export const SessionCard: React.FC<SessionCardProps> = ({ session, onSelect, isF
         backgroundPosition: 'center',
         minHeight: '224px'
     } as React.CSSProperties;
+
+    const totalDuration = session.steps.reduce((sum, step) => sum + step.duration, 0);
+    const durationInMinutes = Math.round(totalDuration / 60);
+    
+    const frequencyString = useMemo(() => {
+        if (!allFrequencies) return '';
+        const uniqueIds = [...new Set(session.steps.flatMap(step => [step.frequencyId, step.layerFrequencyId]).filter(Boolean) as string[])];
+        if (uniqueIds.length === 0) return '';
+        
+        const displayIds = uniqueIds.slice(0, 2);
+        
+        const freqRanges = displayIds.map(id => {
+            const freq = allFrequencies.find(f => f.id === id);
+            return freq ? freq.range : '';
+        }).filter(Boolean);
+        
+        let text = freqRanges.join(' & ');
+        if (uniqueIds.length > 2) {
+            text += '...';
+        }
+        return text;
+    }, [session.steps, allFrequencies]);
 
     return (
       <div className="relative group h-full">
@@ -36,6 +59,7 @@ export const SessionCard: React.FC<SessionCardProps> = ({ session, onSelect, isF
                 <h3 className="text-xl font-display font-bold text-white tracking-wide drop-shadow-md pr-4">{session.title}</h3>
                 {isLocked && <ProBadge />}
             </div>
+            <p className="text-sm mt-1" style={{color: session.colors.accent}}>{durationInMinutes} min • {frequencyString}</p>
             <p className="mt-3 text-white/90 text-sm line-clamp-3 group-hover:line-clamp-none drop-shadow-sm">{session.description}</p>
           </div>
         </button>

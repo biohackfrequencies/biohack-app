@@ -19,16 +19,14 @@ const formatTime = (seconds: number): string => {
   return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
 };
 
-const getScienceLink = (categoryId: CategoryId | 'focus') => {
+const getScienceLink = (categoryId: CategoryId) => {
     switch (categoryId) {
         case 'brainwaves': return '#/science#brainwaves';
-        case 'isochronic': return '#/science#isochronic';
         case 'solfeggio': return '#/science#solfeggio';
         case 'rife': return '#/science#rife';
         case 'noise': return '#/science#noise';
         case 'beauty': return '#/science#beauty';
         case 'angel': return '#/science#angel';
-        case 'focus': return '#/science#focus';
         case 'celestial': return '#/science#schumann';
         default: return '#/science';
     }
@@ -86,7 +84,7 @@ export const PlayerPage: React.FC<PlayerPageProps> = ({
                 binauralFrequency: 0,
                 description: `A custom generated layered tone at ${layerFreqValue} Hz.`,
                 category: BenefitCategory.WELLNESS,
-                categoryId: 'isochronic',
+                categoryId: 'guided',
                 defaultMode: 'PURE',
                 availableModes: ['PURE', 'BINAURAL', 'ISOCHRONIC'],
                 colors: { primary: '#cbd5e1', secondary: '#e2e8f0', accent: '#94a3b8' },
@@ -117,7 +115,8 @@ export const PlayerPage: React.FC<PlayerPageProps> = ({
   const mainFrequencyForPlayback = isSession ? allFrequencies.find(f => f.id === currentStep?.frequencyId) : singleFrequency;
   const layerFrequencyForPlayback = isSession ? allFrequencies.find(f => f.id === currentStep?.layerFrequencyId) : layeredFrequency;
 
-  const totalDuration = useMemo(() => isSession ? item.steps.reduce((sum, step) => sum + step.duration, 0) : 0, [item, isSession]);
+  const totalDuration = useMemo(() => sessionData ? sessionData.steps.reduce((sum, step) => sum + step.duration, 0) : 0, [sessionData]);
+  
   const totalTimeElapsed = useMemo(() => {
     if (!sessionData || !isCurrentItemPlaying) return 0;
     let elapsed = 0;
@@ -202,7 +201,7 @@ export const PlayerPage: React.FC<PlayerPageProps> = ({
     toggleLayer(null, 'BINAURAL');
   }
 
-  const handleNavigateToScience = (e: React.MouseEvent, categoryId: CategoryId | 'focus') => {
+  const handleNavigateToScience = (e: React.MouseEvent, categoryId: CategoryId) => {
     e.preventDefault();
     sessionStorage.setItem('returnTo', window.location.hash);
     window.location.hash = getScienceLink(categoryId);
