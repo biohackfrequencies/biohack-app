@@ -1,3 +1,5 @@
+
+
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { Frequency, CategoryId, CustomStack, GuidedSession, ActivityLogItem, TrackableActivityId, HarmonicElement, BenefitCategory, PlayableItem, AppContentData, CodexNode } from './types';
 import { Header } from './components/Header';
@@ -192,16 +194,6 @@ const App: React.FC<{ content: AppContentData }> = ({ content }) => {
       window.location.hash = `#/stack/${stack.id}`;
   };
 
-  const handlePlayAiSession = (session: CustomStack) => {
-    setCustomStacks(prev => {
-        if (prev.some(s => s.id === session.id)) {
-            return prev;
-        }
-        return [session, ...prev];
-    });
-    window.location.hash = `#/stack/${session.id}`;
-  };
-
   const renderContent = () => {
     if ((page === 'create' || page === 'stack' || page === 'custom-tone') && !isSubscribed) {
         return <PricingPage onBack={() => window.location.hash = '#/library'} />;
@@ -245,7 +237,7 @@ const App: React.FC<{ content: AppContentData }> = ({ content }) => {
       case 'create':
         return <CreateStackPage allFrequencies={allFrequencies} categories={content.categories} onSaveStack={handleSaveStack} onBack={() => window.location.hash = '#/library'} />;
       case 'custom-tone':
-        return <ToneGeneratorPage onBack={() => window.location.hash = '#/library'} onPlayAiSession={handlePlayAiSession} />;
+        return <ToneGeneratorPage onBack={() => window.location.hash = '#/library'} allFrequencies={allFrequencies} />;
       case 'player':
       case 'session':
       case 'stack': {
@@ -380,7 +372,7 @@ const AppInitializer: React.FC = () => {
             range: `${node.frequency.toFixed(2)} Hz`,
             baseFrequency: node.frequency,
             binauralFrequency: 0,
-            description: node.archetype,
+            description: node.tag,
             category: BenefitCategory.SPIRITUAL,
             categoryId: 'codex',
             defaultMode: 'PURE',

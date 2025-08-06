@@ -1,4 +1,5 @@
 
+
 export type SoundGenerationMode = 'PURE' | 'BINAURAL' | 'ISOCHRONIC' | 'AMBIENCE';
 
 export enum BenefitCategory {
@@ -170,22 +171,25 @@ export interface CodexNode {
   note: string;
   frequency: number;
   archetype: string;
-  journeys: {
-    short: {
-      moduli: number[];
-      notes: string[];
-    };
-    medium: {
-      moduli: number[];
-      notes: string[];
-    };
-    long: {
-      moduli: number[];
-      notes: string[];
-    };
-  };
+  tag: string;
+  geometry: string;
+  color: string;
 }
 
+// Types for Harmonic Influence Map
+export interface HarmonicInfluenceNode extends CodexNode {
+    modulus: number;
+    guidance: string;
+}
+
+export interface HarmonicInfluenceMap {
+    coreBlueprint: HarmonicInfluenceNode;
+    yearlyModulation: HarmonicInfluenceNode;
+    monthlyOverlay: HarmonicInfluenceNode;
+    dailyResonance: HarmonicInfluenceNode;
+    suggestedPath: string[];
+    suggestedPathModuli: number[];
+}
 
 // Type for Supabase 'profiles' table row
 export type ProfileRow = {
