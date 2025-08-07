@@ -1,7 +1,7 @@
 
 
 import React, { useState, useEffect } from 'react';
-import { BackIcon, BrainwaveIcon, SolfeggioIcon, RifeIcon, NoiseIcon, SpatialAudioIcon, CelestialIcon, BeautyIcon, AngelIcon, LungsIcon, UserCircleIcon, AtomIcon, PathfinderIcon } from './BohoIcons';
+import { BackIcon, BrainwaveIcon, SolfeggioIcon, RifeIcon, NoiseIcon, SpatialAudioIcon, CelestialIcon, AngelIcon, LungsIcon, UserCircleIcon, AtomIcon, PathfinderIcon } from './BohoIcons';
 import { CategoryId, ColorTheme } from '../types';
 
 const ResearchLink: React.FC<{ href: string; children: React.ReactNode }> = ({ href, children }) => (

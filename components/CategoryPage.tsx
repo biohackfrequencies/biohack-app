@@ -6,7 +6,6 @@ import { BackIcon, InfoIcon, AlchemyIcon, SparklesIcon, PathfinderIcon } from '.
 import { FrequencyCard } from './FrequencyCard';
 import { useSubscription } from '../hooks/useSubscription';
 import { categoryIcons } from './HomePage';
-import { useTheme } from '../contexts/ThemeContext';
 import { SessionCard } from './SessionCard';
 
 interface CategoryPageProps {
@@ -23,7 +22,6 @@ interface CategoryPageProps {
 export const CategoryPage: React.FC<CategoryPageProps> = ({ categoryId, frequenciesInCategory, allFrequencies, sessions, onBack, favorites, toggleFavorite, categories }) => {
   const categoryDetails = categories[categoryId];
   const { isSubscribed } = useSubscription();
-  const { theme } = useTheme();
   const Icon = categoryIcons[categoryId];
 
   const relevantSessions = sessions.filter(s => s.categoryId === categoryId);

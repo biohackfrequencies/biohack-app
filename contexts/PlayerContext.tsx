@@ -1,7 +1,7 @@
 
 
 import React, { createContext, useContext, useState, useCallback, ReactNode, useEffect, useRef } from 'react';
-import { Frequency, GuidedSession, CustomStack, SoundGenerationMode, ActivityLogItem } from '../types';
+import { Frequency, GuidedSession, CustomStack, SoundGenerationMode, ActivityLogItem, BreathingPattern } from '../types';
 import { useBinauralBeat } from '../hooks/useBinauralBeat';
 import { useBreathingGuide } from '../hooks/useBreathingGuide';
 import { useUserData } from './UserDataContext';
@@ -169,7 +169,7 @@ export const PlayerProvider: React.FC<{ children: ReactNode }> = ({ children }) 
 
   }, [audioHook, breathingHook, currentlyPlayingItem?.id, logSessionActivity, finalizeLogItem, is8dEnabled, panningSpeed, panningDepth, isBreathPanningActive]);
   
-  const startGuide = useCallback((pattern) => {
+  const startGuide = useCallback((pattern: BreathingPattern) => {
       breathingHook.startGuide(pattern);
       if (audioHook.isPlaying && is8dEnabled && currentlyPlayingItem && !('steps' in currentlyPlayingItem)) {
           audioHook.enableBreathPanner('main', 5);
