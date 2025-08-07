@@ -1,5 +1,6 @@
 
 
+
 import { useState, useRef, useCallback, useEffect } from 'react';
 import { Frequency, SoundGenerationMode } from '../types';
 
@@ -253,11 +254,14 @@ export const useBinauralBeat = () => {
   
   const setupPanning = useCallback((context: AudioContext, source: AudioNode): PanningSetup => {
     const panner = context.createPanner();
-    panner.panningModel = 'equalpower';
-    panner.distanceModel = 'linear';
+    // Use HRTF for a more realistic 3D sound effect. 'equalpower' is a safe fallback.
+    panner.panningModel = 'HRTF';
+    // The 'inverse' model provides a more natural-sounding drop-off in volume with distance.
+    panner.distanceModel = 'inverse';
     panner.refDistance = 1;
     panner.maxDistance = 10000;
-    panner.rolloffFactor = 0.5;
+    // A lower rolloff factor reduces the volume change as the sound moves, preventing dips.
+    panner.rolloffFactor = 0.1; 
     panner.positionY.setValueAtTime(0, context.currentTime);
 
     source.connect(panner);

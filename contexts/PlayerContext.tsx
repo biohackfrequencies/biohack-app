@@ -1,5 +1,6 @@
 
 
+
 import React, { createContext, useContext, useState, useCallback, ReactNode, useEffect, useRef } from 'react';
 import { Frequency, GuidedSession, CustomStack, SoundGenerationMode, ActivityLogItem, BreathingPattern } from '../types';
 import { useBinauralBeat } from '../hooks/useBinauralBeat';
@@ -99,17 +100,31 @@ export const PlayerProvider: React.FC<{ children: ReactNode }> = ({ children }) 
     }
   }, [currentlyPlayingItem, updateActivityLogItem]);
 
+    const stopGuide = useCallback(() => {
+      breathingHook.stopGuide();
+      if (isBreathPanningActive) {
+          audioHook.disableBreathPanner();
+          setIsBreathPanningActive(false);
+          if (is8dEnabled) {
+              audioHook.set8dPanning('main', true, panningSpeed, panningDepth);
+              if(audioHook.isLayer2Active) {
+                audioHook.set8dPanning('layer', true, panningSpeed, panningDepth);
+              }
+          }
+      }
+  }, [breathingHook, audioHook, isBreathPanningActive, is8dEnabled, panningSpeed, panningDepth]);
+
   const stop = useCallback(() => {
     if (intervalRef.current) clearInterval(intervalRef.current);
     finalizeLogItem();
     audioHook.stop();
-    breathingHook.stopGuide(); // This will also handle disabling breath panner via its own effect.
+    stopGuide(); // Call the context's own stopGuide to correctly reset panning states.
     setCurrentlyPlayingItem(null);
     setSessionStepIndex(0);
     setSessionTimeInStep(0);
     totalSessionTimeElapsedRef.current = 0;
-    setIs8dEnabled(false);
-  }, [audioHook, breathingHook, finalizeLogItem]);
+    // is8dEnabled state is now persisted across sessions.
+  }, [audioHook, finalizeLogItem, stopGuide]);
 
   const pause = useCallback(() => {
     finalizeLogItem();
@@ -176,21 +191,6 @@ export const PlayerProvider: React.FC<{ children: ReactNode }> = ({ children }) 
           setIsBreathPanningActive(true);
       }
   }, [breathingHook, audioHook, is8dEnabled, currentlyPlayingItem]);
-
-  const stopGuide = useCallback(() => {
-      breathingHook.stopGuide();
-      if (isBreathPanningActive) {
-          audioHook.disableBreathPanner();
-          setIsBreathPanningActive(false);
-          if (is8dEnabled) {
-              audioHook.set8dPanning('main', true, panningSpeed, panningDepth);
-              if(audioHook.isLayer2Active) {
-                audioHook.set8dPanning('layer', true, panningSpeed, panningDepth);
-              }
-          }
-      }
-  }, [breathingHook, audioHook, isBreathPanningActive, is8dEnabled, panningSpeed, panningDepth]);
-
 
   const toggleLayer = useCallback((freq: Frequency | null, mode: SoundGenerationMode) => {
     audioHook.toggleLayer(freq, mode, is8dEnabled, panningSpeed, panningDepth);
