@@ -224,4 +224,12 @@ export type ProfileInsert = {
   pro_access_expires_at?: string | null;
 };
 
-export type ProfileUpdate = Partial<Omit<ProfileRow, 'id'>>;
+export type ProfileUpdate = {
+  favorites?: string[];
+  custom_stacks?: CustomStack[];
+  activity_log?: ActivityLogItem[];
+  tracked_habits?: TrackableActivityId[];
+  user_goals?: UserGoals;
+  custom_activities?: TrackableActivityBase[];
+  pro_access_expires_at?: string | null;
+};

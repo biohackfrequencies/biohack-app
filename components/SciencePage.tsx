@@ -94,6 +94,13 @@ export const SciencePage: React.FC<SciencePageProps> = ({ categories }) => {
           title="The Mod-24 Codex Wheel"
           icon={<PathfinderIcon className="w-10 h-10 text-slate-700 dark:text-dark-text-secondary" />}
           color={categories.codex.colors.primary}
+          researchLinks={
+            <>
+              <ResearchLink href="https://www.academia.edu/130330346/Dedicated_to_Kirby_D_Cooper_Codex_of_Resonant_Harmonics_Volumes_I_VI_with_Appendices?utm_source=chatgpt.com">
+                Codex of Resonant Harmonics (Volumes I-VI)
+              </ResearchLink>
+            </>
+          }
         >
           <p>
             The Codex Harmonics wheel is a living map of 24 harmonic positions — each linked to a musical note, its exact frequency, and a symbolic meaning.
@@ -240,7 +247,7 @@ export const SciencePage: React.FC<SciencePageProps> = ({ categories }) => {
                 Colored noises are steady, random signals that cover the entire sound spectrum. Different "colors" like White, Pink, and Brown Noise emphasize different parts of the spectrum, which has varying psychological effects.
             </p>
             <ul>
-                <li><strong>White Noise:</strong> Contains all frequencies at equal intensity. It's excellent at masking distracting background sounds, making it ideal for focus or sleep in noisy environments.</li>
+                <li><strong>White Noise:</strong> Contains all frequencies at equal intensity. It's excellent for masking distracting background sounds, making it ideal for focus or sleep in noisy environments.</li>
                 <li><strong>Pink Noise:</strong> Has more power in the lower frequencies, making it sound "softer" or more balanced than white noise, similar to steady rain or wind. It's often considered more relaxing and is used for sustained focus.</li>
                 <li><strong>Brown Noise:</strong> Has even more energy at the lowest frequencies, creating a deep, rumbling sound like a distant waterfall. It's highly effective for deep relaxation and blocking out intrusive, low-frequency noises.</li>
             </ul>

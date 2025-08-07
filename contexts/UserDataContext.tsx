@@ -61,7 +61,8 @@ const useDebouncedSync = <K extends keyof ProfileUpdate>(
             const timer = setTimeout(() => {
                 const sync = async () => {
                     try {
-                        const { error } = await supabase.from('profiles').update({ [column]: value } as ProfileUpdate).eq('id', userId);
+                        const updatePayload: ProfileUpdate = { [column]: value };
+                        const { error } = await supabase.from('profiles').update(updatePayload as any).eq('id', userId);
                         if (error) {
                             console.warn(`Network issue syncing ${column}:`, error.message);
                         }
@@ -141,7 +142,7 @@ export const UserDataProvider: React.FC<{ children: React.ReactNode }> = ({ chil
               tracked_habits: defaultHabits, user_goals: defaultGoals, custom_activities: [],
               pro_access_expires_at: null,
             };
-          const { data: newProfile, error: insertError } = await supabase.from('profiles').insert([newProfileData]).select().single();
+          const { data: newProfile, error: insertError } = await supabase.from('profiles').insert(newProfileData).select().single();
           if (insertError) throw insertError;
           profile = newProfile;
         } else if (error) {

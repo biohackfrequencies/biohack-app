@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { BackIcon, PathfinderIcon, VolumeIcon, LayersIcon, InfoIcon } from './BohoIcons';
-import { CustomStack, HarmonicInfluenceMap, HarmonicInfluenceNode, Frequency, BREATHING_PATTERNS, ColorTheme } from '../types';
+import { CustomStack, HarmonicInfluenceMap, HarmonicInfluenceNode, Frequency, BREATHING_PATTERNS, ColorTheme, CodexNode } from '../types';
 import { calculateHarmonicInfluence } from '../services/harmonicInfluenceService';
 import { usePlayer } from '../contexts/PlayerContext';
 import { CodexUniversalisField } from './CodexUniversalisField';
@@ -94,6 +94,7 @@ export const ToneGeneratorPage: React.FC<ToneGeneratorPageProps> = ({ onBack, al
     const [dateError, setDateError] = useState<string | null>(null);
     const [highlightedModulus, setHighlightedModulus] = useState<number | null>(null);
     const [interactionMode, setInteractionMode] = useState<'static' | 'breathing' | 'rotating'>('static');
+    const [hoveredNodeInfo, setHoveredNodeInfo] = useState<CodexNode | null>(null);
 
     // Local state to track what's playing from the wheel
     const [mainFrequency, setMainFrequency] = useState<Frequency | null>(null);
@@ -317,9 +318,28 @@ export const ToneGeneratorPage: React.FC<ToneGeneratorPageProps> = ({ onBack, al
                         allFrequencies={allFrequencies}
                         setMainFrequency={setMainFrequency}
                         setLayeredFrequency={setLayeredFrequency}
+                        onNodeHover={setHoveredNodeInfo}
                     />
+                    <div className="min-h-[6rem] mt-4 p-4 rounded-xl bg-black/5 dark:bg-dark-bg/30 border border-slate-200/50 dark:border-dark-border/50 flex items-center justify-center text-center transition-all duration-300">
+                        {hoveredNodeInfo ? (
+                            <div className="animate-fade-in">
+                                <p className="font-bold text-lg text-slate-800 dark:text-dark-text-primary">{hoveredNodeInfo.note} - {hoveredNodeInfo.archetype}</p>
+                                <p className="text-sm text-slate-600 dark:text-dark-text-secondary mt-1">{hoveredNodeInfo.tag}</p>
+                            </div>
+                        ) : (
+                            <p className="text-sm text-slate-500 dark:text-slate-400 italic">Hover over a node for details.</p>
+                        )}
+                    </div>
                      {influenceMap && (
                          <div className="space-y-3">
+                            <div className="text-center text-sm text-slate-600 dark:text-dark-text-secondary p-3 rounded-xl bg-black/5 dark:bg-dark-bg/30 border border-slate-200/50 dark:border-dark-border/50">
+                                <p className="font-display font-semibold italic text-slate-700 dark:text-dark-text-primary mb-1">Consider This Guideline:</p>
+                                <div className="space-y-1 text-xs sm:text-sm leading-relaxed">
+                                    <p>Want to <span className="font-bold text-brand-sage">harmonize</span> &rarr; Sequence</p>
+                                    <p>Want to <span className="font-bold text-brand-gold">activate</span> &rarr; Layer</p>
+                                    <p>Want to <span className="font-bold text-brand-orange">explore or decode</span> &rarr; Combine</p>
+                                </div>
+                            </div>
                             <div className="text-center">
                                 <button
                                     onClick={handlePlayBreathingPath}

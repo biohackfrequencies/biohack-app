@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React from 'react';
 import { CodexNode, HarmonicInfluenceMap, Frequency } from '../types';
 import { usePlayer } from '../contexts/PlayerContext';
 
@@ -10,18 +10,9 @@ interface CodexUniversalisFieldProps {
     allFrequencies: Frequency[];
     setMainFrequency: (freq: Frequency | null) => void;
     setLayeredFrequency: (freq: Frequency | null) => void;
+    onNodeHover: (node: CodexNode | null) => void;
 }
 
-const Tooltip: React.FC<{ content: string; x: number; y: number; }> = ({ content, x, y }) => {
-    return (
-        <div 
-            className="absolute z-10 p-2 text-xs text-white bg-slate-800 rounded-md shadow-lg pointer-events-none transition-opacity"
-            style={{ left: x, top: y, transform: 'translate(-50%, -110%)' }}
-        >
-            {content}
-        </div>
-    );
-};
 
 // Helper function to convert hex color to RGB values for the glow animation
 const hexToRgb = (hex: string): string => {
@@ -33,10 +24,8 @@ const hexToRgb = (hex: string): string => {
 };
 
 
-export const CodexUniversalisField: React.FC<CodexUniversalisFieldProps> = ({ nodes, influenceMap, interactionMode, highlightedModulus, allFrequencies, setMainFrequency, setLayeredFrequency }) => {
-    const [tooltip, setTooltip] = useState<{ content: string; x: number; y: number } | null>(null);
+export const CodexUniversalisField: React.FC<CodexUniversalisFieldProps> = ({ nodes, influenceMap, interactionMode, highlightedModulus, allFrequencies, setMainFrequency, setLayeredFrequency, onNodeHover }) => {
     const player = usePlayer();
-    const fieldRef = useRef<HTMLDivElement>(null);
     const { isPlaying, currentlyPlayingItem, startPlayback, toggleLayer } = player;
 
     const handleNodeClick = (node: CodexNode) => {
@@ -60,16 +49,6 @@ export const CodexUniversalisField: React.FC<CodexUniversalisFieldProps> = ({ no
         }
     };
 
-    const handleMouseEnter = (node: CodexNode, event: React.MouseEvent) => {
-        if (!fieldRef.current) return;
-        const fieldRect = fieldRef.current.getBoundingClientRect();
-        setTooltip({
-            content: `${node.note} - ${node.archetype}`,
-            x: event.clientX - fieldRect.left,
-            y: event.clientY - fieldRect.top,
-        });
-    };
-
     const centerNode = influenceMap?.coreBlueprint || nodes.find(n => n.modulus === 0)!;
     const activeOuterModuli = influenceMap 
         ? [influenceMap.yearlyModulation.modulus, influenceMap.monthlyOverlay.modulus, influenceMap.dailyResonance.modulus]
@@ -80,8 +59,7 @@ export const CodexUniversalisField: React.FC<CodexUniversalisFieldProps> = ({ no
     const viewSize = 350;
 
     return (
-        <div ref={fieldRef} className="relative w-full max-w-[350px] mx-auto aspect-square">
-            {tooltip && <Tooltip {...tooltip} />}
+        <div className="relative w-full max-w-[350px] mx-auto aspect-square">
             <svg viewBox={`0 0 ${viewSize} ${viewSize}`} className={`w-full h-full ${interactionMode === 'rotating' ? 'animate-spin-slow' : ''}`}>
                 <g transform={`translate(${viewSize / 2}, ${viewSize / 2})`}>
                     {/* Connection Lines */}
@@ -116,8 +94,8 @@ export const CodexUniversalisField: React.FC<CodexUniversalisFieldProps> = ({ no
                         return (
                             <g key={node.modulus} transform={`translate(${x}, ${y})`}
                                 onClick={() => handleNodeClick(node)}
-                                onMouseEnter={(e) => handleMouseEnter(node, e)}
-                                onMouseLeave={() => setTooltip(null)}
+                                onMouseEnter={() => onNodeHover(node)}
+                                onMouseLeave={() => onNodeHover(null)}
                                 className="cursor-pointer group"
                             >
                                 <circle 
@@ -151,8 +129,8 @@ export const CodexUniversalisField: React.FC<CodexUniversalisFieldProps> = ({ no
                             <g
                                 key={centerNode.modulus}
                                 onClick={() => handleNodeClick(centerNode)}
-                                onMouseEnter={(e) => handleMouseEnter(centerNode, e)}
-                                onMouseLeave={() => setTooltip(null)}
+                                onMouseEnter={() => onNodeHover(centerNode)}
+                                onMouseLeave={() => onNodeHover(null)}
                                 className="cursor-pointer group"
                             >
                                 <circle
