@@ -183,7 +183,6 @@ export const PlayerPage: React.FC<PlayerPageProps> = ({
   const timerEndTimeRef = useRef<number | null>(null);
   
   const isSession = 'steps' in item;
-  const isElementalMixture = 'isMixture' in item && !!item.isMixture;
   const isCurrentItemPlaying = currentlyPlayingItem?.id === item.id;
   const singleFrequency = isSession ? null : item as Frequency;
   const sessionData = isSession ? item as GuidedSession | CustomStack : null;
