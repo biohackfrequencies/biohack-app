@@ -21,7 +21,7 @@ export const SessionCard: React.FC<SessionCardProps> = ({ session, onSelect, isF
         backgroundImage: `url(${imageUrl})`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
-        minHeight: '224px'
+        minHeight: '192px'
     } as React.CSSProperties;
 
     const totalDuration = session.steps.reduce((sum, step) => sum + step.duration, 0);
@@ -50,17 +50,17 @@ export const SessionCard: React.FC<SessionCardProps> = ({ session, onSelect, isF
       <div className="relative group h-full">
         <button
           onClick={onSelect}
-          className="w-full h-full p-6 rounded-2xl text-left transition-all duration-300 shadow-lg hover:-translate-y-1 text-white hover:shadow-[0_8px_30px_-5px_var(--glow-color)] flex flex-col justify-start"
+          className="w-full h-full p-4 rounded-2xl text-left transition-all duration-300 shadow-lg hover:-translate-y-1 text-white hover:shadow-[0_8px_30px_-5px_var(--glow-color)] flex flex-col justify-start"
           style={cardStyle}
         >
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent group-hover:from-black/70 transition-all duration-300 rounded-2xl"></div>
           <div className="relative z-10">
-            <div className="grid grid-cols-[1fr,auto] items-start gap-4">
-                <h3 className="text-4xl sm:text-5xl font-display font-bold text-white tracking-wide drop-shadow-md">{session.title}</h3>
+            <div className="grid grid-cols-[1fr,auto] items-start gap-2">
+                <h3 className="text-2xl sm:text-3xl font-display font-bold text-white tracking-wide drop-shadow-md">{session.title}</h3>
                 {isLocked && <ProBadge />}
             </div>
-            <p className="text-lg mt-2" style={{color: session.colors.accent}}>{durationInMinutes} min • {frequencyString}</p>
-            <p className="mt-4 text-white/90 text-base drop-shadow-sm">{session.description}</p>
+            <p className="text-base mt-1" style={{color: session.colors.accent}}>{durationInMinutes} min • {frequencyString}</p>
+            <p className="mt-2 text-white/90 text-sm drop-shadow-sm line-clamp-3">{session.description}</p>
           </div>
         </button>
         <button 

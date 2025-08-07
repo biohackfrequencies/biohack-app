@@ -24,7 +24,7 @@ type AudioSource = {
 type PanningControl = {
     panner: PannerNode;
     animationFrameId: React.MutableRefObject<number | null>;
-    settings: React.MutableRefObject<{ enabled: boolean; speed: number; depth: number; startTime: number }>;
+    settings: React.MutableRefObject<{ enabled: boolean; speed: number; depth: number; audioStartTime: number }>;
 };
 
 type PanningSetup = {
@@ -265,7 +265,7 @@ export const useBinauralBeat = () => {
     const panningControl: PanningControl = {
         panner,
         animationFrameId: { current: null },
-        settings: { current: { enabled: false, speed: 0, depth: 0, startTime: performance.now() } }
+        settings: { current: { enabled: false, speed: 0, depth: 0, audioStartTime: 0 } }
     };
     
     return { outputNode: panner, panningControl };
@@ -398,9 +398,9 @@ export const useBinauralBeat = () => {
     
     control.settings.current = { ...control.settings.current, enabled, speed, depth };
     
-    const SMOOTHING_TIME_CONSTANT = 0.02;
+    const SMOOTHING_TIME_CONSTANT = 0.05; // Slightly increased for smoother transitions
 
-    const loop = (now: number) => {
+    const loop = () => {
         const currentControl = controlRef.current;
         if (!audioContextRef.current || !currentControl || !currentControl.settings.current.enabled) {
             if (currentControl && audioContextRef.current) {
@@ -414,13 +414,13 @@ export const useBinauralBeat = () => {
             return;
         }
 
-        const { speed: currentSpeed, depth: currentDepth, startTime } = currentControl.settings.current;
+        const { speed: currentSpeed, depth: currentDepth, audioStartTime } = currentControl.settings.current;
         const nowInSeconds = audioContextRef.current.currentTime;
-        const speedHz = 0.1 + (currentSpeed / 100) * 0.5;
-        const radius = Math.pow(currentDepth / 100, 1.5) * 15;
-        const yRadius = radius * 0.8;
+        const speedHz = 0.05 + (currentSpeed / 100) * 0.4; // Slower, more gentle speed range
+        const radius = Math.pow(currentDepth / 100, 1.5) * 10; // Slightly smaller max radius
+        const yRadius = radius * 0.6; // Less extreme Y movement
         
-        const elapsedTime = (now - startTime) / 1000;
+        const elapsedTime = nowInSeconds - audioStartTime;
         const angle = elapsedTime * 2 * Math.PI * speedHz;
 
         const x = radius * Math.cos(angle);
@@ -436,7 +436,7 @@ export const useBinauralBeat = () => {
     };
 
     if (enabled && control.animationFrameId.current === null) {
-        control.settings.current.startTime = performance.now();
+        control.settings.current.audioStartTime = audioContextRef.current.currentTime;
         control.animationFrameId.current = requestAnimationFrame(loop);
     }
   }, []);

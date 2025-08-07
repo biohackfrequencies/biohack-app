@@ -183,6 +183,7 @@ export const PlayerPage: React.FC<PlayerPageProps> = ({
   const timerEndTimeRef = useRef<number | null>(null);
   
   const isSession = 'steps' in item;
+  const isElementalMixture = 'isMixture' in item && !!item.isMixture;
   const isCurrentItemPlaying = currentlyPlayingItem?.id === item.id;
   const singleFrequency = isSession ? null : item as Frequency;
   const sessionData = isSession ? item as GuidedSession | CustomStack : null;
@@ -211,12 +212,6 @@ export const PlayerPage: React.FC<PlayerPageProps> = ({
     }
   }, [item.id, currentlyPlayingItem?.id, stop]);
   
-  useEffect(() => {
-    if (isSession) {
-      setIs8dEnabled(false);
-    }
-  }, [isSession, setIs8dEnabled]);
-
 
   const togglePlayPause = useCallback(() => {
     if (isCurrentItemPlaying && isPlaying) {
@@ -656,7 +651,6 @@ export const PlayerPage: React.FC<PlayerPageProps> = ({
             depth={panningDepth}
             onDepthChange={(val) => setPanningDepth(val)}
             color={colors.accent}
-            disabled={isSession}
         />
       </div>
     </div>
