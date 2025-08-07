@@ -309,7 +309,15 @@ export const ToneGeneratorPage: React.FC<ToneGeneratorPageProps> = ({ onBack, al
                     )}
                 </div>
                  <div className="p-6 rounded-2xl bg-white/80 dark:bg-dark-surface/80 border border-slate-200/50 dark:border-slate-700/50 backdrop-blur-lg space-y-4">
-                    <CodexUniversalisField nodes={codexData} influenceMap={influenceMap} interactionMode={interactionMode} highlightedModulus={highlightedModulus} allFrequencies={allFrequencies} setMainFrequency={setMainFrequency} setLayeredFrequency={setLayeredFrequency} mainFrequency={mainFrequency} layeredFrequency={layeredFrequency} />
+                    <CodexUniversalisField
+                        nodes={codexData}
+                        influenceMap={influenceMap}
+                        interactionMode={interactionMode}
+                        highlightedModulus={highlightedModulus}
+                        allFrequencies={allFrequencies}
+                        setMainFrequency={setMainFrequency}
+                        setLayeredFrequency={setLayeredFrequency}
+                    />
                      {influenceMap && (
                          <div className="space-y-3">
                             <div className="text-center">

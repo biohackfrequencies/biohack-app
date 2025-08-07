@@ -8,8 +8,6 @@ interface CodexUniversalisFieldProps {
     interactionMode: 'static' | 'breathing' | 'rotating';
     highlightedModulus: number | null;
     allFrequencies: Frequency[];
-    mainFrequency: Frequency | null;
-    layeredFrequency: Frequency | null;
     setMainFrequency: (freq: Frequency | null) => void;
     setLayeredFrequency: (freq: Frequency | null) => void;
 }
@@ -35,7 +33,7 @@ const hexToRgb = (hex: string): string => {
 };
 
 
-export const CodexUniversalisField: React.FC<CodexUniversalisFieldProps> = ({ nodes, influenceMap, interactionMode, highlightedModulus, allFrequencies, setMainFrequency, setLayeredFrequency, layeredFrequency }) => {
+export const CodexUniversalisField: React.FC<CodexUniversalisFieldProps> = ({ nodes, influenceMap, interactionMode, highlightedModulus, allFrequencies, setMainFrequency, setLayeredFrequency }) => {
     const [tooltip, setTooltip] = useState<{ content: string; x: number; y: number } | null>(null);
     const player = usePlayer();
     const fieldRef = useRef<HTMLDivElement>(null);

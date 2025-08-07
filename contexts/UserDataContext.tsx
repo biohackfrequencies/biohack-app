@@ -1,4 +1,5 @@
 
+
 import React, { createContext, useContext, useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { supabase } from '../services/supabaseClient';
 import { useAuth } from './AuthContext';
@@ -49,13 +50,18 @@ interface UserDataContextType {
 const UserDataContext = createContext<UserDataContextType | null>(null);
 
 // Custom hook for debounced Supabase sync
-const useDebouncedSync = (column: keyof ProfileUpdate, value: any, syncEnabled: boolean, userId?: string) => {
+const useDebouncedSync = <K extends keyof ProfileUpdate>(
+    column: K,
+    value: ProfileUpdate[K],
+    syncEnabled: boolean,
+    userId?: string
+) => {
     useEffect(() => {
         if (syncEnabled && userId) {
             const timer = setTimeout(() => {
                 const sync = async () => {
                     try {
-                        const { error } = await supabase.from('profiles').update({ [column]: value }).eq('id', userId);
+                        const { error } = await supabase.from('profiles').update({ [column]: value } as ProfileUpdate).eq('id', userId);
                         if (error) {
                             console.warn(`Network issue syncing ${column}:`, error.message);
                         }
@@ -135,7 +141,7 @@ export const UserDataProvider: React.FC<{ children: React.ReactNode }> = ({ chil
               tracked_habits: defaultHabits, user_goals: defaultGoals, custom_activities: [],
               pro_access_expires_at: null,
             };
-          const { data: newProfile, error: insertError } = await supabase.from('profiles').insert(newProfileData).select().single();
+          const { data: newProfile, error: insertError } = await supabase.from('profiles').insert([newProfileData]).select().single();
           if (insertError) throw insertError;
           profile = newProfile;
         } else if (error) {
