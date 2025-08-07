@@ -1,15 +1,14 @@
 import React from 'react';
 import { CategoryId, Frequency, CustomStack, GuidedSession, ColorTheme } from '../types';
-import { BrainwaveIcon, SolfeggioIcon, AngelIcon, RifeIcon, NoiseIcon, BeautyIcon, CelestialIcon, GuidedSessionIcon, StackIcon, ElementIcon, InfoIcon, PathfinderIcon, SparklesIcon } from './BohoIcons';
+import { BrainwaveIcon, SolfeggioIcon, AngelIcon, RifeIcon, NoiseIcon, CelestialIcon, GuidedSessionIcon, StackIcon, ElementIcon, InfoIcon, PathfinderIcon, SparklesIcon, OracleIcon } from './BohoIcons';
 import { MyLibrary } from './MyLibrary';
 import { useSubscription } from '../hooks/useSubscription';
 import { FeaturedCard } from './FeaturedCard';
 import { useTheme } from '../contexts/ThemeContext';
-import { HarmonicElementsCtaCard } from './HarmonicElementsCtaCard';
 
 export const categoryIcons: Record<string, React.FC<{ className?: string }>> = {
   elements: ElementIcon,
-  beauty: BeautyIcon,
+  codex: PathfinderIcon,
   guided: GuidedSessionIcon,
   brainwaves: BrainwaveIcon,
   solfeggio: SolfeggioIcon,
@@ -56,8 +55,61 @@ const CategoryCard: React.FC<{
         <h3 className="text-base font-display font-bold text-slate-800 dark:text-dark-text-primary tracking-wide">{details.title}</h3>
       </div>
       
-      <div className="absolute inset-0 z-20 p-4 flex items-center justify-center bg-white/80 dark:bg-dark-surface/80 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+      <div className="absolute inset-0 z-20 p-4 flex flex-col items-center justify-center bg-white/80 dark:bg-dark-surface/80 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300">
         <p className="text-sm text-slate-800 dark:text-dark-text-secondary">{details.description}</p>
+      </div>
+    </button>
+  );
+};
+
+const ActionCard: React.FC<{
+  title: string;
+  description: string;
+  Icon: React.FC<{ className?: string }>;
+  onClick: () => void;
+  colors: ColorTheme;
+  isLocked: boolean;
+}> = ({ title, description, Icon, onClick, colors, isLocked }) => {
+  const { theme } = useTheme();
+  const isDarkMode = theme === 'dark' || (theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+  
+  const { primary, secondary, accent } = colors;
+  
+  const lightStyle = {
+    background: `linear-gradient(135deg, ${primary}60, ${secondary}60)`,
+    border: `1px solid ${accent}40`,
+  };
+  const darkStyle = {
+    background: `linear-gradient(135deg, ${primary}80, ${secondary}80)`,
+    borderColor: accent,
+    '--tw-border-opacity': '0.7',
+  };
+
+  return (
+    <button
+      onClick={onClick}
+      title={title}
+      className="group relative w-full h-40 flex flex-col items-center justify-center p-4 rounded-2xl text-center transition-all duration-300 shadow-lg hover:-translate-y-1 text-slate-800 dark:text-dark-text-primary overflow-hidden hover:shadow-[0_8px_30px_-5px_var(--glow-color)] border dark:border"
+      style={{
+        ...(isDarkMode ? darkStyle : lightStyle),
+        '--glow-color': `${accent}80`,
+      } as any}
+    >
+      <div className="absolute inset-0 bg-white/0 dark:bg-dark-surface/30 group-hover:bg-white/30 dark:group-hover:bg-dark-surface/20 transition-colors duration-300"></div>
+      
+      <div className="relative z-10 flex flex-col items-center justify-center transition-opacity duration-300 group-hover:opacity-0">
+        <Icon className="h-12 w-12 mb-2 text-slate-900/[0.85] dark:text-dark-text-primary/[0.95] drop-shadow-[0_1px_2px_rgba(0,0,0,0.3)] dark:drop-shadow-[0_1px_2px_rgba(0,0,0,0.7)]" />
+        <h3 className="text-base font-display font-bold text-slate-800 dark:text-dark-text-primary tracking-wide">{title}</h3>
+      </div>
+      
+      <div className="absolute inset-0 z-20 p-4 flex flex-col items-center justify-center bg-white/80 dark:bg-dark-surface/80 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+        <p className="text-sm text-slate-800 dark:text-dark-text-secondary">{description}</p>
+        {isLocked && (
+            <div className="mt-2 inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold transition-colors bg-brand-orange text-white shadow">
+                <SparklesIcon className="w-4 h-4" />
+                <span>Go Pro</span>
+            </div>
+        )}
       </div>
     </button>
   );
@@ -85,6 +137,10 @@ export const HomePage: React.FC<HomePageProps> = ({
       window.location.hash = '#/pricing';
     }
   };
+
+  const categoryOrder: CategoryId[] = [
+    'elements', 'codex', 'guided', 'brainwaves', 'solfeggio', 'angel', 'celestial', 'rife', 'noise'
+  ];
   
   return (
     <div className="space-y-16 animate-fade-in">
@@ -109,10 +165,11 @@ export const HomePage: React.FC<HomePageProps> = ({
        
       <section className="space-y-6">
         <h3 className="text-3xl font-display text-center font-semibold text-slate-800 dark:text-dark-text-primary">All Categories</h3>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
-            {Object.entries(categories).filter(([id]) => id !== 'elements' && id !== 'codex').map(([id, details]) => {
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-4 md:gap-6">
+            {categoryOrder.map(id => {
+                const details = categories[id];
                 const categoryId = id as CategoryId;
-                if (!categoryIcons[categoryId]) return null;
+                if (!details || !categoryIcons[categoryId]) return null;
                 return (
                     <CategoryCard
                         key={id}
@@ -122,40 +179,28 @@ export const HomePage: React.FC<HomePageProps> = ({
                     />
                 )
             })}
+             <ActionCard
+                title="Creator Studio"
+                description="Design your own custom sessions."
+                Icon={StackIcon}
+                onClick={() => handlePremiumFeatureClick(() => window.location.hash = '#/create')}
+                colors={{ primary: '#EEE8B2', secondary: '#C18D52', accent: '#C18D52' }}
+                isLocked={!isSubscribed}
+            />
         </div>
       </section>
 
       <section className="max-w-4xl mx-auto space-y-8">
-        <HarmonicElementsCtaCard />
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-8">
-           <button
-              onClick={() => handlePremiumFeatureClick(() => window.location.hash = '#/create')}
-              className="group relative w-full p-4 sm:p-6 h-40 rounded-2xl overflow-hidden text-center flex flex-col items-center justify-center bg-gradient-to-br from-[#EEE8B2]/60 to-[#C18D52]/40 dark:bg-slate-800/80 border border-[#C18D52]/30 dark:border-brand-gold/50 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 hover:saturate-125"
+        <button
+              onClick={() => handlePremiumFeatureClick(() => window.location.hash = '#/ai-agent')}
+              className="group relative w-full p-4 sm:p-6 h-48 sm:h-40 rounded-2xl overflow-hidden text-center flex flex-col items-center justify-center bg-gradient-to-br from-teal-100/60 to-cyan-200/40 dark:bg-slate-800/80 border border-cyan-200/30 dark:border-cyan-500/50 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 hover:saturate-125"
           >
-              <div className="absolute -right-4 -bottom-4 w-20 h-20 sm:w-28 sm:h-28 text-brand-gold/30 dark:text-brand-gold/30 opacity-80 group-hover:scale-110 transition-transform duration-500">
-                <StackIcon />
+              <div className="absolute -right-4 -bottom-4 w-24 h-24 sm:w-32 sm:h-32 text-cyan-500/20 dark:text-cyan-500/20 opacity-80 group-hover:scale-110 transition-transform duration-500">
+                <OracleIcon />
               </div>
               <div className="relative">
-                <h4 className="text-xl sm:text-2xl font-display font-bold text-slate-800 dark:text-dark-text-primary drop-shadow-sm">Creator Studio</h4>
-                <p className="text-slate-700/90 dark:text-dark-text-secondary text-xs sm:text-sm mt-1">Design your own sessions.</p>
-                {!isSubscribed && (
-                    <div className="mt-3 inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-bold transition-colors bg-brand-orange text-white shadow">
-                        <SparklesIcon className="w-4 h-4" />
-                        <span>Go Pro</span>
-                    </div>
-                )}
-              </div>
-          </button>
-           <button
-              onClick={() => handlePremiumFeatureClick(() => window.location.hash = '#/codex-breathing-path')}
-              className="group relative w-full p-4 sm:p-6 h-40 rounded-2xl overflow-hidden text-center flex flex-col items-center justify-center bg-gradient-to-br from-purple-100/60 to-indigo-200/40 dark:bg-slate-800/80 border border-indigo-200/30 dark:border-indigo-500/50 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 hover:saturate-125"
-          >
-              <div className="absolute -right-4 -bottom-4 w-20 h-20 sm:w-28 sm:h-28 text-indigo-500/30 dark:text-indigo-500/30 opacity-80 group-hover:scale-110 transition-transform duration-500">
-                <PathfinderIcon />
-              </div>
-              <div className="relative">
-                <h4 className="text-xl sm:text-2xl font-display font-bold text-slate-800 dark:text-dark-text-primary drop-shadow-sm">Codex Harmonics</h4>
-                <p className="text-slate-700/90 dark:text-dark-text-secondary text-xs sm:text-sm mt-1">Explore the Mod-24 wheel.</p>
+                <h4 className="text-xl sm:text-2xl font-display font-bold text-slate-800 dark:text-dark-text-primary drop-shadow-sm">AI Wellness Agent</h4>
+                <p className="text-slate-700/90 dark:text-dark-text-secondary text-xs sm:text-sm mt-1 max-w-xs mx-auto">Describe your intention and let our AI create a session for you.</p>
                  {!isSubscribed && (
                     <div className="mt-3 inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-bold transition-colors bg-brand-orange text-white shadow">
                         <SparklesIcon className="w-4 h-4" />
@@ -164,7 +209,6 @@ export const HomePage: React.FC<HomePageProps> = ({
                 )}
               </div>
           </button>
-        </div>
       </section>
 
       <MyLibrary

@@ -4,7 +4,6 @@ export type SoundGenerationMode = 'PURE' | 'BINAURAL' | 'ISOCHRONIC' | 'AMBIENCE
 
 export enum BenefitCategory {
   HEALING = 'Healing',
-  BEAUTY = 'Beauty',
   COGNITIVE = 'Cognitive',
   RELAXATION = 'Relaxation',
   WELLNESS = 'Wellness',
@@ -13,7 +12,7 @@ export enum BenefitCategory {
   SESSION = 'Session',
 }
 
-export type CategoryId = 'brainwaves' | 'solfeggio' | 'angel' | 'rife' | 'noise' | 'beauty' | 'celestial' | 'guided' | 'elements' | 'codex';
+export type CategoryId = 'brainwaves' | 'solfeggio' | 'angel' | 'rife' | 'noise' | 'celestial' | 'guided' | 'elements' | 'codex';
 
 export type ColorTheme = {
   primary: string;
@@ -35,6 +34,15 @@ export interface Frequency {
   colors: ColorTheme;
   premium?: boolean;
   isFeatured?: boolean;
+  // Optional fields for Harmonic Elements
+  atomicNumber?: number;
+  materialUses?: string;
+  biologicalAssociation?: string;
+  energeticAssociation?: string;
+  sacredGeometry?: string;
+  planetaryAssociation?: string;
+  zodiacAssociation?: string;
+  row?: number;
 }
 
 export interface HistoryItem {
@@ -51,6 +59,7 @@ export interface SessionStep {
   duration: number; // in seconds
   frequencyId: string;
   layerFrequencyId?: string;
+  layer3FrequencyId?: string; // For Elemental Mixtures
 }
 
 export interface GuidedSession {
@@ -75,6 +84,7 @@ export type CustomStack = {
   premium?: boolean;
   isFeatured?: boolean;
   categoryId: 'guided';
+  isMixture?: boolean; // Flag for Elemental Mixtures
 };
 
 export type PlayableItem = Frequency | GuidedSession | CustomStack;
@@ -163,6 +173,13 @@ export interface HarmonicElement {
   row: number;
   col: number;
   description: string;
+  atomicNumber: number;
+  materialUses: string;
+  biologicalAssociation: string;
+  energeticAssociation: string;
+  sacredGeometry: string;
+  planetaryAssociation?: string;
+  zodiacAssociation?: string;
 }
 
 // Type for Codex Mod-24 feature

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
-import { Frequency, CategoryId, CustomStack, GuidedSession, ActivityLogItem, TrackableActivityId, HarmonicElement, BenefitCategory, PlayableItem, AppContentData, CodexNode } from './types';
+import { Frequency, CategoryId, CustomStack, GuidedSession, ActivityLogItem, TrackableActivityId, PlayableItem, AppContentData } from './types';
 import { Header } from './components/Header';
 import { HomePage } from './components/HomePage';
 import { CategoryPage } from './components/CategoryPage';
@@ -24,10 +24,10 @@ import { IntegrationsProvider } from './contexts/IntegrationsContext';
 import { OurMissionPage } from './components/OurMissionPage';
 import { PlayerProvider } from './contexts/PlayerContext';
 import { GlobalPlayerUI } from './components/GlobalPlayerUI';
-import { appContentData } from './data/content';
-import { harmonicElements } from './data/elements';
+import { processedAppContent } from './data/content';
+import AIWellnessAgent from './components/AIWellnessAgent';
 import { ToneGeneratorPage } from './components/ToneGeneratorPage';
-import { codexData } from './data/codex';
+import { ElementalMixerPage } from './components/ElementalMixerPage';
 
 const getWeekNumber = (date: Date): number => {
     const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
@@ -65,6 +65,8 @@ const parseRoute = (hash: string): { page: string; id?: string; fragment?: strin
   if (pathname.startsWith('stack/')) return parsed('stack', pathname.substring('stack/'.length));
   if (pathname.startsWith('category/')) return parsed('category', pathname.substring('category/'.length));
   if (pathname === 'create') return parsed('create');
+  if (pathname === 'ai-agent') return parsed('ai-agent');
+  if (pathname === 'elemental-mixer') return parsed('elemental-mixer');
   if (pathname === 'codex-breathing-path') return parsed('codex-breathing-path');
 
   return parsed('dashboard');
@@ -193,7 +195,7 @@ const App: React.FC<{ content: AppContentData }> = ({ content }) => {
   };
 
   const renderContent = () => {
-    if ((page === 'create' || page === 'stack' || page === 'codex-breathing-path') && !isSubscribed) {
+    if ((page === 'create' || page === 'stack' || page === 'codex-breathing-path' || page === 'ai-agent' || page === 'elemental-mixer') && !isSubscribed) {
         return <PricingPage onBack={() => window.location.hash = '#/library'} />;
     }
 
@@ -234,6 +236,10 @@ const App: React.FC<{ content: AppContentData }> = ({ content }) => {
         />;
       case 'create':
         return <CreateStackPage allFrequencies={allFrequencies} categories={content.categories} onSaveStack={handleSaveStack} onBack={() => window.location.hash = '#/library'} />;
+      case 'ai-agent':
+        return <AIWellnessAgent allFrequencies={allFrequencies} onSaveStack={handleSaveStack} onBack={() => window.location.hash = '#/library'} />;
+      case 'elemental-mixer':
+        return <ElementalMixerPage allFrequencies={allFrequencies} onSaveStack={handleSaveStack} onBack={() => window.location.hash = '#/library'} categories={content.categories} />;
       case 'codex-breathing-path':
         return <ToneGeneratorPage onBack={() => window.location.hash = '#/library'} allFrequencies={allFrequencies} />;
       case 'player':
@@ -332,45 +338,6 @@ const AppInitializer: React.FC = () => {
     const { isUserDataLoading } = useUserData();
     const { isInitializing: isSubscriptionInitializing } = useSubscription();
     
-    const processedAppContent = useMemo(() => {
-        const elementFrequencies: Frequency[] = harmonicElements.map((el: HarmonicElement) => ({
-            id: el.id,
-            name: el.name,
-            range: `${el.frequency} Hz`,
-            baseFrequency: el.frequency,
-            // Map the row number (1-9) to a more pleasant beat frequency range (4Hz-12Hz)
-            binauralFrequency: 4 + (el.row - 1),
-            description: el.description,
-            category: BenefitCategory.SPIRITUAL,
-            categoryId: 'elements',
-            defaultMode: 'PURE',
-            availableModes: ['PURE', 'BINAURAL', 'ISOCHRONIC'],
-            colors: appContentData.categories.elements.colors,
-            premium: false,
-        }));
-
-        const codexFrequencies: Frequency[] = codexData.map((node: CodexNode) => ({
-            id: `codex-${node.modulus}`,
-            name: `${node.note} (${node.archetype})`,
-            range: `${node.frequency.toFixed(2)} Hz`,
-            baseFrequency: node.frequency,
-            binauralFrequency: 0,
-            description: node.tag,
-            category: BenefitCategory.SPIRITUAL,
-            categoryId: 'codex',
-            defaultMode: 'PURE',
-            availableModes: ['PURE', 'BINAURAL', 'ISOCHRONIC'],
-            colors: appContentData.categories.codex.colors,
-            premium: true,
-        }));
-
-        const processedContent: AppContentData = {
-            ...appContentData,
-            initial_frequencies: [...appContentData.initial_frequencies, ...elementFrequencies, ...codexFrequencies],
-        };
-        return processedContent;
-    }, []);
-
     const isAppInitializing = isAuthInitializing;
 
     if (isAppInitializing) {

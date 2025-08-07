@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { CustomStack, Frequency, GuidedSession } from '../types';
 import { FrequencyCard } from './FrequencyCard';
-import { GuidedSessionIcon, StackIcon, HeartFilledIcon } from './BohoIcons';
+import { GuidedSessionIcon, StackIcon, HeartFilledIcon, AlchemyIcon } from './BohoIcons';
 import { useSubscription } from '../hooks/useSubscription';
 import { getImageUrl } from '../services/imageService';
 
@@ -47,9 +47,13 @@ const SessionCard: React.FC<{
         return text;
     }, [session.steps, allFrequencies]);
     
-    const subtitle = isCustom 
-      ? `Custom • ${frequencyString}`
-      : `${durationInMinutes} Min • ${frequencyString}`;
+    const subtitle = (session as CustomStack).isMixture 
+      ? 'Elemental Mixture'
+      : (isCustom 
+        ? `Custom • ${frequencyString}`
+        : `${durationInMinutes} Min • ${frequencyString}`);
+
+    const Icon = (session as CustomStack).isMixture ? AlchemyIcon : (isCustom ? StackIcon : GuidedSessionIcon);
 
     return (
         <div className="relative group h-full">
@@ -57,7 +61,7 @@ const SessionCard: React.FC<{
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent group-hover:from-black/80 transition-all duration-300 rounded-2xl"></div>
                 <div className="relative z-10">
                     <div className='flex items-center gap-3 mb-2'>
-                        {isCustom ? <StackIcon className="w-6 h-6 text-white/80"/> : <GuidedSessionIcon className="w-6 h-6 text-white/80"/>}
+                        <Icon className="w-6 h-6 text-white/80"/>
                         <p className='text-xs font-bold uppercase tracking-wider text-white/80'>{subtitle}</p>
                     </div>
                     <p className="font-display font-bold text-white drop-shadow-md truncate">{session.title}</p>

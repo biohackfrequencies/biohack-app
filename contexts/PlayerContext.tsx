@@ -1,3 +1,5 @@
+
+
 import React, { createContext, useContext, useState, useCallback, ReactNode, useEffect, useRef } from 'react';
 import { Frequency, GuidedSession, CustomStack, SoundGenerationMode, ActivityLogItem } from '../types';
 import { useBinauralBeat } from '../hooks/useBinauralBeat';
@@ -16,8 +18,10 @@ interface PlayerContextType extends Omit<UseBinauralBeatReturn, 'startPlayback' 
     allFrequenciesData: Frequency[],
     mainAudioFreq: Frequency,
     mainMode: SoundGenerationMode,
-    layerFreq: Frequency | null,
-    layerMode: SoundGenerationMode,
+    layer2Freq: Frequency | null,
+    layer2Mode: SoundGenerationMode,
+    layer3Freq: Frequency | null,
+    layer3Mode: SoundGenerationMode,
     options?: { enableBreathPanner?: boolean }
   ) => void;
   pause: () => void;
@@ -99,15 +103,13 @@ export const PlayerProvider: React.FC<{ children: ReactNode }> = ({ children }) 
     if (intervalRef.current) clearInterval(intervalRef.current);
     finalizeLogItem();
     audioHook.stop();
-    breathingHook.stopGuide();
-    if(isBreathPanningActive) audioHook.disableBreathPanner();
-    setIsBreathPanningActive(false);
+    breathingHook.stopGuide(); // This will also handle disabling breath panner via its own effect.
     setCurrentlyPlayingItem(null);
     setSessionStepIndex(0);
     setSessionTimeInStep(0);
     totalSessionTimeElapsedRef.current = 0;
     setIs8dEnabled(false);
-  }, [audioHook, breathingHook, finalizeLogItem, isBreathPanningActive]);
+  }, [audioHook, breathingHook, finalizeLogItem]);
 
   const pause = useCallback(() => {
     finalizeLogItem();
@@ -127,8 +129,10 @@ export const PlayerProvider: React.FC<{ children: ReactNode }> = ({ children }) 
     allFrequenciesData: Frequency[],
     mainAudioFreq: Frequency,
     mainMode: SoundGenerationMode,
-    layerFreq: Frequency | null,
-    layerMode: SoundGenerationMode,
+    layer2Freq: Frequency | null,
+    layer2Mode: SoundGenerationMode,
+    layer3Freq: Frequency | null,
+    layer3Mode: SoundGenerationMode,
     options?: { enableBreathPanner?: boolean }
   ) => {
     const isNewItem = currentlyPlayingItem?.id !== itemToPlay.id;
@@ -148,21 +152,45 @@ export const PlayerProvider: React.FC<{ children: ReactNode }> = ({ children }) 
     setCurrentlyPlayingItem(itemToPlay);
     allFrequenciesRef.current = allFrequenciesData;
     
-    const panningConfig = is8dEnabled && !options?.enableBreathPanner 
+    const shouldEnableBreathPanner = options?.enableBreathPanner || isBreathPanningActive;
+    const panningConfig = is8dEnabled && !shouldEnableBreathPanner
         ? { isEnabled: true, speed: panningSpeed, depth: panningDepth }
         : { isEnabled: false, speed: 0, depth: 0 };
 
-    if(options?.enableBreathPanner) {
-        audioHook.enableBreathPanner('main', 5); // pan main tone with radius 5
+    if (shouldEnableBreathPanner) {
+        audioHook.enableBreathPanner('main', 5);
         setIsBreathPanningActive(true);
     } else {
-        if(isBreathPanningActive) audioHook.disableBreathPanner();
+        if (isBreathPanningActive) audioHook.disableBreathPanner();
         setIsBreathPanningActive(false);
     }
     
-    audioHook.startPlayback(mainAudioFreq, mainMode, layerFreq, layerMode, panningConfig);
+    audioHook.startPlayback(mainAudioFreq, mainMode, layer2Freq, layer2Mode, layer3Freq, layer3Mode, panningConfig);
 
   }, [audioHook, breathingHook, currentlyPlayingItem?.id, logSessionActivity, finalizeLogItem, is8dEnabled, panningSpeed, panningDepth, isBreathPanningActive]);
+  
+  const startGuide = useCallback((pattern) => {
+      breathingHook.startGuide(pattern);
+      if (audioHook.isPlaying && is8dEnabled && currentlyPlayingItem && !('steps' in currentlyPlayingItem)) {
+          audioHook.enableBreathPanner('main', 5);
+          setIsBreathPanningActive(true);
+      }
+  }, [breathingHook, audioHook, is8dEnabled, currentlyPlayingItem]);
+
+  const stopGuide = useCallback(() => {
+      breathingHook.stopGuide();
+      if (isBreathPanningActive) {
+          audioHook.disableBreathPanner();
+          setIsBreathPanningActive(false);
+          if (is8dEnabled) {
+              audioHook.set8dPanning('main', true, panningSpeed, panningDepth);
+              if(audioHook.isLayer2Active) {
+                audioHook.set8dPanning('layer', true, panningSpeed, panningDepth);
+              }
+          }
+      }
+  }, [breathingHook, audioHook, isBreathPanningActive, is8dEnabled, panningSpeed, panningDepth]);
+
 
   const toggleLayer = useCallback((freq: Frequency | null, mode: SoundGenerationMode) => {
     audioHook.toggleLayer(freq, mode, is8dEnabled, panningSpeed, panningDepth);
@@ -179,10 +207,8 @@ export const PlayerProvider: React.FC<{ children: ReactNode }> = ({ children }) 
         return;
       }
 
-      // Clear any existing timers before setting new ones
       if (intervalRef.current) clearInterval(intervalRef.current);
 
-      // Interval for UI timer update
       const uiTimer = setInterval(() => {
         setSessionTimeInStep(t => {
             let elapsedBeforeStep = 0;
@@ -194,13 +220,13 @@ export const PlayerProvider: React.FC<{ children: ReactNode }> = ({ children }) 
         });
       }, 1000);
 
-      // Timeout for the actual step transition
       const transitionTimer = setTimeout(() => {
         const nextStepIndex = stepIndex + 1;
         if (nextStepIndex < session.steps.length) {
           const nextStep = session.steps[nextStepIndex];
           const mainFreq = allFrequenciesRef.current.find(f => f.id === nextStep.frequencyId);
-          const layerFreq = nextStep.layerFrequencyId ? allFrequenciesRef.current.find(f => f.id === nextStep.layerFrequencyId) ?? null : null;
+          const layer2Freq = nextStep.layerFrequencyId ? allFrequenciesRef.current.find(f => f.id === nextStep.layerFrequencyId) ?? null : null;
+          const layer3Freq = nextStep.layer3FrequencyId ? allFrequenciesRef.current.find(f => f.id === nextStep.layer3FrequencyId) ?? null : null;
           
           if (mainFreq) {
             const panningConfig = is8dEnabled && !isBreathPanningActive 
@@ -208,7 +234,9 @@ export const PlayerProvider: React.FC<{ children: ReactNode }> = ({ children }) 
                 : { isEnabled: false, speed: 0, depth: 0 };
 
             audioHook.startPlayback(
-              mainFreq, mainFreq.defaultMode, layerFreq, layerFreq?.defaultMode || 'BINAURAL',
+              mainFreq, mainFreq.defaultMode,
+              layer2Freq, layer2Freq?.defaultMode || 'BINAURAL',
+              layer3Freq, layer3Freq?.defaultMode || 'BINAURAL',
               panningConfig
             );
             setSessionStepIndex(nextStepIndex);
@@ -221,14 +249,13 @@ export const PlayerProvider: React.FC<{ children: ReactNode }> = ({ children }) 
         }
       }, (currentStep.duration - sessionTimeInStep) * 1000);
 
-      intervalRef.current = uiTimer; // Store the interval ID to clear it
+      intervalRef.current = uiTimer;
 
       return () => {
         clearInterval(uiTimer);
         clearTimeout(transitionTimer);
       };
     } else {
-      // Clean up if not playing a session
       if (intervalRef.current) clearInterval(intervalRef.current);
     }
   }, [audioHook.isPlaying, currentlyPlayingItem, sessionStepIndex, audioHook, stop, is8dEnabled, panningSpeed, panningDepth, sessionTimeInStep, isBreathPanningActive]);
@@ -246,7 +273,6 @@ export const PlayerProvider: React.FC<{ children: ReactNode }> = ({ children }) 
     }
   }, [is8dEnabled, panningSpeed, panningDepth, audioHook.isPlaying, audioHook.isLayer2Active, audioHook.set8dPanning, isBreathPanningActive]);
 
-  // Effect to sync breath panner
   useEffect(() => {
     if (isBreathPanningActive && audioHook.isPlaying && breathingHook.activePattern) {
         audioHook.updateBreathPanner('main', breathingHook.phaseProgress);
@@ -262,6 +288,8 @@ export const PlayerProvider: React.FC<{ children: ReactNode }> = ({ children }) 
     stop,
     toggleLayer,
     ...breathingHook,
+    startGuide,
+    stopGuide,
     currentlyPlayingItem,
     sessionStepIndex,
     sessionTimeInStep,

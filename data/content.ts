@@ -1,6 +1,7 @@
-
-import type { AppContentData } from '../types';
+import type { AppContentData, Frequency, HarmonicElement, CodexNode } from '../types';
 import { BenefitCategory } from '../types';
+import { harmonicElements } from './elements';
+import { codexData } from './codex';
 
 export const appContentData: AppContentData = {
   "categories": {
@@ -13,11 +14,6 @@ export const appContentData: AppContentData = {
       "title": "Codex Harmonics",
       "description": "Frequencies from the Mod-24 wheel.",
       "colors": { "primary": "#e9d5ff", "secondary": "#c4b5fd", "accent": "#a855f7" }
-    },
-    "beauty": {
-      "title": "Sonic Bio-Regenesis",
-      "description": "Acoustic protocols designed to support cellular vitality, rejuvenation, and the body's natural regenerative processes.",
-      "colors": { "primary": "#fda4af", "secondary": "#fca5a5", "accent": "#f9a8d4" }
     },
     "guided": {
       "title": "Guided Protocols",
@@ -57,6 +53,18 @@ export const appContentData: AppContentData = {
   },
   "guided_sessions": [
     {
+      "id": "triad-grounding", "title": "The Grounding Triad", "categoryId": "elements", "description": "An elemental sequence of Carbon, Iron, and Zinc to establish a deep connection to the Earth, fortify your core stability, and protect your energetic field.", "steps": [ { "title": "Foundation: Carbon", "description": "Establish a stable base with the cornerstone of organic life.", "duration": 180, "frequencyId": "carbon" }, { "title": "Strength: Iron", "description": "Build inner strength and magnetic grounding.", "duration": 180, "frequencyId": "iron" }, { "title": "Protection: Zinc", "description": "Fortify your energetic defenses and seal your field.", "duration": 180, "frequencyId": "zinc" } ], "colors": { "primary": "#a7f3d0", "secondary": "#86efac", "accent": "#4ade80" }, "premium": false
+    },
+    {
+      "id": "triad-vitality", "title": "The Vitality Triad", "categoryId": "elements", "description": "A sequence of Hydrogen, Oxygen, and Sulphur to spark new potential, purify your system, and energize your entire bio-field with life force.", "steps": [ { "title": "Spark: Hydrogen", "description": "Ignite pure potential and new beginnings.", "duration": 180, "frequencyId": "hydrogen" }, { "title": "Purify: Oxygen", "description": "Cleanse and invigorate with life-sustaining energy.", "duration": 180, "frequencyId": "oxygen" }, { "title": "Energize: Sulphur", "description": "Transmute old energy and catalyze your inner fire.", "duration": 180, "frequencyId": "sulphur" } ], "colors": { "primary": "#fecaca", "secondary": "#fda4af", "accent": "#f87171" }, "premium": true
+    },
+    {
+      "id": "triad-alchemical", "title": "The Alchemical Triad", "categoryId": "elements", "description": "An advanced sequence of Silver, Gold, and Platinum to enhance intuition, connect with divine wisdom, and elevate your consciousness to higher states.", "steps": [ { "title": "Intuition: Silver", "description": "Tune into the reflective, intuitive energy of the divine feminine.", "duration": 180, "frequencyId": "silver" }, { "title": "Enlightenment: Gold", "description": "Resonate with solar radiance and the purity of the perfected soul.", "duration": 180, "frequencyId": "gold" }, { "title": "Ascension: Platinum", "description": "Purify the energetic body and attract higher-vibrational experiences.", "duration": 180, "frequencyId": "platinum" } ], "colors": { "primary": "#e7e5e4", "secondary": "#fcd34d", "accent": "#d6d3d1" }, "premium": true
+    },
+    {
+      "id": "triad-ethereal", "title": "The Ethereal Bridge", "categoryId": "elements", "description": "A sequence of Helium, Neon, and Argon to lift the spirit, illuminate inner truths, and create a state of profound, stable calm for deep meditation.", "steps": [ { "title": "Levity: Helium", "description": "Lift your spirit with the vibration of joy and lightheartedness.", "duration": 180, "frequencyId": "helium" }, { "title": "Illumination: Neon", "description": "Shine a light on your inner world with radiant brilliance.", "duration": 180, "frequencyId": "neon" }, { "title": "Stillness: Argon", "description": "Settle into a state of noble stability and inner quiet.", "duration": 180, "frequencyId": "argon" } ], "colors": { "primary": "#e0f2fe", "secondary": "#cffafe", "accent": "#22d3ee" }, "premium": true
+    },
+    {
       "id": "earth-resonance-grounding", "title": "Earth Resonance Grounding", "categoryId": "guided", "description": "A deeply grounding protocol that combines the Earth's Schumann Resonance with calming Alpha waves and gentle rain sounds to align your bio-field.", "steps": [ { "title": "Calm & Settle", "description": "Ease into a state of relaxation with gentle alpha waves and the soothing sound of rain.", "duration": 300, "frequencyId": "alpha", "layerFrequencyId": "ambient-rain" }, { "title": "Earth Attunement", "description": "Tune into the planet's heartbeat with the 7.83Hz Schumann Resonance, layered with the magnetic pulse of Iron to deeply anchor your energy and promote core stability.", "duration": 300, "frequencyId": "schumann-resonance", "layerFrequencyId": "iron" }, { "title": "Harmonize & Integrate", "description": "Combine alpha waves and the Schumann Resonance, grounded by the foundational energy of Carbon, to harmonize your energy field and integrate the benefits.", "duration": 300, "frequencyId": "alpha", "layerFrequencyId": "carbon" } ], "colors": { "primary": "#86efac", "secondary": "#bbf7d0", "accent": "#4ade80" }, "premium": false
     },
     {
@@ -66,28 +74,28 @@ export const appContentData: AppContentData = {
       "id": "metabolic-harmony-protocol", "title": "Metabolic Harmony Protocol", "categoryId": "guided", "description": "A session to support a healthy metabolism, reduce stress-related cravings, and encourage a positive mindset towards your wellness goals.", "steps": [ { "title": "Reduce Cortisol", "description": "Begin with calming Alpha waves, enhanced by the restorative frequency of Magnesium, to lower stress—a key factor in metabolic balance.", "duration": 300, "frequencyId": "alpha", "layerFrequencyId": "magnesium" }, { "title": "Metabolic Resonance", "description": "Focus on the 1550 Hz Rife frequency, harmonized with the balancing energy of Chromium, to support thyroid and adrenal function.", "duration": 300, "frequencyId": "rife-metabolism-support", "layerFrequencyId": "chromium" }, { "title": "Mindful Motivation", "description": "Conclude with the 417 Hz Solfeggio frequency to facilitate positive change and reinforce healthy habits.", "duration": 300, "frequencyId": "solfeggio-417-change" } ], "colors": { "primary": "#fed7aa", "secondary": "#fde047", "accent": "#fb923c" }, "premium": true
     },
     {
-      "id": "pre-workout-ignition", "title": "Pre-Workout Ignition", "categoryId": "beauty", "description": "An energizing protocol using Beta waves and the driving frequency of Mars to prime your mind and body for peak physical performance.", "steps": [ { "title": "Awaken Focus", "description": "Start with Beta waves to bring sharp, focused energy to your mind.", "duration": 300, "frequencyId": "beta" }, { "title": "Ignite Drive", "description": "Introduce the resonant frequency of Mars, layered with the grounding strength of Iron, to boost motivation and physical drive.", "duration": 300, "frequencyId": "celestial-mars", "layerFrequencyId": "iron" } ], "colors": { "primary": "#fecaca", "secondary": "#fca5a5", "accent": "#ef4444" }, "premium": true
+      "id": "pre-workout-ignition", "title": "Pre-Workout Ignition", "categoryId": "guided", "description": "An energizing protocol using Beta waves and the driving frequency of Mars to prime your mind and body for peak physical performance.", "steps": [ { "title": "Awaken Focus", "description": "Start with Beta waves to bring sharp, focused energy to your mind.", "duration": 300, "frequencyId": "beta" }, { "title": "Ignite Drive", "description": "Introduce the resonant frequency of Mars, layered with the grounding strength of Iron, to boost motivation and physical drive.", "duration": 300, "frequencyId": "celestial-mars", "layerFrequencyId": "iron" } ], "colors": { "primary": "#fecaca", "secondary": "#fca5a5", "accent": "#ef4444" }, "premium": true
     },
     {
-      "id": "peak-performance-endurance", "title": "Peak Performance Endurance", "categoryId": "beauty", "description": "A session for maintaining focus and energy during your workout. Combines Beta and Gamma waves for sustained concentration and peak performance.", "steps": [ { "title": "Sustained Focus", "description": "Lock in with a steady Beta wave protocol, infused with the vital energy of Oxygen, to maintain alertness and cellular respiration.", "duration": 600, "frequencyId": "beta", "layerFrequencyId": "oxygen" }, { "title": "Peak Performance", "description": "Layer in 40Hz Gamma waves to sharpen cognitive processing and push your limits.", "duration": 600, "frequencyId": "beta", "layerFrequencyId": "gamma-40hz-precise" } ], "colors": { "primary": "#fdba74", "secondary": "#fb923c", "accent": "#f97316" }, "premium": true
+      "id": "peak-performance-endurance", "title": "Peak Performance Endurance", "categoryId": "guided", "description": "A session for maintaining focus and energy during your workout. Combines Beta and Gamma waves for sustained concentration and peak performance.", "steps": [ { "title": "Sustained Focus", "description": "Lock in with a steady Beta wave protocol, infused with the vital energy of Oxygen, to maintain alertness and cellular respiration.", "duration": 600, "frequencyId": "beta", "layerFrequencyId": "oxygen" }, { "title": "Peak Performance", "description": "Layer in 40Hz Gamma waves to sharpen cognitive processing and push your limits.", "duration": 600, "frequencyId": "beta", "layerFrequencyId": "gamma-40hz-precise" } ], "colors": { "primary": "#fdba74", "secondary": "#fb923c", "accent": "#f97316" }, "premium": true
     },
     {
-      "id": "post-workout-recovery", "title": "Post-Workout Recovery", "categoryId": "beauty", "description": "A cool-down protocol to ease muscle soreness, reduce inflammation, and shift your nervous system into a restorative state.", "steps": [ { "title": "Inflammation Reduction", "description": "Use a targeted Rife frequency for inflammation, combined with the foundational energy of Carbon, to begin the recovery process.", "duration": 480, "frequencyId": "rife-inflammation", "layerFrequencyId": "carbon" }, { "title": "Deep Relaxation", "description": "Transition to Theta waves to promote deep physical and mental relaxation, allowing your body to repair.", "duration": 600, "frequencyId": "theta" } ], "colors": { "primary": "#93c5fd", "secondary": "#a5b4fc", "accent": "#60a5fa" }, "premium": true
+      "id": "post-workout-recovery", "title": "Post-Workout Recovery", "categoryId": "guided", "description": "A cool-down protocol to ease muscle soreness, reduce inflammation, and shift your nervous system into a restorative state.", "steps": [ { "title": "Inflammation Reduction", "description": "Use a targeted Rife frequency for inflammation, combined with the foundational energy of Carbon, to begin the recovery process.", "duration": 480, "frequencyId": "rife-inflammation", "layerFrequencyId": "carbon" }, { "title": "Deep Relaxation", "description": "Transition to Theta waves to promote deep physical and mental relaxation, allowing your body to repair.", "duration": 600, "frequencyId": "theta" } ], "colors": { "primary": "#93c5fd", "secondary": "#a5b4fc", "accent": "#60a5fa" }, "premium": true
     },
     {
-      "id": "oxygenation-circulation-flow", "title": "Oxygenation & Circulation Flow", "categoryId": "beauty", "description": "A session using specific frequencies to support healthy blood flow, oxygenation, and cellular vitality.", "steps": [ { "title": "Circulation Support", "description": "Use the 727 Hz Rife frequency, a general tonic for vitality, layered with the magnetic pulse of Iron to support blood health.", "duration": 450, "frequencyId": "rife-727", "layerFrequencyId": "iron" }, { "title": "Cellular Oxygenation", "description": "Conclude with the vibrant and purifying frequency of Oxygen to enhance cellular respiration and energy.", "duration": 450, "frequencyId": "oxygen" } ], "colors": { "primary": "#fecaca", "secondary": "#fda4af", "accent": "#f87171" }, "premium": true
+      "id": "oxygenation-circulation-flow", "title": "Oxygenation & Circulation Flow", "categoryId": "guided", "description": "A session using specific frequencies to support healthy blood flow, oxygenation, and cellular vitality.", "steps": [ { "title": "Circulation Support", "description": "Use the 727 Hz Rife frequency, a general tonic for vitality, layered with the magnetic pulse of Iron to support blood health.", "duration": 450, "frequencyId": "rife-727", "layerFrequencyId": "iron" }, { "title": "Cellular Oxygenation", "description": "Conclude with the vibrant and purifying frequency of Oxygen to enhance cellular respiration and energy.", "duration": 450, "frequencyId": "oxygen" } ], "colors": { "primary": "#fecaca", "secondary": "#fda4af", "accent": "#f87171" }, "premium": true
     },
     {
-      "id": "mitochondrial-energy-protocol", "title": "Mitochondrial Energy Protocol", "categoryId": "beauty", "description": "A protocol designed to support your cellular powerhouses, the mitochondria, for enhanced energy and vitality.", "steps": [ { "title": "Cellular Resonance", "description": "A broad-spectrum Rife frequency to stimulate general cellular vitality.", "duration": 360, "frequencyId": "rife-880" }, { "title": "Energetic Charge", "description": "Combine the 528 Hz 'Miracle Tone' with the vital spark of Hydrogen to charge your cells with life force.", "duration": 360, "frequencyId": "solfeggio-528-repair", "layerFrequencyId": "hydrogen" } ], "colors": { "primary": "#fde047", "secondary": "#facc15", "accent": "#eab308" }, "premium": true
+      "id": "mitochondrial-energy-protocol", "title": "Mitochondrial Energy Protocol", "categoryId": "guided", "description": "A protocol designed to support your cellular powerhouses, the mitochondria, for enhanced energy and vitality.", "steps": [ { "title": "Cellular Resonance", "description": "A broad-spectrum Rife frequency to stimulate general cellular vitality.", "duration": 360, "frequencyId": "rife-880" }, { "title": "Energetic Charge", "description": "Combine the 528 Hz 'Miracle Tone' with the vital spark of Hydrogen to charge your cells with life force.", "duration": 360, "frequencyId": "solfeggio-528-repair", "layerFrequencyId": "hydrogen" } ], "colors": { "primary": "#fde047", "secondary": "#facc15", "accent": "#eab308" }, "premium": true
     },
     {
-      "id": "red-light-synergy", "title": "Red Light Therapy Synergy", "categoryId": "beauty", "description": "An audio protocol to complement your Red Light Therapy sessions, promoting collagen production and enhancing cellular absorption of light.", "steps": [ { "title": "Cellular Repair", "description": "The 285 Hz Solfeggio frequency supports tissue healing and cellular regeneration.", "duration": 450, "frequencyId": "solfeggio-285-healing" }, { "title": "Structural Support", "description": "The Rife frequency for fascia helps support the skin's underlying structural matrix, enhancing the effects of light therapy.", "duration": 450, "frequencyId": "rife-fascia" } ], "colors": { "primary": "#fca5a5", "secondary": "#f87171", "accent": "#ef4444" }, "premium": true
+      "id": "red-light-synergy", "title": "Red Light Therapy Synergy", "categoryId": "guided", "description": "An audio protocol to complement your Red Light Therapy sessions, promoting collagen production and enhancing cellular absorption of light.", "steps": [ { "title": "Cellular Repair", "description": "The 285 Hz Solfeggio frequency supports tissue healing and cellular regeneration.", "duration": 450, "frequencyId": "solfeggio-285-healing" }, { "title": "Structural Support", "description": "The Rife frequency for fascia helps support the skin's underlying structural matrix, enhancing the effects of light therapy.", "duration": 450, "frequencyId": "rife-fascia" } ], "colors": { "primary": "#fca5a5", "secondary": "#f87171", "accent": "#ef4444" }, "premium": true
     },
     {
-      "id": "post-procedure-recovery", "title": "Post-Procedure Recovery", "categoryId": "beauty", "description": "A gentle session to support the body's natural healing process after cosmetic procedures, helping to reduce inflammation and promote tissue repair.", "steps": [ { "title": "Soothe & Calm", "description": "Begin with a Rife frequency for inflammation, layered with the calming properties of Lithium.", "duration": 600, "frequencyId": "rife-inflammation", "layerFrequencyId": "lithium" }, { "title": "Tissue Repair", "description": "Use the 285 Hz Solfeggio frequency, associated with tissue healing, to support cellular regeneration.", "duration": 600, "frequencyId": "solfeggio-285-healing" } ], "colors": { "primary": "#d8b4fe", "secondary": "#c084fc", "accent": "#a855f7" }, "premium": true
+      "id": "post-procedure-recovery", "title": "Post-Procedure Recovery", "categoryId": "guided", "description": "A gentle session to support the body's natural healing process after cosmetic procedures, helping to reduce inflammation and promote tissue repair.", "steps": [ { "title": "Soothe & Calm", "description": "Begin with a Rife frequency for inflammation, layered with the calming properties of Lithium.", "duration": 600, "frequencyId": "rife-inflammation", "layerFrequencyId": "lithium" }, { "title": "Tissue Repair", "description": "Use the 285 Hz Solfeggio frequency, associated with tissue healing, to support cellular regeneration.", "duration": 600, "frequencyId": "solfeggio-285-healing" } ], "colors": { "primary": "#d8b4fe", "secondary": "#c084fc", "accent": "#a855f7" }, "premium": true
     },
     {
-      "id": "cellular-longevity-protocol", "title": "Cellular Longevity Protocol", "categoryId": "beauty", "description": "A session to support graceful aging by targeting NAD+ levels and promoting deep cellular restoration during Delta wave states.", "steps": [ { "title": "NAD+ Boost", "description": "A specialized frequency protocol designed to support the body's natural production of NAD+, a key molecule in longevity.", "duration": 720, "frequencyId": "nad-plus-booster" }, { "title": "Deep Restoration", "description": "Enter a deep Delta wave state, the brain's primary state for physical repair and cellular cleansing (autophagy).", "duration": 600, "frequencyId": "delta" } ], "colors": { "primary": "#a5f3fc", "secondary": "#67e8f9", "accent": "#22d3ee" }, "premium": true
+      "id": "cellular-longevity-protocol", "title": "Cellular Longevity Protocol", "categoryId": "guided", "description": "A session to support graceful aging by targeting NAD+ levels and promoting deep cellular restoration during Delta wave states.", "steps": [ { "title": "NAD+ Boost", "description": "A specialized frequency protocol designed to support the body's natural production of NAD+, a key molecule in longevity.", "duration": 720, "frequencyId": "nad-plus-booster" }, { "title": "Deep Restoration", "description": "Enter a deep Delta wave state, the brain's primary state for physical repair and cellular cleansing (autophagy).", "duration": 600, "frequencyId": "delta" } ], "colors": { "primary": "#a5f3fc", "secondary": "#67e8f9", "accent": "#22d3ee" }, "premium": true
     },
     {
       "id": "adhd-focus-protocol", "title": "ADHD Focus Protocol", "categoryId": "guided", "description": "A protocol that starts with calming Theta waves to quiet a busy mind and then transitions to Beta waves to support sustained, focused attention.", "steps": [ { "title": "Calm the Mind", "description": "Begin with Theta waves to reduce mental chatter and create a state of relaxed awareness.", "duration": 600, "frequencyId": "theta" }, { "title": "Engage Focus", "description": "Transition to a steady Beta wave frequency to promote alertness and concentration.", "duration": 900, "frequencyId": "beta" } ], "colors": { "primary": "#e0e7ff", "secondary": "#c7d2fe", "accent": "#818cf8" }, "premium": true
@@ -152,7 +160,7 @@ export const appContentData: AppContentData = {
     {
       "id": "beauty-facelift",
       "title": "Acoustic Face Lift",
-      "categoryId": "beauty",
+      "categoryId": "guided",
       "description": "A session using Solfeggio, Alpha, and Delta waves to support facial muscle tone and skin vitality.",
       "steps": [
         { "title": "Cellular Preparation", "description": "Begin with the 528 Hz 'Miracle Tone', layered with calming Alpha waves, to prepare skin cells for rejuvenation by reducing stress.", "duration": 300, "frequencyId": "solfeggio-528-repair", "layerFrequencyId": "alpha" },
@@ -164,7 +172,7 @@ export const appContentData: AppContentData = {
     {
       "id": "beauty-collagen",
       "title": "Collagen & Elastin Support",
-      "categoryId": "beauty",
+      "categoryId": "guided",
       "description": "A protocol with Delta waves and bio-resonance frequencies to energetically support the body's natural production of collagen and elastin.",
       "steps": [
         { "title": "Deep Relaxation & Priming", "description": "Start with deep Delta waves, layered with the 285 Hz tissue healing frequency, to put the body in an optimal restorative state.", "duration": 360, "frequencyId": "delta", "layerFrequencyId": "solfeggio-285-healing" },
@@ -176,7 +184,7 @@ export const appContentData: AppContentData = {
     {
       "id": "beauty-hair-growth",
       "title": "Hair Growth & Restoration",
-      "categoryId": "beauty",
+      "categoryId": "guided",
       "description": "A session with Rife and Solfeggio frequencies to support scalp circulation and healthy hair follicle function.",
       "steps": [
         { "title": "Scalp Circulation Support", "description": "Use a Rife frequency for vitality (727 Hz), layered with Iron's magnetic energy, to support healthy blood flow to the scalp.", "duration": 300, "frequencyId": "rife-727", "layerFrequencyId": "iron" },
@@ -942,4 +950,48 @@ export const appContentData: AppContentData = {
     { "quote": "Change your frequency, change your life.", "author": "Anonymous" },
     { "quote": "Music is the mediator between the spiritual and the sensual life.", "author": "Ludwig van Beethoven" }
   ]
+};
+
+const elementFrequencies: Frequency[] = harmonicElements.map((el: HarmonicElement) => ({
+    id: el.id,
+    name: el.name,
+    range: `${el.frequency} Hz`,
+    baseFrequency: el.frequency,
+    binauralFrequency: 4 + (el.row - 1),
+    description: el.description,
+    category: BenefitCategory.SPIRITUAL,
+    categoryId: 'elements',
+    defaultMode: 'PURE',
+    availableModes: ['PURE', 'BINAURAL', 'ISOCHRONIC'],
+    colors: appContentData.categories.elements.colors,
+    premium: false,
+    // Pass through the enriched data
+    atomicNumber: el.atomicNumber,
+    materialUses: el.materialUses,
+    biologicalAssociation: el.biologicalAssociation,
+    energeticAssociation: el.energeticAssociation,
+    sacredGeometry: el.sacredGeometry,
+    planetaryAssociation: el.planetaryAssociation,
+    zodiacAssociation: el.zodiacAssociation,
+    row: el.row,
+}));
+
+const codexFrequencies: Frequency[] = codexData.map((node: CodexNode) => ({
+    id: `codex-${node.modulus}`,
+    name: `${node.note} (${node.archetype})`,
+    range: `${node.frequency.toFixed(2)} Hz`,
+    baseFrequency: node.frequency,
+    binauralFrequency: 0,
+    description: node.tag,
+    category: BenefitCategory.SPIRITUAL,
+    categoryId: 'codex',
+    defaultMode: 'PURE',
+    availableModes: ['PURE', 'BINAURAL', 'ISOCHRONIC'],
+    colors: appContentData.categories.codex.colors,
+    premium: true,
+}));
+
+export const processedAppContent: AppContentData = {
+    ...appContentData,
+    initial_frequencies: [...appContentData.initial_frequencies, ...elementFrequencies, ...codexFrequencies],
 };

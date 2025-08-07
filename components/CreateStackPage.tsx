@@ -172,6 +172,7 @@ export const CreateStackPage: React.FC<CreateStackPageProps> = ({
                     currentMainFrequencyId={steps[editingStepIndex]?.frequencyId}
                     title="Select a Layer Frequency"
                     isSubscribed={isSubscribed}
+                    categories={categories}
                 />
             )}
             <button onClick={onBack} className="flex items-center gap-2 text-slate-600 dark:text-dark-text-muted hover:text-slate-900 dark:hover:text-dark-text-primary transition-colors self-start" aria-label="Back">

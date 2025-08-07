@@ -36,7 +36,7 @@ export const CodexUniversalisField: React.FC<CodexUniversalisFieldProps> = ({ no
 
         if (!isPlaying || !isCodexTonePlaying) {
             // Start new playback if nothing is playing, or if a non-Codex sound is playing
-            startPlayback(frequencyToPlay, allFrequencies, frequencyToPlay, 'PURE', null, 'PURE');
+            startPlayback(frequencyToPlay, allFrequencies, frequencyToPlay, 'PURE', null, 'PURE', null, 'PURE');
             setMainFrequency(frequencyToPlay);
             setLayeredFrequency(null);
         } else {

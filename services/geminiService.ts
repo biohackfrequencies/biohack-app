@@ -55,6 +55,6 @@ export const getAiInsight = async (healthData: HealthDataSummary, activitySummar
         return result.insight || "Couldn't generate an insight right now. Check back later!";
     } catch (error) {
         console.error("Error generating AI insight:", error);
-        return "Couldn't generate an insight right now. Check back later!";
+        return "Couldn't generate an insight at this time.";
     }
 };

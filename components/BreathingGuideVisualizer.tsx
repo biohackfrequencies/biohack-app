@@ -1,3 +1,4 @@
+
 import React from 'react';
 
 export const BreathingGuideVisualizer: React.FC<{
@@ -6,12 +7,15 @@ export const BreathingGuideVisualizer: React.FC<{
     time: number;
     color: string;
 }> = ({ phase, progress, time, color }) => {
+    // Apply an easing function to the progress for a more organic pulse
+    const easedProgress = 0.5 - 0.5 * Math.cos(progress * Math.PI);
+
     // Optimized style to be less resource-intensive on mobile browsers
     const visualizerStyle = {
         '--glow-color': color,
         // Scale from a smaller base to reduce repaint area
-        transform: `scale(${0.6 + progress * 0.4})`,
-        opacity: 0.5 + progress * 0.5,
+        transform: `scale(${0.6 + easedProgress * 0.4})`,
+        opacity: 0.5 + easedProgress * 0.5,
         // Hint to the browser that these properties will change, allowing for optimization
         willChange: 'transform, opacity',
     } as React.CSSProperties;

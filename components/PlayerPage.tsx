@@ -1,5 +1,3 @@
-
-
 import React, { useState, useCallback, useEffect, useMemo, useRef } from 'react';
 import { Frequency, SoundGenerationMode, CategoryId, BREATHING_PATTERNS, BreathingPattern, ColorTheme, PlayableItem, GuidedSession, CustomStack, BenefitCategory } from '../types';
 import { Visualizer } from './Visualizer';
@@ -25,9 +23,10 @@ const getScienceLink = (categoryId: CategoryId) => {
         case 'solfeggio': return '#/science#solfeggio';
         case 'rife': return '#/science#rife';
         case 'noise': return '#/science#noise';
-        case 'beauty': return '#/science#beauty';
         case 'angel': return '#/science#angel';
         case 'celestial': return '#/science#schumann';
+        case 'elements': return '#/science#elements';
+        case 'codex': return '#/science#codex';
         default: return '#/science';
     }
 };
@@ -48,15 +47,95 @@ const modeDescriptions: Record<string, React.ReactNode> = {
   AMBIENCE: 'A spectrum of sound, including colored noises and natural soundscapes, designed to mask other noises, aiding focus and relaxation.',
 };
 
+const ElementInfoTabs: React.FC<{ element: Frequency, accentColor: string }> = ({ element, accentColor }) => {
+  const [activeTab, setActiveTab] = useState<'symbolism' | 'science' | 'cosmos'>('symbolism');
+
+  return (
+    <div className="w-full max-w-2xl mx-auto my-6">
+      <div className="flex justify-center border-b border-slate-300/50 dark:border-dark-border/50 mb-4">
+        <button
+          onClick={() => setActiveTab('symbolism')}
+          aria-pressed={activeTab === 'symbolism'}
+          className={`px-4 py-2 font-semibold text-sm transition-colors ${activeTab === 'symbolism' ? 'border-b-2 text-slate-800 dark:text-dark-text-primary' : 'text-slate-500 dark:text-dark-text-muted hover:text-slate-700 dark:hover:text-dark-text-secondary'}`}
+          style={{ borderColor: activeTab === 'symbolism' ? accentColor : 'transparent' }}
+        >
+          Codex Overlay
+        </button>
+        <button
+          onClick={() => setActiveTab('science')}
+          aria-pressed={activeTab === 'science'}
+          className={`px-4 py-2 font-semibold text-sm transition-colors ${activeTab === 'science' ? 'border-b-2 text-slate-800 dark:text-dark-text-primary' : 'text-slate-500 dark:text-dark-text-muted hover:text-slate-700 dark:hover:text-dark-text-secondary'}`}
+          style={{ borderColor: activeTab === 'science' ? accentColor : 'transparent' }}
+        >
+          Science
+        </button>
+        <button
+          onClick={() => setActiveTab('cosmos')}
+          aria-pressed={activeTab === 'cosmos'}
+          className={`px-4 py-2 font-semibold text-sm transition-colors ${activeTab === 'cosmos' ? 'border-b-2 text-slate-800 dark:text-dark-text-primary' : 'text-slate-500 dark:text-dark-text-muted hover:text-slate-700 dark:hover:text-dark-text-secondary'}`}
+          style={{ borderColor: activeTab === 'cosmos' ? accentColor : 'transparent' }}
+        >
+          Cosmos
+        </button>
+      </div>
+
+      <div className="text-center text-slate-700 dark:text-dark-text-secondary p-2 animate-fade-in min-h-[180px]">
+        {activeTab === 'symbolism' && (
+          <div className="space-y-4">
+            <p className="italic">{element.description}</p>
+            <div>
+              <p className="font-bold text-sm uppercase tracking-wider text-slate-500 dark:text-dark-text-muted">Energetic Association</p>
+              <p>{element.energeticAssociation}</p>
+            </div>
+            <div>
+              <p className="font-bold text-sm uppercase tracking-wider text-slate-500 dark:text-dark-text-muted">Biological Association</p>
+              <p>{element.biologicalAssociation}</p>
+            </div>
+             <div>
+              <p className="font-bold text-sm uppercase tracking-wider text-slate-500 dark:text-dark-text-muted">Sacred Geometry</p>
+              <p>{element.sacredGeometry}</p>
+            </div>
+          </div>
+        )}
+        {activeTab === 'science' && (
+          <div className="space-y-4">
+             <div>
+              <p className="font-bold text-sm uppercase tracking-wider text-slate-500 dark:text-dark-text-muted">Atomic Number</p>
+              <p>{element.atomicNumber}</p>
+            </div>
+             <div>
+              <p className="font-bold text-sm uppercase tracking-wider text-slate-500 dark:text-dark-text-muted">Common Material Uses</p>
+              <p>{element.materialUses}</p>
+            </div>
+          </div>
+        )}
+        {activeTab === 'cosmos' && (
+            <div className="space-y-4">
+                <div>
+                    <p className="font-bold text-sm uppercase tracking-wider text-slate-500 dark:text-dark-text-muted">Planetary Association</p>
+                    <p>{element.planetaryAssociation || 'N/A'}</p>
+                </div>
+                <div>
+                    <p className="font-bold text-sm uppercase tracking-wider text-slate-500 dark:text-dark-text-muted">Zodiac Association</p>
+                    <p>{element.zodiacAssociation || 'N/A'}</p>
+                </div>
+            </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+
 export const PlayerPage: React.FC<PlayerPageProps> = ({ 
-    item, allFrequencies, onBack, favorites, toggleFavorite
+    item, allFrequencies, onBack, favorites, toggleFavorite, categories
 }) => {
   const player = usePlayer();
   const { theme } = useTheme();
   const isDarkMode = theme === 'dark' || (theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
   const { 
-    currentlyPlayingItem, isPlaying, isLayer2Active, analyser, 
-    mainVolume, layer2Volume, setMainVolume, setLayer2Volume,
+    currentlyPlayingItem, isPlaying, isLayer2Active, isLayer3Active, analyser, 
+    mainVolume, layer2Volume, layer3Volume, setMainVolume, setLayer2Volume, setLayer3Volume,
     setTimer, startPlayback, pause, resume, toggleLayer, stop,
     activePattern, currentPhase, phaseProgress, phaseTime, startGuide, stopGuide,
     sessionStepIndex, sessionTimeInStep,
@@ -65,7 +144,6 @@ export const PlayerPage: React.FC<PlayerPageProps> = ({
 
   const { isSubscribed } = useSubscription();
   
-  // --- Local State ---
   const [selectedMode, setSelectedMode] = useState<SoundGenerationMode>(('defaultMode' in item) ? item.defaultMode : 'PURE');
   const [shareState, setShareState] = useState<'idle' | 'copied'>('idle');
   const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false);
@@ -95,7 +173,6 @@ export const PlayerPage: React.FC<PlayerPageProps> = ({
     return null;
   });
 
-  // UI Modals / Menus
   const [isTimerMenuOpen, setIsTimerMenuOpen] = useState(false);
   const [activeTimer, setActiveTimer] = useState(0);
   const [timeRemaining, setTimeRemaining] = useState(0);
@@ -105,15 +182,16 @@ export const PlayerPage: React.FC<PlayerPageProps> = ({
 
   const timerEndTimeRef = useRef<number | null>(null);
   
-  // --- Derived State & Memos ---
   const isSession = 'steps' in item;
   const isCurrentItemPlaying = currentlyPlayingItem?.id === item.id;
   const singleFrequency = isSession ? null : item as Frequency;
   const sessionData = isSession ? item as GuidedSession | CustomStack : null;
+  const isElement = item.categoryId === 'elements';
   
   const currentStep = sessionData ? sessionData.steps[sessionStepIndex] : null;
   const mainFrequencyForPlayback = isSession ? allFrequencies.find(f => f.id === currentStep?.frequencyId) : singleFrequency;
-  const layerFrequencyForPlayback = isSession ? allFrequencies.find(f => f.id === currentStep?.layerFrequencyId) : layeredFrequency;
+  const layer2FrequencyForPlayback = isSession ? allFrequencies.find(f => f.id === currentStep?.layerFrequencyId) : layeredFrequency;
+  const layer3FrequencyForPlayback = isSession ? allFrequencies.find(f => f.id === currentStep?.layer3FrequencyId) : null;
 
   const totalDuration = useMemo(() => sessionData ? sessionData.steps.reduce((sum, step) => sum + step.duration, 0) : 0, [sessionData]);
   
@@ -127,14 +205,18 @@ export const PlayerPage: React.FC<PlayerPageProps> = ({
     return elapsed;
   }, [sessionStepIndex, sessionTimeInStep, sessionData, isCurrentItemPlaying]);
 
-  // --- Handlers & Effects ---
-
-  // CRITICAL FIX: If another track is playing when this page loads, stop it.
   useEffect(() => {
     if (currentlyPlayingItem && currentlyPlayingItem.id !== item.id) {
       stop();
     }
   }, [item.id, currentlyPlayingItem?.id, stop]);
+  
+  useEffect(() => {
+    if (isSession) {
+      setIs8dEnabled(false);
+    }
+  }, [isSession, setIs8dEnabled]);
+
 
   const togglePlayPause = useCallback(() => {
     if (isCurrentItemPlaying && isPlaying) {
@@ -143,19 +225,28 @@ export const PlayerPage: React.FC<PlayerPageProps> = ({
       resume();
     } else {
       if (mainFrequencyForPlayback) {
-        startPlayback(item, allFrequencies, mainFrequencyForPlayback, selectedMode, layerFrequencyForPlayback || null, layerFrequencyForPlayback?.defaultMode || 'BINAURAL');
+        startPlayback(
+          item, allFrequencies, 
+          mainFrequencyForPlayback, selectedMode, 
+          layer2FrequencyForPlayback || null, layer2FrequencyForPlayback?.defaultMode || 'BINAURAL',
+          layer3FrequencyForPlayback || null, layer3FrequencyForPlayback?.defaultMode || 'PURE'
+        );
       }
     }
-  }, [isCurrentItemPlaying, isPlaying, pause, resume, startPlayback, item, mainFrequencyForPlayback, selectedMode, layerFrequencyForPlayback, allFrequencies]);
+  }, [isCurrentItemPlaying, isPlaying, pause, resume, startPlayback, item, allFrequencies, mainFrequencyForPlayback, selectedMode, layer2FrequencyForPlayback, layer3FrequencyForPlayback]);
   
   const handleModeChange = useCallback((newMode: SoundGenerationMode) => {
     setSelectedMode(newMode);
     if (isCurrentItemPlaying && isPlaying && mainFrequencyForPlayback) {
-      startPlayback(item, allFrequencies, mainFrequencyForPlayback, newMode, layerFrequencyForPlayback || null, layerFrequencyForPlayback?.defaultMode || 'BINAURAL');
+       startPlayback(
+          item, allFrequencies, 
+          mainFrequencyForPlayback, newMode, 
+          layer2FrequencyForPlayback || null, layer2FrequencyForPlayback?.defaultMode || 'BINAURAL',
+          layer3FrequencyForPlayback || null, layer3FrequencyForPlayback?.defaultMode || 'PURE'
+        );
     }
-  }, [isCurrentItemPlaying, isPlaying, startPlayback, item, mainFrequencyForPlayback, layerFrequencyForPlayback, allFrequencies]);
+  }, [isCurrentItemPlaying, isPlaying, startPlayback, item, allFrequencies, mainFrequencyForPlayback, layer2FrequencyForPlayback, layer3FrequencyForPlayback]);
 
-  // Effect to reset local UI state when the item being played changes.
   useEffect(() => {
     if (currentlyPlayingItem?.id !== item.id) {
         setSelectedMode(('defaultMode' in item) ? item.defaultMode : 'PURE');
@@ -166,7 +257,6 @@ export const PlayerPage: React.FC<PlayerPageProps> = ({
     }
   }, [item, currentlyPlayingItem, stopGuide]);
   
-  // Effect for Timer UI
   useEffect(() => {
     let intervalId: ReturnType<typeof setInterval> | null = null;
     if (isCurrentItemPlaying && isPlaying && activeTimer > 0 && timerEndTimeRef.current) {
@@ -301,6 +391,7 @@ export const PlayerPage: React.FC<PlayerPageProps> = ({
                 currentMainFrequencyId={item.id}
                 isSubscribed={isSubscribed}
                 title="Select a Frequency to Layer"
+                categories={categories}
             />
         )}
         {isBreathingMenuOpen && (
@@ -372,7 +463,9 @@ export const PlayerPage: React.FC<PlayerPageProps> = ({
             </>
         )}
 
-        {descriptionText && (
+        {isElement ? (
+            <ElementInfoTabs element={item as Frequency} accentColor={colors.accent} />
+        ) : descriptionText ? (
             <p className="max-w-2xl text-center text-slate-700 dark:text-dark-text-secondary my-6 drop-shadow-sm">
                 <span className={!isDescriptionExpanded && isLongDescription ? 'line-clamp-3' : ''}>
                     {descriptionText}
@@ -383,7 +476,7 @@ export const PlayerPage: React.FC<PlayerPageProps> = ({
                     </button>
                 )}
             </p>
-        )}
+        ) : null}
 
         <div className="w-full max-w-sm flex flex-col items-center gap-6">
             <div className="flex items-center gap-2">
@@ -487,13 +580,14 @@ export const PlayerPage: React.FC<PlayerPageProps> = ({
                       const isCurrent = index === sessionStepIndex;
                       const mainFreq = allFrequencies.find(f => f.id === step.frequencyId);
                       const layerFreq = step.layerFrequencyId ? allFrequencies.find(f => f.id === step.layerFrequencyId) : null;
+                      const layer3Freq = step.layer3FrequencyId ? allFrequencies.find(f => f.id === step.layer3FrequencyId) : null;
                       
                       const containerClasses = `flex items-center gap-4 p-3 rounded-lg transition-all duration-300 ${isCurrent ? 'bg-white/80 dark:bg-dark-surface shadow-md' : isCompleted ? 'opacity-50' : 'bg-white/30 dark:bg-dark-surface/30'}`;
                       const iconBgColor = isCurrent ? colors.accent : (isCompleted ? '#94a3b8' : '#cbd5e1');
                       let frequencyText = mainFreq?.name || step.frequencyId;
-                      if (layerFreq) {
-                          frequencyText += ` + ${layerFreq.name}`;
-                      }
+                      if (layerFreq) frequencyText += ` + ${layerFreq.name}`;
+                      if (layer3Freq) frequencyText += ` + ${layer3Freq.name}`;
+                      
 
                       return (
                           <div key={index} className={containerClasses}>
@@ -516,13 +610,42 @@ export const PlayerPage: React.FC<PlayerPageProps> = ({
       
       <div className="w-full max-w-sm space-y-5 rounded-2xl bg-white/50 dark:bg-dark-surface/50 border border-slate-900/5 dark:border-dark-border/50 p-6 shadow-inner backdrop-blur-sm">
         <div className="grid grid-cols-[auto,1fr] items-center gap-4">
-          <label htmlFor="main-volume" className="cursor-pointer text-slate-700 dark:text-dark-text-secondary"><VolumeIcon className="w-6 h-6" /></label>
+          <label htmlFor="main-volume" className="cursor-pointer text-slate-700 dark:text-dark-text-secondary">
+            {isLayer2Active || isLayer3Active ? (
+                <span className="text-sm font-semibold w-14 inline-block">Layer 1</span>
+            ) : (
+                <VolumeIcon className="w-6 h-6" />
+            )}
+          </label>
           <input id="main-volume" type="range" min="0" max="100" value={mainVolume} onChange={(e) => setMainVolume(parseInt(e.target.value, 10))} className="mobile-slider" style={{'--thumb-color': colors.accent} as React.CSSProperties}/>
         </div>
         <div className={`grid grid-cols-[auto,1fr] items-center gap-4 transition-opacity ${isLayer2Active ? 'opacity-100' : 'opacity-30'}`}>
-          <label htmlFor="layer2-volume" className={`cursor-pointer ${!isLayer2Active && 'cursor-not-allowed'}`}><LayersIcon className="w-6 h-6 text-slate-700 dark:text-dark-text-secondary" /></label>
-          <input id="layer2-volume" type="range" min="0" max="100" disabled={!isLayer2Active} value={layer2Volume} onChange={(e) => setLayer2Volume(parseInt(e.target.value, 10))} className={`mobile-slider ${!isLayer2Active && 'cursor-not-allowed'}`} style={{ '--thumb-color': (layerFrequencyForPlayback?.colors || colors).accent} as React.CSSProperties} />
+          <label htmlFor="layer2-volume" className={`cursor-pointer ${!isLayer2Active && 'cursor-not-allowed'} text-slate-700 dark:text-dark-text-secondary`}>
+            {isLayer2Active || isLayer3Active ? (
+                <span className="text-sm font-semibold w-14 inline-block">Layer 2</span>
+            ) : (
+                <LayersIcon className="w-6 h-6" />
+            )}
+          </label>
+          <input id="layer2-volume" type="range" min="0" max="100" disabled={!isLayer2Active} value={layer2Volume} onChange={(e) => setLayer2Volume(parseInt(e.target.value, 10))} className={`mobile-slider ${!isLayer2Active && 'cursor-not-allowed'}`} style={{ '--thumb-color': (layer2FrequencyForPlayback?.colors || colors).accent} as React.CSSProperties} />
         </div>
+        {isLayer3Active && (
+            <div className="grid grid-cols-[auto,1fr] items-center gap-4 transition-opacity">
+                <label htmlFor="layer3-volume" className="cursor-pointer text-slate-700 dark:text-dark-text-secondary">
+                    <span className="text-sm font-semibold w-14 inline-block">Layer 3</span>
+                </label>
+                <input 
+                    id="layer3-volume" 
+                    type="range" 
+                    min="0" 
+                    max="100" 
+                    value={layer3Volume} 
+                    onChange={(e) => setLayer3Volume(parseInt(e.target.value, 10))} 
+                    className="mobile-slider" 
+                    style={{ '--thumb-color': (layer3FrequencyForPlayback?.colors || colors).accent} as React.CSSProperties}
+                />
+            </div>
+        )}
         <hr className="border-slate-900/10 dark:border-dark-border" />
         <SpatialAudioController
             isSubscribed={isSubscribed}
@@ -533,6 +656,7 @@ export const PlayerPage: React.FC<PlayerPageProps> = ({
             depth={panningDepth}
             onDepthChange={(val) => setPanningDepth(val)}
             color={colors.accent}
+            disabled={isSession}
         />
       </div>
     </div>

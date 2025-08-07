@@ -5,6 +5,16 @@ export interface IconProps {
   style?: React.CSSProperties;
 }
 
+export const AlchemyIcon: React.FC<IconProps> = ({ className, style }) => (
+    <svg fill="none" viewBox="0 0 48 48" stroke="currentColor" strokeWidth="1.5" className={className} style={style} aria-hidden="true">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M24 10 L 12 30 L 36 30 Z" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M12 22 h 24" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M24 38 A 12 12 0 0 0 24 14" strokeOpacity="0.6" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M24 38 A 12 12 0 0 1 24 14" strokeOpacity="0.6" />
+    </svg>
+);
+
+
 export const AtomIcon: React.FC<IconProps> = ({ className, style }) => (
     <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5" className={className} style={style} aria-hidden="true">
         <ellipse cx="12" cy="12" rx="10" ry="4" />

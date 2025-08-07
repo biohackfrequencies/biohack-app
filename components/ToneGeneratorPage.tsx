@@ -183,7 +183,9 @@ export const ToneGeneratorPage: React.FC<ToneGeneratorPageProps> = ({ onBack, al
             firstMainFreq,
             firstMainFreq.defaultMode,
             firstLayerFreq || null,
-            firstLayerFreq?.defaultMode || 'BINAURAL'
+            firstLayerFreq?.defaultMode || 'BINAURAL',
+            null,
+            'PURE'
         );
     };
     
@@ -211,7 +213,7 @@ export const ToneGeneratorPage: React.FC<ToneGeneratorPageProps> = ({ onBack, al
         const firstMainFreq = allFrequencies.find(f => f.id === firstStep.frequencyId);
         if (!firstMainFreq) return;
         
-        startPlayback(newStack, allFrequencies, firstMainFreq, firstMainFreq.defaultMode, null, 'BINAURAL', { enableBreathPanner: true });
+        startPlayback(newStack, allFrequencies, firstMainFreq, firstMainFreq.defaultMode, null, 'BINAURAL', null, 'PURE', { enableBreathPanner: true });
         
         const boxBreathingPattern = BREATHING_PATTERNS.find(p => p.name === 'Box Breathing');
         if (boxBreathingPattern) startGuide(boxBreathingPattern);

@@ -1,9 +1,11 @@
 
+
 import { useState, useRef, useCallback, useEffect } from 'react';
 import { Frequency, SoundGenerationMode } from '../types';
 
 const MAX_GAIN = 0.25; // Master gain ceiling
 const MAX_LAYER2_GAIN = 0.20;
+const MAX_LAYER3_GAIN = 0.20;
 
 type SourceNodes = {
   binaural?: { left: OscillatorNode, right: OscillatorNode, merger?: ChannelMergerNode };
@@ -42,9 +44,11 @@ const safeStop = (node: AudioNode) => {
 export const useBinauralBeat = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isLayer2Active, setIsLayer2Active] = useState(false);
+  const [isLayer3Active, setIsLayer3Active] = useState(false);
   
   const [mainVolume, setMainVolumeState] = useState(50);
   const [layer2Volume, setLayer2VolumeState] = useState(40);
+  const [layer3Volume, setLayer3VolumeState] = useState(40);
 
   const audioContextRef = useRef<AudioContext | null>(null);
   const analyserRef = useRef<AnalyserNode | null>(null);
@@ -58,6 +62,10 @@ export const useBinauralBeat = () => {
   const layer2SourceRef = useRef<AudioSource | null>(null);
   const layer2GainNodeRef = useRef<GainNode | null>(null);
   const layer2PanningControlRef = useRef<PanningControl | null>(null);
+  
+  const layer3SourceRef = useRef<AudioSource | null>(null);
+  const layer3GainNodeRef = useRef<GainNode | null>(null);
+  // Layer 3 will not have independent panning for now to simplify UI/UX
 
   const breathPannerStateRef = useRef<{ enabled: boolean; channel: 'main' | 'layer' | null; radius: number }>({ enabled: false, channel: null, radius: 5 });
   
@@ -283,12 +291,19 @@ export const useBinauralBeat = () => {
       stopOscillators(layer2SourceRef.current.nodes);
       layer2SourceRef.current = null;
     }
+    if (layer3SourceRef.current) {
+      layer3SourceRef.current.source.disconnect();
+      stopOscillators(layer3SourceRef.current.nodes);
+      layer3SourceRef.current = null;
+    }
 
     if (gainNodeRef.current) gainNodeRef.current.disconnect();
     if (layer2GainNodeRef.current) layer2GainNodeRef.current.disconnect();
+    if (layer3GainNodeRef.current) layer3GainNodeRef.current.disconnect();
 
     if (fullReset) {
       setIsLayer2Active(false);
+      setIsLayer3Active(false);
     }
 
     if (fullReset && audioContextRef.current && audioContextRef.current.state !== 'closed') {
@@ -304,6 +319,7 @@ export const useBinauralBeat = () => {
         analyserRef.current = null;
         gainNodeRef.current = null;
         layer2GainNodeRef.current = null;
+        layer3GainNodeRef.current = null;
         mainPanningControlRef.current = null;
         layer2PanningControlRef.current = null;
       }
@@ -312,12 +328,14 @@ export const useBinauralBeat = () => {
 
   const stop = useCallback(() => {
     setIsPlaying(false);
-    if (gainNodeRef.current && layer2GainNodeRef.current && audioContextRef.current) {
+    if (audioContextRef.current) {
         const now = audioContextRef.current.currentTime;
-        gainNodeRef.current.gain.cancelScheduledValues(now);
-        layer2GainNodeRef.current.gain.cancelScheduledValues(now);
-        gainNodeRef.current.gain.linearRampToValueAtTime(0, now + 0.5);
-        layer2GainNodeRef.current.gain.linearRampToValueAtTime(0, now + 0.5);
+        [gainNodeRef.current, layer2GainNodeRef.current, layer3GainNodeRef.current].forEach(gainNode => {
+            if (gainNode) {
+                gainNode.gain.cancelScheduledValues(now);
+                gainNode.gain.linearRampToValueAtTime(0, now + 0.5);
+            }
+        });
     }
     setTimeout(() => {
        teardown(true);
@@ -333,14 +351,12 @@ export const useBinauralBeat = () => {
     setIsPlaying(false);
     if (audioContextRef.current) {
       const now = audioContextRef.current.currentTime;
-      if (gainNodeRef.current) {
-        gainNodeRef.current.gain.cancelScheduledValues(now);
-        gainNodeRef.current.gain.setTargetAtTime(0, now, 0.1);
-      }
-      if (layer2GainNodeRef.current) {
-        layer2GainNodeRef.current.gain.cancelScheduledValues(now);
-        layer2GainNodeRef.current.gain.setTargetAtTime(0, now, 0.1);
-      }
+      [gainNodeRef.current, layer2GainNodeRef.current, layer3GainNodeRef.current].forEach(gainNode => {
+         if(gainNode) {
+            gainNode.gain.cancelScheduledValues(now);
+            gainNode.gain.setTargetAtTime(0, now, 0.1);
+         }
+      });
     }
     if(timerIdRef.current) {
       clearTimeout(timerIdRef.current);
@@ -366,8 +382,13 @@ export const useBinauralBeat = () => {
       layer2GainNodeRef.current.gain.cancelScheduledValues(now);
       layer2GainNodeRef.current.gain.setTargetAtTime(newGain, now, 0.1);
     }
+    if (layer3GainNodeRef.current && isLayer3Active) {
+      const newGain = MAX_LAYER3_GAIN * (layer3Volume / 100);
+      layer3GainNodeRef.current.gain.cancelScheduledValues(now);
+      layer3GainNodeRef.current.gain.setTargetAtTime(newGain, now, 0.1);
+    }
     setIsPlaying(true);
-  }, [isPlaying, mainVolume, layer2Volume, isLayer2Active]);
+  }, [isPlaying, mainVolume, layer2Volume, layer3Volume, isLayer2Active, isLayer3Active]);
 
   const set8dPanning = useCallback((channel: 'main' | 'layer', enabled: boolean, speed: number, depth: number) => {
     const controlRef = channel === 'main' ? mainPanningControlRef : layer2PanningControlRef;
@@ -377,17 +398,14 @@ export const useBinauralBeat = () => {
     
     control.settings.current = { ...control.settings.current, enabled, speed, depth };
     
-    // The time constant for smoothing position changes. A small value ensures responsiveness.
     const SMOOTHING_TIME_CONSTANT = 0.02;
 
     const loop = (now: number) => {
         const currentControl = controlRef.current;
-        // Check if the loop should stop
         if (!audioContextRef.current || !currentControl || !currentControl.settings.current.enabled) {
             if (currentControl && audioContextRef.current) {
                 const panner = currentControl.panner;
                 const resetTime = audioContextRef.current.currentTime;
-                // Smoothly return the panner to the center (0, 0, 0)
                 panner.positionX.setTargetAtTime(0, resetTime, SMOOTHING_TIME_CONSTANT);
                 panner.positionY.setTargetAtTime(0, resetTime, SMOOTHING_TIME_CONSTANT);
                 panner.positionZ.setTargetAtTime(0, resetTime, SMOOTHING_TIME_CONSTANT);
@@ -398,25 +416,18 @@ export const useBinauralBeat = () => {
 
         const { speed: currentSpeed, depth: currentDepth, startTime } = currentControl.settings.current;
         const nowInSeconds = audioContextRef.current.currentTime;
-        
-        // A more controlled speed curve. It starts at 0.1Hz and goes up to about 0.6Hz.
         const speedHz = 0.1 + (currentSpeed / 100) * 0.5;
-        
-        // A gentler, more predictable depth curve. pow(1.5) feels more natural than pow(2).
         const radius = Math.pow(currentDepth / 100, 1.5) * 15;
-        const yRadius = radius * 0.8; // Make vertical movement more prominent
+        const yRadius = radius * 0.8;
         
         const elapsedTime = (now - startTime) / 1000;
         const angle = elapsedTime * 2 * Math.PI * speedHz;
 
         const x = radius * Math.cos(angle);
         const z = radius * Math.sin(angle);
-        // Use a slightly different frequency for Y-axis to create a more complex orbital path
         const y = yRadius * Math.sin(angle * 0.7);
 
         const panner = currentControl.panner;
-        // Use setTargetAtTime for smooth, click-free position updates.
-        // This delegates the interpolation to the high-priority audio thread.
         panner.positionX.setTargetAtTime(x, nowInSeconds, SMOOTHING_TIME_CONSTANT);
         panner.positionY.setTargetAtTime(y, nowInSeconds, SMOOTHING_TIME_CONSTANT);
         panner.positionZ.setTargetAtTime(z, nowInSeconds, SMOOTHING_TIME_CONSTANT);
@@ -433,18 +444,17 @@ export const useBinauralBeat = () => {
   const startPlayback = useCallback(async (
     mainFreq: Frequency,
     mainMode: SoundGenerationMode,
-    layerFreq: Frequency | null,
-    layerMode: SoundGenerationMode,
+    layer2Freq: Frequency | null,
+    layer2Mode: SoundGenerationMode,
+    layer3Freq: Frequency | null,
+    layer3Mode: SoundGenerationMode,
     panningConfig?: { isEnabled: boolean; speed: number; depth: number; }
   ) => {
-    // Teardown previous sources; this is now safe for a persistent context
     await teardown(false);
 
     let context = audioContextRef.current;
-    let mainGain: GainNode;
-    let layer2Gain: GainNode;
+    let mainGain: GainNode, layer2Gain: GainNode, layer3Gain: GainNode;
 
-    // --- Robust Graph Initialization ---
     if (!context || context.state === 'closed') {
         const AudioContext = window.AudioContext || (window as any).webkitAudioContext;
         if (!AudioContext) {
@@ -471,81 +481,75 @@ export const useBinauralBeat = () => {
         limiterRef.current = limiter;
         analyserRef.current = analyser;
 
-        // Create and store gain nodes for the first time
-        mainGain = context.createGain();
-        gainNodeRef.current = mainGain;
-        layer2Gain = context.createGain();
-        layer2GainNodeRef.current = layer2Gain;
-
+        mainGain = context.createGain(); gainNodeRef.current = mainGain;
+        layer2Gain = context.createGain(); layer2GainNodeRef.current = layer2Gain;
+        layer3Gain = context.createGain(); layer3GainNodeRef.current = layer3Gain;
     } else {
-        // Reuse existing gain nodes from refs
         mainGain = gainNodeRef.current!;
         layer2Gain = layer2GainNodeRef.current!;
+        layer3Gain = layer3GainNodeRef.current!;
     }
     
-    // Ensure gain nodes are connected to the limiter every time,
-    // as teardown(false) disconnects them. This is the key fix.
     mainGain.connect(limiterRef.current!);
     layer2Gain.connect(limiterRef.current!);
+    layer3Gain.connect(limiterRef.current!);
     
-    // Reset gain values before fading in
     mainGain.gain.value = 0;
     layer2Gain.gain.value = 0;
+    layer3Gain.gain.value = 0;
 
     if (context.state === 'suspended') {
       try { await context.resume(); } catch (e) { console.error("Failed to resume AudioContext:", e); return; }
     }
     
-    // --- Source Creation and Connection ---
     const mainSource = createAudioSource(context, mainFreq, mainMode);
     if (mainSource) {
       sourceNodeRef.current = mainSource;
-      if (mainMode === 'BINAURAL') {
-        // For BINAURAL mode, connect directly to the gain node, bypassing the panner.
-        // This preserves the stereo separation required for the effect.
-        mainSource.source.connect(mainGain);
-        mainPanningControlRef.current = null;
-      } else {
-        const { outputNode, panningControl } = setupPanning(context, mainSource.source);
-        mainPanningControlRef.current = panningControl;
-        outputNode.connect(mainGain);
-        if (panningConfig?.isEnabled) {
-          set8dPanning('main', true, panningConfig.speed, panningConfig.depth);
-        }
+      const { outputNode, panningControl } = setupPanning(context, mainSource.source);
+      mainPanningControlRef.current = panningControl;
+      outputNode.connect(mainGain);
+      if (panningConfig?.isEnabled) {
+        set8dPanning('main', true, panningConfig.speed, panningConfig.depth);
       }
     }
 
-    if (layerFreq) {
-      const layer2Source = createAudioSource(context, layerFreq, layerMode);
+    if (layer2Freq) {
+      const layer2Source = createAudioSource(context, layer2Freq, layer2Mode);
       if(layer2Source) {
         layer2SourceRef.current = layer2Source;
-        if (layerMode === 'BINAURAL') {
-          layer2Source.source.connect(layer2Gain);
-          layer2PanningControlRef.current = null;
-        } else {
-          const { outputNode, panningControl } = setupPanning(context, layer2Source.source);
-          layer2PanningControlRef.current = panningControl;
-          outputNode.connect(layer2Gain);
-          if (panningConfig?.isEnabled) {
+        const { outputNode, panningControl } = setupPanning(context, layer2Source.source);
+        layer2PanningControlRef.current = panningControl;
+        outputNode.connect(layer2Gain);
+        if (panningConfig?.isEnabled) {
             set8dPanning('layer', true, panningConfig.speed, panningConfig.depth);
-          }
         }
         setIsLayer2Active(true);
-      } else {
-        setIsLayer2Active(false);
-      }
-    } else {
-      setIsLayer2Active(false);
-    }
+      } else { setIsLayer2Active(false); }
+    } else { setIsLayer2Active(false); }
     
-    // Fade in the volume
-    mainGain.gain.linearRampToValueAtTime(MAX_GAIN * (mainVolume / 100), context.currentTime + 0.5);
-    if (layerFreq && layer2Gain.gain) {
-        layer2Gain.gain.linearRampToValueAtTime(MAX_LAYER2_GAIN * (layer2Volume / 100), context.currentTime + 0.5);
+    if (layer3Freq) {
+      const layer3Source = createAudioSource(context, layer3Freq, layer3Mode);
+      if(layer3Source) {
+        layer3SourceRef.current = layer3Source;
+        // Layer 3 is always mono for now (no panning)
+        layer3Source.source.connect(layer3Gain);
+        setIsLayer3Active(true);
+      } else { setIsLayer3Active(false); }
+    } else { setIsLayer3Active(false); }
+
+    const numLayers = 1 + (layer2Freq ? 1 : 0) + (layer3Freq ? 1 : 0);
+    const gainDivisor = Math.max(1, numLayers - 0.5); // Attenuate slightly as more layers are added.
+
+    mainGain.gain.linearRampToValueAtTime((MAX_GAIN * (mainVolume / 100)) / gainDivisor, context.currentTime + 0.5);
+    if (layer2Freq) {
+        layer2Gain.gain.linearRampToValueAtTime((MAX_LAYER2_GAIN * (layer2Volume / 100)) / gainDivisor, context.currentTime + 0.5);
+    }
+    if (layer3Freq) {
+        layer3Gain.gain.linearRampToValueAtTime((MAX_LAYER3_GAIN * (layer3Volume / 100)) / gainDivisor, context.currentTime + 0.5);
     }
 
     setIsPlaying(true);
-  }, [teardown, createAudioSource, setupPanning, mainVolume, layer2Volume, set8dPanning]);
+  }, [teardown, createAudioSource, setupPanning, mainVolume, layer2Volume, layer3Volume, set8dPanning]);
   
   const setTimer = useCallback((durationInSeconds: number) => {
     if (timerIdRef.current) {
@@ -571,7 +575,6 @@ export const useBinauralBeat = () => {
       return;
     }
 
-    // Fade out and disconnect existing layer
     const now = audioContextRef.current.currentTime;
     gainNode.gain.cancelScheduledValues(now);
     gainNode.gain.linearRampToValueAtTime(0, now + 0.3);
@@ -584,24 +587,19 @@ export const useBinauralBeat = () => {
         }
 
         if (freq && audioContextRef.current) {
-            // Create and connect new layer
             const newLayerSource = createAudioSource(audioContextRef.current, freq, mode);
             if (newLayerSource) {
                 layer2SourceRef.current = newLayerSource;
-                if (mode === 'BINAURAL') {
-                    newLayerSource.source.connect(gainNode);
-                    layer2PanningControlRef.current = null;
-                } else {
-                    const { outputNode, panningControl } = setupPanning(audioContextRef.current, newLayerSource.source);
-                    layer2PanningControlRef.current = panningControl;
-                    outputNode.connect(gainNode);
-                    if (is8dAudioEnabled && typeof panningSpeed === 'number' && typeof panningDepth === 'number') {
-                        set8dPanning('layer', true, panningSpeed, panningDepth);
-                    }
+                const { outputNode, panningControl } = setupPanning(audioContextRef.current, newLayerSource.source);
+                layer2PanningControlRef.current = panningControl;
+                outputNode.connect(gainNode);
+                
+                // Only enable 8D on the new layer if 8D is active AND breath panning is NOT
+                if (is8dAudioEnabled && !breathPannerStateRef.current.enabled && typeof panningSpeed === 'number' && typeof panningDepth === 'number') {
+                    set8dPanning('layer', true, panningSpeed, panningDepth);
                 }
+                
                 setIsLayer2Active(true);
-
-                // Fade in
                 gainNode.gain.linearRampToValueAtTime(MAX_LAYER2_GAIN * (layer2Volume / 100), audioContextRef.current.currentTime + 0.3);
             }
         } else {
@@ -626,7 +624,14 @@ export const useBinauralBeat = () => {
     }
   }, []);
   
-  // --- Breath Panner Logic ---
+  const setLayer3Volume = useCallback((value: number) => {
+    setLayer3VolumeState(value);
+    if (layer3GainNodeRef.current && audioContextRef.current) {
+      const newGain = MAX_LAYER3_GAIN * (value / 100);
+      layer3GainNodeRef.current.gain.setTargetAtTime(newGain, audioContextRef.current.currentTime, 0.01);
+    }
+  }, []);
+
   const enableBreathPanner = useCallback((channel: 'main' | 'layer', radius: number) => {
     const controlRef = channel === 'main' ? mainPanningControlRef : layer2PanningControlRef;
     breathPannerStateRef.current = { enabled: true, channel, radius };
@@ -655,18 +660,15 @@ export const useBinauralBeat = () => {
     const radius = state.radius;
     const SMOOTHING_TIME_CONSTANT = 0.1;
 
-    // Semicircle path from right (angle 0) to left (angle PI)
     const angle = progress * Math.PI;
     const x = radius * Math.cos(angle);
-    const z = radius * Math.sin(angle) * 0.5; // less depth change for a flatter arc
+    const z = radius * Math.sin(angle) * 0.5;
     
     panner.positionX.setTargetAtTime(x, now, SMOOTHING_TIME_CONSTANT);
     panner.positionZ.setTargetAtTime(z, now, SMOOTHING_TIME_CONSTANT);
     panner.positionY.setTargetAtTime(0, now, SMOOTHING_TIME_CONSTANT);
   }, []);
 
-
-  // Handle browser tab visibility changes
   useEffect(() => {
     const handleVisibilityChange = () => {
       if (!document.hidden) {
@@ -681,7 +683,6 @@ export const useBinauralBeat = () => {
     };
   }, []);
 
-  // Cleanup on unmount
   useEffect(() => {
     return () => { teardown(true); };
   }, [teardown]);
@@ -695,11 +696,14 @@ export const useBinauralBeat = () => {
     setTimer,
     analyser: analyserRef.current,
     isLayer2Active,
+    isLayer3Active, // Expose layer 3 state
     toggleLayer,
     mainVolume,
     setMainVolume,
     layer2Volume,
     setLayer2Volume,
+    layer3Volume, // Expose layer 3 volume controls
+    setLayer3Volume,
     set8dPanning,
     enableBreathPanner,
     disableBreathPanner,

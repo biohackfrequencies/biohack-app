@@ -1,3 +1,5 @@
+
+
 import React, { useState, useEffect } from 'react';
 import { BackIcon, BrainwaveIcon, SolfeggioIcon, RifeIcon, NoiseIcon, SpatialAudioIcon, CelestialIcon, BeautyIcon, AngelIcon, LungsIcon, UserCircleIcon, AtomIcon, PathfinderIcon } from './BohoIcons';
 import { CategoryId, ColorTheme } from '../types';
@@ -45,7 +47,13 @@ export const SciencePage: React.FC<SciencePageProps> = ({ categories }) => {
         const returnTo = sessionStorage.getItem('returnTo');
         if (returnTo) {
             setBackLink(returnTo);
-            setBackText('Back to Session');
+            if (returnTo.includes('/category/')) {
+                setBackText('Back to Category');
+            } else if (returnTo.includes('/player/') || returnTo.includes('/session/')) {
+                setBackText('Back to Player');
+            } else {
+                setBackText('Back');
+            }
         }
     }, []);
 
@@ -74,18 +82,22 @@ export const SciencePage: React.FC<SciencePageProps> = ({ categories }) => {
       <div className="space-y-6">
         <ScienceSection 
           id="elements" 
-          title="81 Harmonic Elements Chart" 
+          title="The Harmonic Table of the 81 Elements" 
           icon={<AtomIcon className="w-10 h-10 text-slate-700 dark:text-dark-text-secondary" />} 
           color={categories.elements.colors.primary}
         >
+          <p className="font-semibold">A Resonant Bridge Between Matter and Frequency</p>
           <p>
-              The 81 Harmonic Elements chart is an esoteric system that maps the first 81 chemical elements to a unique harmonic frequency. It's based on a numerological framework, often associated with concepts like Vortex-Based Mathematics and the work of figures like Nikola Tesla.
+            The Harmonic Elements Chart is a vibrational mapping of the first 81 elements in the periodic table, each aligned with a distinct sound frequency. Unlike traditional chemical classifications, this system approaches the periodic table through the lens of harmonic resonance—exploring how the elemental building blocks of nature express themselves not only as matter, but as coherent vibrational patterns.
           </p>
           <p>
-              The system organizes elements according to vibrational patterns, with each element assigned a specific frequency derived from numerological calculations (e.g., patterns of 3, 6, 9). The purpose of this system is to provide a tool for vibrational exploration, allowing one to meditatively connect with the energetic signature of the fundamental building blocks of our physical world.
+            Each frequency assigned to an element is derived from a harmonic model that integrates principles of wave interference, musical tuning systems (notably A = 432 Hz), and resonant field theory. These values are not arbitrary—they are rooted in observable frequency intervals that correspond to qualities such as coherence, stability, expansion, or regeneration. In this way, Hydrogen is not just the lightest element—it becomes the spark of pure potential at 111 Hz, while Carbon, the basis of all organic life, anchors structural stability at 162 Hz.
           </p>
           <p>
-              While this system is not derived from mainstream chemistry or physics, it offers a fascinating and profound way to experience the relationship between matter and frequency from a holistic perspective.
+            While the chart is not aligned with conventional spectroscopy or quantum chemistry, it offers a complementary language—one that frames matter as music, and atoms as notes in a larger universal symphony. This approach draws inspiration from sacred geometry, Pythagorean harmonics, and recent work in cymatics, quantum acoustics, and biofield science.
+          </p>
+          <p>
+            Rather than presenting frequencies as diagnostic or therapeutic claims, the Harmonic Elements Chart invites exploration. It allows users to resonate with the “tonal essence” of each element, whether through meditative listening, sound layering, or visual contemplation of cymatic patterns. Each element becomes a portal—not just to scientific inquiry, but to a felt experience of the vibrational order behind physical form.
           </p>
         </ScienceSection>
         
@@ -218,20 +230,6 @@ export const SciencePage: React.FC<SciencePageProps> = ({ categories }) => {
           </ul>
         </ScienceSection>
         
-         <ScienceSection id="beauty" title="Sonic Bio-Regenesis" icon={<BeautyIcon className="w-10 h-10 text-slate-700 dark:text-dark-text-secondary" />} color={categories.beauty.colors.primary}>
-           <p>
-            This category applies the principles of bio-resonance and neural entrainment to support the body's natural regenerative processes. While not a substitute for conventional care, these protocols are designed to create a supportive environment for cellular vitality.
-          </p>
-          <ul>
-            <li>
-              <strong>Frequencies for Vitality:</strong> For example, the 528 Hz frequency is used for its association with cellular repair, while deep Delta waves (2.5 Hz) are included for their role in stimulating the body's natural healing cycles during deep sleep.
-            </li>
-            <li>
-              <strong>The Goal:</strong> To use sound as a tool to encourage relaxation, reduce stress, and support the body's own systems for maintaining a vibrant, healthy appearance.
-            </li>
-          </ul>
-        </ScienceSection>
-
         <ScienceSection 
           id="noise" 
           title="Acoustic Environments (Colored Noise)" 
