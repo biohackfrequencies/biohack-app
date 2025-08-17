@@ -220,19 +220,9 @@ export const SettingsPage: React.FC = () => {
         </div>
 
         <div className="mt-8">
-            <h3 className="text-xl font-bold font-display text-slate-700 dark:text-dark-text-primary">About This App</h3>
-            <div className="mt-2 space-y-3 text-slate-600 dark:text-dark-text-secondary">
-                <p className="font-semibold text-slate-700 dark:text-dark-text-primary">Unlock the Science & Soul of Sound</p>
-                <p>
-                    The first sound platform that maps your unique harmonic blueprint and transforms it into a living, breathing audio‑visual journey — with 140+ curated frequencies, AI‑powered wellness insights, and immersive 8D soundscapes. Featuring the Creator Studio: your personal lab for building unlimited custom sessions, layering tones, and crafting protocols as unique as your own frequency.
-                </p>
-            </div>
-        </div>
-
-        <div className="mt-8">
-            <h3 className="text-xl font-bold font-display text-slate-700 dark:text-dark-text-primary">Our Mission</h3>
+            <h3 className="text-xl font-bold font-display text-slate-700 dark:text-dark-text-primary">🌐 About Us</h3>
             <p className="mt-2 text-slate-600 dark:text-dark-text-secondary">
-                Learn about the story and the science-driven vision behind Biohack Frequencies.
+                Learn about our mission, vision, and the story behind the frequencies.
             </p>
             <a
                 href="#/our-mission"

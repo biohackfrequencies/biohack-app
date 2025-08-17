@@ -1,6 +1,3 @@
-
-
-
 import { useState, useRef, useCallback, useEffect } from 'react';
 import { Frequency, SoundGenerationMode } from '../types';
 
@@ -254,14 +251,13 @@ export const useBinauralBeat = () => {
   
   const setupPanning = useCallback((context: AudioContext, source: AudioNode): PanningSetup => {
     const panner = context.createPanner();
-    // Use HRTF for a more realistic 3D sound effect. 'equalpower' is a safe fallback.
     panner.panningModel = 'HRTF';
-    // The 'inverse' model provides a more natural-sounding drop-off in volume with distance.
-    panner.distanceModel = 'inverse';
+    panner.distanceModel = 'inverse'; // This model works well with HRTF.
     panner.refDistance = 1;
     panner.maxDistance = 10000;
-    // A lower rolloff factor reduces the volume change as the sound moves, preventing dips.
-    panner.rolloffFactor = 0.1; 
+    // Key change: Set rolloffFactor to 0 to disable distance-based volume reduction.
+    // This maintains the spatialization effect of HRTF without the sound "disappearing".
+    panner.rolloffFactor = 0;
     panner.positionY.setValueAtTime(0, context.currentTime);
 
     source.connect(panner);
@@ -402,7 +398,7 @@ export const useBinauralBeat = () => {
     
     control.settings.current = { ...control.settings.current, enabled, speed, depth };
     
-    const SMOOTHING_TIME_CONSTANT = 0.05; // Slightly increased for smoother transitions
+    const SMOOTHING_TIME_CONSTANT = 0.05;
 
     const loop = () => {
         const currentControl = controlRef.current;
@@ -420,16 +416,17 @@ export const useBinauralBeat = () => {
 
         const { speed: currentSpeed, depth: currentDepth, audioStartTime } = currentControl.settings.current;
         const nowInSeconds = audioContextRef.current.currentTime;
-        const speedHz = 0.05 + (currentSpeed / 100) * 0.4; // Slower, more gentle speed range
-        const radius = Math.pow(currentDepth / 100, 1.5) * 10; // Slightly smaller max radius
-        const yRadius = radius * 0.6; // Less extreme Y movement
+        const speedHz = 0.05 + (currentSpeed / 100) * 0.25;
+        const radius = Math.pow(currentDepth / 100, 2) * 8 + 2;
+        const yRadius = radius * 0.5;
         
         const elapsedTime = nowInSeconds - audioStartTime;
         const angle = elapsedTime * 2 * Math.PI * speedHz;
 
+        // New infinity loop path for a more complex and spatial feel.
         const x = radius * Math.cos(angle);
-        const z = radius * Math.sin(angle);
-        const y = yRadius * Math.sin(angle * 0.7);
+        const z = (radius * 0.8) * Math.sin(2 * angle); // Creates a figure-eight pattern.
+        const y = yRadius * Math.sin(angle * 0.75);
 
         const panner = currentControl.panner;
         panner.positionX.setTargetAtTime(x, nowInSeconds, SMOOTHING_TIME_CONSTANT);

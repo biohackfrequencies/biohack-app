@@ -28,35 +28,50 @@ export const OurMissionPage: React.FC = () => {
 
             <div className="p-6 sm:p-8 rounded-2xl shadow-lg bg-white/80 dark:bg-slate-800/50 border border-slate-200/50 dark:border-slate-700/50 backdrop-blur-lg">
                 <CelestialBrandIcon className="w-24 h-24 text-slate-500 dark:text-purple-400 mx-auto mb-4" />
-                <h2 className="text-3xl font-display font-bold text-slate-800 dark:text-dark-text-primary text-center">Our Mission: Sound Science for Human Potential</h2>
-                <p className="mt-4 text-center text-slate-600 dark:text-dark-text-secondary">
-                    The Story Behind the Frequencies.
-                </p>
-
-                <MissionSection title="The Origin: An Expert's Journey">
+                <h2 className="text-3xl font-display font-bold text-slate-800 dark:text-dark-text-primary text-center">🌐 About Us</h2>
+                
+                <MissionSection title="Our Mission">
                     <p>
-                        Our story begins with our founder, a professional DJ and sound engineer whose world has revolved around sound for over 25 years. We've lived and breathed the profound impact frequency has on human emotion, learning how to shift moods and create entire experiences by controlling it. It was an art and a craft.
+                        We believe sound is more than music — it is a key to unlocking human potential. Our mission is to provide scientifically-grounded tools that empower people to shift their frequency, transform their state of being, and live in greater alignment with their highest selves.
                     </p>
                 </MissionSection>
 
-                <MissionSection title="The Pivot to Science">
+                <MissionSection title="The Story Behind the Frequencies">
                     <p>
-                        But that curiosity went deeper. Seeing how sound could help overcome personal obstacles, we knew it was more than just a feeling—it was science. This led us down a path from the studio to the laboratory, studying the real, measurable effects of specific frequencies. We made it our mission to bridge the gap between intuitive 'sound healing' and verifiable, data-driven bio-acoustics.
+                        Our journey began with our founder — a DJ and sound engineer with over 25 years of experience shaping soundscapes for human emotion. What started as an art of creating moods and experiences through music became a deeper quest: understanding why sound moves us so profoundly.
+                    </p>
+                    <p>
+                        This curiosity led us beyond the studio and into the science of bio-acoustics. Through years of exploration, research, and experimentation, we discovered how specific frequencies resonate with body, mind, and spirit. What was once an intuitive practice revealed itself as a bridge between ancient wisdom and modern science.
                     </p>
                 </MissionSection>
 
-                <MissionSection title="The Mission Statement">
+                <MissionSection title="Our Vision">
                    <p>
-                        This app is the result of that mission. It's not about 'new age bla bla.' It's about providing you with scientifically-grounded tools to help upgrade your own consciousness. Every protocol is chosen with the precision of a sound engineer and the passion of those who have experienced its transformative power firsthand.
+                        We envision a world where sound becomes a daily tool for self-discovery, healing, and collective harmony. Where every person has the ability to tune themselves like an instrument — to reduce stress, enhance focus, expand creativity, and raise consciousness.
                     </p>
+                </MissionSection>
+                
+                <MissionSection title="Core Values">
+                    <ul>
+                        <li><strong>Integrity of Sound</strong> – Every frequency is chosen with precision, respect, and authenticity.</li>
+                        <li><strong>Bridging Science & Spirit</strong> – We combine measurable bio-acoustics with timeless wisdom.</li>
+                        <li><strong>Accessibility for All</strong> – Tools for transformation should be intuitive and available to everyone.</li>
+                        <li><strong>Transformation Through Experience</strong> – Growth comes from feeling, not theory.</li>
+                        <li><strong>Collective Resonance</strong> – Individual tuning creates harmony in the greater human symphony.</li>
+                    </ul>
                 </MissionSection>
 
                 <MissionSection title="Our Invitation to You">
                     <p>
-                        Sound is more than just hearing; it is a feeling. It's a vibration that can resonate with every cell in your body, creating a cascade of change from the inside out. This is where the true transformation begins.
+                        Sound is not just something you hear. It’s something you feel — a vibration that reaches every cell, shaping your energy and your reality.
                     </p>
                     <p>
-                        This app is your instrument. Our life's work is now in your hands. Explore, experiment, and feel the change for yourself. Welcome to the journey.
+                        This app is your instrument.<br />
+                        This is your invitation to explore, to experiment, and to transform.
+                    </p>
+                    <p className="font-semibold">
+                        Welcome to the journey.<br />
+                        Welcome to your frequency.
                     </p>
                 </MissionSection>
             </div>

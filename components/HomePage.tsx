@@ -147,13 +147,10 @@ export const HomePage: React.FC<HomePageProps> = ({
        <section className="text-center">
             <h2 className="text-4xl font-display text-center font-semibold text-slate-800 dark:text-dark-text-primary">The Sound Library</h2>
             <p className="max-w-xl mx-auto font-sans text-base leading-relaxed text-slate-700/80 dark:text-dark-text-secondary mt-2">
-                Explore our library of science-backed acoustic protocols designed to help you achieve specific mental states for focus, relaxation, and cognitive enhancement.
+                Explore our library of acoustic protocols designed to support focus, relaxation, and cognitive well-being. These sound experiences are based on research in acoustics, resonance, and neuro-acoustics, and are offered for informational, educational, and wellness purposes.
             </p>
-            <div className="mt-6 max-w-xl mx-auto p-3 rounded-lg bg-amber-100/50 dark:bg-amber-900/20 border border-amber-200/80 dark:border-amber-500/30 flex items-center justify-center gap-3">
-                <InfoIcon className="w-6 h-6 text-amber-600 dark:text-amber-400 flex-shrink-0" />
-                <p className="text-sm text-amber-800 dark:text-amber-300">
-                    For best results with Binaural or 8D protocols, please use headphones.
-                </p>
+            <div className="mt-4 p-3 max-w-xl mx-auto rounded-xl bg-amber-100/50 dark:bg-amber-900/20 border border-amber-200/50 dark:border-amber-500/30 text-amber-800 dark:text-amber-200 text-sm">
+                For immersive experiences (such as Binaural Beats or 8D Spatial Audio), headphones are recommended.
             </div>
        </section>
 
@@ -181,7 +178,7 @@ export const HomePage: React.FC<HomePageProps> = ({
             })}
              <ActionCard
                 title="Creator Studio"
-                description="Design your own custom sessions."
+                description="Design and customize your own sessions by combining frequencies, soundscapes, and protocols tailored to your personal journey."
                 Icon={StackIcon}
                 onClick={() => handlePremiumFeatureClick(() => window.location.hash = '#/create')}
                 colors={{ primary: '#EEE8B2', secondary: '#C18D52', accent: '#C18D52' }}
@@ -199,8 +196,8 @@ export const HomePage: React.FC<HomePageProps> = ({
                 <OracleIcon />
               </div>
               <div className="relative">
-                <h4 className="text-xl sm:text-2xl font-display font-bold text-slate-800 dark:text-dark-text-primary drop-shadow-sm">AI Wellness Agent</h4>
-                <p className="text-slate-700/90 dark:text-dark-text-secondary text-xs sm:text-sm mt-1 max-w-xs mx-auto">Describe your intention and let our AI create a session for you.</p>
+                <h4 className="text-xl sm:text-2xl font-display font-bold text-slate-800 dark:text-dark-text-primary drop-shadow-sm">Codex Alchemist</h4>
+                <p className="text-slate-700/90 dark:text-dark-text-secondary text-xs sm:text-sm mt-1 max-w-md mx-auto">Describe your intention, and let our AI suggest a personalized sound session. Designed to guide you through our library of acoustic protocols, the agent helps you explore combinations that align with your focus, relaxation, or inner journey goals.</p>
                  {!isSubscribed && (
                     <div className="mt-3 inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-bold transition-colors bg-brand-orange text-white shadow">
                         <SparklesIcon className="w-4 h-4" />

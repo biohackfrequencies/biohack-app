@@ -7,47 +7,47 @@ export const appContentData: AppContentData = {
   "categories": {
     "elements": {
       "title": "Harmonic Elements",
-      "description": "Explore the resonant frequencies of the first 81 elements, based on the harmonic frequency chart.",
+      "description": "Discover the resonant frequencies of the first 81 elements, inspired by the harmonic frequency chart, and explore their acoustic patterns.",
       "colors": { "primary": "#a5f3fc", "secondary": "#e0f2fe", "accent": "#22d3ee" }
     },
     "codex": {
       "title": "Codex Harmonics",
-      "description": "Frequencies from the Mod-24 wheel.",
+      "description": "Experience frequencies derived from the Mod-24 wheel, a harmonic system designed for exploration and creative resonance.",
       "colors": { "primary": "#e9d5ff", "secondary": "#c4b5fd", "accent": "#a855f7" }
     },
     "guided": {
       "title": "Guided Protocols",
-      "description": "Sequenced audio protocols that transition through different frequencies to achieve a specific neuro-acoustic goal.",
+      "description": "Follow sequenced audio protocols that transition through different frequencies to support specific neuro-acoustic goals.",
       "colors": { "primary": "#a7f3d0", "secondary": "#93c5fd", "accent": "#6ee7b7" }
     },
     "brainwaves": {
       "title": "Brainwave Entrainment",
-      "description": "Use neural entrainment to guide your brain into specific states for sleep, focus, relaxation, and creative problem-solving.",
+      "description": "Use rhythmic sound patterns designed to encourage shifts in brainwave activity for focus, relaxation, rest, or creative states.",
       "colors": { "primary": "#d8b4fe", "secondary": "#e9d5ff", "accent": "#c084fc" }
     },
     "solfeggio": {
       "title": "Solfeggio Protocols",
-      "description": "A set of ancient resonant tones. These acoustic protocols are based on the physics of sound and vibration, designed to promote cellular harmony and energetic balance.",
+      "description": "Explore a set of ancient resonant tones rooted in the physics of sound and vibration, traditionally associated with harmony and balance.",
       "colors": { "primary": "#fcd34d", "secondary": "#fdba74", "accent": "#fde047" }
     },
     "angel": {
       "title": "Ascension Codes",
-      "description": "High-vibrational harmonic protocols designed to elevate consciousness, clear energetic channels, and connect you to higher states of awareness.",
+      "description": "Engage with high-vibrational harmonic protocols intended to support awareness, clear energetic pathways, and deepen inner exploration.",
       "colors": { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" }
     },
     "celestial": {
       "title": "Planetary Harmonics",
-      "description": "Acoustic protocols tuned to the orbital frequencies of celestial bodies, designed to align your bio-field with their archetypal energies.",
+      "description": "Listen to acoustic protocols tuned to the orbital frequencies of celestial bodies, designed for alignment with archetypal energies.",
       "colors": { "primary": "#a5b4fc", "secondary": "#93c5fd", "accent": "#a78bfa" }
     },
     "rife": {
       "title": "Rife Bio-Resonance",
-      "description": "Targeted resonant frequencies for holistic well-being, based on principles of bio-resonance to support the body’s homeostatic balance.",
+      "description": "Explore resonant frequencies inspired by bio-resonance principles, intended to support balance and holistic well-being.",
       "colors": { "primary": "#a7f3d0", "secondary": "#bbf7d0", "accent": "#6ee7b7" }
     },
     "noise": {
       "title": "Acoustic Environments",
-      "description": "Scientifically crafted soundscapes (colored noise, natural ambience) to mask distractions, improve focus, and promote deep, uninterrupted relaxation.",
+      "description": "Immerse yourself in crafted soundscapes (such as colored noise and natural ambiences) to reduce distractions and encourage relaxation or focus.",
       "colors": { "primary": "#e7e5e4", "secondary": "#d6d3d1", "accent": "#cbd5e1" }
     }
   },
