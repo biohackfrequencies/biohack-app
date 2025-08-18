@@ -159,8 +159,17 @@ export const UserDataProvider: React.FC<{ children: React.ReactNode }> = ({ chil
             setProAccessExpiresAt(profile.pro_access_expires_at ? new Date(profile.pro_access_expires_at).getTime() : null);
         }
       } catch (e) {
-        console.error("Failed to bootstrap user data:", e);
-        setFavorites([]); setCustomStacks([]); setActivityLog([]);
+        // This catch block is for network failures or other errors when fetching from Supabase.
+        // The previous implementation reset the user's state to empty arrays, which could
+        // wipe out locally-stored data if the user was temporarily offline.
+        // This fix improves the error logging and, crucially, REMOVES the state-clearing calls.
+        // Now, if the sync fails, the app will continue to run with the data already
+        // loaded from localStorage by the `useSyncedState` hooks, ensuring a robust offline experience.
+        const error = e as (Error & { details?: string; hint?: string; message: string });
+        console.error("Failed to bootstrap user data from Supabase. App will continue with locally-stored data.");
+        console.error("Error details:", { message: error.message, details: error.details, hint: error.hint, fullError: e });
+        
+        // DO NOT reset state here. Let the app use the data loaded from localStorage.
       } finally {
         setIsUserDataLoading(false);
         bootstrapInProgress.current = false;

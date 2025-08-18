@@ -1,6 +1,6 @@
 import React from 'react';
 import { CategoryId, Frequency, CustomStack, GuidedSession, ColorTheme } from '../types';
-import { BrainwaveIcon, SolfeggioIcon, AngelIcon, RifeIcon, NoiseIcon, CelestialIcon, GuidedSessionIcon, StackIcon, ElementIcon, PathfinderIcon, SparklesIcon, OracleIcon, TreeOfLifeIcon } from './BohoIcons';
+import { BrainwaveIcon, SolfeggioIcon, AngelIcon, RifeIcon, NoiseIcon, CelestialIcon, GuidedSessionIcon, StackIcon, ElementIcon, PathfinderIcon, OracleIcon, TreeOfLifeIcon } from './BohoIcons';
 import { MyLibrary } from './MyLibrary';
 import { useSubscription } from '../hooks/useSubscription';
 import { FeaturedCard } from './FeaturedCard';
