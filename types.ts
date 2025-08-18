@@ -1,5 +1,6 @@
 
 
+
 export type SoundGenerationMode = 'PURE' | 'BINAURAL' | 'ISOCHRONIC' | 'AMBIENCE';
 
 export enum BenefitCategory {
@@ -146,6 +147,12 @@ export type OuraData = {
     bodyTemperature?: number; // +/- degrees from baseline
 };
 
+export type FitbitData = {
+    activeZoneMinutes?: number;
+    steps?: number;
+    sleepScore?: number;
+};
+
 export type CalendarEvent = {
     title: string;
     startTime: string; // ISO string
@@ -160,6 +167,7 @@ export type CgmData = {
 
 export type IntegratedDataSummary = {
     oura?: OuraData;
+    fitbit?: FitbitData;
     calendar?: CalendarEvent[];
     cgm?: CgmData;
 };

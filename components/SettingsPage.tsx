@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { useSubscription } from '../hooks/useSubscription';
-import { SparklesIcon, BackIcon, UserCircleIcon, OuraRingIcon, CalendarIcon, CGMIcon } from './BohoIcons';
+import { SparklesIcon, BackIcon, UserCircleIcon, OuraRingIcon, CalendarIcon, CGMIcon, FitbitIcon } from './BohoIcons';
 import LoadingSpinner from './LoadingSpinner';
 import { useTheme } from '../contexts/ThemeContext';
 import { useAuth } from '../contexts/AuthContext';
 import { useIntegrations } from '../contexts/IntegrationsContext';
 
-type IntegrationId = 'oura' | 'calendar' | 'cgm';
+type IntegrationId = 'oura' | 'calendar' | 'cgm' | 'fitbit';
 
 const ThemeOptionButton: React.FC<{
   currentTheme: string;
@@ -155,6 +155,15 @@ export const SettingsPage: React.FC = () => {
                 name="Oura Ring"
                 description="Sync readiness, sleep scores & temperature."
                 Icon={OuraRingIcon}
+                connectedIntegrations={connectedIntegrations}
+                toggleIntegration={handleToggleIntegration}
+                />
+                <hr className="border-slate-200 dark:border-slate-700" />
+                <IntegrationItem
+                id="fitbit"
+                name="Fitbit"
+                description="Sync active minutes, steps & sleep score."
+                Icon={FitbitIcon}
                 connectedIntegrations={connectedIntegrations}
                 toggleIntegration={handleToggleIntegration}
                 />

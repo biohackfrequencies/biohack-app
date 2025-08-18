@@ -1,6 +1,6 @@
-import { IntegratedDataSummary, OuraData, CalendarEvent, CgmData } from '../types';
+import { IntegratedDataSummary, OuraData, FitbitData, CalendarEvent, CgmData } from '../types';
 
-type IntegrationId = 'oura' | 'calendar' | 'cgm';
+type IntegrationId = 'oura' | 'calendar' | 'cgm' | 'fitbit';
 
 const simulateOuraData = (): OuraData => {
   const readinessScore = 70 + Math.floor(Math.random() * 25); // 70-95
@@ -8,6 +8,15 @@ const simulateOuraData = (): OuraData => {
     readinessScore,
     sleepScore: 65 + Math.floor(Math.random() * 30), // 65-95
     bodyTemperature: +(Math.random() * 1.2 - 0.6).toFixed(1), // -0.6 to +0.6
+  };
+};
+
+const simulateFitbitData = (): FitbitData => {
+  const activeZoneMinutes = 30 + Math.floor(Math.random() * 90); // 30-120
+  return {
+    activeZoneMinutes,
+    steps: 2000 + Math.floor(Math.random() * 10000), // 2000-12000
+    sleepScore: 60 + Math.floor(Math.random() * 35), // 60-95
   };
 };
 
@@ -53,6 +62,9 @@ export const getIntegratedDataSummary = async (connectedIntegrations: Set<Integr
   
   if (connectedIntegrations.has('oura')) {
     summary.oura = simulateOuraData();
+  }
+  if (connectedIntegrations.has('fitbit')) {
+    summary.fitbit = simulateFitbitData();
   }
   if (connectedIntegrations.has('calendar')) {
     summary.calendar = simulateCalendarData();

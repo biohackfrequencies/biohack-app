@@ -172,7 +172,7 @@ Create a personalized sound therapy session as a JSON object that strictly adher
                 const { healthData, activitySummary, integratedData } = payload;
                 const systemInstruction = `You are an AI Biohacking Co-pilot. 
 - Analyze the user's health metrics (HRV, RHR, Sleep) from HealthKit/Health Connect.
-- Analyze data from integrated services like Oura Ring (readiness, sleep scores), Google Calendar (events, focus blocks), and CGM (glucose levels).
+- Analyze data from integrated services like Oura Ring or Fitbit (readiness, sleep scores, active minutes), Google Calendar (events, focus blocks), and CGM (glucose levels).
 - Correlate this data with their logged activities from today/yesterday.
 - Generate a single, actionable insight, a proactive recommendation, or a piece of positive reinforcement.
 - Be specific and data-driven.

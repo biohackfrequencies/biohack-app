@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
-type IntegrationId = 'oura' | 'calendar' | 'cgm';
+type IntegrationId = 'oura' | 'calendar' | 'cgm' | 'fitbit';
 
 interface IntegrationsContextType {
   connectedIntegrations: Set<IntegrationId>;
