@@ -435,7 +435,10 @@ export const PlayerPage: React.FC<PlayerPageProps> = ({
         {isSession && (
             <>
                 <div className="w-full max-w-2xl my-4 text-center">
-                    <p className="text-lg font-bold text-slate-800 dark:text-dark-text-primary">{currentStep?.title}</p>
+                    <p className="text-lg font-bold text-slate-800 dark:text-dark-text-primary">
+                        {currentStep?.title}
+                        {mainFrequencyForPlayback && ` (${mainFrequencyForPlayback.baseFrequency} Hz)`}
+                    </p>
                     <p className="text-sm text-slate-600 dark:text-dark-text-secondary">{currentStep?.description}</p>
                 </div>
                 <div className="w-full max-w-lg space-y-2 mb-6">
@@ -578,9 +581,10 @@ export const PlayerPage: React.FC<PlayerPageProps> = ({
                       
                       const containerClasses = `flex items-center gap-4 p-3 rounded-lg transition-all duration-300 ${isCurrent ? 'bg-white/80 dark:bg-dark-surface shadow-md' : isCompleted ? 'opacity-50' : 'bg-white/30 dark:bg-dark-surface/30'}`;
                       const iconBgColor = isCurrent ? colors.accent : (isCompleted ? '#94a3b8' : '#cbd5e1');
-                      let frequencyText = mainFreq?.name || step.frequencyId;
-                      if (layerFreq) frequencyText += ` + ${layerFreq.name}`;
-                      if (layer3Freq) frequencyText += ` + ${layer3Freq.name}`;
+                      
+                      let frequencyText = mainFreq ? `${mainFreq.name} (${mainFreq.range})` : step.frequencyId;
+                      if (layerFreq) frequencyText += ` + ${layerFreq.name} (${layerFreq.range})`;
+                      if (layer3Freq) frequencyText += ` + ${layer3Freq.name} (${layer3Freq.range})`;
                       
 
                       return (

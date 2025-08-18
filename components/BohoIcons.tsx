@@ -659,3 +659,15 @@ export const OracleIcon: React.FC<IconProps> = ({ className, style }) => (
         <path strokeLinecap="round" strokeLinejoin="round" d="M28.93 15.07 L 26.12 17.88" />
     </svg>
 );
+
+export const TreeOfLifeIcon: React.FC<IconProps> = ({ className, style }) => (
+    <svg fill="none" viewBox="0 0 48 48" stroke="currentColor" strokeWidth="2" className={className} style={style} aria-hidden="true">
+        <circle cx="24" cy="8" r="3"/>
+        <circle cx="16" cy="18" r="3"/>
+        <circle cx="32" cy="18" r="3"/>
+        <circle cx="24" cy="28" r="3"/>
+        <circle cx="16" cy="38" r="3"/>
+        <circle cx="32" cy="38" r="3"/>
+        <path strokeLinecap="round" d="M24 11v14 M16 21v14 M32 21v14 M22 9.5L18 16.5 M26 9.5L30 16.5 M18 19.5L22 26.5 M30 19.5L26 26.5 M18 36.5L22 29.5 M30 36.5L26 29.5"/>
+    </svg>
+);

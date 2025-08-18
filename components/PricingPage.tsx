@@ -161,8 +161,8 @@ const PricingPage: React.FC<PricingPageProps> = ({ onBack }) => {
     {
       id: MOCK_PRODUCT_ID_MONTHLY,
       title: 'Monthly',
-      price: '$4.99',
-      numericPrice: 4.99,
+      price: '$7.99',
+      numericPrice: 7.99,
       period: 'per month',
       isPopular: false,
       offer: null,
@@ -177,34 +177,18 @@ const PricingPage: React.FC<PricingPageProps> = ({ onBack }) => {
     {
       id: MOCK_PRODUCT_ID_ANNUAL,
       title: 'Annual',
-      price: '$39.99',
-      originalPrice: '$59.88',
-      numericPrice: 39.99,
+      price: '$59.99',
+      originalPrice: '$95.88',
+      numericPrice: 59.99,
       period: 'per year',
       isPopular: true,
-      offer: 'Save over 30%',
+      offer: 'Save 40%',
       description: 'Commit for a year and get the best value.',
       buttonText: 'Start Free Trial',
       style: {
           bg: 'bg-gradient-to-br from-[#EEE8B2]/50 to-[#C18D52]/30 dark:from-dark-surface dark:to-dark-bg',
           border: 'border-brand-gold/70',
           buttonClass: 'bg-brand-gold text-white',
-      }
-    },
-    {
-      id: MOCK_PRODUCT_ID_LIFETIME,
-      title: 'Lifetime',
-      price: '$99',
-      numericPrice: 99,
-      period: 'one-time payment',
-      isPopular: false,
-      offer: 'Unlock Forever',
-      description: 'One payment for lifetime access to all current and future features.',
-      buttonText: 'Go Lifetime',
-      style: {
-          bg: 'bg-white/60 dark:bg-dark-surface/60',
-          border: 'border-slate-300/50 dark:border-dark-border/50',
-          buttonClass: 'bg-slate-800 text-white dark:bg-slate-200 dark:text-slate-900',
       }
     },
   ];
@@ -219,6 +203,7 @@ const PricingPage: React.FC<PricingPageProps> = ({ onBack }) => {
     { name: 'HealthKit / Health Connect', free: true, pro: 'Sync + AI Insights' },
     { name: 'Creator Studio', free: false, pro: true },
     { name: 'Codex Mod-24 Harmonics', free: false, pro: true },
+    { name: 'Kabbalah Tree of Life', free: false, pro: true },
     { name: '8D Spatial Audio', free: false, pro: true },
     { name: 'Habit Tracking', free: '3 Habits', pro: 'Unlimited' },
     { name: 'Daily Logging', free: '5 Entries/Day', pro: 'Unlimited' },
@@ -275,7 +260,7 @@ const PricingPage: React.FC<PricingPageProps> = ({ onBack }) => {
         </div>
       )}
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {plans.map((plan: Plan) => (
           <div key={plan.id} className={`relative p-6 rounded-2xl border-2 transition-transform hover:-translate-y-2 ${plan.style.bg} ${plan.isPopular ? plan.style.border : 'border-transparent'}`}>
             {plan.isPopular && <div className="absolute top-0 -translate-y-1/2 left-1/2 -translate-x-1/2 px-3 py-1 bg-brand-gold text-white text-xs font-bold rounded-full uppercase tracking-wider">{plan.offer}</div>}

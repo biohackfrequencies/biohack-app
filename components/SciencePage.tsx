@@ -1,6 +1,7 @@
 
+
 import React, { useState, useEffect } from 'react';
-import { BackIcon, BrainwaveIcon, SolfeggioIcon, RifeIcon, NoiseIcon, SpatialAudioIcon, CelestialIcon, LungsIcon, UserCircleIcon, AtomIcon, PathfinderIcon, InfoIcon } from './BohoIcons';
+import { BackIcon, BrainwaveIcon, SolfeggioIcon, RifeIcon, NoiseIcon, SpatialAudioIcon, CelestialIcon, LungsIcon, UserCircleIcon, AtomIcon, PathfinderIcon, InfoIcon, TreeOfLifeIcon } from './BohoIcons';
 import { CategoryId, ColorTheme } from '../types';
 
 const ScienceSection: React.FC<{
@@ -95,6 +96,19 @@ export const SciencePage: React.FC<SciencePageProps> = ({ categories }) => {
             </ul>
             <p>When you interact, you’re exploring sound + number + meaning. Your Core Blueprint, Yearly Modulation, Monthly Overlay, and Daily Resonance can be sequenced (a story across time) or layered (a living chord).</p>
             <p>We frame these as self-inquiry tools, not medical instruments.</p>
+        </ScienceSection>
+
+         <ScienceSection 
+          id="kabbalah"
+          title="The Kabbalistic Sound Codex (Exploratory/Contemplative)"
+          icon={<TreeOfLifeIcon className="w-10 h-10 text-slate-700 dark:text-dark-text-secondary" />}
+          color={categories.kabbalah.colors.primary}
+        >
+            <p>This framework maps esoteric concepts from Jewish mysticism to sound frequencies for contemplative use. It is not based on empirical science but on symbolic correspondence and is offered for personal spiritual exploration.</p>
+            <ul>
+                <li><strong>The Tree of Life (Etz Chaim):</strong> The 10 Sefirot (e.g., Keter, Chokhmah) are treated as energetic archetypes, each assigned a frequency or sound quality to represent concepts like 'Wisdom' or 'Strength'.</li>
+                <li><strong>The Hebrew Alphabet:</strong> Each of the 22 letters is viewed as a vibrational archetype. Frequencies are assigned based on their elemental (Air, Water, Fire), planetary, or zodiacal associations as described in texts like the Sefer Yetzirah.</li>
+            </ul>
         </ScienceSection>
 
         <ScienceSection 

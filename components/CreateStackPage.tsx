@@ -91,6 +91,9 @@ export const CreateStackPage: React.FC<CreateStackPageProps> = ({
         return allFrequencies.filter(f => f.name.toLowerCase().includes(lowerCaseQuery));
     }, [searchQuery, allFrequencies]);
 
+    const categoryOrder: CategoryId[] = [
+        'elements', 'codex', 'kabbalah', 'brainwaves', 'solfeggio', 'angel', 'celestial', 'rife', 'noise'
+    ];
 
     const addStep = (freq: Frequency) => {
         const newStep: SessionStep = {
@@ -229,13 +232,16 @@ export const CreateStackPage: React.FC<CreateStackPageProps> = ({
                     <h3 className="font-display text-2xl font-bold text-slate-800 dark:text-dark-text-primary">Available Frequencies</h3>
                     <input type="search" value={searchQuery} onChange={e => setSearchQuery(e.target.value)} placeholder="Search frequencies..." className="w-full p-3 rounded-lg border border-slate-300/80 dark:border-dark-border dark:bg-slate-700 dark:text-dark-text-primary" />
                     <div className="space-y-2 max-h-[40rem] overflow-y-auto pr-2">
-                        {Object.entries(categories).map(([categoryId, categoryDetails]) => {
+                        {categoryOrder.map(categoryId => {
+                            const categoryDetails = categories[categoryId];
+                            if (!categoryDetails) return null;
+                            
                             const categoryFrequencies = filteredFrequencies.filter(f => f.categoryId === categoryId);
                             if (categoryFrequencies.length === 0) return null;
 
                             // Sort frequencies within each category
                             categoryFrequencies.sort((a, b) => {
-                                if (categoryId === 'solfeggio') {
+                                if (categoryId === 'solfeggio' || categoryId === 'elements' || categoryId === 'kabbalah') {
                                     return a.baseFrequency - b.baseFrequency;
                                 }
                                 return a.name.localeCompare(b.name);

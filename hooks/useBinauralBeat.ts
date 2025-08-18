@@ -1,7 +1,7 @@
 import { useState, useRef, useCallback, useEffect } from 'react';
 import { Frequency, SoundGenerationMode } from '../types';
 
-const MAX_GAIN = 0.25; // Master gain ceiling
+const MAX_GAIN = 0.30; // Master gain ceiling, slightly increased for more presence
 const MAX_LAYER2_GAIN = 0.20;
 const MAX_LAYER3_GAIN = 0.20;
 
@@ -252,12 +252,10 @@ export const useBinauralBeat = () => {
   const setupPanning = useCallback((context: AudioContext, source: AudioNode): PanningSetup => {
     const panner = context.createPanner();
     panner.panningModel = 'HRTF';
-    panner.distanceModel = 'inverse'; // This model works well with HRTF.
-    panner.refDistance = 1;
+    panner.distanceModel = 'inverse';
+    panner.refDistance = 0.8; // Make sound feel slightly closer to enhance HRTF effect
     panner.maxDistance = 10000;
-    // Key change: Set rolloffFactor to 0 to disable distance-based volume reduction.
-    // This maintains the spatialization effect of HRTF without the sound "disappearing".
-    panner.rolloffFactor = 0;
+    panner.rolloffFactor = 0; // Disable distance-based volume reduction for a consistent level
     panner.positionY.setValueAtTime(0, context.currentTime);
 
     source.connect(panner);
@@ -418,15 +416,14 @@ export const useBinauralBeat = () => {
         const nowInSeconds = audioContextRef.current.currentTime;
         const speedHz = 0.05 + (currentSpeed / 100) * 0.25;
         const radius = Math.pow(currentDepth / 100, 2) * 8 + 2;
-        const yRadius = radius * 0.5;
         
         const elapsedTime = nowInSeconds - audioStartTime;
         const angle = elapsedTime * 2 * Math.PI * speedHz;
 
-        // New infinity loop path for a more complex and spatial feel.
+        // Smoother, horizontal circle path for a more stable experience.
         const x = radius * Math.cos(angle);
-        const z = (radius * 0.8) * Math.sin(2 * angle); // Creates a figure-eight pattern.
-        const y = yRadius * Math.sin(angle * 0.75);
+        const z = radius * Math.sin(angle);
+        const y = 0; // No vertical movement
 
         const panner = currentControl.panner;
         panner.positionX.setTargetAtTime(x, nowInSeconds, SMOOTHING_TIME_CONSTANT);
@@ -467,11 +464,13 @@ export const useBinauralBeat = () => {
         audioContextRef.current = context;
 
         const limiter = context.createDynamicsCompressor();
-        limiter.threshold.setValueAtTime(-1.0, context.currentTime);
-        limiter.knee.setValueAtTime(3.0, context.currentTime);
-        limiter.ratio.setValueAtTime(12.0, context.currentTime);
-        limiter.attack.setValueAtTime(0.003, context.currentTime);
-        limiter.release.setValueAtTime(0.25, context.currentTime);
+        // A more transparent limiter setting: only catches peaks to prevent clipping,
+        // without constantly shaping the sound which can cause volume fluctuations.
+        limiter.threshold.setValueAtTime(-3.0, context.currentTime); // Higher threshold, engages less often.
+        limiter.knee.setValueAtTime(0, context.currentTime);      // Hard knee for pure limiting.
+        limiter.ratio.setValueAtTime(20.0, context.currentTime);   // High ratio.
+        limiter.attack.setValueAtTime(0.003, context.currentTime); // Very fast attack.
+        limiter.release.setValueAtTime(0.1, context.currentTime); // Fast release to avoid "pumping".
         
         const analyser = context.createAnalyser();
         analyser.fftSize = 256;

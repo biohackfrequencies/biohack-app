@@ -12,7 +12,7 @@ export enum BenefitCategory {
   SESSION = 'Session',
 }
 
-export type CategoryId = 'brainwaves' | 'solfeggio' | 'angel' | 'rife' | 'noise' | 'celestial' | 'guided' | 'elements' | 'codex';
+export type CategoryId = 'brainwaves' | 'solfeggio' | 'angel' | 'rife' | 'noise' | 'celestial' | 'guided' | 'elements' | 'codex' | 'kabbalah';
 
 export type ColorTheme = {
   primary: string;
@@ -222,7 +222,7 @@ export type ProfileRow = {
 };
 
 export interface AppContentData {
-    categories: Record<CategoryId, { title: string; description:string; colors: ColorTheme; }>;
+    categories: Record<CategoryId, { title: string; description:string; colors: ColorTheme; premium?: boolean; }>;
     guided_sessions: GuidedSession[];
     initial_frequencies: Frequency[];
     featured_candidates: string[];

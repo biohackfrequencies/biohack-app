@@ -1,14 +1,16 @@
 import React from 'react';
 import { CategoryId, Frequency, CustomStack, GuidedSession, ColorTheme } from '../types';
-import { BrainwaveIcon, SolfeggioIcon, AngelIcon, RifeIcon, NoiseIcon, CelestialIcon, GuidedSessionIcon, StackIcon, ElementIcon, PathfinderIcon, SparklesIcon, OracleIcon } from './BohoIcons';
+import { BrainwaveIcon, SolfeggioIcon, AngelIcon, RifeIcon, NoiseIcon, CelestialIcon, GuidedSessionIcon, StackIcon, ElementIcon, PathfinderIcon, SparklesIcon, OracleIcon, TreeOfLifeIcon } from './BohoIcons';
 import { MyLibrary } from './MyLibrary';
 import { useSubscription } from '../hooks/useSubscription';
 import { FeaturedCard } from './FeaturedCard';
 import { useTheme } from '../contexts/ThemeContext';
+import { ProBadge } from './ProBadge';
 
 export const categoryIcons: Record<string, React.FC<{ className?: string }>> = {
   elements: ElementIcon,
   codex: PathfinderIcon,
+  kabbalah: TreeOfLifeIcon,
   guided: GuidedSessionIcon,
   brainwaves: BrainwaveIcon,
   solfeggio: SolfeggioIcon,
@@ -95,6 +97,11 @@ const ActionCard: React.FC<{
         '--glow-color': `${accent}80`,
       } as any}
     >
+      {isLocked && (
+        <div className="absolute top-3 right-3 z-20">
+            <ProBadge />
+        </div>
+      )}
       <div className="absolute inset-0 bg-white/0 dark:bg-dark-surface/30 group-hover:bg-white/30 dark:group-hover:bg-dark-surface/20 transition-colors duration-300"></div>
       
       <div className="relative z-10 flex flex-col items-center justify-center transition-opacity duration-300 group-hover:opacity-0">
@@ -104,12 +111,6 @@ const ActionCard: React.FC<{
       
       <div className="absolute inset-0 z-20 p-4 flex flex-col items-center justify-center bg-white/80 dark:bg-dark-surface/80 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300">
         <p className="text-sm text-slate-800 dark:text-dark-text-secondary">{description}</p>
-        {isLocked && (
-            <div className="mt-2 inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold transition-colors bg-brand-orange text-white shadow">
-                <SparklesIcon className="w-4 h-4" />
-                <span>Go Pro</span>
-            </div>
-        )}
       </div>
     </button>
   );
@@ -139,7 +140,7 @@ export const HomePage: React.FC<HomePageProps> = ({
   };
 
   const categoryOrder: CategoryId[] = [
-    'elements', 'codex', 'guided', 'brainwaves', 'solfeggio', 'angel', 'celestial', 'rife', 'noise'
+    'elements', 'codex', 'kabbalah', 'guided', 'brainwaves', 'solfeggio', 'angel', 'celestial', 'rife', 'noise'
   ];
   
   return (
@@ -184,28 +185,15 @@ export const HomePage: React.FC<HomePageProps> = ({
                 colors={{ primary: '#EEE8B2', secondary: '#C18D52', accent: '#C18D52' }}
                 isLocked={!isSubscribed}
             />
+             <ActionCard
+                title="Codex Alchemist"
+                description="Describe an intention and our AI will instantly design a personalized sound session for you."
+                Icon={OracleIcon}
+                onClick={() => handlePremiumFeatureClick(() => window.location.hash = '#/ai-agent')}
+                colors={{ primary: '#a7f3d0', secondary: '#cffafe', accent: '#22d3ee' }}
+                isLocked={!isSubscribed}
+            />
         </div>
-      </section>
-
-      <section className="max-w-4xl mx-auto space-y-8">
-        <button
-              onClick={() => handlePremiumFeatureClick(() => window.location.hash = '#/ai-agent')}
-              className="group relative w-full p-4 sm:p-6 h-48 sm:h-40 rounded-2xl overflow-hidden text-center flex flex-col items-center justify-center bg-gradient-to-br from-teal-100/60 to-cyan-200/40 dark:bg-slate-800/80 border border-cyan-200/30 dark:border-cyan-500/50 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 hover:saturate-125"
-          >
-              <div className="absolute -right-4 -bottom-4 w-24 h-24 sm:w-32 sm:h-32 text-cyan-500/20 dark:text-cyan-500/20 opacity-80 group-hover:scale-110 transition-transform duration-500">
-                <OracleIcon />
-              </div>
-              <div className="relative">
-                <h4 className="text-xl sm:text-2xl font-display font-bold text-slate-800 dark:text-dark-text-primary drop-shadow-sm">Codex Alchemist</h4>
-                <p className="text-slate-700/90 dark:text-dark-text-secondary text-xs sm:text-sm mt-1 max-w-md mx-auto">Describe your intention, and let our AI suggest a personalized sound session. Designed to guide you through our library of acoustic protocols, the agent helps you explore combinations that align with your focus, relaxation, or inner journey goals.</p>
-                 {!isSubscribed && (
-                    <div className="mt-3 inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-bold transition-colors bg-brand-orange text-white shadow">
-                        <SparklesIcon className="w-4 h-4" />
-                        <span>Go Pro</span>
-                    </div>
-                )}
-              </div>
-          </button>
       </section>
 
       <MyLibrary

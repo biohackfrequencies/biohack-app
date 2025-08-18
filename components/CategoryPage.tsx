@@ -1,6 +1,4 @@
-
-
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Frequency, CategoryId, GuidedSession, ColorTheme } from '../types';
 import { BackIcon, InfoIcon, AlchemyIcon, SparklesIcon, PathfinderIcon } from './BohoIcons';
 import { FrequencyCard } from './FrequencyCard';
@@ -19,12 +17,31 @@ interface CategoryPageProps {
   categories: Record<CategoryId, { title: string; description:string; colors: ColorTheme; }>;
 }
 
+const CategorySection: React.FC<{ title: string; frequencies: Frequency[]; onSelect: (item: Frequency) => void; favorites: string[]; toggleFavorite: (id: string) => void; }> = ({ title, frequencies, onSelect, favorites, toggleFavorite }) => (
+    <div className="space-y-4">
+        <h3 className="text-2xl font-display font-bold text-slate-800 dark:text-dark-text-primary">{title}</h3>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {frequencies.map(freq => (
+                <FrequencyCard
+                    key={freq.id}
+                    frequency={freq}
+                    onSelect={() => onSelect(freq)}
+                    isFavorite={favorites.includes(freq.id)}
+                    onToggleFavorite={() => toggleFavorite(freq.id)}
+                />
+            ))}
+        </div>
+    </div>
+);
+
 export const CategoryPage: React.FC<CategoryPageProps> = ({ categoryId, frequenciesInCategory, allFrequencies, sessions, onBack, favorites, toggleFavorite, categories }) => {
   const categoryDetails = categories[categoryId];
   const { isSubscribed } = useSubscription();
   const Icon = categoryIcons[categoryId];
-
   const relevantSessions = sessions.filter(s => s.categoryId === categoryId);
+
+  const isKabbalah = categoryId === 'kabbalah';
+  const showScienceLink = ['elements', 'codex', 'kabbalah'].includes(categoryId);
 
   const handleSelect = (item: Frequency | GuidedSession) => {
     if (item.premium && !isSubscribed) {
@@ -38,28 +55,46 @@ export const CategoryPage: React.FC<CategoryPageProps> = ({ categoryId, frequenc
     }
   };
 
-  const getSortScore = (item: { premium?: boolean; isFeatured?: boolean }) => {
-      if (item.isFeatured) return -1; // Featured items first
-      if (!item.premium) return 0;   // Then free items
-      return 1;                      // Then premium items
-  };
+  const kabbalahContent = useMemo(() => {
+      if (!isKabbalah) return null;
+      const sephirotIds = ['kabbalah-keter', 'kabbalah-chokhmah', 'kabbalah-binah', 'kabbalah-chesed', 'kabbalah-gevurah', 'kabbalah-tiferet', 'kabbalah-netzach', 'kabbalah-hod', 'kabbalah-yesod', 'kabbalah-malkuth'];
+      const motherLetterIds = ['kabbalah-aleph', 'kabbalah-mem', 'kabbalah-shin'];
+      const doubleLetterIds = ['kabbalah-bet', 'kabbalah-gimel', 'kabbalah-dalet', 'kabbalah-kaf', 'kabbalah-pe', 'kabbalah-resh', 'kabbalah-tav'];
+      const simpleLetterIds = ['kabbalah-he', 'kabbalah-vav', 'kabbalah-zayin', 'kabbalah-chet', 'kabbalah-tet', 'kabbalah-yod', 'kabbalah-lamed', 'kabbalah-nun', 'kabbalah-samekh', 'kabbalah-ayin', 'kabbalah-tzade', 'kabbalah-qof'];
 
-  const sortedFrequencies = [...frequenciesInCategory].sort((a, b) => {
-      const scoreA = getSortScore(a);
-      const scoreB = getSortScore(b);
-      if (scoreA !== scoreB) {
-          return scoreA - scoreB;
-      }
-      // For specific categories, apply a secondary sort by base frequency.
-      if (categoryId === 'solfeggio' || categoryId === 'elements') {
-          return a.baseFrequency - b.baseFrequency;
-      }
-      // For other categories, sort alphabetically for consistent ordering.
-      return a.name.localeCompare(b.name);
-  });
+      const getSortedFrequenciesByIds = (ids: string[]) => ids.map(id => frequenciesInCategory.find(f => f.id === id)).filter((f): f is Frequency => !!f);
 
-  const sortedSessions = [...relevantSessions].sort((a, b) => getSortScore(a) - getSortScore(b));
-  
+      const sections = [
+        { title: "The Three Mother Letters (Primordial Forces)", frequencies: getSortedFrequenciesByIds(motherLetterIds) },
+        { title: "The Seven Double Letters (Planets / Polarities)", frequencies: getSortedFrequenciesByIds(doubleLetterIds) },
+        { title: "The Twelve Simple Letters (Zodiac / Human Faculties)", frequencies: getSortedFrequenciesByIds(simpleLetterIds) },
+        { title: "The Tree of Life (10 Sephirot)", frequencies: getSortedFrequenciesByIds(sephirotIds) },
+      ];
+
+      const sortedSessions = [...relevantSessions].sort((a, b) => (a.premium ? 1 : 0) - (b.premium ? 1 : 0));
+      return { sections, sortedSessions };
+  }, [isKabbalah, frequenciesInCategory, relevantSessions]);
+
+
+  const otherContent = useMemo(() => {
+      if (isKabbalah) return null;
+      const getSortScore = (item: { premium?: boolean; isFeatured?: boolean }) => {
+          if (item.isFeatured) return -1;
+          if (!item.premium) return 0;
+          return 1;
+      };
+      const sortedFrequencies = [...frequenciesInCategory].sort((a, b) => {
+          const scoreA = getSortScore(a);
+          const scoreB = getSortScore(b);
+          if (scoreA !== scoreB) return scoreA - scoreB;
+          if (categoryId === 'solfeggio' || categoryId === 'elements') return a.baseFrequency - b.baseFrequency;
+          return a.name.localeCompare(b.name);
+      });
+      const sortedSessions = [...relevantSessions].sort((a, b) => getSortScore(a) - getSortScore(b));
+      return { sortedFrequencies, sortedSessions };
+  }, [isKabbalah, frequenciesInCategory, relevantSessions, categoryId]);
+
+
   const headerStyle = { background: `linear-gradient(135deg, ${categoryDetails.colors.primary}60, ${categoryDetails.colors.secondary}60)`, borderColor: `${categoryDetails.colors.accent}80` };
 
   return (
@@ -74,8 +109,8 @@ export const CategoryPage: React.FC<CategoryPageProps> = ({ categoryId, frequenc
         <h2 className="text-4xl font-display font-bold text-slate-800 dark:text-dark-text-primary">{categoryDetails.title}</h2>
         <p className="text-slate-700/80 dark:text-dark-text-secondary/90 max-w-2xl mx-auto mt-2">{categoryDetails.description}</p>
         <div className="mt-4 flex flex-wrap justify-center items-center gap-4">
-            {(categoryId === 'elements' || categoryId === 'codex') && (
-                <a href={`#/science#${categoryId}`} 
+            {showScienceLink && (
+                 <a href={`#/science#${categoryId}`} 
                    onClick={(e) => {
                        e.preventDefault();
                        sessionStorage.setItem('returnTo', window.location.hash);
@@ -122,58 +157,92 @@ export const CategoryPage: React.FC<CategoryPageProps> = ({ categoryId, frequenc
         </div>
       </div>
 
-      {categoryId === 'elements' && sortedSessions.length > 0 && (
-          <div className="space-y-4">
-              <h3 className="text-2xl font-display font-bold text-slate-800 dark:text-dark-text-primary">Elemental Triads</h3>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {sortedSessions.map(session => (
-                      <SessionCard
-                          key={session.id}
-                          session={session}
-                          onSelect={() => handleSelect(session)}
-                          isFavorite={favorites.includes(session.id)}
-                          onToggleFavorite={() => toggleFavorite(session.id)}
-                          isLocked={!!session.premium && !isSubscribed}
-                          allFrequencies={allFrequencies}
-                      />
-                  ))}
-              </div>
-          </div>
-      )}
-
-      {frequenciesInCategory.length > 0 && (
-        <div className="space-y-4">
-            {categoryId === 'elements' && <h3 className="text-2xl font-display font-bold text-slate-800 dark:text-dark-text-primary">Individual Elements</h3>}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                {sortedFrequencies.map(freq => (
-                    <FrequencyCard
-                        key={freq.id}
-                        frequency={freq}
-                        onSelect={() => handleSelect(freq)}
-                        isFavorite={favorites.includes(freq.id)}
-                        onToggleFavorite={() => toggleFavorite(freq.id)}
-                    />
-                ))}
-            </div>
-        </div>
-      )}
-
-      {categoryId !== 'elements' && sortedSessions.length > 0 && (
-         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {sortedSessions.map(session => (
-                <SessionCard
-                    key={session.id}
-                    session={session}
-                    onSelect={() => handleSelect(session)}
-                    isFavorite={favorites.includes(session.id)}
-                    onToggleFavorite={() => toggleFavorite(session.id)}
-                    isLocked={!!session.premium && !isSubscribed}
-                    allFrequencies={allFrequencies}
+      {isKabbalah && kabbalahContent ? (
+        <div className="space-y-12">
+            {kabbalahContent.sortedSessions.length > 0 && (
+                <div className="space-y-4">
+                    <h3 className="text-2xl font-display font-bold text-slate-800 dark:text-dark-text-primary">Guided Protocols</h3>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {kabbalahContent.sortedSessions.map(session => (
+                            <SessionCard
+                                key={session.id}
+                                session={session}
+                                onSelect={() => handleSelect(session)}
+                                isFavorite={favorites.includes(session.id)}
+                                onToggleFavorite={() => toggleFavorite(session.id)}
+                                isLocked={!!session.premium && !isSubscribed}
+                                allFrequencies={allFrequencies}
+                            />
+                        ))}
+                    </div>
+                </div>
+            )}
+            {kabbalahContent.sections.map(section => (
+                <CategorySection 
+                    key={section.title}
+                    title={section.title}
+                    frequencies={section.frequencies}
+                    onSelect={handleSelect}
+                    favorites={favorites}
+                    toggleFavorite={toggleFavorite}
                 />
             ))}
         </div>
-      )}
+      ) : otherContent ? (
+        <>
+            {categoryId === 'elements' && otherContent.sortedSessions.length > 0 && (
+                <div className="space-y-4">
+                    <h3 className="text-2xl font-display font-bold text-slate-800 dark:text-dark-text-primary">Elemental Triads</h3>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {otherContent.sortedSessions.map(session => (
+                            <SessionCard
+                                key={session.id}
+                                session={session}
+                                onSelect={() => handleSelect(session)}
+                                isFavorite={favorites.includes(session.id)}
+                                onToggleFavorite={() => toggleFavorite(session.id)}
+                                isLocked={!!session.premium && !isSubscribed}
+                                allFrequencies={allFrequencies}
+                            />
+                        ))}
+                    </div>
+                </div>
+            )}
 
+            {frequenciesInCategory.length > 0 && (
+                <div className="space-y-4">
+                    {categoryId === 'elements' && <h3 className="text-2xl font-display font-bold text-slate-800 dark:text-dark-text-primary">Individual Elements</h3>}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {otherContent.sortedFrequencies.map(freq => (
+                            <FrequencyCard
+                                key={freq.id}
+                                frequency={freq}
+                                onSelect={() => handleSelect(freq)}
+                                isFavorite={favorites.includes(freq.id)}
+                                onToggleFavorite={() => toggleFavorite(freq.id)}
+                            />
+                        ))}
+                    </div>
+                </div>
+            )}
+
+            {categoryId !== 'elements' && otherContent.sortedSessions.length > 0 && (
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {otherContent.sortedSessions.map(session => (
+                        <SessionCard
+                            key={session.id}
+                            session={session}
+                            onSelect={() => handleSelect(session)}
+                            isFavorite={favorites.includes(session.id)}
+                            onToggleFavorite={() => toggleFavorite(session.id)}
+                            isLocked={!!session.premium && !isSubscribed}
+                            allFrequencies={allFrequencies}
+                        />
+                    ))}
+                </div>
+            )}
+        </>
+      ) : null}
     </div>
   );
 };

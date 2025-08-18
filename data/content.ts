@@ -13,7 +13,14 @@ export const appContentData: AppContentData = {
     "codex": {
       "title": "Codex Harmonics",
       "description": "Experience frequencies derived from the Mod-24 wheel, a harmonic system designed for exploration and creative resonance.",
-      "colors": { "primary": "#e9d5ff", "secondary": "#c4b5fd", "accent": "#a855f7" }
+      "colors": { "primary": "#e9d5ff", "secondary": "#c4b5fd", "accent": "#a855f7" },
+      "premium": true
+    },
+    "kabbalah": {
+      "title": "Kabbalistic Harmonics",
+      "description": "Explore the sonic pathways of ancient mysticism with 32 frequencies corresponding to the 10 Sefirot of the Tree of Life and the 22 letters of the Hebrew alphabet.",
+      "colors": { "primary": "#fefce8", "secondary": "#fde68a", "accent": "#f59e0b" },
+      "premium": true
     },
     "guided": {
       "title": "Guided Protocols",
@@ -192,6 +199,71 @@ export const appContentData: AppContentData = {
       ],
       "colors": { "primary": "#fda4af", "secondary": "#fca5a5", "accent": "#f9a8d4" },
       "premium": true
+    },
+    {
+      "id": "kabbalah-protocol-mother-letters",
+      "title": "Three Mother Letters – Creation Breath",
+      "categoryId": "kabbalah",
+      "description": "A 15-minute breathwork session to regulate your body and mind through the primal elements. Use a 4-7-8 breath pattern (Inhale-Hold-Exhale) to harmonize Air, Water, and Fire within you.",
+      "premium": false,
+      "colors": { "primary": "#fefce8", "secondary": "#fde68a", "accent": "#f59e0b" },
+      "steps": [
+        { "title": "Aleph (א) – Air", "description": "Draw in the breath of Air, clarity and expansion.", "duration": 300, "frequencyId": "kabbalah-aleph" },
+        { "title": "Mem (מ) – Water", "description": "Rest in the stillness of Water, calm and renewal.", "duration": 300, "frequencyId": "kabbalah-mem" },
+        { "title": "Shin (ש) – Fire", "description": "Release with Fire, transformation and energy.", "duration": 300, "frequencyId": "kabbalah-shin" }
+      ]
+    },
+    {
+      "id": "kabbalah-protocol-tree-of-life",
+      "title": "Tree of Life Alignment",
+      "categoryId": "kabbalah",
+      "description": "A 20-minute journey to balance and align the 10 Sefirot, from the Crown's unity to the Earth's grounding. Close with the feeling of your Tree of Life aligned, rooted, and radiant.",
+      "premium": true,
+      "colors": { "primary": "#fefce8", "secondary": "#fde68a", "accent": "#f59e0b" },
+      "steps": [
+        { "title": "Keter (Crown – Unity)", "description": "Open to infinite light above your head. Feel unity.", "duration": 120, "frequencyId": "kabbalah-keter" },
+        { "title": "Chokhmah (Wisdom – Expansion)", "description": "Breathe into expansion, pure inspiration.", "duration": 120, "frequencyId": "kabbalah-chokhmah" },
+        { "title": "Binah (Understanding – Structure)", "description": "Form takes shape, wisdom becomes structure.", "duration": 120, "frequencyId": "kabbalah-binah" },
+        { "title": "Chesed (Loving-Kindness)", "description": "Feel generosity and open-heartedness expand within.", "duration": 120, "frequencyId": "kabbalah-chesed" },
+        { "title": "Gevurah (Strength, Boundaries)", "description": "Anchor with strength. Boundaries create freedom.", "duration": 120, "frequencyId": "kabbalah-gevurah" },
+        { "title": "Tiferet (Harmony, Beauty)", "description": "The heart unites above and below, harmony in the center.", "duration": 120, "frequencyId": "kabbalah-tiferet" },
+        { "title": "Netzach (Endurance, Flow)", "description": "Step into perseverance and flow.", "duration": 120, "frequencyId": "kabbalah-netzach" },
+        { "title": "Hod (Splendor, Intellect)", "description": "The brilliance of clarity shines in thought and speech.", "duration": 120, "frequencyId": "kabbalah-hod" },
+        { "title": "Yesod (Foundation)", "description": "Energy gathers at the foundation, preparing to manifest.", "duration": 120, "frequencyId": "kabbalah-yesod" },
+        { "title": "Malkhut (Kingdom – Earth)", "description": "Feel grounded in the body, the divine manifest in Earth.", "duration": 120, "frequencyId": "kabbalah-malkuth" }
+      ]
+    },
+    {
+      "id": "kabbalah-protocol-22-pathways",
+      "title": "22 Pathways of Resonance",
+      "categoryId": "kabbalah",
+      "description": "A 22-minute sonic meditation through the Hebrew alphabet. For each letter, see it glowing, breathe in its tone, and let its resonance infuse your body and spirit.",
+      "premium": true,
+      "colors": { "primary": "#fefce8", "secondary": "#fde68a", "accent": "#f59e0b" },
+      "steps": [
+        { "title": "Aleph (א) – Breath of life", "description": "See the letter glowing. Breathe in its sound and resonance.", "duration": 60, "frequencyId": "kabbalah-aleph" },
+        { "title": "Bet (ב) – House, structure", "description": "See the letter glowing. Breathe in its sound and resonance.", "duration": 60, "frequencyId": "kabbalah-bet" },
+        { "title": "Gimel (ג) – Giving, generosity", "description": "See the letter glowing. Breathe in its sound and resonance.", "duration": 60, "frequencyId": "kabbalah-gimel" },
+        { "title": "Dalet (ד) – Door, opening", "description": "See the letter glowing. Breathe in its sound and resonance.", "duration": 60, "frequencyId": "kabbalah-dalet" },
+        { "title": "He (ה) – Expansion, divine breath", "description": "See the letter glowing. Breathe in its sound and resonance.", "duration": 60, "frequencyId": "kabbalah-he" },
+        { "title": "Vav (ו) – Connection, bridge", "description": "See the letter glowing. Breathe in its sound and resonance.", "duration": 60, "frequencyId": "kabbalah-vav" },
+        { "title": "Zayin (ז) – Spark, movement", "description": "See the letter glowing. Breathe in its sound and resonance.", "duration": 60, "frequencyId": "kabbalah-zayin" },
+        { "title": "Chet (ח) – Life force", "description": "See the letter glowing. Breathe in its sound and resonance.", "duration": 60, "frequencyId": "kabbalah-chet" },
+        { "title": "Tet (ט) – Hidden good", "description": "See the letter glowing. Breathe in its sound and resonance.", "duration": 60, "frequencyId": "kabbalah-tet" },
+        { "title": "Yod (י) – Point of creation", "description": "See the letter glowing. Breathe in its sound and resonance.", "duration": 60, "frequencyId": "kabbalah-yod" },
+        { "title": "Kaf (כ) – Palm, potential", "description": "See the letter glowing. Breathe in its sound and resonance.", "duration": 60, "frequencyId": "kabbalah-kaf" },
+        { "title": "Lamed (ל) – Learning, ascent", "description": "See the letter glowing. Breathe in its sound and resonance.", "duration": 60, "frequencyId": "kabbalah-lamed" },
+        { "title": "Mem (מ) – Water, renewal", "description": "See the letter glowing. Breathe in its sound and resonance.", "duration": 60, "frequencyId": "kabbalah-mem" },
+        { "title": "Nun (נ) – Continuity, humility", "description": "See the letter glowing. Breathe in its sound and resonance.", "duration": 60, "frequencyId": "kabbalah-nun" },
+        { "title": "Samekh (ס) – Support, circle", "description": "See the letter glowing. Breathe in its sound and resonance.", "duration": 60, "frequencyId": "kabbalah-samekh" },
+        { "title": "Ayin (ע) – Vision, seeing", "description": "See the letter glowing. Breathe in its sound and resonance.", "duration": 60, "frequencyId": "kabbalah-ayin" },
+        { "title": "Pe (פ) – Speech, expression", "description": "See the letter glowing. Breathe in its sound and resonance.", "duration": 60, "frequencyId": "kabbalah-pe" },
+        { "title": "Tsade (צ) – Righteousness", "description": "See the letter glowing. Breathe in its sound and resonance.", "duration": 60, "frequencyId": "kabbalah-tzade" },
+        { "title": "Qof (ק) – Holiness, cycles", "description": "See the letter glowing. Breathe in its sound and resonance.", "duration": 60, "frequencyId": "kabbalah-qof" },
+        { "title": "Resh (ר) – Head, renewal", "description": "See the letter glowing. Breathe in its sound and resonance.", "duration": 60, "frequencyId": "kabbalah-resh" },
+        { "title": "Shin (ש) – Fire, transformation", "description": "See the letter glowing. Breathe in its sound and resonance.", "duration": 60, "frequencyId": "kabbalah-shin" },
+        { "title": "Tav (ת) – Completion, seal", "description": "See the letter glowing. Breathe in its sound and resonance.", "duration": 60, "frequencyId": "kabbalah-tav" }
+      ]
     }
   ],
   "featured_candidates": [ "vagus-lymph-reset", "metabolic-harmony-protocol", "adhd-focus-protocol", "ultimate-deep-sleep", "chakra-balancing-journey", "solfeggio-528-repair", "beta", "gamma-40hz-precise", "solfeggio-1782-alchemy" ],
@@ -952,6 +1024,46 @@ export const appContentData: AppContentData = {
   ]
 };
 
+const kabbalahColors = appContentData.categories.kabbalah.colors;
+const kabbalahFrequencies: Frequency[] = [
+    // Sephirot
+    { id: "kabbalah-keter", name: "Keter (Crown – Unity)", range: "972 Hz", baseFrequency: 972, binauralFrequency: 0, description: "The frequency of unity and the unmanifest potential of the Crown.", category: BenefitCategory.SPIRITUAL, categoryId: "kabbalah", defaultMode: "PURE", availableModes: ["PURE"], colors: kabbalahColors, premium: true },
+    { id: "kabbalah-chokhmah", name: "Chokhmah (Wisdom – Expansion)", range: "864 Hz", baseFrequency: 864, binauralFrequency: 0, description: "Expansive Sound, associated with dynamic bursts of inspiration.", category: BenefitCategory.SPIRITUAL, categoryId: "kabbalah", defaultMode: "PURE", availableModes: ["PURE"], colors: kabbalahColors, premium: true },
+    { id: "kabbalah-binah", name: "Binah (Understanding – Structure)", range: "792 Hz", baseFrequency: 792, binauralFrequency: 0, description: "The frequency of structure and form, where wisdom becomes order.", category: BenefitCategory.SPIRITUAL, categoryId: "kabbalah", defaultMode: "PURE", availableModes: ["PURE"], colors: kabbalahColors, premium: true },
+    { id: "kabbalah-chesed", name: "Chesed (Loving-Kindness)", range: "672 Hz", baseFrequency: 672, binauralFrequency: 0, description: "A warm tone representing flow, expansion, and generosity.", category: BenefitCategory.SPIRITUAL, categoryId: "kabbalah", defaultMode: "PURE", availableModes: ["PURE"], colors: kabbalahColors, premium: true },
+    { id: "kabbalah-gevurah", name: "Gevurah (Strength, Boundaries)", range: "648 Hz", baseFrequency: 648, binauralFrequency: 0, description: "A sharp, resonant frequency of power and discipline.", category: BenefitCategory.SPIRITUAL, categoryId: "kabbalah", defaultMode: "PURE", availableModes: ["PURE"], colors: kabbalahColors, premium: true },
+    { id: "kabbalah-tiferet", name: "Tiferet (Harmony, Beauty)", range: "594 Hz", baseFrequency: 594, binauralFrequency: 0, description: "The balance point and heart center, resonating with harmony.", category: BenefitCategory.SPIRITUAL, categoryId: "kabbalah", defaultMode: "PURE", availableModes: ["PURE"], colors: kabbalahColors, premium: true },
+    { id: "kabbalah-netzach", name: "Netzach (Endurance, Flow)", range: "528 Hz", baseFrequency: 528, binauralFrequency: 0, description: "A frequency linked to perseverance, passion, and drive.", category: BenefitCategory.SPIRITUAL, categoryId: "kabbalah", defaultMode: "PURE", availableModes: ["PURE"], colors: kabbalahColors, premium: true },
+    { id: "kabbalah-hod", name: "Hod (Splendor, Intellect)", range: "504 Hz", baseFrequency: 504, binauralFrequency: 0, description: "The resonance of precision, analysis, and intellectual clarity.", category: BenefitCategory.SPIRITUAL, categoryId: "kabbalah", defaultMode: "PURE", availableModes: ["PURE"], colors: kabbalahColors, premium: true },
+    { id: "kabbalah-yesod", name: "Yesod (Foundation)", range: "444 Hz", baseFrequency: 444, binauralFrequency: 0, description: "The frequency of the subconscious and the foundation of manifestation.", category: BenefitCategory.SPIRITUAL, categoryId: "kabbalah", defaultMode: "PURE", availableModes: ["PURE"], colors: kabbalahColors, premium: true },
+    { id: "kabbalah-malkuth", name: "Malkhut (Kingdom – Earth)", range: "396 Hz", baseFrequency: 396, binauralFrequency: 0, description: "A grounding frequency that connects to the physical world.", category: BenefitCategory.SPIRITUAL, categoryId: "kabbalah", defaultMode: "PURE", availableModes: ["PURE"], colors: kabbalahColors, premium: true },
+    // Mother Letters
+    { id: "kabbalah-aleph", name: "Aleph (א) - Breath of life", range: "432 Hz", baseFrequency: 432, binauralFrequency: 0, description: "Element: Air/Spirit. Symbolic Meaning: Balance, mediation, life force.", category: BenefitCategory.SPIRITUAL, categoryId: "kabbalah", defaultMode: "PURE", availableModes: ["PURE"], colors: kabbalahColors, premium: false },
+    { id: "kabbalah-mem", name: "Mem (מ) - Water, renewal", range: "315 Hz", baseFrequency: 315, binauralFrequency: 0, description: "Element: Water. Symbolic Meaning: Flow, womb, gestation, subconscious.", category: BenefitCategory.SPIRITUAL, categoryId: "kabbalah", defaultMode: "PURE", availableModes: ["PURE"], colors: kabbalahColors, premium: false },
+    { id: "kabbalah-shin", name: "Shin (ש) - Fire, transformation", range: "285 Hz", baseFrequency: 285, binauralFrequency: 0, description: "Element: Fire. Symbolic Meaning: Energy, transformation, purification.", category: BenefitCategory.SPIRITUAL, categoryId: "kabbalah", defaultMode: "PURE", availableModes: ["PURE"], colors: kabbalahColors, premium: false },
+    // Double Letters
+    { id: "kabbalah-bet", name: "Bet (ב) - House, structure", range: "360 Hz", baseFrequency: 360, binauralFrequency: 0, description: "Planet: Saturn. Dual Aspect: Wisdom / Foolishness.", category: BenefitCategory.SPIRITUAL, categoryId: "kabbalah", defaultMode: "PURE", availableModes: ["PURE"], colors: kabbalahColors, premium: true },
+    { id: "kabbalah-gimel", name: "Gimel (ג) - Giving, generosity", range: "342 Hz", baseFrequency: 342, binauralFrequency: 0, description: "Planet: Jupiter. Dual Aspect: Wealth / Poverty.", category: BenefitCategory.SPIRITUAL, categoryId: "kabbalah", defaultMode: "PURE", availableModes: ["PURE"], colors: kabbalahColors, premium: true },
+    { id: "kabbalah-dalet", name: "Dalet (ד) - Door, opening", range: "324 Hz", baseFrequency: 324, binauralFrequency: 0, description: "Planet: Mars. Dual Aspect: Peace / War.", category: BenefitCategory.SPIRITUAL, categoryId: "kabbalah", defaultMode: "PURE", availableModes: ["PURE"], colors: kabbalahColors, premium: true },
+    { id: "kabbalah-kaf", name: "Kaf (כ) - Palm, potential", range: "234 Hz", baseFrequency: 234, binauralFrequency: 0, description: "Planet: Sun. Dual Aspect: Life / Death.", category: BenefitCategory.SPIRITUAL, categoryId: "kabbalah", defaultMode: "PURE", availableModes: ["PURE"], colors: kabbalahColors, premium: true },
+    { id: "kabbalah-pe", name: "Pe (פ) - Speech, expression", range: "180 Hz", baseFrequency: 180, binauralFrequency: 0, description: "Planet: Venus. Dual Aspect: Grace / Ugliness.", category: BenefitCategory.SPIRITUAL, categoryId: "kabbalah", defaultMode: "PURE", availableModes: ["PURE"], colors: kabbalahColors, premium: true },
+    { id: "kabbalah-resh", name: "Resh (ר) - Head, renewal", range: "153 Hz", baseFrequency: 153, binauralFrequency: 0, description: "Planet: Mercury. Dual Aspect: Dominion / Servitude.", category: BenefitCategory.SPIRITUAL, categoryId: "kabbalah", defaultMode: "PURE", availableModes: ["PURE"], colors: kabbalahColors, premium: true },
+    { id: "kabbalah-tav", name: "Tav (ת) - Completion, seal", range: "144 Hz", baseFrequency: 144, binauralFrequency: 0, description: "Planet: Moon. Dual Aspect: Good / Evil.", category: BenefitCategory.SPIRITUAL, categoryId: "kabbalah", defaultMode: "PURE", availableModes: ["PURE"], colors: kabbalahColors, premium: true },
+    // Simple Letters
+    { id: "kabbalah-he", name: "He (ה) - Expansion, divine breath", range: "315 Hz", baseFrequency: 315, binauralFrequency: 0, description: "Zodiac: Aries. Human Faculty: Speech.", category: BenefitCategory.SPIRITUAL, categoryId: "kabbalah", defaultMode: "PURE", availableModes: ["PURE"], colors: kabbalahColors, premium: true },
+    { id: "kabbalah-vav", name: "Vav (ו) - Connection, bridge", range: "297 Hz", baseFrequency: 297, binauralFrequency: 0, description: "Zodiac: Taurus. Human Faculty: Thought.", category: BenefitCategory.SPIRITUAL, categoryId: "kabbalah", defaultMode: "PURE", availableModes: ["PURE"], colors: kabbalahColors, premium: true },
+    { id: "kabbalah-zayin", name: "Zayin (ז) - Spark, movement", range: "288 Hz", baseFrequency: 288, binauralFrequency: 0, description: "Zodiac: Gemini. Human Faculty: Movement.", category: BenefitCategory.SPIRITUAL, categoryId: "kabbalah", defaultMode: "PURE", availableModes: ["PURE"], colors: kabbalahColors, premium: true },
+    { id: "kabbalah-chet", name: "Chet (ח) - Life force", range: "270 Hz", baseFrequency: 270, binauralFrequency: 0, description: "Zodiac: Cancer. Human Faculty: Sight.", category: BenefitCategory.SPIRITUAL, categoryId: "kabbalah", defaultMode: "PURE", availableModes: ["PURE"], colors: kabbalahColors, premium: true },
+    { id: "kabbalah-tet", name: "Tet (ט) - Hidden good", range: "252 Hz", baseFrequency: 252, binauralFrequency: 0, description: "Zodiac: Leo. Human Faculty: Hearing.", category: BenefitCategory.SPIRITUAL, categoryId: "kabbalah", defaultMode: "PURE", availableModes: ["PURE"], colors: kabbalahColors, premium: true },
+    { id: "kabbalah-yod", name: "Yod (י) - Point of creation", range: "243 Hz", baseFrequency: 243, binauralFrequency: 0, description: "Zodiac: Virgo. Human Faculty: Work.", category: BenefitCategory.SPIRITUAL, categoryId: "kabbalah", defaultMode: "PURE", availableModes: ["PURE"], colors: kabbalahColors, premium: true },
+    { id: "kabbalah-lamed", name: "Lamed (ל) - Learning, ascent", range: "225 Hz", baseFrequency: 225, binauralFrequency: 0, description: "Zodiac: Libra. Human Faculty: Balance.", category: BenefitCategory.SPIRITUAL, categoryId: "kabbalah", defaultMode: "PURE", availableModes: ["PURE"], colors: kabbalahColors, premium: true },
+    { id: "kabbalah-nun", name: "Nun (נ) - Continuity, humility", range: "207 Hz", baseFrequency: 207, binauralFrequency: 0, description: "Zodiac: Scorpio. Human Faculty: Smell.", category: BenefitCategory.SPIRITUAL, categoryId: "kabbalah", defaultMode: "PURE", availableModes: ["PURE"], colors: kabbalahColors, premium: true },
+    { id: "kabbalah-samekh", name: "Samekh (ס) - Support, circle", range: "198 Hz", baseFrequency: 198, binauralFrequency: 0, description: "Zodiac: Sagittarius. Human Faculty: Sleep/Dream.", category: BenefitCategory.SPIRITUAL, categoryId: "kabbalah", defaultMode: "PURE", availableModes: ["PURE"], colors: kabbalahColors, premium: true },
+    { id: "kabbalah-ayin", name: "Ayin (ע) - Vision, seeing", range: "189 Hz", baseFrequency: 189, binauralFrequency: 0, description: "Zodiac: Capricorn. Human Faculty: Anger/Joy.", category: BenefitCategory.SPIRITUAL, categoryId: "kabbalah", defaultMode: "PURE", availableModes: ["PURE"], colors: kabbalahColors, premium: true },
+    { id: "kabbalah-tzade", name: "Tzade (צ) - Righteousness", range: "171 Hz", baseFrequency: 171, binauralFrequency: 0, description: "Zodiac: Aquarius. Human Faculty: Taste.", category: BenefitCategory.SPIRITUAL, categoryId: "kabbalah", defaultMode: "PURE", availableModes: ["PURE"], colors: kabbalahColors, premium: true },
+    { id: "kabbalah-qof", name: "Qof (ק) - Holiness, cycles", range: "162 Hz", baseFrequency: 162, binauralFrequency: 0, description: "Zodiac: Pisces. Human Faculty: Laughter/Imagination.", category: BenefitCategory.SPIRITUAL, categoryId: "kabbalah", defaultMode: "PURE", availableModes: ["PURE"], colors: kabbalahColors, premium: true },
+];
+
 const elementFrequencies: Frequency[] = harmonicElements.map((el: HarmonicElement) => ({
     id: el.id,
     name: el.name,
@@ -993,5 +1105,5 @@ const codexFrequencies: Frequency[] = codexData.map((node: CodexNode) => ({
 
 export const processedAppContent: AppContentData = {
     ...appContentData,
-    initial_frequencies: [...appContentData.initial_frequencies, ...elementFrequencies, ...codexFrequencies],
+    initial_frequencies: [...appContentData.initial_frequencies, ...elementFrequencies, ...codexFrequencies, ...kabbalahFrequencies],
 };

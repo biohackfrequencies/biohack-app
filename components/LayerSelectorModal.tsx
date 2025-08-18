@@ -34,7 +34,7 @@ export const LayerSelectorModal: React.FC<LayerSelectorModalProps> = ({
         }
 
         // Define a preferred order for categories
-        const categoryOrder: CategoryId[] = ['brainwaves', 'solfeggio', 'elements', 'celestial', 'rife', 'angel', 'noise', 'codex'];
+        const categoryOrder: CategoryId[] = ['brainwaves', 'solfeggio', 'elements', 'celestial', 'rife', 'angel', 'noise', 'codex', 'kabbalah'];
         const groups: Record<CategoryId, Frequency[]> = {} as any;
 
         categoryOrder.forEach(catId => {
@@ -55,7 +55,7 @@ export const LayerSelectorModal: React.FC<LayerSelectorModalProps> = ({
                 if (catId === 'elements') {
                     return (a.atomicNumber || 0) - (b.atomicNumber || 0);
                 }
-                if (catId === 'solfeggio' || catId === 'angel') {
+                if (catId === 'solfeggio' || catId === 'angel' || catId === 'kabbalah') {
                     return a.baseFrequency - b.baseFrequency;
                 }
                 return a.name.localeCompare(b.name);
