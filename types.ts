@@ -1,7 +1,8 @@
 
 
 
-export type SoundGenerationMode = 'PURE' | 'BINAURAL' | 'ISOCHRONIC' | 'AMBIENCE';
+
+export type SoundGenerationMode = 'PURE' | 'BINAURAL' | 'ISOCHRONIC' | 'AMBIENCE' | 'SPLIT_BINAURAL';
 
 export enum BenefitCategory {
   HEALING = 'Healing',
@@ -27,6 +28,8 @@ export interface Frequency {
   range: string;
   baseFrequency: number;
   binauralFrequency: number;
+  leftFrequency?: number;
+  rightFrequency?: number;
   description: string;
   category: BenefitCategory;
   categoryId: CategoryId;

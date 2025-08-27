@@ -1,15 +1,12 @@
 import React from 'react';
-import { CodexNode, HarmonicInfluenceMap, Frequency } from '../types';
-import { usePlayer } from '../contexts/PlayerContext';
+import { CodexNode, HarmonicInfluenceMap } from '../types';
 
 interface CodexUniversalisFieldProps {
     nodes: CodexNode[];
     influenceMap: HarmonicInfluenceMap | null;
     interactionMode: 'static' | 'breathing' | 'rotating';
     highlightedModulus: number | null;
-    allFrequencies: Frequency[];
-    setMainFrequency: (freq: Frequency | null) => void;
-    setLayeredFrequency: (freq: Frequency | null) => void;
+    onNodeClick: (node: CodexNode) => void;
     onNodeHover: (node: CodexNode | null) => void;
 }
 
@@ -24,31 +21,8 @@ const hexToRgb = (hex: string): string => {
 };
 
 
-export const CodexUniversalisField: React.FC<CodexUniversalisFieldProps> = ({ nodes, influenceMap, interactionMode, highlightedModulus, allFrequencies, setMainFrequency, setLayeredFrequency, onNodeHover }) => {
-    const player = usePlayer();
-    const { isPlaying, currentlyPlayingItem, startPlayback, toggleLayer } = player;
-
-    const handleNodeClick = (node: CodexNode) => {
-        const frequencyToPlay = allFrequencies.find(f => f.id === `codex-${node.modulus}`);
-        if (!frequencyToPlay) return;
-
-        const isCodexTonePlaying = currentlyPlayingItem?.id.startsWith('codex-');
-
-        if (!isPlaying || !isCodexTonePlaying) {
-            // Start new playback if nothing is playing, or if a non-Codex sound is playing
-            startPlayback(frequencyToPlay, allFrequencies, frequencyToPlay, 'PURE', null, 'PURE', null, 'PURE');
-            setMainFrequency(frequencyToPlay);
-            setLayeredFrequency(null);
-        } else {
-            // If main tone is clicked again, do nothing. User can use global player to stop.
-            if (currentlyPlayingItem?.id === frequencyToPlay.id) return;
-
-            // Layer the new tone
-            toggleLayer(frequencyToPlay, 'PURE');
-            setLayeredFrequency(frequencyToPlay);
-        }
-    };
-
+export const CodexUniversalisField: React.FC<CodexUniversalisFieldProps> = ({ nodes, influenceMap, interactionMode, highlightedModulus, onNodeClick, onNodeHover }) => {
+    
     const centerNode = influenceMap?.coreBlueprint || nodes.find(n => n.modulus === 0)!;
     const activeOuterModuli = influenceMap 
         ? [influenceMap.yearlyModulation.modulus, influenceMap.monthlyOverlay.modulus, influenceMap.dailyResonance.modulus]
@@ -93,7 +67,7 @@ export const CodexUniversalisField: React.FC<CodexUniversalisFieldProps> = ({ no
                         
                         return (
                             <g key={node.modulus} transform={`translate(${x}, ${y})`}
-                                onClick={() => handleNodeClick(node)}
+                                onClick={() => onNodeClick(node)}
                                 onMouseEnter={() => onNodeHover(node)}
                                 onMouseLeave={() => onNodeHover(null)}
                                 className="cursor-pointer group"
@@ -128,7 +102,7 @@ export const CodexUniversalisField: React.FC<CodexUniversalisFieldProps> = ({ no
                         return (
                             <g
                                 key={centerNode.modulus}
-                                onClick={() => handleNodeClick(centerNode)}
+                                onClick={() => onNodeClick(centerNode)}
                                 onMouseEnter={() => onNodeHover(centerNode)}
                                 onMouseLeave={() => onNodeHover(null)}
                                 className="cursor-pointer group"

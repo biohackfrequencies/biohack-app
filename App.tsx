@@ -27,7 +27,6 @@ import { GlobalPlayerUI } from './components/GlobalPlayerUI';
 import { processedAppContent } from './data/content';
 import AIWellnessAgent from './components/AIWellnessAgent';
 import { ToneGeneratorPage } from './components/ToneGeneratorPage';
-import { ElementalMixerPage } from './components/ElementalMixerPage';
 
 const getWeekNumber = (date: Date): number => {
     const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
@@ -66,7 +65,6 @@ const parseRoute = (hash: string): { page: string; id?: string; fragment?: strin
   if (pathname.startsWith('category/')) return parsed('category', pathname.substring('category/'.length));
   if (pathname === 'create') return parsed('create');
   if (pathname === 'ai-agent') return parsed('ai-agent');
-  if (pathname === 'elemental-mixer') return parsed('elemental-mixer');
   if (pathname === 'codex-breathing-path') return parsed('codex-breathing-path');
 
   return parsed('dashboard');
@@ -195,7 +193,7 @@ const App: React.FC<{ content: AppContentData }> = ({ content }) => {
   };
 
   const renderContent = () => {
-    if ((page === 'create' || page === 'stack' || page === 'codex-breathing-path' || page === 'ai-agent' || page === 'elemental-mixer') && !isSubscribed) {
+    if ((page === 'create' || page === 'stack' || page === 'codex-breathing-path' || page === 'ai-agent') && !isSubscribed) {
         return <PricingPage onBack={() => window.location.hash = '#/library'} />;
     }
 
@@ -238,8 +236,6 @@ const App: React.FC<{ content: AppContentData }> = ({ content }) => {
         return <CreateStackPage allFrequencies={allFrequencies} categories={content.categories} onSaveStack={handleSaveStack} onBack={() => window.location.hash = '#/library'} />;
       case 'ai-agent':
         return <AIWellnessAgent allFrequencies={allFrequencies} onSaveStack={handleSaveStack} onBack={() => window.location.hash = '#/library'} />;
-      case 'elemental-mixer':
-        return <ElementalMixerPage allFrequencies={allFrequencies} onSaveStack={handleSaveStack} onBack={() => window.location.hash = '#/library'} categories={content.categories} />;
       case 'codex-breathing-path':
         return <ToneGeneratorPage onBack={() => window.location.hash = '#/library'} allFrequencies={allFrequencies} />;
       case 'player':

@@ -5,9 +5,10 @@ interface VisualizerProps {
   analyser: AnalyserNode | null;
   isPlaying: boolean;
   colors: ColorTheme;
+  baseFrequency: number;
 }
 
-export const Visualizer: React.FC<VisualizerProps> = ({ analyser, isPlaying, colors }) => {
+export const Visualizer: React.FC<VisualizerProps> = ({ analyser, isPlaying, colors, baseFrequency }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animationFrameId = useRef<number>(0);
   // Separate angles for each layer for asynchronous rotation
@@ -47,6 +48,7 @@ export const Visualizer: React.FC<VisualizerProps> = ({ analyser, isPlaying, col
     const bassAvg = getAverage(bassSlice) / 255;
     const midAvg = getAverage(midSlice) / 255;
     const trebleAvg = getAverage(trebleSlice) / 255;
+    const overallAvg = getAverage(dataArray) / 255;
 
     context.translate(centerX, centerY);
 
@@ -115,7 +117,10 @@ export const Visualizer: React.FC<VisualizerProps> = ({ analyser, isPlaying, col
     });
 
     // Layer 1: Core Flower
+    const coreScale = 1 + overallAvg * 0.15; // Scale up to 15% for a visible pulse
     drawLayer(angles.core, () => {
+      context.save();
+      context.scale(coreScale, coreScale);
       // Inner small petals
       context.fillStyle = `${primary}99`;
       context.strokeStyle = secondary;
@@ -137,12 +142,13 @@ export const Visualizer: React.FC<VisualizerProps> = ({ analyser, isPlaying, col
       context.strokeStyle = primary;
       context.lineWidth = 3;
       context.beginPath();
-      context.arc(0, 0, baseRadius * (0.6 + bassAvg * 0.2), 0, 2 * Math.PI);
+      context.arc(0, 0, baseRadius * 0.6, 0, 2 * Math.PI);
       context.fill();
       context.stroke();
       context.beginPath();
       context.arc(0, 0, baseRadius * 0.3, 0, 2 * Math.PI);
       context.stroke();
+      context.restore();
     });
 
     context.restore(); // Restore to the default state, undoing the translate
@@ -180,12 +186,7 @@ export const Visualizer: React.FC<VisualizerProps> = ({ analyser, isPlaying, col
     const renderFrame = () => {
       animationFrameId.current = requestAnimationFrame(renderFrame);
       const angles = anglesRef.current;
-      // Update angles for asynchronous rotation
-      angles.core += 0.0005;
-      angles.midPetals -= 0.0008;
-      angles.outerPetals += 0.0006;
-      angles.loops -= 0.0004;
-
+      
       if (isPlaying && analyser) {
         analyser.getByteFrequencyData(dataArray);
       } else {
@@ -196,6 +197,19 @@ export const Visualizer: React.FC<VisualizerProps> = ({ analyser, isPlaying, col
             dataArray.fill(0);
         }
       }
+
+      const bassAvg = getAverage(dataArray.subarray(0, Math.floor(bufferLength * 0.1))) / 255;
+      const trebleAvg = getAverage(dataArray.subarray(Math.floor(bufferLength * 0.4))) / 255;
+
+      // Update angles for dynamic rotation
+      angles.core += 0.0005 + bassAvg * 0.0005;
+      angles.midPetals -= 0.0008 + bassAvg * 0.0005;
+      
+      // Outer petals rotate based on the base frequency of the tone, clamped for stability.
+      const outerPetalSpeed = 0.0004 + (Math.min(baseFrequency, 1500) / 1500) * 0.001;
+      angles.outerPetals += outerPetalSpeed;
+
+      angles.loops -= 0.0004 + trebleAvg * 0.0003;
       
       const canvasWidth = canvas.width / dpr;
       const canvasHeight = canvas.height / dpr;
@@ -212,7 +226,7 @@ export const Visualizer: React.FC<VisualizerProps> = ({ analyser, isPlaying, col
         resizeObserver.unobserve(parent);
       }
     };
-  }, [analyser, isPlaying, colors]);
+  }, [analyser, isPlaying, colors, baseFrequency]);
 
   return <canvas ref={canvasRef} className="w-full h-full" />;
 };

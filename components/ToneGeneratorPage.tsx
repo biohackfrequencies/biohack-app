@@ -69,7 +69,9 @@ export const ToneGeneratorPage: React.FC<ToneGeneratorPageProps> = ({ onBack, al
     const { 
         startPlayback, startGuide, activePattern, isPlaying, currentlyPlayingItem, sessionStepIndex, sessionTimeInStep,
         is8dEnabled, setIs8dEnabled, panningSpeed, setPanningSpeed, panningDepth, setPanningDepth,
-        mainVolume, setMainVolume, layer2Volume, setLayer2Volume, isLayer2Active, toggleLayer
+        mainVolume, setMainVolume, layer2Volume, setLayer2Volume, isLayer2Active, 
+        // FIX: Replaced non-existent 'toggleLayer' with 'toggleLayer2' from the PlayerContext.
+        toggleLayer2
     } = player;
     const { isSubscribed } = useSubscription();
 
@@ -105,11 +107,19 @@ export const ToneGeneratorPage: React.FC<ToneGeneratorPageProps> = ({ onBack, al
         if (!isPlaying) {
             setMainFrequency(null);
             setLayeredFrequency(null);
-        } else if (currentlyPlayingItem && currentlyPlayingItem.id.startsWith('codex-')) {
-            // This case handles when the player might be started from another page
-            // and we navigate here. It tries to sync up.
-            const mainFreq = allFrequencies.find(f => f.id === currentlyPlayingItem.id);
-            if (mainFreq) setMainFrequency(mainFreq);
+        } else {
+            const currentMainId = currentlyPlayingItem?.id;
+            const currentIsCodex = currentMainId?.startsWith('codex-');
+
+            if (currentIsCodex) {
+                const mainFreq = allFrequencies.find(f => f.id === currentMainId);
+                if (mainFreq) setMainFrequency(mainFreq);
+                // Note: We can't know the layered frequency from player context alone,
+                // so we only reset it when play stops. This is a reasonable tradeoff.
+            } else {
+                setMainFrequency(null);
+                setLayeredFrequency(null);
+            }
         }
     }, [isPlaying, currentlyPlayingItem, allFrequencies]);
 
@@ -170,6 +180,29 @@ export const ToneGeneratorPage: React.FC<ToneGeneratorPageProps> = ({ onBack, al
         const map = calculateHarmonicInfluence(yearNum, monthNum, dayNum);
         setInfluenceMap(map);
     };
+    
+    const handleNodeClick = (node: CodexNode) => {
+        const frequencyToPlay = allFrequencies.find(f => f.id === `codex-${node.modulus}`);
+        if (!frequencyToPlay) return;
+
+        const isCodexTonePlaying = currentlyPlayingItem?.id.startsWith('codex-');
+
+        if (!isPlaying || !isCodexTonePlaying) {
+            startPlayback(frequencyToPlay, allFrequencies, frequencyToPlay, 'PURE', null, 'PURE', null, 'PURE');
+            setMainFrequency(frequencyToPlay);
+            setLayeredFrequency(null);
+        } else {
+            if (mainFrequency?.id === frequencyToPlay.id) return;
+            if (layeredFrequency?.id === frequencyToPlay.id) {
+                toggleLayer2(null, 'PURE');
+                setLayeredFrequency(null);
+                return;
+            }
+            toggleLayer2(frequencyToPlay, 'PURE');
+            setLayeredFrequency(frequencyToPlay);
+        }
+    };
+
 
     const playGeneratedPath = (stack: CustomStack) => {
         const firstStep = stack.steps[0];
@@ -264,7 +297,7 @@ export const ToneGeneratorPage: React.FC<ToneGeneratorPageProps> = ({ onBack, al
     };
     
     const handleRemoveLayer = () => {
-      toggleLayer(null, 'PURE');
+      toggleLayer2(null, 'PURE');
       setLayeredFrequency(null);
     }
     
@@ -283,7 +316,7 @@ export const ToneGeneratorPage: React.FC<ToneGeneratorPageProps> = ({ onBack, al
                 <PathfinderIcon className="w-20 h-20 text-slate-500 dark:text-brand-gold mx-auto mb-4" />
                 <h2 className="text-3xl font-display font-bold text-slate-800 dark:text-dark-text-primary">Codex Universalis</h2>
                 <p className="text-slate-700/80 dark:text-dark-text-secondary mt-2 max-w-2xl mx-auto">
-                    Enter your birth date to reveal your daily harmonic map and generate personalized sonic journeys.
+                    Explore the interactive soundboard, or enter your birth date to reveal your daily harmonic map and generate personalized sonic journeys.
                 </p>
             </div>
             
@@ -317,9 +350,7 @@ export const ToneGeneratorPage: React.FC<ToneGeneratorPageProps> = ({ onBack, al
                         influenceMap={influenceMap}
                         interactionMode={interactionMode}
                         highlightedModulus={highlightedModulus}
-                        allFrequencies={allFrequencies}
-                        setMainFrequency={setMainFrequency}
-                        setLayeredFrequency={setLayeredFrequency}
+                        onNodeClick={handleNodeClick}
                         onNodeHover={setHoveredNodeInfo}
                     />
                     <div className="min-h-[6rem] mt-4 p-4 rounded-xl bg-black/5 dark:bg-dark-bg/30 border border-slate-200/50 dark:border-dark-border/50 flex items-center justify-center text-center transition-all duration-300">
@@ -329,7 +360,7 @@ export const ToneGeneratorPage: React.FC<ToneGeneratorPageProps> = ({ onBack, al
                                 <p className="text-sm text-slate-600 dark:text-dark-text-secondary mt-1">{hoveredNodeInfo.tag}</p>
                             </div>
                         ) : (
-                            <p className="text-sm text-slate-500 dark:text-slate-400 italic">Hover over a node for details.</p>
+                            <p className="text-sm text-slate-500 dark:text-slate-400 italic">Hover or click a node for details.</p>
                         )}
                     </div>
                      {influenceMap && (
@@ -401,6 +432,27 @@ export const ToneGeneratorPage: React.FC<ToneGeneratorPageProps> = ({ onBack, al
 
                          </div>
                      )}
+                     
+                    {/* New Cubicle Grid */}
+                    <div className="mt-8 pt-6 border-t border-slate-200 dark:border-dark-border">
+                        <h3 className="text-xl font-display font-bold text-center text-slate-800 dark:text-dark-text-primary mb-4">Codex Soundboard</h3>
+                        <div className="grid grid-cols-4 sm:grid-cols-5 gap-2">
+                            {codexData.map(node => (
+                                <button
+                                    key={node.modulus}
+                                    onClick={() => handleNodeClick(node)}
+                                    className="p-2 rounded-lg text-center transition-all duration-200 hover:-translate-y-0.5"
+                                    style={{ 
+                                        border: `2px solid ${node.color}`, 
+                                        backgroundColor: `${node.color}20`,
+                                    }}
+                                >
+                                    <div className="font-bold text-lg" style={{ color: node.color }}>{node.note.replace(/[0-9]/g, '')}</div>
+                                    <div className="text-xs text-slate-700 dark:text-dark-text-secondary">{node.frequency.toFixed(2)} Hz</div>
+                                </button>
+                            ))}
+                        </div>
+                    </div>
 
                       {mainFrequency && (
                         <div className="space-y-4 mt-4 pt-4 border-t border-slate-200 dark:border-dark-border">
@@ -433,7 +485,7 @@ export const ToneGeneratorPage: React.FC<ToneGeneratorPageProps> = ({ onBack, al
                                     </>
                                 ) : (
                                     <div className="p-3 text-center rounded-lg bg-black/5 dark:bg-dark-bg/30 border border-slate-200/50 dark:border-dark-border/50">
-                                        <p className="text-sm text-slate-600 dark:text-dark-text-secondary">Click another node on the wheel to add a layer.</p>
+                                        <p className="text-sm text-slate-600 dark:text-dark-text-secondary">Click another node or cubicle to add a layer.</p>
                                     </div>
                                 )}
                             </div>

@@ -1,6 +1,3 @@
-
-
-
 import React, { createContext, useContext, useState, useCallback, ReactNode, useEffect, useRef } from 'react';
 import { Frequency, GuidedSession, CustomStack, SoundGenerationMode, ActivityLogItem, BreathingPattern } from '../types';
 import { useBinauralBeat } from '../hooks/useBinauralBeat';
@@ -12,7 +9,7 @@ export type PlayableItem = Frequency | GuidedSession | CustomStack;
 type UseBinauralBeatReturn = ReturnType<typeof useBinauralBeat>;
 type UseBreathingGuideReturn = ReturnType<typeof useBreathingGuide>;
 
-interface PlayerContextType extends Omit<UseBinauralBeatReturn, 'startPlayback' | 'pause' | 'resume' | 'stop' | 'toggleLayer'>, UseBreathingGuideReturn {
+interface PlayerContextType extends Omit<UseBinauralBeatReturn, 'startPlayback' | 'pause' | 'resume' | 'stop' | 'toggleLayer2' | 'toggleLayer3'>, UseBreathingGuideReturn {
   currentlyPlayingItem: PlayableItem | null;
   startPlayback: (
     itemToPlay: PlayableItem,
@@ -28,7 +25,8 @@ interface PlayerContextType extends Omit<UseBinauralBeatReturn, 'startPlayback' 
   pause: () => void;
   resume: () => void;
   stop: () => void;
-  toggleLayer: (freq: Frequency | null, mode: SoundGenerationMode) => void;
+  toggleLayer2: (freq: Frequency | null, mode: SoundGenerationMode) => void;
+  toggleLayer3: (freq: Frequency | null, mode: SoundGenerationMode) => void;
   sessionStepIndex: number;
   sessionTimeInStep: number;
   is8dEnabled: boolean;
@@ -192,9 +190,13 @@ export const PlayerProvider: React.FC<{ children: ReactNode }> = ({ children }) 
       }
   }, [breathingHook, audioHook, is8dEnabled, currentlyPlayingItem]);
 
-  const toggleLayer = useCallback((freq: Frequency | null, mode: SoundGenerationMode) => {
-    audioHook.toggleLayer(freq, mode, is8dEnabled, panningSpeed, panningDepth);
+  const toggleLayer2 = useCallback((freq: Frequency | null, mode: SoundGenerationMode) => {
+    audioHook.toggleLayer2(freq, mode, is8dEnabled, panningSpeed, panningDepth);
   }, [audioHook, is8dEnabled, panningSpeed, panningDepth]);
+
+  const toggleLayer3 = useCallback((freq: Frequency | null, mode: SoundGenerationMode) => {
+    audioHook.toggleLayer3(freq, mode);
+  }, [audioHook]);
   
   useEffect(() => {
     if (audioHook.isPlaying && currentlyPlayingItem && 'steps' in currentlyPlayingItem) {
@@ -236,7 +238,7 @@ export const PlayerProvider: React.FC<{ children: ReactNode }> = ({ children }) 
             audioHook.startPlayback(
               mainFreq, mainFreq.defaultMode,
               layer2Freq, layer2Freq?.defaultMode || 'BINAURAL',
-              layer3Freq, layer3Freq?.defaultMode || 'BINAURAL',
+              layer3Freq, layer3Freq?.defaultMode || 'PURE',
               panningConfig
             );
             setSessionStepIndex(nextStepIndex);
@@ -286,7 +288,8 @@ export const PlayerProvider: React.FC<{ children: ReactNode }> = ({ children }) 
     pause,
     resume,
     stop,
-    toggleLayer,
+    toggleLayer2,
+    toggleLayer3,
     ...breathingHook,
     startGuide,
     stopGuide,

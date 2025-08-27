@@ -136,7 +136,7 @@ export const PlayerPage: React.FC<PlayerPageProps> = ({
   const { 
     currentlyPlayingItem, isPlaying, isLayer2Active, isLayer3Active, analyser, 
     mainVolume, layer2Volume, layer3Volume, setMainVolume, setLayer2Volume, setLayer3Volume,
-    setTimer, startPlayback, pause, resume, toggleLayer, stop,
+    setTimer, startPlayback, pause, resume, toggleLayer2, toggleLayer3, stop,
     activePattern, currentPhase, phaseProgress, phaseTime, startGuide, stopGuide,
     sessionStepIndex, sessionTimeInStep,
     is8dEnabled, setIs8dEnabled, panningSpeed, setPanningSpeed, panningDepth, setPanningDepth
@@ -148,7 +148,7 @@ export const PlayerPage: React.FC<PlayerPageProps> = ({
   const [shareState, setShareState] = useState<'idle' | 'copied'>('idle');
   const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false);
   
-  const [layeredFrequency, setLayeredFrequency] = useState<Frequency | null>(() => {
+  const [layer2Freq, setLayer2Freq] = useState<Frequency | null>(() => {
     const params = new URLSearchParams(window.location.hash.split('?')[1] || '');
     const layerFreqParam = params.get('layerFreq');
     if (item.id.startsWith('custom-') && layerFreqParam) {
@@ -172,11 +172,13 @@ export const PlayerPage: React.FC<PlayerPageProps> = ({
     }
     return null;
   });
+  const [layer3Freq, setLayer3Freq] = useState<Frequency | null>(null);
 
   const [isTimerMenuOpen, setIsTimerMenuOpen] = useState(false);
   const [activeTimer, setActiveTimer] = useState(0);
   const [timeRemaining, setTimeRemaining] = useState(0);
   const [isLayerModalOpen, setIsLayerModalOpen] = useState(false);
+  const [editingLayer, setEditingLayer] = useState<2 | 3 | null>(null);
   const [isBreathingMenuOpen, setIsBreathingMenuOpen] = useState(false);
   const [selectedPattern, setSelectedPattern] = useLocalStorage<BreathingPattern>('biohack_breathing_pattern', BREATHING_PATTERNS[0]);
 
@@ -190,8 +192,8 @@ export const PlayerPage: React.FC<PlayerPageProps> = ({
   
   const currentStep = sessionData ? sessionData.steps[sessionStepIndex] : null;
   const mainFrequencyForPlayback = isSession ? allFrequencies.find(f => f.id === currentStep?.frequencyId) : singleFrequency;
-  const layer2FrequencyForPlayback = isSession ? allFrequencies.find(f => f.id === currentStep?.layerFrequencyId) : layeredFrequency;
-  const layer3FrequencyForPlayback = isSession ? allFrequencies.find(f => f.id === currentStep?.layer3FrequencyId) : null;
+  const layer2FrequencyForPlayback = isSession ? allFrequencies.find(f => f.id === currentStep?.layerFrequencyId) : layer2Freq;
+  const layer3FrequencyForPlayback = isSession ? allFrequencies.find(f => f.id === currentStep?.layer3FrequencyId) : layer3Freq;
 
   const totalDuration = useMemo(() => sessionData ? sessionData.steps.reduce((sum, step) => sum + step.duration, 0) : 0, [sessionData]);
   
@@ -219,15 +221,19 @@ export const PlayerPage: React.FC<PlayerPageProps> = ({
       resume();
     } else {
       if (mainFrequencyForPlayback) {
+        // Determine the correct mode for the main frequency. For sessions, it's fixed by the data.
+        // For single frequencies, it's controlled by the user's selection.
+        const mainModeForPlayback = isSession ? mainFrequencyForPlayback.defaultMode : selectedMode;
+        
         startPlayback(
           item, allFrequencies, 
-          mainFrequencyForPlayback, selectedMode, 
+          mainFrequencyForPlayback, mainModeForPlayback, 
           layer2FrequencyForPlayback || null, layer2FrequencyForPlayback?.defaultMode || 'BINAURAL',
           layer3FrequencyForPlayback || null, layer3FrequencyForPlayback?.defaultMode || 'PURE'
         );
       }
     }
-  }, [isCurrentItemPlaying, isPlaying, pause, resume, startPlayback, item, allFrequencies, mainFrequencyForPlayback, selectedMode, layer2FrequencyForPlayback, layer3FrequencyForPlayback]);
+  }, [isCurrentItemPlaying, isPlaying, pause, resume, startPlayback, item, allFrequencies, mainFrequencyForPlayback, selectedMode, layer2FrequencyForPlayback, layer3FrequencyForPlayback, isSession]);
   
   const handleModeChange = useCallback((newMode: SoundGenerationMode) => {
     setSelectedMode(newMode);
@@ -274,16 +280,35 @@ export const PlayerPage: React.FC<PlayerPageProps> = ({
     setIsTimerMenuOpen(false);
   };
   
-  const handleSelectLayer = (newLayerFreq: Frequency) => {
-    setLayeredFrequency(newLayerFreq);
-    toggleLayer(newLayerFreq, newLayerFreq.defaultMode);
-    setIsLayerModalOpen(false);
-  }
+  const openLayerModal = (layer: 2 | 3) => {
+    if (!isSubscribed && !isSession) {
+      window.location.hash = '#/pricing';
+      return;
+    }
+    setEditingLayer(layer);
+    setIsLayerModalOpen(true);
+  };
 
-  const handleRemoveLayer = () => {
-    setLayeredFrequency(null);
-    toggleLayer(null, 'BINAURAL');
-  }
+  const handleSelectLayer = (newLayerFreq: Frequency) => {
+    if (editingLayer === 2) {
+      setLayer2Freq(newLayerFreq);
+      toggleLayer2(newLayerFreq, newLayerFreq.defaultMode);
+    } else if (editingLayer === 3) {
+      setLayer3Freq(newLayerFreq);
+      toggleLayer3(newLayerFreq, newLayerFreq.defaultMode);
+    }
+    setIsLayerModalOpen(false);
+    setEditingLayer(null);
+  };
+
+  const handleRemoveLayer2 = () => {
+    setLayer2Freq(null);
+    toggleLayer2(null, 'BINAURAL');
+  };
+  const handleRemoveLayer3 = () => {
+    setLayer3Freq(null);
+    toggleLayer3(null, 'BINAURAL');
+  };
 
   const handleNavigateToScience = (e: React.MouseEvent, categoryId: CategoryId) => {
     e.preventDefault();
@@ -363,6 +388,36 @@ export const PlayerPage: React.FC<PlayerPageProps> = ({
         </div>
     );
   };
+
+  const LayerControl: React.FC<{
+    layerNumber: 2 | 3;
+    frequency: Frequency | null;
+    isActive: boolean;
+    onOpenModal: () => void;
+    onRemove: () => void;
+  }> = ({ layerNumber, frequency, isActive, onOpenModal, onRemove }) => {
+    return (
+        <div className="pt-2">
+            <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                    <LayersIcon className="w-6 h-6 text-slate-700 dark:text-dark-text-secondary" />
+                    <div>
+                        <span className="font-semibold text-slate-700 dark:text-dark-text-secondary">Layer {layerNumber}</span>
+                        {frequency && <p className="text-xs font-semibold" style={{ color: frequency.colors.accent }}>{frequency.name}</p>}
+                    </div>
+                </div>
+                <div className="flex items-center gap-2">
+                    {isActive && (
+                        <button onClick={onRemove} className="px-3 py-1 text-xs font-semibold rounded-full bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300 hover:bg-red-200 dark:hover:bg-red-900/50">Remove</button>
+                    )}
+                    <button onClick={onOpenModal} className="px-3 py-1 text-xs font-semibold rounded-full bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-dark-text-secondary hover:bg-slate-300 dark:hover:bg-slate-600">
+                        {isActive ? 'Change' : 'Add'}
+                    </button>
+                </div>
+            </div>
+        </div>
+    );
+  };
   
   if (!mainFrequencyForPlayback) {
     return (
@@ -377,14 +432,14 @@ export const PlayerPage: React.FC<PlayerPageProps> = ({
       className="p-4 sm:p-8 rounded-2xl shadow-2xl shadow-black/5 dark:shadow-black/20 border border-black/5 dark:border-white/5 relative animate-fade-in transition-all duration-500 text-slate-800 dark:text-dark-text-secondary flex flex-col items-center"
       style={backgroundStyle as React.CSSProperties}
     >
-        {isLayerModalOpen && !isSession && (
+        {isLayerModalOpen && (
             <LayerSelectorModal 
                 allFrequencies={allFrequencies} 
                 onSelect={handleSelectLayer}
-                onClose={() => setIsLayerModalOpen(false)}
+                onClose={() => { setIsLayerModalOpen(false); setEditingLayer(null); }}
                 currentMainFrequencyId={item.id}
                 isSubscribed={isSubscribed}
-                title="Select a Frequency to Layer"
+                title={`Select Frequency for Layer ${editingLayer}`}
                 categories={categories}
             />
         )}
@@ -412,7 +467,12 @@ export const PlayerPage: React.FC<PlayerPageProps> = ({
         </div>
 
         <div className="w-full max-w-lg h-80 sm:h-96 my-4 md:my-0 relative">
-          <Visualizer analyser={analyser} isPlaying={isCurrentItemPlaying && isPlaying} colors={colors} />
+          <Visualizer 
+            analyser={analyser} 
+            isPlaying={isCurrentItemPlaying && isPlaying} 
+            colors={colors}
+            baseFrequency={mainFrequencyForPlayback.baseFrequency}
+          />
            {activePattern && (
                 <BreathingGuideVisualizer 
                     phase={currentPhase}
@@ -523,25 +583,10 @@ export const PlayerPage: React.FC<PlayerPageProps> = ({
             )}
             
              {!isSession && (
-                <div className="pt-2">
-                    <div className="flex items-center justify-between">
-                         <div className="flex items-center gap-3">
-                            <LayersIcon className="w-6 h-6 text-slate-700 dark:text-dark-text-secondary" />
-                            <div>
-                                <span className="font-semibold text-slate-700 dark:text-dark-text-secondary">Layered Frequency</span>
-                                {layeredFrequency && <p className="text-xs font-semibold" style={{color: layeredFrequency.colors.accent}}>{layeredFrequency.name}</p>}
-                            </div>
-                         </div>
-                        <div className="flex items-center gap-2">
-                        {isLayer2Active && (
-                            <button onClick={handleRemoveLayer} className="px-3 py-1 text-xs font-semibold rounded-full bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300 hover:bg-red-200 dark:hover:bg-red-900/50">Remove</button>
-                        )}
-                        <button onClick={() => isSubscribed ? setIsLayerModalOpen(true) : window.location.hash = '#/pricing'} className="px-3 py-1 text-xs font-semibold rounded-full bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-dark-text-secondary hover:bg-slate-300 dark:hover:bg-slate-600">
-                           {isLayer2Active ? 'Change' : 'Add'}
-                        </button>
-                        </div>
-                    </div>
-                </div>
+                <>
+                  <LayerControl layerNumber={2} frequency={layer2Freq} isActive={isLayer2Active} onOpenModal={() => openLayerModal(2)} onRemove={handleRemoveLayer2} />
+                  <LayerControl layerNumber={3} frequency={layer3Freq} isActive={isLayer3Active} onOpenModal={() => openLayerModal(3)} onRemove={handleRemoveLayer3} />
+                </>
              )}
 
             <hr className="border-slate-900/10 dark:border-dark-border" />
@@ -607,43 +652,34 @@ export const PlayerPage: React.FC<PlayerPageProps> = ({
         )}
       
       <div className="w-full max-w-sm space-y-5 rounded-2xl bg-white/50 dark:bg-dark-surface/50 border border-slate-900/5 dark:border-dark-border/50 p-6 shadow-inner backdrop-blur-sm">
-        <div className="grid grid-cols-[auto,1fr] items-center gap-4">
-          <label htmlFor="main-volume" className="cursor-pointer text-slate-700 dark:text-dark-text-secondary">
-            {isLayer2Active || isLayer3Active ? (
-                <span className="text-sm font-semibold w-14 inline-block">Layer 1</span>
-            ) : (
-                <VolumeIcon className="w-6 h-6" />
-            )}
+        <div className="grid grid-cols-[minmax(0,1fr),minmax(0,2fr)] items-center gap-4">
+          <label htmlFor="main-volume" className="cursor-pointer text-slate-700 dark:text-dark-text-secondary text-sm font-semibold truncate text-right" title={mainFrequencyForPlayback.name}>
+            {mainFrequencyForPlayback.name}
           </label>
           <input id="main-volume" type="range" min="0" max="100" value={mainVolume} onChange={(e) => setMainVolume(parseInt(e.target.value, 10))} className="mobile-slider" style={{'--thumb-color': colors.accent} as React.CSSProperties}/>
         </div>
-        <div className={`grid grid-cols-[auto,1fr] items-center gap-4 transition-opacity ${isLayer2Active ? 'opacity-100' : 'opacity-30'}`}>
-          <label htmlFor="layer2-volume" className={`cursor-pointer ${!isLayer2Active && 'cursor-not-allowed'} text-slate-700 dark:text-dark-text-secondary`}>
-            {isLayer2Active || isLayer3Active ? (
-                <span className="text-sm font-semibold w-14 inline-block">Layer 2</span>
-            ) : (
-                <LayersIcon className="w-6 h-6" />
-            )}
+        <div className={`grid grid-cols-[minmax(0,1fr),minmax(0,2fr)] items-center gap-4 transition-opacity ${isLayer2Active ? 'opacity-100' : 'opacity-30'}`}>
+          <label htmlFor="layer2-volume" className={`cursor-pointer ${!isLayer2Active && 'cursor-not-allowed'} text-slate-700 dark:text-dark-text-secondary text-sm font-semibold truncate text-right`} title={layer2FrequencyForPlayback?.name || 'Layer 2'}>
+            {layer2FrequencyForPlayback?.name || 'Layer 2'}
           </label>
           <input id="layer2-volume" type="range" min="0" max="100" disabled={!isLayer2Active} value={layer2Volume} onChange={(e) => setLayer2Volume(parseInt(e.target.value, 10))} className={`mobile-slider ${!isLayer2Active && 'cursor-not-allowed'}`} style={{ '--thumb-color': (layer2FrequencyForPlayback?.colors || colors).accent} as React.CSSProperties} />
         </div>
-        {isLayer3Active && (
-            <div className="grid grid-cols-[auto,1fr] items-center gap-4 transition-opacity">
-                <label htmlFor="layer3-volume" className="cursor-pointer text-slate-700 dark:text-dark-text-secondary">
-                    <span className="text-sm font-semibold w-14 inline-block">Layer 3</span>
-                </label>
-                <input 
-                    id="layer3-volume" 
-                    type="range" 
-                    min="0" 
-                    max="100" 
-                    value={layer3Volume} 
-                    onChange={(e) => setLayer3Volume(parseInt(e.target.value, 10))} 
-                    className="mobile-slider" 
-                    style={{ '--thumb-color': (layer3FrequencyForPlayback?.colors || colors).accent} as React.CSSProperties}
-                />
-            </div>
-        )}
+        <div className={`grid grid-cols-[minmax(0,1fr),minmax(0,2fr)] items-center gap-4 transition-opacity ${isLayer3Active ? 'opacity-100' : 'opacity-30'}`}>
+            <label htmlFor="layer3-volume" className={`cursor-pointer ${!isLayer3Active && 'cursor-not-allowed'} text-slate-700 dark:text-dark-text-secondary text-sm font-semibold truncate text-right`} title={layer3FrequencyForPlayback?.name || 'Layer 3'}>
+                {layer3FrequencyForPlayback?.name || 'Layer 3'}
+            </label>
+            <input 
+                id="layer3-volume" 
+                type="range" 
+                min="0" 
+                max="100" 
+                disabled={!isLayer3Active}
+                value={layer3Volume} 
+                onChange={(e) => setLayer3Volume(parseInt(e.target.value, 10))} 
+                className={`mobile-slider ${!isLayer3Active && 'cursor-not-allowed'}`} 
+                style={{ '--thumb-color': (layer3FrequencyForPlayback?.colors || colors).accent} as React.CSSProperties}
+            />
+        </div>
         <hr className="border-slate-900/10 dark:border-dark-border" />
         <SpatialAudioController
             isSubscribed={isSubscribed}
@@ -655,6 +691,9 @@ export const PlayerPage: React.FC<PlayerPageProps> = ({
             onDepthChange={(val) => setPanningDepth(val)}
             color={colors.accent}
         />
+        <p className="text-xs text-center text-slate-500 dark:text-dark-text-muted pt-2">
+            8D Audio applies to the first two layers for an immersive soundscape. Layer 3 remains centered.
+        </p>
       </div>
     </div>
   );

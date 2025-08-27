@@ -89,6 +89,36 @@ export const useBinauralBeat = () => {
       const beatFrequency = freq.binauralFrequency > 0 ? freq.binauralFrequency : 7.0;
       
       switch (mode) {
+      case 'SPLIT_BINAURAL': {
+        if (typeof freq.leftFrequency === 'undefined' || typeof freq.rightFrequency === 'undefined') {
+            console.error('SPLIT_BINAURAL mode requires leftFrequency and rightFrequency.', freq);
+            return null;
+        }
+        const leftOscillator = context.createOscillator();
+        const rightOscillator = context.createOscillator();
+        leftOscillator.type = 'sine';
+        rightOscillator.type = 'sine';
+        leftOscillator.frequency.setValueAtTime(freq.leftFrequency, context.currentTime);
+        rightOscillator.frequency.setValueAtTime(freq.rightFrequency, context.currentTime);
+        
+        const leftGain = context.createGain();
+        const rightGain = context.createGain();
+        leftGain.gain.setValueAtTime(0, context.currentTime);
+        leftGain.gain.linearRampToValueAtTime(safeGain, context.currentTime + 0.01);
+        rightGain.gain.setValueAtTime(0, context.currentTime);
+        rightGain.gain.linearRampToValueAtTime(safeGain, context.currentTime + 0.01);
+
+        leftOscillator.connect(leftGain);
+        rightOscillator.connect(rightGain);
+
+        const merger = context.createChannelMerger(2);
+        leftGain.connect(merger, 0, 0);
+        rightGain.connect(merger, 0, 1);
+        
+        leftOscillator.start();
+        rightOscillator.start();
+        return { source: merger, nodes: { binaural: { left: leftOscillator, right: rightOscillator, merger } }, mode };
+      }
       case 'BINAURAL': {
         const leftOscillator = context.createOscillator();
         const rightOscillator = context.createOscillator();
@@ -98,9 +128,13 @@ export const useBinauralBeat = () => {
         rightOscillator.frequency.setValueAtTime(freq.baseFrequency + beatFrequency, context.currentTime);
         
         const leftGain = context.createGain();
-        leftGain.gain.value = safeGain;
         const rightGain = context.createGain();
-        rightGain.gain.value = safeGain;
+        // Ramp gain from 0 to prevent clicks
+        leftGain.gain.setValueAtTime(0, context.currentTime);
+        leftGain.gain.linearRampToValueAtTime(safeGain, context.currentTime + 0.01);
+        rightGain.gain.setValueAtTime(0, context.currentTime);
+        rightGain.gain.linearRampToValueAtTime(safeGain, context.currentTime + 0.01);
+
         leftOscillator.connect(leftGain);
         rightOscillator.connect(rightGain);
 
@@ -117,7 +151,9 @@ export const useBinauralBeat = () => {
         oscillator.type = 'sine';
         oscillator.frequency.setValueAtTime(freq.baseFrequency, context.currentTime);
         const gainNode = context.createGain();
-        gainNode.gain.value = safeGain;
+        // Instead of a static value, ramp it quickly from 0 to prevent a click/cackle.
+        gainNode.gain.setValueAtTime(0, context.currentTime);
+        gainNode.gain.linearRampToValueAtTime(safeGain, context.currentTime + 0.01); // 10ms ramp
         oscillator.connect(gainNode);
         oscillator.start();
         return { source: gainNode, nodes: { pure: { oscillator, gain: gainNode } }, mode };
@@ -127,7 +163,9 @@ export const useBinauralBeat = () => {
         carrierOsc.type = 'sine';
         carrierOsc.frequency.setValueAtTime(freq.baseFrequency, context.currentTime);
         const boostGain = context.createGain();
-        boostGain.gain.value = safeGain;
+        // Ramp gain from 0 to prevent clicks
+        boostGain.gain.setValueAtTime(0, context.currentTime);
+        boostGain.gain.linearRampToValueAtTime(safeGain, context.currentTime + 0.01);
 
         const lfo = context.createOscillator();
         lfo.type = 'square'; // Use a square wave for a distinct on/off pulse.
@@ -256,7 +294,11 @@ export const useBinauralBeat = () => {
     panner.refDistance = 0.8; // Make sound feel slightly closer to enhance HRTF effect
     panner.maxDistance = 10000;
     panner.rolloffFactor = 0; // Disable distance-based volume reduction for a consistent level
+    
+    // Explicitly set initial position to prevent any potential audio jumps when panning starts.
+    panner.positionX.setValueAtTime(0, context.currentTime);
     panner.positionY.setValueAtTime(0, context.currentTime);
+    panner.positionZ.setValueAtTime(0, context.currentTime);
 
     source.connect(panner);
     
@@ -390,6 +432,13 @@ export const useBinauralBeat = () => {
 
   const set8dPanning = useCallback((channel: 'main' | 'layer', enabled: boolean, speed: number, depth: number) => {
     const controlRef = channel === 'main' ? mainPanningControlRef : layer2PanningControlRef;
+    const sourceRef = channel === 'main' ? sourceNodeRef : layer2SourceRef;
+
+    // Forcibly disable panning for SPLIT_BINAURAL mode as it requires fixed stereo channels.
+    if (sourceRef.current?.mode === 'SPLIT_BINAURAL') {
+      enabled = false;
+    }
+
     if (!controlRef.current || !audioContextRef.current || breathPannerStateRef.current.enabled) return;
 
     const control = controlRef.current;
@@ -414,7 +463,9 @@ export const useBinauralBeat = () => {
 
         const { speed: currentSpeed, depth: currentDepth, audioStartTime } = currentControl.settings.current;
         const nowInSeconds = audioContextRef.current.currentTime;
-        const speedHz = 0.05 + (currentSpeed / 100) * 0.25;
+        // Remapped speed to prevent distortion at very slow speeds.
+        // The new minimum speed is 0.1 Hz (10s rotation), up from 0.05 Hz (20s rotation).
+        const speedHz = 0.1 + (currentSpeed / 100) * 0.2;
         const radius = Math.pow(currentDepth / 100, 2) * 8 + 2;
         
         const elapsedTime = nowInSeconds - audioStartTime;
@@ -464,13 +515,15 @@ export const useBinauralBeat = () => {
         audioContextRef.current = context;
 
         const limiter = context.createDynamicsCompressor();
-        // A more transparent limiter setting: only catches peaks to prevent clipping,
-        // without constantly shaping the sound which can cause volume fluctuations.
-        limiter.threshold.setValueAtTime(-3.0, context.currentTime); // Higher threshold, engages less often.
-        limiter.knee.setValueAtTime(0, context.currentTime);      // Hard knee for pure limiting.
-        limiter.ratio.setValueAtTime(20.0, context.currentTime);   // High ratio.
-        limiter.attack.setValueAtTime(0.003, context.currentTime); // Very fast attack.
-        limiter.release.setValueAtTime(0.1, context.currentTime); // Fast release to avoid "pumping".
+        // Re-calibrated the final DynamicsCompressorNode to act as a true "brickwall" limiter.
+        // This change implements a low threshold, hard knee, max ratio, and near-instantaneous attack
+        // to prevent any audio peaks from clipping, which was the root cause of the distortion.
+        // The release time has been carefully tuned to be transparent across all 8D panning speeds.
+        limiter.threshold.setValueAtTime(-10.0, context.currentTime);
+        limiter.knee.setValueAtTime(0.0, context.currentTime);
+        limiter.ratio.setValueAtTime(20.0, context.currentTime);
+        limiter.attack.setValueAtTime(0.0, context.currentTime);
+        limiter.release.setValueAtTime(0.2, context.currentTime);
         
         const analyser = context.createAnalyser();
         analyser.fftSize = 256;
@@ -562,7 +615,7 @@ export const useBinauralBeat = () => {
     }
   }, [stop]);
   
-    const toggleLayer = useCallback((
+    const toggleLayer2 = useCallback((
     freq: Frequency | null, 
     mode: SoundGenerationMode,
     is8dAudioEnabled?: boolean,
@@ -607,6 +660,41 @@ export const useBinauralBeat = () => {
         }
     }, 350);
 }, [createAudioSource, setupPanning, layer2Volume, set8dPanning, stopOscillators]);
+
+  const toggleLayer3 = useCallback((
+    freq: Frequency | null,
+    mode: SoundGenerationMode
+  ) => {
+      const gainNode = layer3GainNodeRef.current;
+
+      if (!audioContextRef.current || !gainNode) {
+        return;
+      }
+
+      const now = audioContextRef.current.currentTime;
+      gainNode.gain.cancelScheduledValues(now);
+      gainNode.gain.linearRampToValueAtTime(0, now + 0.3);
+
+      setTimeout(() => {
+          if (layer3SourceRef.current) {
+              layer3SourceRef.current.source.disconnect();
+              stopOscillators(layer3SourceRef.current.nodes);
+              layer3SourceRef.current = null;
+          }
+
+          if (freq && audioContextRef.current) {
+              const newLayerSource = createAudioSource(audioContextRef.current, freq, mode);
+              if (newLayerSource) {
+                  layer3SourceRef.current = newLayerSource;
+                  newLayerSource.source.connect(gainNode);
+                  setIsLayer3Active(true);
+                  gainNode.gain.linearRampToValueAtTime(MAX_LAYER3_GAIN * (layer3Volume / 100), audioContextRef.current.currentTime + 0.3);
+              }
+          } else {
+              setIsLayer3Active(false);
+          }
+      }, 350);
+  }, [createAudioSource, layer3Volume, stopOscillators]);
 
   const setMainVolume = useCallback((value: number) => {
     setMainVolumeState(value);
@@ -697,7 +785,8 @@ export const useBinauralBeat = () => {
     analyser: analyserRef.current,
     isLayer2Active,
     isLayer3Active, // Expose layer 3 state
-    toggleLayer,
+    toggleLayer2,
+    toggleLayer3,
     mainVolume,
     setMainVolume,
     layer2Volume,

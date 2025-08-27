@@ -41,6 +41,7 @@ export const CategoryPage: React.FC<CategoryPageProps> = ({ categoryId, frequenc
   const relevantSessions = sessions.filter(s => s.categoryId === categoryId);
 
   const isKabbalah = categoryId === 'kabbalah';
+  const isBrainwaves = categoryId === 'brainwaves';
   const showScienceLink = ['elements', 'codex', 'kabbalah'].includes(categoryId);
 
   const handleSelect = (item: Frequency | GuidedSession) => {
@@ -75,9 +76,23 @@ export const CategoryPage: React.FC<CategoryPageProps> = ({ categoryId, frequenc
       return { sections, sortedSessions };
   }, [isKabbalah, frequenciesInCategory, relevantSessions]);
 
+  const brainwavesContent = useMemo(() => {
+    if (!isBrainwaves) return null;
+    
+    const mirrorAxisProtocols = relevantSessions
+        .filter(s => s.id.startsWith('mirror-axis-') || s.id === 'phi-axis-harmonic-balance')
+        .sort((a, b) => a.title.localeCompare(b.title));
+
+    const singleFrequencies = frequenciesInCategory
+        .filter(f => f.defaultMode !== 'SPLIT_BINAURAL')
+        .sort((a,b) => a.baseFrequency - b.baseFrequency); // Sort from low to high freq
+        
+    return { mirrorAxisProtocols, singleFrequencies };
+  }, [isBrainwaves, relevantSessions, frequenciesInCategory]);
+
 
   const otherContent = useMemo(() => {
-      if (isKabbalah) return null;
+      if (isKabbalah || isBrainwaves) return null;
       const getSortScore = (item: { premium?: boolean; isFeatured?: boolean }) => {
           if (item.isFeatured) return -1;
           if (!item.premium) return 0;
@@ -92,7 +107,7 @@ export const CategoryPage: React.FC<CategoryPageProps> = ({ categoryId, frequenc
       });
       const sortedSessions = [...relevantSessions].sort((a, b) => getSortScore(a) - getSortScore(b));
       return { sortedFrequencies, sortedSessions };
-  }, [isKabbalah, frequenciesInCategory, relevantSessions, categoryId]);
+  }, [isKabbalah, isBrainwaves, frequenciesInCategory, relevantSessions, categoryId]);
 
 
   const headerStyle = { background: `linear-gradient(135deg, ${categoryDetails.colors.primary}60, ${categoryDetails.colors.secondary}60)`, borderColor: `${categoryDetails.colors.accent}80` };
@@ -122,22 +137,6 @@ export const CategoryPage: React.FC<CategoryPageProps> = ({ categoryId, frequenc
                     <span>Learn about the Science</span>
                 </a>
             )}
-            {categoryId === 'elements' && (
-                <button
-                    onClick={() => {
-                        if (!isSubscribed) {
-                            window.location.hash = '#/pricing';
-                        } else {
-                            window.location.hash = '#/elemental-mixer';
-                        }
-                    }}
-                    className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold transition-colors bg-white/50 dark:bg-dark-surface/50 text-slate-700 dark:text-dark-text-secondary hover:bg-white/80 dark:hover:bg-dark-surface border border-slate-300/50 dark:border-dark-border/50"
-                >
-                    <AlchemyIcon className="w-5 h-5" />
-                    <span>Sonic Alchemy Lab</span>
-                    {!isSubscribed && <SparklesIcon className="w-4 h-4 text-brand-orange ml-1" />}
-                </button>
-            )}
             {categoryId === 'codex' && (
                 <button
                     onClick={() => {
@@ -157,7 +156,37 @@ export const CategoryPage: React.FC<CategoryPageProps> = ({ categoryId, frequenc
         </div>
       </div>
 
-      {isKabbalah && kabbalahContent ? (
+      {isBrainwaves && brainwavesContent ? (
+        <div className="space-y-12">
+            {brainwavesContent.mirrorAxisProtocols.length > 0 && (
+                <div className="space-y-4">
+                    <h3 className="text-2xl font-display font-bold text-slate-800 dark:text-dark-text-primary">Mirror Axis & Guided Protocols</h3>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {brainwavesContent.mirrorAxisProtocols.map(session => (
+                            <SessionCard
+                                key={session.id}
+                                session={session}
+                                onSelect={() => handleSelect(session)}
+                                isFavorite={favorites.includes(session.id)}
+                                onToggleFavorite={() => toggleFavorite(session.id)}
+                                isLocked={!!session.premium && !isSubscribed}
+                                allFrequencies={allFrequencies}
+                            />
+                        ))}
+                    </div>
+                </div>
+            )}
+            {brainwavesContent.singleFrequencies.length > 0 && (
+                <CategorySection 
+                    title="Single Brainwave Frequencies"
+                    frequencies={brainwavesContent.singleFrequencies}
+                    onSelect={handleSelect}
+                    favorites={favorites}
+                    toggleFavorite={toggleFavorite}
+                />
+            )}
+        </div>
+      ) : isKabbalah && kabbalahContent ? (
         <div className="space-y-12">
             {kabbalahContent.sortedSessions.length > 0 && (
                 <div className="space-y-4">

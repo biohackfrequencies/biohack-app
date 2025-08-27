@@ -140,7 +140,7 @@ export const HomePage: React.FC<HomePageProps> = ({
   };
 
   const categoryOrder: CategoryId[] = [
-    'elements', 'codex', 'kabbalah', 'guided', 'brainwaves', 'solfeggio', 'angel', 'celestial', 'rife', 'noise'
+    'guided', 'brainwaves', 'elements', 'kabbalah', 'solfeggio', 'angel', 'celestial', 'rife', 'noise'
   ];
   
   return (
@@ -177,6 +177,14 @@ export const HomePage: React.FC<HomePageProps> = ({
                     />
                 )
             })}
+             <ActionCard
+                title={categories.codex.title}
+                description={categories.codex.description}
+                Icon={PathfinderIcon}
+                onClick={() => handlePremiumFeatureClick(() => window.location.hash = '#/codex-breathing-path')}
+                colors={categories.codex.colors}
+                isLocked={!isSubscribed}
+            />
              <ActionCard
                 title="Creator Studio"
                 description="Design and customize your own sessions by combining frequencies, soundscapes, and protocols tailored to your personal journey."
