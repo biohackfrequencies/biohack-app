@@ -1,4 +1,4 @@
-import type { AppContentData, Frequency, HarmonicElement, CodexNode } from '../types';
+import type { AppContentData, Frequency } from '../types';
 import { BenefitCategory } from '../types';
 import { harmonicElements } from './elements';
 import { codexData } from './codex';

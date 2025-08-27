@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useEffect, useMemo, useRef } from 'react';
 import { Frequency, SoundGenerationMode, CategoryId, BREATHING_PATTERNS, BreathingPattern, ColorTheme, PlayableItem, GuidedSession, CustomStack, BenefitCategory } from '../types';
 import { Visualizer } from './Visualizer';
-import { PlayIcon, PauseIcon, BackIcon, VolumeIcon, HeartIcon, HeartFilledIcon, ClockIcon, LayersIcon, InfoIcon, LungsIcon, ChevronDownIcon, ShareIcon, CheckmarkIcon, BrainwaveIcon } from './BohoIcons';
+import { PlayIcon, PauseIcon, BackIcon, HeartIcon, HeartFilledIcon, ClockIcon, LayersIcon, InfoIcon, LungsIcon, ChevronDownIcon, ShareIcon, CheckmarkIcon, BrainwaveIcon } from './BohoIcons';
 import { LayerSelectorModal } from './LayerSelectorModal';
 import { useSubscription } from '../hooks/useSubscription';
 import { SpatialAudioController } from './SpatialAudioController';

@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { Frequency, CategoryId, GuidedSession, ColorTheme } from '../types';
-import { BackIcon, InfoIcon, AlchemyIcon, SparklesIcon, PathfinderIcon } from './BohoIcons';
+import { BackIcon, InfoIcon, SparklesIcon, PathfinderIcon } from './BohoIcons';
 import { FrequencyCard } from './FrequencyCard';
 import { useSubscription } from '../hooks/useSubscription';
 import { categoryIcons } from './HomePage';
