@@ -1251,4 +1251,72 @@ const kabbalahFrequencies: Frequency[] = [
     { id: "kabbalah-dalet", name: "Dalet (ד) - Door, opening", range: "324 Hz", baseFrequency: 324, binauralFrequency: 0, description: "Planet: Mars. Dual Aspect: Peace / War.", category: BenefitCategory.SPIRITUAL, categoryId: "kabbalah", defaultMode: "PURE", availableModes: ["PURE"], colors: kabbalahColors, premium: true },
     { id: "kabbalah-kaf", name: "Kaf (כ) - Palm, potential", range: "234 Hz", baseFrequency: 234, binauralFrequency: 0, description: "Planet: Sun. Dual Aspect: Life / Death.", category: BenefitCategory.SPIRITUAL, categoryId: "kabbalah", defaultMode: "PURE", availableModes: ["PURE"], colors: kabbalahColors, premium: true },
     { id: "kabbalah-pe", name: "Pe (פ) - Speech, expression", range: "180 Hz", baseFrequency: 180, binauralFrequency: 0, description: "Planet: Venus. Dual Aspect: Grace / Ugliness.", category: BenefitCategory.SPIRITUAL, categoryId: "kabbalah", defaultMode: "PURE", availableModes: ["PURE"], colors: kabbalahColors, premium: true },
-    { id: "kabbalah-resh", name: "Resh (ר) - Head, renewal", range: "153 Hz", baseFrequency: 153, binauralFrequency: 0, description: "Planet: Mercury. Dual Aspect: Dominion / Servitude.", category: BenefitCategory.SPIR
+    { id: "kabbalah-resh", name: "Resh (ר) - Head, renewal", range: "153 Hz", baseFrequency: 153, binauralFrequency: 0, description: "Planet: Mercury. Dual Aspect: Dominion / Servitude.", category: BenefitCategory.SPIRITUAL, categoryId: "kabbalah", defaultMode: "PURE", availableModes: ["PURE"], colors: kabbalahColors, premium: true },
+    { id: "kabbalah-tav", name: "Tav (ת) - Completion, seal", range: "126 Hz", baseFrequency: 126, binauralFrequency: 0, description: "Planet: Moon. Dual Aspect: Grace / Ugliness.", category: BenefitCategory.SPIRITUAL, categoryId: "kabbalah", defaultMode: "PURE", availableModes: ["PURE"], colors: kabbalahColors, premium: true },
+    // Simple Letters
+    { id: "kabbalah-he", name: "He (ה) - Expansion, divine breath", range: "117 Hz", baseFrequency: 117, binauralFrequency: 0, description: "Zodiac: Aries. Faculty: Speech.", category: BenefitCategory.SPIRITUAL, categoryId: "kabbalah", defaultMode: "PURE", availableModes: ["PURE"], colors: kabbalahColors, premium: true },
+    { id: "kabbalah-vav", name: "Vav (ו) - Connection, bridge", range: "108 Hz", baseFrequency: 108, binauralFrequency: 0, description: "Zodiac: Taurus. Faculty: Thought.", category: BenefitCategory.SPIRITUAL, categoryId: "kabbalah", defaultMode: "PURE", availableModes: ["PURE"], colors: kabbalahColors, premium: true },
+    { id: "kabbalah-zayin", name: "Zayin (ז) - Spark, movement", range: "99 Hz", baseFrequency: 99, binauralFrequency: 0, description: "Zodiac: Gemini. Faculty: Movement.", category: BenefitCategory.SPIRITUAL, categoryId: "kabbalah", defaultMode: "PURE", availableModes: ["PURE"], colors: kabbalahColors, premium: true },
+    { id: "kabbalah-chet", name: "Chet (ח) - Life force", range: "90 Hz", baseFrequency: 90, binauralFrequency: 0, description: "Zodiac: Cancer. Faculty: Sight.", category: BenefitCategory.SPIRITUAL, categoryId: "kabbalah", defaultMode: "PURE", availableModes: ["PURE"], colors: kabbalahColors, premium: true },
+    { id: "kabbalah-tet", name: "Tet (ט) - Hidden good", range: "81 Hz", baseFrequency: 81, binauralFrequency: 0, description: "Zodiac: Leo. Faculty: Hearing.", category: BenefitCategory.SPIRITUAL, categoryId: "kabbalah", defaultMode: "PURE", availableModes: ["PURE"], colors: kabbalahColors, premium: true },
+    { id: "kabbalah-yod", name: "Yod (י) - Point of creation", range: "72 Hz", baseFrequency: 72, binauralFrequency: 0, description: "Zodiac: Virgo. Faculty: Action.", category: BenefitCategory.SPIRITUAL, categoryId: "kabbalah", defaultMode: "PURE", availableModes: ["PURE"], colors: kabbalahColors, premium: true },
+    { id: "kabbalah-lamed", name: "Lamed (ל) - Learning, ascent", range: "63 Hz", baseFrequency: 63, binauralFrequency: 0, description: "Zodiac: Libra. Faculty: Desire.", category: BenefitCategory.SPIRITUAL, categoryId: "kabbalah", defaultMode: "PURE", availableModes: ["PURE"], colors: kabbalahColors, premium: true },
+    { id: "kabbalah-nun", name: "Nun (נ) - Continuity, humility", range: "54 Hz", baseFrequency: 54, binauralFrequency: 0, description: "Zodiac: Scorpio. Faculty: Smell.", category: BenefitCategory.SPIRITUAL, categoryId: "kabbalah", defaultMode: "PURE", availableModes: ["PURE"], colors: kabbalahColors, premium: true },
+    { id: "kabbalah-samekh", name: "Samekh (ס) - Support, circle", range: "45 Hz", baseFrequency: 45, binauralFrequency: 0, description: "Zodiac: Sagittarius. Faculty: Sleep.", category: BenefitCategory.SPIRITUAL, categoryId: "kabbalah", defaultMode: "PURE", availableModes: ["PURE"], colors: kabbalahColors, premium: true },
+    { id: "kabbalah-ayin", name: "Ayin (ע) - Vision, seeing", range: "36 Hz", baseFrequency: 36, binauralFrequency: 0, description: "Zodiac: Capricorn. Faculty: Anger.", category: BenefitCategory.SPIRITUAL, categoryId: "kabbalah", defaultMode: "PURE", availableModes: ["PURE"], colors: kabbalahColors, premium: true },
+    { id: "kabbalah-tzade", name: "Tsade (צ) - Righteousness", range: "27 Hz", baseFrequency: 27, binauralFrequency: 0, description: "Zodiac: Aquarius. Faculty: Taste/Eating.", category: BenefitCategory.SPIRITUAL, categoryId: "kabbalah", defaultMode: "PURE", availableModes: ["PURE"], colors: kabbalahColors, premium: true },
+    { id: "kabbalah-qof", name: "Qof (ק) - Holiness, cycles", range: "18 Hz", baseFrequency: 18, binauralFrequency: 0, description: "Zodiac: Pisces. Faculty: Laughter.", category: BenefitCategory.SPIRITUAL, categoryId: "kabbalah", defaultMode: "PURE", availableModes: ["PURE"], colors: kabbalahColors, premium: true }
+];
+
+const codexFrequencies: Frequency[] = codexData.map(node => ({
+    id: `codex-${node.modulus}`,
+    name: `${node.note} - ${node.archetype}`,
+    range: `${node.frequency.toFixed(2)} Hz`,
+    baseFrequency: node.frequency,
+    binauralFrequency: 0,
+    description: node.tag,
+    category: BenefitCategory.SPIRITUAL,
+    categoryId: 'codex',
+    defaultMode: 'PURE',
+    availableModes: ['PURE', 'BINAURAL', 'ISOCHRONIC'],
+    colors: { primary: node.color, secondary: node.color, accent: node.color },
+    premium: true,
+}));
+
+
+const harmonicElementFrequencies: Frequency[] = harmonicElements.map(element => ({
+  id: element.id,
+  name: element.name,
+  range: `${element.frequency} Hz`,
+  baseFrequency: element.frequency,
+  binauralFrequency: 0, // Pure tones by default
+  description: element.description,
+  category: BenefitCategory.WELLNESS, // Or a more specific category if applicable
+  categoryId: 'elements',
+  defaultMode: 'PURE',
+  availableModes: ['PURE', 'BINAURAL', 'ISOCHRONIC'],
+  colors: { primary: "#a5f3fc", secondary: "#e0f2fe", accent: "#22d3ee" },
+  premium: true, // Assuming elements are premium
+  atomicNumber: element.atomicNumber,
+  materialUses: element.materialUses,
+  biologicalAssociation: element.biologicalAssociation,
+  energeticAssociation: element.energeticAssociation,
+  sacredGeometry: element.sacredGeometry,
+  planetaryAssociation: element.planetaryAssociation,
+  zodiacAssociation: element.zodiacAssociation,
+  row: element.row,
+}));
+
+// Combine all frequencies
+appContentData.initial_frequencies.push(
+    ...harmonicElementFrequencies,
+    ...codexFrequencies,
+    ...kabbalahFrequencies,
+    ...mirrorAxisFrequencies,
+);
+
+// To avoid having duplicate frequencies when content processor is run multiple times
+const uniqueFrequencies = Array.from(new Map(appContentData.initial_frequencies.map(item => [item.id, item])).values());
+appContentData.initial_frequencies = uniqueFrequencies;
+
+export const processedAppContent = appContentData;
