@@ -16,11 +16,11 @@ export const AlchemyIcon: React.FC<IconProps> = ({ className, style }) => (
 
 
 export const AtomIcon: React.FC<IconProps> = ({ className, style }) => (
-    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5" className={className} style={style} aria-hidden="true">
-        <ellipse cx="12" cy="12" rx="10" ry="4" />
-        <ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(60 12 12)" />
-        <ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(120 12 12)" />
-        <circle cx="12" cy="12" r="1.5" fill="currentColor" />
+    <svg fill="none" viewBox="0 0 48 48" stroke="currentColor" strokeWidth="1.5" className={className} style={style} aria-hidden="true">
+        <ellipse cx="24" cy="24" rx="20" ry="8" />
+        <ellipse cx="24" cy="24" rx="20" ry="8" transform="rotate(60 24 24)" />
+        <ellipse cx="24" cy="24" rx="20" ry="8" transform="rotate(120 24 24)" />
+        <circle cx="24" cy="24" r="3" fill="currentColor" />
     </svg>
 );
 export const ElementIcon = AtomIcon;
@@ -111,16 +111,16 @@ export const CelestialBrandIcon: React.FC<IconProps> = ({ className, style }) =>
 );
 
 export const GuidedSessionIcon: React.FC<IconProps> = ({ className, style }) => (
-    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5" className={className} style={style} aria-hidden="true">
-        <circle cx="12" cy="12" r="3.5" />
-        <path strokeLinecap="round" d="M12 2v2" />
-        <path strokeLinecap="round" d="M12 20v2" />
-        <path strokeLinecap="round" d="M4.93 4.93l1.41 1.41" />
-        <path strokeLinecap="round" d="M17.66 17.66l1.41 1.41" />
-        <path strokeLinecap="round" d="M2 12h2" />
-        <path strokeLinecap="round" d="M20 12h2" />
-        <path strokeLinecap="round" d="M4.93 19.07l1.41-1.41" />
-        <path strokeLinecap="round" d="M17.66 6.34l1.41-1.41" />
+    <svg fill="none" viewBox="0 0 48 48" stroke="currentColor" strokeWidth="1.5" className={className} style={style} aria-hidden="true">
+        <circle cx="24" cy="24" r="7" />
+        <path strokeLinecap="round" d="M24 4v4" />
+        <path strokeLinecap="round" d="M24 40v4" />
+        <path strokeLinecap="round" d="M9.86 9.86l2.82 2.82" />
+        <path strokeLinecap="round" d="M35.32 35.32l2.82 2.82" />
+        <path strokeLinecap="round" d="M4 24h4" />
+        <path strokeLinecap="round" d="M40 24h4" />
+        <path strokeLinecap="round" d="M9.86 38.14l2.82-2.82" />
+        <path strokeLinecap="round" d="M35.32 12.68l2.82-2.82" />
     </svg>
 );
 
@@ -670,7 +670,7 @@ export const OracleIcon: React.FC<IconProps> = ({ className, style }) => (
 );
 
 export const TreeOfLifeIcon: React.FC<IconProps> = ({ className, style }) => (
-    <svg fill="none" viewBox="0 0 48 48" stroke="currentColor" strokeWidth="2" className={className} style={style} aria-hidden="true">
+    <svg fill="none" viewBox="0 0 48 48" stroke="currentColor" strokeWidth="1.5" className={className} style={style} aria-hidden="true">
         <circle cx="24" cy="8" r="3"/>
         <circle cx="16" cy="18" r="3"/>
         <circle cx="32" cy="18" r="3"/>

@@ -50,7 +50,10 @@ export const CodexOraclePage: React.FC<CodexOraclePageProps> = ({ onBack, allFre
                 id: `reflection-${Date.now()}`,
                 timestamp: Date.now(),
                 intention,
-                ...response,
+                title: response.title,
+                transmission: response.transmission,
+                recommendedSessionId: response.recommendedSessionId,
+                imageData: response.imageData,
             };
             setCodexReflections(prev => [newReflection, ...prev]);
 
@@ -100,9 +103,10 @@ export const CodexOraclePage: React.FC<CodexOraclePageProps> = ({ onBack, allFre
                     disabled={isLoading || !intention.trim()}
                     className="w-full sm:w-auto flex-grow flex items-center justify-center py-3 px-4 rounded-lg font-bold text-white bg-brand-gold hover:scale-105 transition-transform shadow-lg hover:shadow-xl disabled:bg-slate-400 disabled:scale-100"
                 >
-                    {isLoading ? <LoadingSpinner /> : 'Enter the Portal'}
+                    {isLoading ? <div className="flex items-center gap-2"><LoadingSpinner className="w-5 h-5" /><span>Generating...</span></div> : 'Enter the Portal'}
                 </button>
             </div>
+            {isLoading && <p className="text-center text-sm text-slate-600 dark:text-dark-text-secondary">Generating transmission & symbolic image...</p>}
             {error && <p className="text-sm text-center text-red-500">{error}</p>}
             </form>
         </div>
@@ -112,6 +116,12 @@ export const CodexOraclePage: React.FC<CodexOraclePageProps> = ({ onBack, allFre
                 <p className="text-sm italic text-slate-600 dark:text-dark-text-secondary">Your Intention:</p>
                 <p className="text-lg font-semibold text-slate-800 dark:text-dark-text-primary">"{intention}"</p>
             </div>
+            
+            {reflection.imageData && (
+                <div className="mb-8 rounded-lg overflow-hidden shadow-lg border border-slate-200/50 dark:border-dark-border/50">
+                    <img src={`data:image/png;base64,${reflection.imageData}`} alt={reflection.title} className="w-full h-auto" />
+                </div>
+            )}
 
             <div className="text-center mb-8">
                 <h3 className="text-3xl font-display font-bold text-brand-gold">{reflection.title}</h3>

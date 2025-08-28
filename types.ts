@@ -232,6 +232,7 @@ export interface CodexReflection {
   transmission: string;
   recommendedSessionId: string;
   sourceSessionId?: string;
+  imageData?: string;
 }
 
 

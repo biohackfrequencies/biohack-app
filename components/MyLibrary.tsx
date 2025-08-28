@@ -100,15 +100,30 @@ const ReflectionCard: React.FC<{
             style={cardStyle as React.CSSProperties}
         >
             <button onClick={() => setIsExpanded(!isExpanded)} className="w-full text-left">
-                <div className="flex justify-between items-start gap-4">
-                    <div>
+                <div className="flex items-start gap-4">
+                    {reflection.imageData ? (
+                        <img 
+                            src={`data:image/png;base64,${reflection.imageData}`} 
+                            alt="Reflection symbol" 
+                            className="w-16 h-16 rounded-md object-cover flex-shrink-0"
+                        />
+                    ) : (
+                        <div className="w-16 h-16 flex-shrink-0 flex items-center justify-center bg-slate-200 dark:bg-slate-700 rounded-md">
+                            <JournalIcon className="w-8 h-8 text-brand-gold/70" />
+                        </div>
+                    )}
+                    <div className="flex-grow">
                         <p className="text-xs text-slate-500 dark:text-dark-text-muted">{new Date(reflection.timestamp).toLocaleDateString()}</p>
                         <h4 className="font-display font-bold text-lg text-brand-gold">{reflection.title}</h4>
                         <p className="text-sm italic text-slate-600 dark:text-dark-text-secondary mt-1 line-clamp-1">Intention: "{reflection.intention}"</p>
                     </div>
-                    <JournalIcon className="w-8 h-8 text-brand-gold/70 flex-shrink-0 mt-1" />
                 </div>
-                <div className={`overflow-hidden transition-all duration-500 ease-in-out ${isExpanded ? 'max-h-[1000px] mt-4 pt-4 border-t border-slate-200 dark:border-dark-border' : 'max-h-0'}`}>
+                <div className={`overflow-hidden transition-all duration-500 ease-in-out ${isExpanded ? 'max-h-[2000px] mt-4 pt-4 border-t border-slate-200 dark:border-dark-border' : 'max-h-0'}`}>
+                    {isExpanded && reflection.imageData && (
+                        <div className="mb-4 rounded-lg overflow-hidden shadow-md animate-fade-in">
+                            <img src={`data:image/png;base64,${reflection.imageData}`} alt={reflection.title} className="w-full h-auto" />
+                        </div>
+                    )}
                     <div className="prose prose-sm prose-slate dark:prose-invert max-w-none whitespace-pre-wrap font-sans">
                         <p>{reflection.transmission}</p>
                     </div>

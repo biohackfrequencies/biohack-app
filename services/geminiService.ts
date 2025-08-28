@@ -11,7 +11,9 @@ export type AiChatResponse = {
     sources?: Array<{ uri: string; title: string; }>;
 }
 
-export type AiReflectionResponse = Omit<CodexReflection, 'id' | 'timestamp' | 'intention' | 'sourceSessionId'>;
+export type AiReflectionResponse = Omit<CodexReflection, 'id' | 'timestamp' | 'intention' | 'sourceSessionId'> & {
+    imageData: string;
+};
 
 
 /**

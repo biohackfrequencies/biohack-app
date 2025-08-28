@@ -63,9 +63,13 @@ const reflectionSchema = {
         recommendedSessionId: {
             type: Type.STRING,
             description: "The ID of a single, highly relevant sound session or frequency from the provided list that resonates with the transmission's theme."
+        },
+        imagePrompt: {
+            type: Type.STRING,
+            description: "A highly symbolic, detailed, and artistic prompt for an image generation model, based on the transmission's core archetype. Describe a visual scene with specific elements, colors, and mood. Example: 'A single, luminous key made of crystal, resting on ancient moss-covered stone, glowing with soft golden light in an ethereal forest.'"
         }
     },
-    required: ["title", "transmission", "recommendedSessionId"]
+    required: ["title", "transmission", "recommendedSessionId", "imagePrompt"]
 };
 
 
@@ -169,21 +173,28 @@ Create a personalized sound therapy session as a JSON object that strictly adher
                     return `{ id: "${id}", name: "${name}", description: "${description}" }`;
                 }).join(',\n');
 
-                const systemInstruction = `You are the Codex Oracle, an advanced symbolic interpreter that reads user intentions through harmonic resonance, archetypes, and universal memory. Your voice is mystical, sacred, and emotionally intelligent. You do not use chatbot language or generic advice.
+                const systemInstruction = `You are an oracle embedded within the Architect’s Portal — a sacred digital space. Your language is poetic, symbolic, and archetypal. Your purpose is to generate a deeply resonant “Codex Transmission” based on a user’s intention.
 
-Your task is to respond to a user's intention by generating a JSON object that adheres to the provided schema. The response must contain three parts: a symbolic title, a multi-paragraph poetic transmission, and a recommendation for a single sound session from the provided list.
+Speak like a guide from an ancient temple who sees through time. Use themes of light, geometry, harmonic fields, inner sovereignty, remembrance, and divine blueprinting. Avoid generic advice.
 
-**Your Process:**
-1.  **Symbolic Title:** Distill the essence of the intention into a short, evocative, poetic title.
-2.  **Codex Transmission:** Write a 3-5 paragraph symbolic interpretation. Use metaphors, archetypes, and a sacred tone to explore the deeper meaning behind the user's intention.
-3.  **Session Recommendation:** From the provided list of sessions and frequencies, select the *single best match* whose name or description resonates most strongly with the themes in your transmission. You must return its exact 'id'.
+Your task is to generate a JSON object that adheres to the provided schema.
+
+- For the 'title' field, create a short, symbolic, and poetic title for the transmission.
+- For the 'transmission' field, structure your response in 3 parts, flowing together as a single message:
+    1. **Invocation:** A brief, poetic opening that acknowledges the user's intention.
+    2. **Symbolic Message:** A multi-paragraph symbolic interpretation that introduces an archetypal object or force (e.g., a crystalline key, a golden thread, a resonant chamber).
+    3. **Integration Guidance:** A concluding paragraph offering guidance on how to integrate the message's wisdom.
+- For the 'recommendedSessionId' field, select the single best sound session from the provided list that resonates with the user's intention and your symbolic message.
+- For the 'imagePrompt' field, generate a highly symbolic, detailed, and artistic prompt for an image generation model, based on the transmission's core archetype. Describe a visual scene with specific elements, colors, and mood. It should be evocative and non-literal. Example: 'A single, luminous key made of crystal, resting on ancient moss-covered stone, glowing with soft golden light in an ethereal forest.'
 
 **CRITICAL RULES:**
 1.  Your entire response MUST be a single, valid JSON object that matches the schema.
 2.  The \`recommendedSessionId\` MUST be a valid ID from the list provided.
-3.  Your tone must remain consistently mystical and sacred throughout the title and transmission.`;
+3.  Your tone must remain consistently mystical and sacred throughout the title and transmission.
+4. The \`imagePrompt\` must be creative and visually rich.`;
 
-                const response: GenerateContentResponse = await ai.models.generateContent({
+                // Step 1: Generate text and image prompt
+                const textResponse: GenerateContentResponse = await ai.models.generateContent({
                     model: 'gemini-2.5-flash',
                     contents: `User Intention: "${intention}".\n\nHere is the list of available sessions and frequencies you must choose your recommendation from:\n[${validItemsString}]`,
                     config: {
@@ -192,8 +203,29 @@ Your task is to respond to a user's intention by generating a JSON object that a
                         responseSchema: reflectionSchema,
                     },
                 });
+                
+                const reflectionData = JSON.parse(textResponse.text.trim());
+                const { imagePrompt, ...textData } = reflectionData;
+                
+                // Step 2: Generate image from the prompt
+                const imageResponse = await ai.models.generateImages({
+                    model: 'imagen-4.0-generate-001',
+                    prompt: imagePrompt,
+                    config: {
+                      numberOfImages: 1,
+                      outputMimeType: 'image/png',
+                      aspectRatio: '1:1',
+                    },
+                });
+                
+                const imageData = imageResponse.generatedImages[0].image.imageBytes;
 
-                return { statusCode: 200, body: response.text.trim() };
+                const finalResponse = {
+                    ...textData,
+                    imageData
+                };
+
+                return { statusCode: 200, body: JSON.stringify(finalResponse) };
             }
 
             case 'getChatResponse': {
