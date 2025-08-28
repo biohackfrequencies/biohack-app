@@ -1,14 +1,5 @@
 
 
-import { GoogleGenAI, Type, GenerateContentResponse } from "@google/genai";
-import { createClient } from '@supabase/supabase-js';
-
-
-
-
-
-
-
 export type SoundGenerationMode = 'PURE' | 'BINAURAL' | 'ISOCHRONIC' | 'AMBIENCE' | 'SPLIT_BINAURAL';
 
 export enum BenefitCategory {
@@ -245,14 +236,15 @@ export interface CodexReflection {
 export type ProfileRow = {
   id: string;
   favorites: string[];
-  // FIX: Replace `any` with specific types for Supabase to correctly infer table structure.
-  custom_stacks: CustomStack[];
-  activity_log: ActivityLogItem[];
+  // FIX: Use `any` for complex JSONB columns to prevent Supabase type inference issues.
+  // Type safety is maintained by casting on data retrieval.
+  custom_stacks: any;
+  activity_log: any;
   tracked_habits: TrackableActivityId[];
-  // FIX: Replace `any` with specific types for Supabase to correctly infer table structure.
-  user_goals: UserGoals;
-  custom_activities: TrackableActivityBase[];
-  codex_reflections: CodexReflection[];
+  // FIX: Use `any` for complex JSONB columns to prevent Supabase type inference issues.
+  user_goals: any;
+  custom_activities: any;
+  codex_reflections: any;
   pro_access_expires_at: string | null;
   ai_credits_remaining?: number;
   ai_credits_reset_at?: string | null;
@@ -271,14 +263,14 @@ export interface AppContentData {
 export type ProfileInsert = {
   id: string;
   favorites?: string[];
-  // FIX: Replace `any` with specific types for Supabase to correctly infer table structure.
-  custom_stacks?: CustomStack[];
-  activity_log?: ActivityLogItem[];
+  // FIX: Use `any` for complex JSONB columns to prevent Supabase type inference issues.
+  custom_stacks?: any;
+  activity_log?: any;
   tracked_habits?: TrackableActivityId[];
-  // FIX: Replace `any` with specific types for Supabase to correctly infer table structure.
-  user_goals?: UserGoals;
-  custom_activities?: TrackableActivityBase[];
-  codex_reflections?: CodexReflection[];
+  // FIX: Use `any` for complex JSONB columns to prevent Supabase type inference issues.
+  user_goals?: any;
+  custom_activities?: any;
+  codex_reflections?: any;
   pro_access_expires_at?: string | null;
   ai_credits_remaining?: number;
   ai_credits_reset_at?: string | null;
@@ -287,14 +279,14 @@ export type ProfileInsert = {
 
 export type ProfileUpdate = {
   favorites?: string[];
-  // FIX: Replace `any` with specific types for Supabase to correctly infer table structure.
-  custom_stacks?: CustomStack[];
-  activity_log?: ActivityLogItem[];
+  // FIX: Use `any` for complex JSONB columns to prevent Supabase type inference issues.
+  custom_stacks?: any;
+  activity_log?: any;
   tracked_habits?: TrackableActivityId[];
-  // FIX: Replace `any` with specific types for Supabase to correctly infer table structure.
-  user_goals?: UserGoals;
-  custom_activities?: TrackableActivityBase[];
-  codex_reflections?: CodexReflection[];
+  // FIX: Use `any` for complex JSONB columns to prevent Supabase type inference issues.
+  user_goals?: any;
+  custom_activities?: any;
+  codex_reflections?: any;
   pro_access_expires_at?: string | null;
   ai_credits_remaining?: number;
   ai_credits_reset_at?: string | null;

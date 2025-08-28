@@ -2,6 +2,8 @@
 
 
 
+
+
 import React, { createContext, useContext, useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { supabase } from '../services/supabaseClient';
 import { useAuth } from './AuthContext';
@@ -68,7 +70,6 @@ const useDebouncedSync = <K extends keyof ProfileUpdate>(
                 const sync = async () => {
                     try {
                         const updatePayload: ProfileUpdate = { [column]: value };
-                        // FIX: Removed `as any` cast now that types are correct.
                         const { error } = await supabase.from('profiles').update(updatePayload).eq('id', userId);
                         if (error) {
                             console.warn(`Network issue syncing ${column}:`, error.message);
@@ -167,13 +168,14 @@ export const UserDataProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         }
         
         if (profile) {
+            // FIX: Cast complex JSONB column types from `any` back to their specific types to restore type safety.
             setFavorites(profile.favorites || []);
-            setCustomStacks(profile.custom_stacks || []);
-            setActivityLog(profile.activity_log || []);
+            setCustomStacks((profile.custom_stacks as CustomStack[]) || []);
+            setActivityLog((profile.activity_log as ActivityLogItem[]) || []);
             setTrackedHabits(profile.tracked_habits || ['session', 'workout', 'meditation', 'sleep', 'supplements', 'rlt', 'mood']);
-            setUserGoals(profile.user_goals || { mind: 20, move: 10000 });
-            setCustomActivities(profile.custom_activities || []);
-            setCodexReflections(profile.codex_reflections || []);
+            setUserGoals((profile.user_goals as UserGoals) || { mind: 20, move: 10000 });
+            setCustomActivities((profile.custom_activities as TrackableActivityBase[]) || []);
+            setCodexReflections((profile.codex_reflections as CodexReflection[]) || []);
             setProAccessExpiresAt(profile.pro_access_expires_at ? new Date(profile.pro_access_expires_at).getTime() : null);
             setAiCreditsRemaining(profile.ai_credits_remaining ?? 5);
             setAiCreditsResetAt(profile.ai_credits_reset_at ?? null);
