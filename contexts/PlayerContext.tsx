@@ -12,6 +12,7 @@ type UseBreathingGuideReturn = ReturnType<typeof useBreathingGuide>;
 interface PlayerContextType extends Omit<UseBinauralBeatReturn, 'startPlayback' | 'pause' | 'resume' | 'stop' | 'toggleLayer2' | 'toggleLayer3'>, UseBreathingGuideReturn {
   currentlyPlayingItem: PlayableItem | null;
   lastCompletedSession: { id: string; name: string } | null;
+  clearLastCompletedSession: () => void;
   startPlayback: (
     itemToPlay: PlayableItem,
     allFrequenciesData: Frequency[],
@@ -63,6 +64,10 @@ export const PlayerProvider: React.FC<{ children: ReactNode }> = ({ children }) 
   
   const totalSessionTimeElapsedRef = useRef(0);
   
+  const clearLastCompletedSession = useCallback(() => {
+    setLastCompletedSession(null);
+  }, []);
+
   const logSessionActivity = useCallback((session: { id: string, name: string, duration?: number }): ActivityLogItem => {
     const newItem: ActivityLogItem = {
       id: `log-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`,
@@ -305,6 +310,7 @@ export const PlayerProvider: React.FC<{ children: ReactNode }> = ({ children }) 
     stopGuide,
     currentlyPlayingItem,
     lastCompletedSession,
+    clearLastCompletedSession,
     sessionStepIndex,
     sessionTimeInStep,
     is8dEnabled,

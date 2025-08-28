@@ -1,4 +1,5 @@
 import { Frequency, CustomStack, HealthDataSummary, IntegratedDataSummary, CodexReflection, PlayableItem } from '../types';
+import { supabase } from './supabaseClient';
 
 export type AiCreationResponse = {
   type: 'session';
@@ -23,11 +24,19 @@ export type AiReflectionResponse = Omit<CodexReflection, 'id' | 'timestamp' | 'i
  * @returns The JSON response from the serverless function.
  */
 async function callGeminiFunction(action: string, payload: any) {
+    const { data: { session } } = await supabase.auth.getSession();
+    const token = session?.access_token;
+
+    if (!token) {
+        throw new Error('You must be logged in to use AI features.');
+    }
+
     try {
         const response = await fetch('/.netlify/functions/gemini', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`,
             },
             body: JSON.stringify({ action, payload }),
         });

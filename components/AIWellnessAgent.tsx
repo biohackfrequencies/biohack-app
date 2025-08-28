@@ -3,6 +3,8 @@ import { BackIcon, AlchemyIcon } from './BohoIcons';
 import { Frequency, CustomStack } from '../types';
 import { generateAiCreation } from '../services/geminiService';
 import LoadingSpinner from './LoadingSpinner';
+import { useUserData } from '../contexts/UserDataContext';
+import { useSubscription } from '../hooks/useSubscription';
 
 interface AIWellnessAgentProps {
   allFrequencies: Frequency[];
@@ -14,10 +16,13 @@ const AIWellnessAgent: React.FC<AIWellnessAgentProps> = ({ allFrequencies, onSav
   const [prompt, setPrompt] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const { aiCreditsRemaining } = useUserData();
+  const { isSubscribed } = useSubscription();
+  const hasNoCredits = !isSubscribed && aiCreditsRemaining <= 0;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!prompt.trim()) return;
+    if (!prompt.trim() || hasNoCredits) return;
     setIsLoading(true);
     setError(null);
 
@@ -66,13 +71,23 @@ const AIWellnessAgent: React.FC<AIWellnessAgentProps> = ({ allFrequencies, onSav
             disabled={isLoading}
           />
           {error && <p className="text-sm text-center text-red-500">{error}</p>}
+          {hasNoCredits && (
+            <p className="text-sm text-center text-amber-600 dark:text-amber-400 p-3 rounded-lg bg-amber-100 dark:bg-amber-900/20">
+                You've used all your free AI generations. <a href="#/pricing" className="font-bold underline">Upgrade to Pro</a> for more.
+            </p>
+          )}
           <button
             type="submit"
-            disabled={isLoading || !prompt.trim()}
+            disabled={isLoading || !prompt.trim() || hasNoCredits}
             className="w-full flex items-center justify-center py-4 px-4 rounded-lg font-bold text-white bg-brand-gold hover:scale-105 transition-transform shadow-lg hover:shadow-xl disabled:bg-slate-400 disabled:scale-100"
           >
             {isLoading ? <LoadingSpinner /> : 'Generate Session'}
           </button>
+          {!isSubscribed && (
+            <p className="text-xs text-center text-slate-500 dark:text-dark-text-muted">
+                You have {aiCreditsRemaining} free AI generation{aiCreditsRemaining !== 1 ? 's' : ''} remaining.
+            </p>
+          )}
         </form>
       </div>
     </div>

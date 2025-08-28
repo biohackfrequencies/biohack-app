@@ -5,6 +5,7 @@ import { getAiCodexReflection } from '../services/geminiService';
 import { AiReflectionResponse } from '../services/geminiService';
 import LoadingSpinner from './LoadingSpinner';
 import { CodexReflection, CustomStack, Frequency, GuidedSession } from '../types';
+import { useSubscription } from '../hooks/useSubscription';
 
 interface CodexOraclePageProps {
   onBack: () => void;
@@ -22,11 +23,13 @@ const PRESET_INTENTIONS = [
 ];
 
 export const CodexOraclePage: React.FC<CodexOraclePageProps> = ({ onBack, allFrequencies, allSessions, customStacks }) => {
-    const { setCodexReflections } = useUserData();
+    const { setCodexReflections, aiCreditsRemaining } = useUserData();
+    const { isSubscribed } = useSubscription();
     const [intention, setIntention] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const [reflection, setReflection] = useState<AiReflectionResponse | null>(null);
+    const hasNoCredits = !isSubscribed && aiCreditsRemaining <= 0;
 
     const handleShuffle = () => {
         const randomIndex = Math.floor(Math.random() * PRESET_INTENTIONS.length);
@@ -35,7 +38,7 @@ export const CodexOraclePage: React.FC<CodexOraclePageProps> = ({ onBack, allFre
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        if (!intention.trim()) return;
+        if (!intention.trim() || hasNoCredits) return;
         setIsLoading(true);
         setError(null);
         setReflection(null);
@@ -100,7 +103,7 @@ export const CodexOraclePage: React.FC<CodexOraclePageProps> = ({ onBack, allFre
                 </button>
                 <button
                     type="submit"
-                    disabled={isLoading || !intention.trim()}
+                    disabled={isLoading || !intention.trim() || hasNoCredits}
                     className="w-full sm:w-auto flex-grow flex items-center justify-center py-3 px-4 rounded-lg font-bold text-white bg-brand-gold hover:scale-105 transition-transform shadow-lg hover:shadow-xl disabled:bg-slate-400 disabled:scale-100"
                 >
                     {isLoading ? <div className="flex items-center gap-2"><LoadingSpinner className="w-5 h-5" /><span>Generating...</span></div> : 'Enter the Portal'}
@@ -108,6 +111,16 @@ export const CodexOraclePage: React.FC<CodexOraclePageProps> = ({ onBack, allFre
             </div>
             {isLoading && <p className="text-center text-sm text-slate-600 dark:text-dark-text-secondary">Generating transmission & symbolic image...</p>}
             {error && <p className="text-sm text-center text-red-500">{error}</p>}
+            {hasNoCredits && (
+              <p className="text-sm text-center text-amber-600 dark:text-amber-400 p-3 rounded-lg bg-amber-100 dark:bg-amber-900/20">
+                  You've used all your free AI generations. <a href="#/pricing" className="font-bold underline">Upgrade to Pro</a> for more.
+              </p>
+            )}
+             {!isSubscribed && (
+                <p className="text-xs text-center text-slate-500 dark:text-dark-text-muted">
+                    You have {aiCreditsRemaining} free AI generation{aiCreditsRemaining !== 1 ? 's' : ''} remaining.
+                </p>
+            )}
             </form>
         </div>
       ) : (

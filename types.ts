@@ -4,6 +4,10 @@
 
 
 
+
+
+
+
 export type SoundGenerationMode = 'PURE' | 'BINAURAL' | 'ISOCHRONIC' | 'AMBIENCE' | 'SPLIT_BINAURAL';
 
 export enum BenefitCategory {
@@ -247,6 +251,9 @@ export type ProfileRow = {
   custom_activities: TrackableActivityBase[];
   codex_reflections: CodexReflection[];
   pro_access_expires_at: string | null;
+  ai_credits_remaining?: number;
+  ai_credits_reset_at?: string | null;
+  api_requests?: number[];
 };
 
 export interface AppContentData {
@@ -268,6 +275,9 @@ export type ProfileInsert = {
   custom_activities?: TrackableActivityBase[];
   codex_reflections?: CodexReflection[];
   pro_access_expires_at?: string | null;
+  ai_credits_remaining?: number;
+  ai_credits_reset_at?: string | null;
+  api_requests?: number[];
 };
 
 export type ProfileUpdate = {
@@ -279,4 +289,32 @@ export type ProfileUpdate = {
   custom_activities?: TrackableActivityBase[];
   codex_reflections?: CodexReflection[];
   pro_access_expires_at?: string | null;
+  ai_credits_remaining?: number;
+  ai_credits_reset_at?: string | null;
+  api_requests?: number[];
 };
+
+// FIX: Moved Database type from supabaseClient.ts to be shared.
+export interface Database {
+  public: {
+    Tables: {
+      profiles: {
+        Row: ProfileRow;
+        Insert: ProfileInsert;
+        Update: ProfileUpdate;
+      }
+    }
+    Views: {
+      [_ in never]: never
+    }
+    Functions: {
+      [_ in never]: never
+    }
+    Enums: {
+      [_ in never]: never
+    }
+    CompositeTypes: {
+      [_ in never]: never
+    }
+  }
+}

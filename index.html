@@ -180,6 +180,19 @@
           filter: drop-shadow(0 0 8px rgba(var(--glow-color-rgb, 255, 215, 0), 0.4));
         }
       }
+      
+      /* Accessibility utility class */
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border-width: 0;
+      }
     </style>
     <script>
       tailwind.config = {

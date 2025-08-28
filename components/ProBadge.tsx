@@ -10,6 +10,7 @@ export const ProBadge: React.FC<ProBadgeProps> = ({ onClick }) => {
     <>
       <LockIcon className="w-3 h-3" />
       <span className="text-xs font-bold tracking-wider uppercase">Pro</span>
+      <span className="sr-only">Pro feature</span>
     </>
   );
 

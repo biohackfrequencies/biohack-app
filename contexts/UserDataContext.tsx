@@ -1,5 +1,6 @@
 
 
+
 import React, { createContext, useContext, useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { supabase } from '../services/supabaseClient';
 import { useAuth } from './AuthContext';
@@ -47,6 +48,8 @@ interface UserDataContextType {
   removeCustomActivity: (id: TrackableActivityId) => void;
   codexReflections: CodexReflection[];
   setCodexReflections: React.Dispatch<React.SetStateAction<CodexReflection[]>>;
+  aiCreditsRemaining: number;
+  setAiCreditsRemaining: React.Dispatch<React.SetStateAction<number>>;
 }
 
 const UserDataContext = createContext<UserDataContextType | null>(null);
@@ -106,7 +109,9 @@ export const UserDataProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   const [customActivities, setCustomActivities] = useSyncedState<TrackableActivityBase[]>('biohack_custom_activities', [], !!user);
   const [proAccessExpiresAt, setProAccessExpiresAt] = useSyncedState<number | null>('biohack_pro_expires', null, !!user);
   const [codexReflections, setCodexReflections] = useSyncedState<CodexReflection[]>('biohack_reflections', [], !!user);
-  
+  const [aiCreditsRemaining, setAiCreditsRemaining] = useSyncedState<number>('biohack_ai_credits', 5, !!user);
+  const [aiCreditsResetAt, setAiCreditsResetAt] = useSyncedState<string | null>('biohack_ai_credits_reset', null, !!user);
+
   const bootstrapInProgress = useRef(false);
 
   useEffect(() => {
@@ -124,6 +129,8 @@ export const UserDataProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         setCustomActivities([]);
         setCodexReflections([]);
         setProAccessExpiresAt(null);
+        setAiCreditsRemaining(5);
+        setAiCreditsResetAt(null);
         setIsUserDataLoading(false);
         return;
       }
@@ -146,6 +153,9 @@ export const UserDataProvider: React.FC<{ children: React.ReactNode }> = ({ chil
               tracked_habits: defaultHabits, user_goals: defaultGoals, custom_activities: [],
               codex_reflections: [],
               pro_access_expires_at: null,
+              ai_credits_remaining: 5,
+              ai_credits_reset_at: new Date().toISOString(),
+              api_requests: [],
             };
           const { data: newProfile, error: insertError } = await supabase.from('profiles').insert(newProfileData).select().single();
           if (insertError) throw insertError;
@@ -163,6 +173,8 @@ export const UserDataProvider: React.FC<{ children: React.ReactNode }> = ({ chil
             setCustomActivities((profile.custom_activities as TrackableActivityBase[]) || []);
             setCodexReflections((profile.codex_reflections as CodexReflection[]) || []);
             setProAccessExpiresAt(profile.pro_access_expires_at ? new Date(profile.pro_access_expires_at).getTime() : null);
+            setAiCreditsRemaining(profile.ai_credits_remaining ?? 5);
+            setAiCreditsResetAt(profile.ai_credits_reset_at ?? null);
         }
       } catch (e) {
         // This catch block is for network failures or other errors when fetching from Supabase.
@@ -193,9 +205,13 @@ export const UserDataProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   useDebouncedSync('user_goals', userGoals, syncEnabled, user?.id);
   useDebouncedSync('custom_activities', customActivities, syncEnabled, user?.id);
   useDebouncedSync('codex_reflections', codexReflections, syncEnabled, user?.id);
+  useDebouncedSync('ai_credits_remaining', aiCreditsRemaining, syncEnabled, user?.id);
   
   const proAccessExpiresAtIso = useMemo(() => proAccessExpiresAt ? new Date(proAccessExpiresAt).toISOString() : null, [proAccessExpiresAt]);
   useDebouncedSync('pro_access_expires_at', proAccessExpiresAtIso, syncEnabled, user?.id);
+
+  const aiCreditsResetAtIso = useMemo(() => aiCreditsResetAt ? new Date(aiCreditsResetAt).toISOString() : null, [aiCreditsResetAt]);
+  useDebouncedSync('ai_credits_reset_at', aiCreditsResetAtIso, syncEnabled, user?.id);
 
   const addCustomActivity = useCallback((name: string): TrackableActivityBase | undefined => {
     if (!name.trim()) return;
@@ -224,7 +240,8 @@ export const UserDataProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     userGoals, setUserGoals,
     proAccessExpiresAt, setProAccessExpiresAt,
     customActivities, addCustomActivity, removeCustomActivity,
-    codexReflections, setCodexReflections
+    codexReflections, setCodexReflections,
+    aiCreditsRemaining, setAiCreditsRemaining,
   };
 
   return <UserDataContext.Provider value={value}>{children}</UserDataContext.Provider>;

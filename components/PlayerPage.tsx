@@ -52,10 +52,13 @@ const ElementInfoTabs: React.FC<{ element: Frequency, accentColor: string }> = (
 
   return (
     <div className="w-full max-w-2xl mx-auto my-6">
-      <div className="flex justify-center border-b border-slate-300/50 dark:border-dark-border/50 mb-4">
+      <div className="flex justify-center border-b border-slate-300/50 dark:border-dark-border/50 mb-4" role="tablist" aria-label="Element Information">
         <button
           onClick={() => setActiveTab('symbolism')}
-          aria-pressed={activeTab === 'symbolism'}
+          role="tab"
+          aria-selected={activeTab === 'symbolism'}
+          aria-controls="tab-symbolism"
+          id="tab-btn-symbolism"
           className={`px-4 py-2 font-semibold text-sm transition-colors ${activeTab === 'symbolism' ? 'border-b-2 text-slate-800 dark:text-dark-text-primary' : 'text-slate-500 dark:text-dark-text-muted hover:text-slate-700 dark:hover:text-dark-text-secondary'}`}
           style={{ borderColor: activeTab === 'symbolism' ? accentColor : 'transparent' }}
         >
@@ -63,7 +66,10 @@ const ElementInfoTabs: React.FC<{ element: Frequency, accentColor: string }> = (
         </button>
         <button
           onClick={() => setActiveTab('science')}
-          aria-pressed={activeTab === 'science'}
+          role="tab"
+          aria-selected={activeTab === 'science'}
+          aria-controls="tab-science"
+          id="tab-btn-science"
           className={`px-4 py-2 font-semibold text-sm transition-colors ${activeTab === 'science' ? 'border-b-2 text-slate-800 dark:text-dark-text-primary' : 'text-slate-500 dark:text-dark-text-muted hover:text-slate-700 dark:hover:text-dark-text-secondary'}`}
           style={{ borderColor: activeTab === 'science' ? accentColor : 'transparent' }}
         >
@@ -71,7 +77,10 @@ const ElementInfoTabs: React.FC<{ element: Frequency, accentColor: string }> = (
         </button>
         <button
           onClick={() => setActiveTab('cosmos')}
-          aria-pressed={activeTab === 'cosmos'}
+          role="tab"
+          aria-selected={activeTab === 'cosmos'}
+          aria-controls="tab-cosmos"
+          id="tab-btn-cosmos"
           className={`px-4 py-2 font-semibold text-sm transition-colors ${activeTab === 'cosmos' ? 'border-b-2 text-slate-800 dark:text-dark-text-primary' : 'text-slate-500 dark:text-dark-text-muted hover:text-slate-700 dark:hover:text-dark-text-secondary'}`}
           style={{ borderColor: activeTab === 'cosmos' ? accentColor : 'transparent' }}
         >
@@ -81,7 +90,7 @@ const ElementInfoTabs: React.FC<{ element: Frequency, accentColor: string }> = (
 
       <div className="text-center text-slate-700 dark:text-dark-text-secondary p-2 animate-fade-in min-h-[180px]">
         {activeTab === 'symbolism' && (
-          <div className="space-y-4">
+          <div role="tabpanel" id="tab-symbolism" aria-labelledby="tab-btn-symbolism" className="space-y-4">
             <p className="italic">{element.description}</p>
             <div>
               <p className="font-bold text-sm uppercase tracking-wider text-slate-500 dark:text-dark-text-muted">Energetic Association</p>
@@ -98,7 +107,7 @@ const ElementInfoTabs: React.FC<{ element: Frequency, accentColor: string }> = (
           </div>
         )}
         {activeTab === 'science' && (
-          <div className="space-y-4">
+          <div role="tabpanel" id="tab-science" aria-labelledby="tab-btn-science" className="space-y-4">
              <div>
               <p className="font-bold text-sm uppercase tracking-wider text-slate-500 dark:text-dark-text-muted">Atomic Number</p>
               <p>{element.atomicNumber}</p>
@@ -110,7 +119,7 @@ const ElementInfoTabs: React.FC<{ element: Frequency, accentColor: string }> = (
           </div>
         )}
         {activeTab === 'cosmos' && (
-            <div className="space-y-4">
+            <div role="tabpanel" id="tab-cosmos" aria-labelledby="tab-btn-cosmos" className="space-y-4">
                 <div>
                     <p className="font-bold text-sm uppercase tracking-wider text-slate-500 dark:text-dark-text-muted">Planetary Association</p>
                     <p>{element.planetaryAssociation || 'N/A'}</p>
@@ -381,7 +390,7 @@ export const PlayerPage: React.FC<PlayerPageProps> = ({
             >
                 {children}
             </button>
-            <div className="absolute bottom-full mb-3 w-64 p-3 rounded-lg bg-slate-800 dark:bg-slate-900 text-white dark:text-slate-200 text-sm shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-30 left-1/2 -translate-x-1/2">
+            <div className="absolute bottom-full mb-3 w-64 p-3 rounded-lg bg-slate-800 dark:bg-slate-900 text-white dark:text-slate-200 text-sm shadow-lg opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity duration-300 pointer-events-none z-30 left-1/2 -translate-x-1/2">
                 {description}
                 <div className="absolute top-full left-1/2 -translate-x-1/2 w-0 h-0 border-x-8 border-x-transparent border-t-8 border-t-slate-800 dark:border-t-slate-900"></div>
             </div>
@@ -613,10 +622,10 @@ export const PlayerPage: React.FC<PlayerPageProps> = ({
 
        {isSession && sessionData && (
           <div className="w-full max-w-2xl my-6">
-              <h3 className="font-display text-xl font-bold text-center text-slate-700 dark:text-dark-text-primary mb-4">
+              <h3 id="session-protocol-heading" className="font-display text-xl font-bold text-center text-slate-700 dark:text-dark-text-primary mb-4">
                   Session Protocol
               </h3>
-              <div className="max-h-60 overflow-y-auto space-y-2 rounded-lg p-2 bg-white/30 dark:bg-dark-surface/30 border border-slate-200/50 dark:border-dark-border/50">
+              <ul aria-labelledby="session-protocol-heading" className="max-h-60 overflow-y-auto space-y-2 rounded-lg p-2 bg-white/30 dark:bg-dark-surface/30 border border-slate-200/50 dark:border-dark-border/50">
                   {sessionData.steps.map((step, index) => {
                       const isCompleted = index < sessionStepIndex;
                       const isCurrent = index === sessionStepIndex;
@@ -631,11 +640,13 @@ export const PlayerPage: React.FC<PlayerPageProps> = ({
                       if (layerFreq) frequencyText += ` + ${layerFreq.name} (${layerFreq.range})`;
                       if (layer3Freq) frequencyText += ` + ${layer3Freq.name} (${layer3Freq.range})`;
                       
+                      const statusText = isCompleted ? "Status: Completed." : isCurrent ? "Status: Current." : "Status: Upcoming.";
 
                       return (
-                          <div key={index} className={containerClasses}>
+                          <li key={index} className={containerClasses}>
+                              <span className="sr-only">{statusText}</span>
                               <div className="w-8 h-8 flex-shrink-0 flex items-center justify-center rounded-full" style={{ backgroundColor: iconBgColor, color: isCurrent || isCompleted ? 'white' : '#475569' }}>
-                                  {isCompleted ? <CheckmarkIcon className="w-5 h-5" /> : (isCurrent ? <BrainwaveIcon className="w-5 h-5 animate-pulse" /> : <span className="font-bold text-sm">{index + 1}</span>)}
+                                  {isCompleted ? <CheckmarkIcon className="w-5 h-5" /> : (isCurrent ? <BrainwaveIcon className="w-5 h-5 animate-pulse" /> : <span aria-hidden="true" className="font-bold text-sm">{index + 1}</span>)}
                               </div>
                               <div className="flex-grow overflow-hidden">
                                   <p className={`font-bold truncate ${isCurrent ? 'text-slate-800 dark:text-dark-text-primary' : 'text-slate-600 dark:text-dark-text-secondary'}`}>{step.title}</p>
@@ -644,10 +655,10 @@ export const PlayerPage: React.FC<PlayerPageProps> = ({
                               <div className="text-sm font-semibold text-slate-600 dark:text-dark-text-secondary flex-shrink-0">
                                   {formatTime(step.duration)}
                               </div>
-                          </div>
+                          </li>
                       );
                   })}
-              </div>
+              </ul>
           </div>
         )}
       

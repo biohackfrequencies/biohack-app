@@ -91,7 +91,7 @@ export const Header: React.FC = () => {
               <a
                 href="#/pricing"
                 onClick={e => navigate(e, '#/pricing')}
-                className="flex items-center gap-2 px-3 py-2 rounded-full text-sm font-bold transition-colors bg-brand-orange text-white shadow hover:brightness-110"
+                className="flex items-center gap-2 px-3 py-2 rounded-full text-sm font-bold transition-colors bg-brand-orange text-slate-900 shadow hover:brightness-110"
               >
                 <SparklesIcon className="w-5 h-5" />
                 <span className="hidden sm:inline">Go Pro</span>

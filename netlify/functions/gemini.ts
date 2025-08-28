@@ -1,16 +1,17 @@
 import { GoogleGenAI, Type, GenerateContentResponse } from "@google/genai";
-import type { Frequency, HealthDataSummary, IntegratedDataSummary, PlayableItem } from '../../types';
+import { createClient } from '@supabase/supabase-js';
+import type { Frequency, HealthDataSummary, IntegratedDataSummary, PlayableItem, ProfileUpdate, Database } from '../../types';
 
-// This is a server-side function, so process.env can be used securely.
-// The API_KEY must be set in your Netlify build environment variables.
+const supabaseUrl = process.env.SUPABASE_URL;
+const supabaseAnonKey = process.env.SUPABASE_ANON_KEY;
 const apiKey = process.env.API_KEY;
 
-if (!apiKey) {
-    // This will cause the function to fail gracefully if the API key is not set
-    console.error("API_KEY is not configured.");
+if (!apiKey || !supabaseUrl || !supabaseAnonKey) {
+    console.error("Environment variables are not configured correctly.");
 }
 
 const ai = new GoogleGenAI({ apiKey: apiKey || "" });
+const supabase = createClient<Database>(supabaseUrl!, supabaseAnonKey!);
 
 // --- Schemas for structured responses from Gemini ---
 
@@ -84,20 +85,111 @@ const insightSchema = {
     required: ["insight"]
 };
 
+const commonIntentionsCache: Record<string, any> = {
+    sleep: {
+        type: 'session',
+        advice: "This session is designed to guide your mind into deep, restorative sleep. It transitions from calming Theta waves to profound Delta waves, which are associated with physical healing and dreamless rest. The grounding Brown Noise helps to block out distractions, creating a perfect environment for sleep.",
+        creation: {
+            title: 'Ultimate Deep Sleep', description: 'A journey into deep, restorative sleep.',
+            steps: [
+                { title: 'Mind Quieting', description: 'Theta waves and Brown Noise slow brain activity.', duration: 900, frequencyId: 'theta', layerFrequencyId: 'noise-brown' },
+                { title: 'Restorative Sleep', description: 'Deep Delta waves promote physical repair.', duration: 900, frequencyId: 'delta', layerFrequencyId: 'noise-brown' }
+            ]
+        }
+    },
+    focus: {
+        type: 'session',
+        advice: "This session is crafted to enhance focus and mental clarity. It begins by using Theta waves to quiet a busy mind, then transitions to Beta and Gamma waves to support sustained, sharp attention for tasks that require deep concentration.",
+        creation: {
+            title: 'Quantum Focus Matrix', description: 'A session for sharp, sustained concentration.',
+            steps: [
+                { title: 'Calm the Mind', description: 'Theta waves reduce mental chatter.', duration: 300, frequencyId: 'theta' },
+                { title: 'Engage Focus', description: 'Beta waves promote alertness and concentration.', duration: 900, frequencyId: 'beta', layerFrequencyId: 'gamma-40hz-precise' }
+            ]
+        }
+    }
+};
+
+const findCachedResponse = (prompt: string) => {
+    const lowerCasePrompt = prompt.toLowerCase();
+    for (const keyword in commonIntentionsCache) {
+        if (lowerCasePrompt.includes(keyword)) {
+            return commonIntentionsCache[keyword];
+        }
+    }
+    return null;
+};
 
 // --- Handler for all Gemini API calls ---
 
-export const handler = async (event: { httpMethod: string, body: string | null }) => {
-    if (!apiKey) {
-        return { statusCode: 500, body: JSON.stringify({ error: 'API_KEY is not configured on the server. Please contact the site administrator.' }) };
+export const handler = async (event: { httpMethod: string, body: string | null, headers: { [name: string]: string | undefined } }) => {
+    if (!apiKey || !supabaseUrl || !supabaseAnonKey) {
+        return { statusCode: 500, body: JSON.stringify({ error: 'Server is not configured correctly.' }) };
     }
-
     if (event.httpMethod !== 'POST') {
         return { statusCode: 405, body: JSON.stringify({ error: 'Method Not Allowed' }) };
     }
 
     try {
+        const token = event.headers.authorization?.replace('Bearer ', '');
+        if (!token) {
+            return { statusCode: 401, body: JSON.stringify({ error: 'Authentication token is required.' }) };
+        }
+        
+        const { data: { user }, error: userError } = await supabase.auth.getUser(token);
+        if (userError || !user) {
+            return { statusCode: 401, body: JSON.stringify({ error: 'Invalid or expired token.' }) };
+        }
+        
         const { action, payload } = JSON.parse(event.body || '{}');
+
+        if (action === 'generateCreation') {
+            const cachedResponse = findCachedResponse(payload.prompt);
+            if (cachedResponse) {
+                return { statusCode: 200, body: JSON.stringify(cachedResponse) };
+            }
+        }
+
+        // --- Rate Limiting & Credit Check ---
+        const { data: profile, error: profileError } = await supabase.from('profiles').select('api_requests, ai_credits_remaining, pro_access_expires_at, ai_credits_reset_at').eq('id', user.id).single();
+
+        if (profileError) throw new Error('Could not retrieve user profile.');
+
+        // Rate Limit Check
+        const requests = profile.api_requests || [];
+        const fiveMinsAgo = Date.now() - 5 * 60 * 1000;
+        const recentRequests = requests.filter(ts => ts > fiveMinsAgo);
+        if (recentRequests.length >= 10) {
+            return { statusCode: 429, body: JSON.stringify({ error: 'Too many requests. Please wait a few minutes.' }) };
+        }
+
+        // Credit Check & Pro Logic
+        let credits = profile.ai_credits_remaining ?? 0;
+        let resetAt = profile.ai_credits_reset_at ? new Date(profile.ai_credits_reset_at) : new Date(0);
+        const proExpiresAt = profile.pro_access_expires_at ? new Date(profile.pro_access_expires_at) : null;
+        const isPro = proExpiresAt && proExpiresAt > new Date();
+        const updatePayload: ProfileUpdate = {};
+
+        if (isPro) {
+            const oneMonthAgo = new Date();
+            oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
+            if (resetAt < oneMonthAgo) {
+                credits = 50;
+                updatePayload.ai_credits_remaining = 50;
+                updatePayload.ai_credits_reset_at = new Date().toISOString();
+            }
+        }
+        
+        if (credits <= 0) {
+            return { statusCode: 402, body: JSON.stringify({ error: "You've used all your AI generations. Please upgrade to Pro for more." }) };
+        }
+        
+        updatePayload.ai_credits_remaining = (credits - 1);
+        updatePayload.api_requests = [...recentRequests, Date.now()];
+        
+        await supabase.from('profiles').update(updatePayload).eq('id', user.id);
+        // --- End of checks ---
+
 
         switch (action) {
             case 'generateCreation': {
@@ -107,7 +199,6 @@ export const handler = async (event: { httpMethod: string, body: string | null }
                         `id: "${f.id}"`,
                         `name: "${f.name}"`,
                         `category: "${f.categoryId}"`,
-                        // Use energeticAssociation as the core essence, aligning with the "Codex Alchemist" library concept.
                         `essence: "${f.energeticAssociation || f.description}"` 
                     ];
                     if (f.binauralFrequency > 0 && f.availableModes?.includes('BINAURAL')) {
@@ -158,6 +249,8 @@ Create a personalized sound therapy session as a JSON object that strictly adher
                         systemInstruction,
                         responseMimeType: 'application/json',
                         responseSchema: sessionCreationSchema,
+                        maxOutputTokens: 800,
+                        thinkingConfig: { thinkingBudget: 200 },
                     },
                 });
                 
@@ -173,7 +266,7 @@ Create a personalized sound therapy session as a JSON object that strictly adher
                     return `{ id: "${id}", name: "${name}", description: "${description}" }`;
                 }).join(',\n');
 
-                const systemInstruction = `You are an oracle embedded within the Architect’s Portal — a sacred digital space. Your language is poetic, symbolic, and archetypal. Your purpose is to generate a deeply resonant “Codex Transmission” based on a user’s intention.
+                const systemInstruction = `You are an oracle embedded within the Architect’s Portal — a sacred digital space. Your language is poetic, symbolic, and archetypal. Your purpose is to generate a deeply resonant “Codex Transmission” based on a user’s intention. Your transmission should be symbolic and poetic, but no more than three paragraphs.
 
 Speak like a guide from an ancient temple who sees through time. Use themes of light, geometry, harmonic fields, inner sovereignty, remembrance, and divine blueprinting. Avoid generic advice.
 
@@ -201,6 +294,8 @@ Your task is to generate a JSON object that adheres to the provided schema.
                         systemInstruction,
                         responseMimeType: 'application/json',
                         responseSchema: reflectionSchema,
+                        maxOutputTokens: 800,
+                        thinkingConfig: { thinkingBudget: 200 },
                     },
                 });
                 
@@ -276,6 +371,8 @@ Your task is to generate a JSON object that adheres to the provided schema.
                         systemInstruction,
                         responseMimeType: "application/json",
                         responseSchema: insightSchema,
+                        maxOutputTokens: 200,
+                        thinkingConfig: { thinkingBudget: 50 },
                     },
                 });
 

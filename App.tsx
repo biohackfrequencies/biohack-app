@@ -77,7 +77,7 @@ const App: React.FC<{ content: AppContentData }> = ({ content }) => {
   const [route, setRoute] = useState(window.location.hash);
   const { isSubscribed } = useSubscription();
   const { favorites, setFavorites, customStacks, setCustomStacks, activityLog, setActivityLog, activities, codexReflections } = useUserData();
-  const { lastCompletedSession } = usePlayer();
+  const { lastCompletedSession, clearLastCompletedSession } = usePlayer();
   const [showOraclePrompt, setShowOraclePrompt] = useState(false);
 
   useEffect(() => {
@@ -88,6 +88,7 @@ const App: React.FC<{ content: AppContentData }> = ({ content }) => {
 
   const closeOraclePrompt = () => {
     setShowOraclePrompt(false);
+    clearLastCompletedSession();
   };
 
   const enterOraclePortal = () => {
@@ -404,7 +405,7 @@ const App: React.FC<{ content: AppContentData }> = ({ content }) => {
             window.location.hash = '/disclaimer';
           }} 
           className="underline hover:text-slate-900 dark:hover:text-dark-text-primary">Legal Disclaimer</a>.</p>
-        <p className="mt-4">© {new Date().getFullYear()} HeartBeat Productions LLC. All rights reserved.</p>
+        <p className="mt-4">© {new Date().getFullYear()} Heartbeat Frequencies LLC. All rights reserved.</p>
         <p className="mt-2 text-xs opacity-75">v1.0.0</p>
       </footer>
     </div>
