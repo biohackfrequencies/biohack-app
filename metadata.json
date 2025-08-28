@@ -1,6 +1,8 @@
 {
   "name": "Biohack Frequencies",
   "description": "Unlock the Science & Soul of Sound \"The first sound platform that maps your unique harmonic blueprint and transforms it into a living, breathing audio‑visual journey — with 140+ curated frequencies, AI‑powered wellness insights, and immersive 8D soundscapes. Featuring the Creator Studio: your personal lab for building unlimited custom sessions, layering tones, and crafting protocols as unique as your own frequency.\"",
-  "requestFramePermissions": [],
+  "requestFramePermissions": [
+    "microphone"
+  ],
   "prompt": ""
 }

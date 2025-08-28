@@ -224,6 +224,16 @@ export interface HarmonicInfluenceMap {
     suggestedPathModuli: number[];
 }
 
+export interface CodexReflection {
+  id: string;
+  timestamp: number;
+  intention: string;
+  title: string;
+  transmission: string;
+  recommendedSessionId: string;
+  sourceSessionId?: string;
+}
+
 
 // Type for Supabase 'profiles' table row
 export type ProfileRow = {
@@ -234,6 +244,7 @@ export type ProfileRow = {
   tracked_habits: TrackableActivityId[];
   user_goals: UserGoals;
   custom_activities: TrackableActivityBase[];
+  codex_reflections: CodexReflection[];
   pro_access_expires_at: string | null;
 };
 
@@ -254,6 +265,7 @@ export type ProfileInsert = {
   tracked_habits?: TrackableActivityId[];
   user_goals?: UserGoals;
   custom_activities?: TrackableActivityBase[];
+  codex_reflections?: CodexReflection[];
   pro_access_expires_at?: string | null;
 };
 
@@ -264,5 +276,6 @@ export type ProfileUpdate = {
   tracked_habits?: TrackableActivityId[];
   user_goals?: UserGoals;
   custom_activities?: TrackableActivityBase[];
+  codex_reflections?: CodexReflection[];
   pro_access_expires_at?: string | null;
 };

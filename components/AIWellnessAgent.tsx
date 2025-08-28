@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BackIcon, OracleIcon } from './BohoIcons';
+import { BackIcon, AlchemyIcon } from './BohoIcons';
 import { Frequency, CustomStack } from '../types';
 import { generateAiCreation } from '../services/geminiService';
 import LoadingSpinner from './LoadingSpinner';
@@ -49,7 +49,7 @@ const AIWellnessAgent: React.FC<AIWellnessAgentProps> = ({ allFrequencies, onSav
       </button>
 
       <div className="p-8 rounded-2xl bg-white/60 dark:bg-dark-surface backdrop-blur-md border border-white/50 dark:border-dark-border/50 shadow-lg text-center">
-        <OracleIcon className="w-20 h-20 text-slate-500 dark:text-brand-gold mx-auto mb-4" />
+        <AlchemyIcon className="w-20 h-20 text-slate-500 dark:text-brand-gold mx-auto mb-4" />
         <h2 className="text-3xl font-display font-bold text-slate-800 dark:text-dark-text-primary">Codex Alchemist</h2>
         <p className="text-slate-700/80 dark:text-dark-text-secondary mt-2 max-w-2xl mx-auto">
           Describe an intention, feeling, or goal, and our AI will instantly design a personalized sound journey for you.

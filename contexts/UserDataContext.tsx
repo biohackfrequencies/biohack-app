@@ -3,7 +3,7 @@
 import React, { createContext, useContext, useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { supabase } from '../services/supabaseClient';
 import { useAuth } from './AuthContext';
-import { CustomStack, ActivityLogItem, UserGoals, TrackableActivityId, TrackableActivityBase, ProfileInsert, ProfileUpdate } from '../types';
+import { CustomStack, ActivityLogItem, UserGoals, TrackableActivityId, TrackableActivityBase, ProfileInsert, ProfileUpdate, CodexReflection } from '../types';
 import { TRACKABLE_ACTIVITIES, TrackableActivity } from '../constants';
 import { PlusCircleIcon } from '../components/BohoIcons';
 
@@ -45,6 +45,8 @@ interface UserDataContextType {
   customActivities: TrackableActivityBase[];
   addCustomActivity: (name: string) => TrackableActivityBase | undefined;
   removeCustomActivity: (id: TrackableActivityId) => void;
+  codexReflections: CodexReflection[];
+  setCodexReflections: React.Dispatch<React.SetStateAction<CodexReflection[]>>;
 }
 
 const UserDataContext = createContext<UserDataContextType | null>(null);
@@ -103,6 +105,7 @@ export const UserDataProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   const [userGoals, setUserGoals] = useSyncedState<UserGoals>('biohack_user_goals', { mind: 20, move: 10000 }, !!user);
   const [customActivities, setCustomActivities] = useSyncedState<TrackableActivityBase[]>('biohack_custom_activities', [], !!user);
   const [proAccessExpiresAt, setProAccessExpiresAt] = useSyncedState<number | null>('biohack_pro_expires', null, !!user);
+  const [codexReflections, setCodexReflections] = useSyncedState<CodexReflection[]>('biohack_reflections', [], !!user);
   
   const bootstrapInProgress = useRef(false);
 
@@ -119,6 +122,7 @@ export const UserDataProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         setTrackedHabits(['session', 'workout', 'meditation', 'sleep', 'supplements', 'rlt', 'mood']);
         setUserGoals({ mind: 20, move: 10000 });
         setCustomActivities([]);
+        setCodexReflections([]);
         setProAccessExpiresAt(null);
         setIsUserDataLoading(false);
         return;
@@ -140,6 +144,7 @@ export const UserDataProvider: React.FC<{ children: React.ReactNode }> = ({ chil
           const newProfileData: ProfileInsert = {
               id: user.id, favorites: [], custom_stacks: [], activity_log: [],
               tracked_habits: defaultHabits, user_goals: defaultGoals, custom_activities: [],
+              codex_reflections: [],
               pro_access_expires_at: null,
             };
           const { data: newProfile, error: insertError } = await supabase.from('profiles').insert(newProfileData).select().single();
@@ -156,6 +161,7 @@ export const UserDataProvider: React.FC<{ children: React.ReactNode }> = ({ chil
             setTrackedHabits(profile.tracked_habits || ['session', 'workout', 'meditation', 'sleep', 'supplements', 'rlt', 'mood']);
             setUserGoals((profile.user_goals as UserGoals) || { mind: 20, move: 10000 });
             setCustomActivities((profile.custom_activities as TrackableActivityBase[]) || []);
+            setCodexReflections((profile.codex_reflections as CodexReflection[]) || []);
             setProAccessExpiresAt(profile.pro_access_expires_at ? new Date(profile.pro_access_expires_at).getTime() : null);
         }
       } catch (e) {
@@ -186,6 +192,7 @@ export const UserDataProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   useDebouncedSync('tracked_habits', trackedHabits, syncEnabled, user?.id);
   useDebouncedSync('user_goals', userGoals, syncEnabled, user?.id);
   useDebouncedSync('custom_activities', customActivities, syncEnabled, user?.id);
+  useDebouncedSync('codex_reflections', codexReflections, syncEnabled, user?.id);
   
   const proAccessExpiresAtIso = useMemo(() => proAccessExpiresAt ? new Date(proAccessExpiresAt).toISOString() : null, [proAccessExpiresAt]);
   useDebouncedSync('pro_access_expires_at', proAccessExpiresAtIso, syncEnabled, user?.id);
@@ -216,7 +223,8 @@ export const UserDataProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     trackedHabits, setTrackedHabits,
     userGoals, setUserGoals,
     proAccessExpiresAt, setProAccessExpiresAt,
-    customActivities, addCustomActivity, removeCustomActivity
+    customActivities, addCustomActivity, removeCustomActivity,
+    codexReflections, setCodexReflections
   };
 
   return <UserDataContext.Provider value={value}>{children}</UserDataContext.Provider>;

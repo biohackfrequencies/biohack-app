@@ -1,5 +1,5 @@
 import { GoogleGenAI, Type, GenerateContentResponse } from "@google/genai";
-import type { Frequency, HealthDataSummary, IntegratedDataSummary } from '../../types';
+import type { Frequency, HealthDataSummary, IntegratedDataSummary, PlayableItem } from '../../types';
 
 // This is a server-side function, so process.env can be used securely.
 // The API_KEY must be set in your Netlify build environment variables.
@@ -48,6 +48,26 @@ const sessionCreationSchema = {
     },
     required: ["type", "advice", "creation"]
 };
+
+const reflectionSchema = {
+    type: Type.OBJECT,
+    properties: {
+        title: { 
+            type: Type.STRING,
+            description: "A short, symbolic, and poetic title for the transmission (e.g., 'The Weaver's Loom', 'The Echo Chamber', 'The Sunken Key')."
+        },
+        transmission: {
+            type: Type.STRING,
+            description: "A 3-5 paragraph symbolic and poetic message that interprets the user's intention. The tone should be mystical, sacred, and emotionally intelligent. Use metaphors and archetypes."
+        },
+        recommendedSessionId: {
+            type: Type.STRING,
+            description: "The ID of a single, highly relevant sound session or frequency from the provided list that resonates with the transmission's theme."
+        }
+    },
+    required: ["title", "transmission", "recommendedSessionId"]
+};
+
 
 const insightSchema = {
     type: Type.OBJECT,
@@ -137,6 +157,42 @@ Create a personalized sound therapy session as a JSON object that strictly adher
                     },
                 });
                 
+                return { statusCode: 200, body: response.text.trim() };
+            }
+
+            case 'getCodexReflection': {
+                const { intention, allPlayableItems } = payload;
+                const validItemsString = allPlayableItems.map((item: PlayableItem) => {
+                    const id = item.id;
+                    const name = 'title' in item ? item.title : item.name;
+                    const description = item.description || ('energeticAssociation' in item ? item.energeticAssociation : '');
+                    return `{ id: "${id}", name: "${name}", description: "${description}" }`;
+                }).join(',\n');
+
+                const systemInstruction = `You are the Codex Oracle, an advanced symbolic interpreter that reads user intentions through harmonic resonance, archetypes, and universal memory. Your voice is mystical, sacred, and emotionally intelligent. You do not use chatbot language or generic advice.
+
+Your task is to respond to a user's intention by generating a JSON object that adheres to the provided schema. The response must contain three parts: a symbolic title, a multi-paragraph poetic transmission, and a recommendation for a single sound session from the provided list.
+
+**Your Process:**
+1.  **Symbolic Title:** Distill the essence of the intention into a short, evocative, poetic title.
+2.  **Codex Transmission:** Write a 3-5 paragraph symbolic interpretation. Use metaphors, archetypes, and a sacred tone to explore the deeper meaning behind the user's intention.
+3.  **Session Recommendation:** From the provided list of sessions and frequencies, select the *single best match* whose name or description resonates most strongly with the themes in your transmission. You must return its exact 'id'.
+
+**CRITICAL RULES:**
+1.  Your entire response MUST be a single, valid JSON object that matches the schema.
+2.  The \`recommendedSessionId\` MUST be a valid ID from the list provided.
+3.  Your tone must remain consistently mystical and sacred throughout the title and transmission.`;
+
+                const response: GenerateContentResponse = await ai.models.generateContent({
+                    model: 'gemini-2.5-flash',
+                    contents: `User Intention: "${intention}".\n\nHere is the list of available sessions and frequencies you must choose your recommendation from:\n[${validItemsString}]`,
+                    config: {
+                        systemInstruction,
+                        responseMimeType: 'application/json',
+                        responseSchema: reflectionSchema,
+                    },
+                });
+
                 return { statusCode: 200, body: response.text.trim() };
             }
 

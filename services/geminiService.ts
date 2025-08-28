@@ -1,4 +1,4 @@
-import { Frequency, CustomStack, HealthDataSummary, IntegratedDataSummary } from '../types';
+import { Frequency, CustomStack, HealthDataSummary, IntegratedDataSummary, CodexReflection, PlayableItem } from '../types';
 
 export type AiCreationResponse = {
   type: 'session';
@@ -10,6 +10,9 @@ export type AiChatResponse = {
     text: string;
     sources?: Array<{ uri: string; title: string; }>;
 }
+
+export type AiReflectionResponse = Omit<CodexReflection, 'id' | 'timestamp' | 'intention' | 'sourceSessionId'>;
+
 
 /**
  * A helper function to call our Netlify serverless function.
@@ -43,6 +46,10 @@ async function callGeminiFunction(action: string, payload: any) {
 
 export const generateAiCreation = async (prompt: string, allFrequencies: Frequency[]): Promise<AiCreationResponse> => {
     return callGeminiFunction('generateCreation', { prompt, allFrequencies });
+};
+
+export const getAiCodexReflection = async (intention: string, allPlayableItems: PlayableItem[]): Promise<AiReflectionResponse> => {
+    return callGeminiFunction('getCodexReflection', { intention, allPlayableItems });
 };
 
 export const getAiChatResponse = async (prompt: string, history: { role: 'user' | 'model', parts: { text: string }[] }[]): Promise<AiChatResponse> => {

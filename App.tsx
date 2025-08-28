@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
-import { Frequency, CategoryId, CustomStack, GuidedSession, ActivityLogItem, TrackableActivityId, PlayableItem, AppContentData } from './types';
+import { Frequency, CategoryId, CustomStack, GuidedSession, ActivityLogItem, TrackableActivityId, PlayableItem, AppContentData, CodexReflection } from './types';
 import { Header } from './components/Header';
 import { HomePage } from './components/HomePage';
 import { CategoryPage } from './components/CategoryPage';
@@ -22,11 +22,13 @@ import ResetPasswordPage from './components/ResetPasswordPage';
 import { UserDataProvider, useUserData } from './contexts/UserDataContext';
 import { IntegrationsProvider } from './contexts/IntegrationsContext';
 import { OurMissionPage } from './components/OurMissionPage';
-import { PlayerProvider } from './contexts/PlayerContext';
+import { PlayerProvider, usePlayer } from './contexts/PlayerContext';
 import { GlobalPlayerUI } from './components/GlobalPlayerUI';
 import { processedAppContent } from './data/content';
 import AIWellnessAgent from './components/AIWellnessAgent';
 import { ToneGeneratorPage } from './components/ToneGeneratorPage';
+import { CodexOraclePage } from './components/CodexOraclePage';
+import { OraclePromptModal } from './components/OraclePromptModal';
 
 const getWeekNumber = (date: Date): number => {
     const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
@@ -66,6 +68,7 @@ const parseRoute = (hash: string): { page: string; id?: string; fragment?: strin
   if (pathname === 'create') return parsed('create');
   if (pathname === 'ai-agent') return parsed('ai-agent');
   if (pathname === 'codex-breathing-path') return parsed('codex-breathing-path');
+  if (pathname === 'codex-oracle') return parsed('codex-oracle');
 
   return parsed('dashboard');
 };
@@ -73,7 +76,24 @@ const parseRoute = (hash: string): { page: string; id?: string; fragment?: strin
 const App: React.FC<{ content: AppContentData }> = ({ content }) => {
   const [route, setRoute] = useState(window.location.hash);
   const { isSubscribed } = useSubscription();
-  const { favorites, setFavorites, customStacks, setCustomStacks, activityLog, setActivityLog, activities } = useUserData();
+  const { favorites, setFavorites, customStacks, setCustomStacks, activityLog, setActivityLog, activities, codexReflections } = useUserData();
+  const { lastCompletedSession } = usePlayer();
+  const [showOraclePrompt, setShowOraclePrompt] = useState(false);
+
+  useEffect(() => {
+    if (lastCompletedSession) {
+      setShowOraclePrompt(true);
+    }
+  }, [lastCompletedSession]);
+
+  const closeOraclePrompt = () => {
+    setShowOraclePrompt(false);
+  };
+
+  const enterOraclePortal = () => {
+    closeOraclePrompt();
+    window.location.hash = '#/codex-oracle';
+  };
 
   const { page, id, fragment } = parseRoute(route);
   
@@ -246,7 +266,7 @@ const App: React.FC<{ content: AppContentData }> = ({ content }) => {
   };
 
   const renderContent = () => {
-    if ((page === 'create' || page === 'stack' || page === 'codex-breathing-path' || page === 'ai-agent') && !isSubscribed) {
+    if ((page === 'create' || page === 'stack' || page === 'codex-breathing-path' || page === 'ai-agent' || page === 'codex-oracle') && !isSubscribed) {
         return <PricingPage onBack={() => window.location.hash = '#/library'} />;
     }
 
@@ -284,6 +304,7 @@ const App: React.FC<{ content: AppContentData }> = ({ content }) => {
             customStacks={customStacks}
             toggleFavorite={toggleFavorite}
             categories={content.categories}
+            codexReflections={codexReflections}
         />;
       case 'create':
         return <CreateStackPage allFrequencies={allFrequencies} categories={content.categories} onSaveStack={handleSaveStack} onBack={() => window.location.hash = '#/library'} />;
@@ -291,6 +312,13 @@ const App: React.FC<{ content: AppContentData }> = ({ content }) => {
         return <AIWellnessAgent allFrequencies={allFrequencies} onSaveStack={handleSaveStack} onBack={() => window.location.hash = '#/library'} />;
       case 'codex-breathing-path':
         return <ToneGeneratorPage onBack={() => window.location.hash = '#/library'} allFrequencies={allFrequencies} />;
+      case 'codex-oracle':
+        return <CodexOraclePage
+            onBack={() => window.location.hash = '#/library'}
+            allFrequencies={allFrequencies}
+            allSessions={allSessions}
+            customStacks={customStacks}
+        />;
       case 'player':
       case 'session':
       case 'stack': {
@@ -350,6 +378,7 @@ const App: React.FC<{ content: AppContentData }> = ({ content }) => {
 
   return (
     <div className="min-h-screen bg-transparent animate-fade-in dark:bg-transparent">
+      {showOraclePrompt && <OraclePromptModal onEnter={enterOraclePortal} onClose={closeOraclePrompt} />}
       <Header />
       <main className="container mx-auto px-4 py-8 pb-24 sm:pb-20">
         {renderContent()}

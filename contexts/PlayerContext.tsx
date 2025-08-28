@@ -11,6 +11,7 @@ type UseBreathingGuideReturn = ReturnType<typeof useBreathingGuide>;
 
 interface PlayerContextType extends Omit<UseBinauralBeatReturn, 'startPlayback' | 'pause' | 'resume' | 'stop' | 'toggleLayer2' | 'toggleLayer3'>, UseBreathingGuideReturn {
   currentlyPlayingItem: PlayableItem | null;
+  lastCompletedSession: { id: string; name: string } | null;
   startPlayback: (
     itemToPlay: PlayableItem,
     allFrequenciesData: Frequency[],
@@ -44,6 +45,7 @@ export const PlayerProvider: React.FC<{ children: ReactNode }> = ({ children }) 
   const [sessionStepIndex, setSessionStepIndex] = useState(0);
   const [sessionTimeInStep, setSessionTimeInStep] = useState(0);
   const [activeLogItem, setActiveLogItem] = useState<ActivityLogItem | null>(null);
+  const [lastCompletedSession, setLastCompletedSession] = useState<{ id: string; name: string } | null>(null);
 
   const [is8dEnabled, setIs8dEnabled] = useState(false);
   const [panningSpeed, setPanningSpeed] = useState(30);
@@ -114,6 +116,13 @@ export const PlayerProvider: React.FC<{ children: ReactNode }> = ({ children }) 
 
   const stop = useCallback(() => {
     if (intervalRef.current) clearInterval(intervalRef.current);
+    
+    if (currentlyPlayingItem && 'steps' in currentlyPlayingItem && totalSessionTimeElapsedRef.current >= 300) { // 5 min check
+        setLastCompletedSession({ id: currentlyPlayingItem.id, name: currentlyPlayingItem.title });
+    } else {
+        setLastCompletedSession(null);
+    }
+    
     finalizeLogItem();
     audioHook.stop();
     stopGuide(); // Call the context's own stopGuide to correctly reset panning states.
@@ -122,7 +131,7 @@ export const PlayerProvider: React.FC<{ children: ReactNode }> = ({ children }) 
     setSessionTimeInStep(0);
     totalSessionTimeElapsedRef.current = 0;
     // is8dEnabled state is now persisted across sessions.
-  }, [audioHook, finalizeLogItem, stopGuide]);
+  }, [audioHook, finalizeLogItem, stopGuide, currentlyPlayingItem]);
 
   const pause = useCallback(() => {
     finalizeLogItem();
@@ -162,6 +171,7 @@ export const PlayerProvider: React.FC<{ children: ReactNode }> = ({ children }) 
       setActiveLogItem(newItem);
     }
     
+    setLastCompletedSession(null);
     setCurrentlyPlayingItem(itemToPlay);
     allFrequenciesRef.current = allFrequenciesData;
     
@@ -294,6 +304,7 @@ export const PlayerProvider: React.FC<{ children: ReactNode }> = ({ children }) 
     startGuide,
     stopGuide,
     currentlyPlayingItem,
+    lastCompletedSession,
     sessionStepIndex,
     sessionTimeInStep,
     is8dEnabled,

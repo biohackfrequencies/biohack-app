@@ -1,7 +1,6 @@
 import React, { useMemo } from 'react';
-import { CustomStack, Frequency, GuidedSession } from '../types';
-import { FrequencyCard } from './FrequencyCard';
-import { GuidedSessionIcon, StackIcon, HeartFilledIcon, AlchemyIcon } from './BohoIcons';
+import { CustomStack, Frequency, GuidedSession, CodexReflection } from '../types';
+import { GuidedSessionIcon, StackIcon, HeartFilledIcon, AlchemyIcon, JournalIcon } from './BohoIcons';
 import { useSubscription } from '../hooks/useSubscription';
 import { getImageUrl } from '../services/imageService';
 
@@ -11,6 +10,7 @@ interface MyLibraryProps {
   allSessions: GuidedSession[];
   customStacks: CustomStack[];
   toggleFavorite: (id: string) => void;
+  codexReflections: CodexReflection[];
 }
 
 const SessionCard: React.FC<{
@@ -80,8 +80,61 @@ const SessionCard: React.FC<{
     );
 };
 
+const ReflectionCard: React.FC<{
+  reflection: CodexReflection;
+  allPlayableItems: (Frequency | GuidedSession | CustomStack)[];
+  customStacks: CustomStack[];
+}> = ({ reflection, allPlayableItems, customStacks }) => {
+    const recommendedItem = allPlayableItems.find(item => item.id === reflection.recommendedSessionId);
+    const [isExpanded, setIsExpanded] = React.useState(false);
+
+    const cardStyle = {
+        '--glow-color': `#C18D5240`,
+    };
+
+    return (
+        <div 
+            className="w-full p-4 rounded-2xl text-left transition-all duration-300 shadow-lg text-slate-800 dark:text-dark-text-primary bg-white/50 dark:bg-dark-surface/50 border border-slate-200/50 dark:border-dark-border/50"
+            // FIX: Cast style object to React.CSSProperties to allow custom properties.
+            style={cardStyle as React.CSSProperties}
+        >
+            <button onClick={() => setIsExpanded(!isExpanded)} className="w-full text-left">
+                <div className="flex justify-between items-start gap-4">
+                    <div>
+                        <p className="text-xs text-slate-500 dark:text-dark-text-muted">{new Date(reflection.timestamp).toLocaleDateString()}</p>
+                        <h4 className="font-display font-bold text-lg text-brand-gold">{reflection.title}</h4>
+                        <p className="text-sm italic text-slate-600 dark:text-dark-text-secondary mt-1 line-clamp-1">Intention: "{reflection.intention}"</p>
+                    </div>
+                    <JournalIcon className="w-8 h-8 text-brand-gold/70 flex-shrink-0 mt-1" />
+                </div>
+                <div className={`overflow-hidden transition-all duration-500 ease-in-out ${isExpanded ? 'max-h-[1000px] mt-4 pt-4 border-t border-slate-200 dark:border-dark-border' : 'max-h-0'}`}>
+                    <div className="prose prose-sm prose-slate dark:prose-invert max-w-none whitespace-pre-wrap font-sans">
+                        <p>{reflection.transmission}</p>
+                    </div>
+                    {recommendedItem && (
+                        <div className="mt-4 pt-3 border-t border-dashed border-slate-300 dark:border-dark-border/50">
+                            <p className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-dark-text-muted">Recommended Session:</p>
+                            <button 
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    const itemType = 'steps' in recommendedItem ? (customStacks.some(s => s.id === recommendedItem.id) ? 'stack' : 'session') : 'player';
+                                    window.location.hash = `#/${itemType}/${recommendedItem.id}`;
+                                }}
+                                className="font-semibold text-brand-gold hover:underline"
+                            >
+                                {'title' in recommendedItem ? recommendedItem.title : recommendedItem.name}
+                            </button>
+                        </div>
+                    )}
+                </div>
+            </button>
+        </div>
+    );
+};
+
+
 export const MyLibrary: React.FC<MyLibraryProps> = ({ 
-  favorites, customStacks, toggleFavorite, allFrequencies, allSessions
+  favorites, customStacks, toggleFavorite, allFrequencies, allSessions, codexReflections
 }) => {
   const { isSubscribed } = useSubscription();
   
@@ -92,20 +145,8 @@ export const MyLibrary: React.FC<MyLibraryProps> = ({
         .filter((item): item is Frequency | GuidedSession | CustomStack => !!item);
   }, [favorites, allFrequencies, allSessions, customStacks]);
 
-  const hasFavorites = favoriteItems.length > 0;
-
-  if (!hasFavorites) {
-    return (
-        <div id="my-library" className="space-y-6 scroll-mt-32">
-            <h3 className="text-4xl font-display text-center font-semibold text-slate-800 dark:text-dark-text-primary">My Library</h3>
-            <div className="text-center text-slate-500 dark:text-dark-text-muted p-8 rounded-2xl bg-slate-500/5 dark:bg-dark-surface/20 backdrop-blur-sm border-2 border-dashed border-slate-500/10 dark:border-dark-border/50 flex flex-col items-center gap-4">
-                <HeartFilledIcon className="w-12 h-12 text-slate-400 dark:text-slate-500" />
-                <h4 className="font-semibold text-slate-700 dark:text-dark-text-secondary">Your favorites are a blank canvas.</h4>
-                <p>Tap the heart icon on any frequency or session to add it here.</p>
-            </div>
-        </div>
-    );
-  }
+  const allPlayableItems = useMemo(() => [...allFrequencies, ...allSessions, ...customStacks], [allFrequencies, allSessions, customStacks]);
+  const sortedReflections = useMemo(() => [...codexReflections].sort((a, b) => b.timestamp - a.timestamp), [codexReflections]);
   
   const handleSelect = (item: Frequency | GuidedSession | CustomStack) => {
     const isCustomStack = customStacks.some(stack => stack.id === item.id);
@@ -131,41 +172,68 @@ export const MyLibrary: React.FC<MyLibraryProps> = ({
   };
   
   return (
-    <div id="my-library" className="space-y-6 scroll-mt-32">
-        <h3 className="text-4xl font-display text-center font-semibold text-slate-800 dark:text-dark-text-primary">My Favorites</h3>
-        <div className="p-4 sm:p-6 rounded-2xl bg-slate-500/5 dark:bg-dark-surface/20 backdrop-blur-sm border border-slate-500/10 dark:border-dark-border/50">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {favoriteItems.map(item => {
-                  if (!item) return null;
-                  if ('steps' in item) { // GuidedSession or CustomStack
-                      const sessionItem = item as GuidedSession | CustomStack;
-                      const isCustomStack = customStacks.some(s => s.id === sessionItem.id);
-                      return (
-                        <SessionCard
-                            key={sessionItem.id}
-                            session={sessionItem}
-                            isCustom={isCustomStack}
-                            onSelect={() => handleSelect(sessionItem)}
-                            isFavorite={true}
-                            onToggleFavorite={() => toggleFavorite(sessionItem.id)}
-                            allFrequencies={allFrequencies}
-                        />
-                      );
-                  } else { // Frequency
-                      const freqItem = item as Frequency;
-                       return (
-                          <FrequencyCard
-                            key={freqItem.id}
-                            frequency={freqItem}
-                            onSelect={() => handleSelect(freqItem)}
-                            isFavorite={true}
-                            onToggleFavorite={() => toggleFavorite(freqItem.id)}
-                          />
-                       );
-                  }
-              })}
-          </div>
-      </div>
+    <div id="my-library" className="space-y-16 scroll-mt-32">
+        <section className="space-y-6">
+            <h3 className="text-4xl font-display text-center font-semibold text-slate-800 dark:text-dark-text-primary">My Favorites</h3>
+            {favoriteItems.length > 0 ? (
+                <div className="p-4 sm:p-6 rounded-2xl bg-slate-500/5 dark:bg-dark-surface/20 backdrop-blur-sm border border-slate-500/10 dark:border-dark-border/50">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                    {favoriteItems.map(item => {
+                        if (!item) return null;
+                        if ('steps' in item) { // GuidedSession or CustomStack
+                            const sessionItem = item as GuidedSession | CustomStack;
+                            const isCustomStack = customStacks.some(s => s.id === sessionItem.id);
+                            return (
+                                <SessionCard
+                                    key={sessionItem.id}
+                                    session={sessionItem}
+                                    isCustom={isCustomStack}
+                                    onSelect={() => handleSelect(sessionItem)}
+                                    isFavorite={true}
+                                    onToggleFavorite={() => toggleFavorite(sessionItem.id)}
+                                    allFrequencies={allFrequencies}
+                                />
+                            );
+                        } else { // Frequency
+                            const freqItem = item as Frequency;
+                            return (
+                                <FrequencyCard
+                                    key={freqItem.id}
+                                    frequency={freqItem}
+                                    onSelect={() => handleSelect(freqItem)}
+                                    isFavorite={true}
+                                    onToggleFavorite={() => toggleFavorite(freqItem.id)}
+                                />
+                            );
+                        }
+                    })}
+                    </div>
+                </div>
+            ) : (
+                <div className="text-center text-slate-500 dark:text-dark-text-muted p-8 rounded-2xl bg-slate-500/5 dark:bg-dark-surface/20 backdrop-blur-sm border-2 border-dashed border-slate-500/10 dark:border-dark-border/50 flex flex-col items-center gap-4">
+                    <HeartFilledIcon className="w-12 h-12 text-slate-400 dark:text-slate-500" />
+                    <h4 className="font-semibold text-slate-700 dark:text-dark-text-secondary">Your favorites are a blank canvas.</h4>
+                    <p>Tap the heart icon on any frequency or session to add it here.</p>
+                </div>
+            )}
+        </section>
+
+        <section className="space-y-6">
+            <h3 className="text-4xl font-display text-center font-semibold text-slate-800 dark:text-dark-text-primary">Codex Journal</h3>
+             {sortedReflections.length > 0 ? (
+                <div className="space-y-4 max-w-2xl mx-auto">
+                    {sortedReflections.map(reflection => (
+                        <ReflectionCard key={reflection.id} reflection={reflection} allPlayableItems={allPlayableItems} customStacks={customStacks} />
+                    ))}
+                </div>
+            ) : (
+                <div className="text-center text-slate-500 dark:text-dark-text-muted p-8 rounded-2xl bg-slate-500/5 dark:bg-dark-surface/20 backdrop-blur-sm border-2 border-dashed border-slate-500/10 dark:border-dark-border/50 flex flex-col items-center gap-4">
+                    <JournalIcon className="w-12 h-12 text-slate-400 dark:text-slate-500" />
+                    <h4 className="font-semibold text-slate-700 dark:text-dark-text-secondary">Your journal is empty.</h4>
+                    <p>Visit the Codex Oracle to receive and save your first reading.</p>
+                </div>
+            )}
+        </section>
     </div>
   );
 };

@@ -1,6 +1,6 @@
 import React from 'react';
-import { CategoryId, Frequency, CustomStack, GuidedSession, ColorTheme } from '../types';
-import { BrainwaveIcon, SolfeggioIcon, AngelIcon, RifeIcon, NoiseIcon, CelestialIcon, GuidedSessionIcon, StackIcon, ElementIcon, PathfinderIcon, OracleIcon, TreeOfLifeIcon } from './BohoIcons';
+import { CategoryId, Frequency, CustomStack, GuidedSession, ColorTheme, CodexReflection } from '../types';
+import { BrainwaveIcon, SolfeggioIcon, AngelIcon, RifeIcon, NoiseIcon, CelestialIcon, GuidedSessionIcon, StackIcon, ElementIcon, PathfinderIcon, OracleIcon, TreeOfLifeIcon, AlchemyIcon } from './BohoIcons';
 import { MyLibrary } from './MyLibrary';
 import { useSubscription } from '../hooks/useSubscription';
 import { FeaturedCard } from './FeaturedCard';
@@ -124,10 +124,11 @@ interface HomePageProps {
   allSessions: GuidedSession[];
   featuredItem: Frequency | GuidedSession | null;
   categories: Record<CategoryId, { title: string; description: string; colors: ColorTheme }>;
+  codexReflections: CodexReflection[];
 }
 
 export const HomePage: React.FC<HomePageProps> = ({ 
-  favorites, toggleFavorite, customStacks, allFrequencies, allSessions, featuredItem, categories
+  favorites, toggleFavorite, customStacks, allFrequencies, allSessions, featuredItem, categories, codexReflections
 }) => {
   const { isSubscribed } = useSubscription();
 
@@ -196,9 +197,17 @@ export const HomePage: React.FC<HomePageProps> = ({
              <ActionCard
                 title="Codex Alchemist"
                 description="Describe an intention and our AI will instantly design a personalized sound session for you."
-                Icon={OracleIcon}
+                Icon={AlchemyIcon}
                 onClick={() => handlePremiumFeatureClick(() => window.location.hash = '#/ai-agent')}
                 colors={{ primary: '#a7f3d0', secondary: '#cffafe', accent: '#22d3ee' }}
+                isLocked={!isSubscribed}
+            />
+            <ActionCard
+                title="Codex Oracle"
+                description="Enter the Architect's Portal. State an intention and receive a symbolic, AI-generated reading for reflection."
+                Icon={OracleIcon}
+                onClick={() => handlePremiumFeatureClick(() => window.location.hash = '#/codex-oracle')}
+                colors={{ primary: '#fbcfe8', secondary: '#fda4af', accent: '#f9a8d4' }}
                 isLocked={!isSubscribed}
             />
         </div>
@@ -210,6 +219,7 @@ export const HomePage: React.FC<HomePageProps> = ({
         allSessions={allSessions}
         customStacks={customStacks}
         toggleFavorite={toggleFavorite}
+        codexReflections={codexReflections}
       />
       
     </div>
