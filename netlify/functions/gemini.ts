@@ -154,14 +154,13 @@ export const handler = async (event: { httpMethod: string, body: string | null, 
 
         // --- Robust "Upsert" User Profile Logic ---
         // This default data is used ONLY when creating a brand new profile.
-        // It omits AI credit columns to prevent errors if the user's DB schema is outdated.
-        const defaultProfileData: Omit<ProfileInsert, 'id' | 'ai_credits_remaining' | 'ai_credits_reset_at'> = {
+        // It omits AI/API columns to prevent errors if the user's DB schema is outdated.
+        const defaultProfileData: Omit<ProfileInsert, 'id' | 'ai_credits_remaining' | 'ai_credits_reset_at' | 'api_requests'> = {
             favorites: [], custom_stacks: [], activity_log: [],
             tracked_habits: ['session', 'workout', 'meditation', 'sleep', 'supplements', 'rlt', 'mood'],
             user_goals: { mind: 20, move: 10000 }, custom_activities: [],
             codex_reflections: [],
             pro_access_expires_at: null,
-            api_requests: []
         };
         
         // This ensures a profile exists. If it doesn't, it's created with safe defaults.
@@ -188,27 +187,30 @@ export const handler = async (event: { httpMethod: string, body: string | null, 
         }
         
         // --- Rate Limiting & Credit Check (with graceful fallback) ---
+        // FIX: Explicitly check if the optional columns exist on the fetched profile before using them.
+        const hasApiRequests = profile.hasOwnProperty('api_requests');
         const hasCreditSystem = profile.hasOwnProperty('ai_credits_remaining');
         
-        // Rate limiting is independent of credit system
-        const requests = (profile.api_requests as number[] | null) || [];
-        const fiveMinsAgo = Date.now() - 5 * 60 * 1000;
-        const recentRequests = requests.filter(ts => ts > fiveMinsAgo);
-        if (recentRequests.length >= 10) {
-            return { statusCode: 429, body: JSON.stringify({ error: 'Too many requests. Please wait a few minutes.' }) };
+        const updatePayload: ProfileUpdate = {};
+
+        // Rate Limiting - only runs if the column exists
+        if (hasApiRequests) {
+            const requests = (profile.api_requests as number[] | null) || [];
+            const fiveMinsAgo = Date.now() - 5 * 60 * 1000;
+            const recentRequests = requests.filter(ts => ts > fiveMinsAgo);
+            if (recentRequests.length >= 10) {
+                return { statusCode: 429, body: JSON.stringify({ error: 'Too many requests. Please wait a few minutes.' }) };
+            }
+            updatePayload.api_requests = [...recentRequests, Date.now()];
         }
         
-        const updatePayload: ProfileUpdate = {
-            api_requests: [...recentRequests, Date.now()]
-        };
-
+        // Credit System - only runs if the column exists
         if (hasCreditSystem) {
             let credits = (profile.ai_credits_remaining as number | null);
             let resetAt = profile.ai_credits_reset_at ? new Date(profile.ai_credits_reset_at) : null;
             const proExpiresAt = profile.pro_access_expires_at ? new Date(profile.pro_access_expires_at) : null;
             const isPro = proExpiresAt && proExpiresAt > new Date();
             
-            // If credits column exists but is null (e.g., old user, new feature), initialize it.
             if (credits === null) {
                 credits = isPro ? 50 : 5;
                 updatePayload.ai_credits_remaining = credits;
@@ -226,16 +228,18 @@ export const handler = async (event: { httpMethod: string, body: string | null, 
                 }
             }
             
-            // Only decrement if it's not a cached response
             if (action !== 'generateCreation' || !findCachedResponse(payload.prompt)) {
-                if (credits <= 0) {
+                if ((credits || 0) <= 0) {
                     return { statusCode: 402, body: JSON.stringify({ error: "You've used all your AI generations. Please upgrade to Pro for more." }) };
                 }
-                updatePayload.ai_credits_remaining = (credits - 1);
+                updatePayload.ai_credits_remaining = ((credits || 0) - 1);
             }
         }
         
-        await supabaseAuthedClient.from('profiles').update(updatePayload).eq('id', user.id);
+        // Only perform an update if there's something to change.
+        if (Object.keys(updatePayload).length > 0) {
+            await supabaseAuthedClient.from('profiles').update(updatePayload).eq('id', user.id);
+        }
 
         switch (action) {
             case 'generateCreation': {
