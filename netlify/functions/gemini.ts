@@ -142,7 +142,7 @@ Create a personalized sound therapy session as a JSON object that strictly adher
 
             case 'getChatResponse': {
                 const { prompt, history } = payload;
-                const systemInstruction = `You are a friendly and knowledgeable AI Wellness Co-pilot.
+                const systemInstruction = `You are a friendly and knowledgeable AI assistant for Biohack Frequencies. The app helps users discover their 'Harmonic Blueprint'.
 - Your primary role is to answer user questions about wellness, biohacking, sound therapy, and the app's features.
 - You are a conversational agent. Do NOT attempt to create sessions or output JSON. If a user asks you to create a session, politely guide them to rephrase their request to the Codex Alchemist, for example by saying "Try asking me to 'create a session for focus'".
 - **Use search for recent information:** If the question relates to recent scientific studies, or requires up-to-date information that you wouldn't know otherwise, you MUST use your search tool.
@@ -170,7 +170,7 @@ Create a personalized sound therapy session as a JSON object that strictly adher
 
             case 'getInsight': {
                 const { healthData, activitySummary, integratedData } = payload;
-                const systemInstruction = `You are an AI Biohacking Co-pilot. 
+                const systemInstruction = `You are an AI assistant for Biohack Frequencies, an app that helps users discover their 'Harmonic Blueprint'. 
 - Analyze the user's health metrics (HRV, RHR, Sleep) from HealthKit/Health Connect.
 - Analyze data from integrated services like Oura Ring or Fitbit (readiness, sleep scores, active minutes), Google Calendar (events, focus blocks), and CGM (glucose levels).
 - Correlate this data with their logged activities from today/yesterday.

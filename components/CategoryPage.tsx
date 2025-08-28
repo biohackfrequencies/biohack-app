@@ -40,6 +40,7 @@ export const CategoryPage: React.FC<CategoryPageProps> = ({ categoryId, frequenc
   const Icon = categoryIcons[categoryId];
   const relevantSessions = sessions.filter(s => s.categoryId === categoryId);
 
+  const isAngel = categoryId === 'angel';
   const isKabbalah = categoryId === 'kabbalah';
   const isBrainwaves = categoryId === 'brainwaves';
   const showScienceLink = ['elements', 'codex', 'kabbalah'].includes(categoryId);
@@ -55,6 +56,20 @@ export const CategoryPage: React.FC<CategoryPageProps> = ({ categoryId, frequenc
       }
     }
   };
+
+  const angelContent = useMemo(() => {
+    if (!isAngel) return null;
+
+    const advancedProtocols = relevantSessions
+      .filter(s => s.subCategory === 'Advanced Resonance Protocols')
+      .sort((a, b) => a.title.localeCompare(b.title));
+
+    const angelicFrequencies = frequenciesInCategory
+      .filter(f => f.subCategory === 'Angelic Frequencies')
+      .sort((a, b) => a.baseFrequency - b.baseFrequency);
+
+    return { advancedProtocols, angelicFrequencies };
+  }, [isAngel, relevantSessions, frequenciesInCategory]);
 
   const kabbalahContent = useMemo(() => {
       if (!isKabbalah) return null;
@@ -92,7 +107,7 @@ export const CategoryPage: React.FC<CategoryPageProps> = ({ categoryId, frequenc
 
 
   const otherContent = useMemo(() => {
-      if (isKabbalah || isBrainwaves) return null;
+      if (isAngel || isKabbalah || isBrainwaves) return null;
       const getSortScore = (item: { premium?: boolean; isFeatured?: boolean }) => {
           if (item.isFeatured) return -1;
           if (!item.premium) return 0;
@@ -107,7 +122,7 @@ export const CategoryPage: React.FC<CategoryPageProps> = ({ categoryId, frequenc
       });
       const sortedSessions = [...relevantSessions].sort((a, b) => getSortScore(a) - getSortScore(b));
       return { sortedFrequencies, sortedSessions };
-  }, [isKabbalah, isBrainwaves, frequenciesInCategory, relevantSessions, categoryId]);
+  }, [isAngel, isKabbalah, isBrainwaves, frequenciesInCategory, relevantSessions, categoryId]);
 
 
   const headerStyle = { background: `linear-gradient(135deg, ${categoryDetails.colors.primary}60, ${categoryDetails.colors.secondary}60)`, borderColor: `${categoryDetails.colors.accent}80` };
@@ -156,7 +171,37 @@ export const CategoryPage: React.FC<CategoryPageProps> = ({ categoryId, frequenc
         </div>
       </div>
 
-      {isBrainwaves && brainwavesContent ? (
+      {isAngel && angelContent ? (
+        <div className="space-y-12">
+          {angelContent.advancedProtocols.length > 0 && (
+            <div className="space-y-4">
+              <h3 className="text-2xl font-display font-bold text-slate-800 dark:text-dark-text-primary">Advanced Resonance Protocols</h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {angelContent.advancedProtocols.map(session => (
+                  <SessionCard
+                    key={session.id}
+                    session={session}
+                    onSelect={() => handleSelect(session)}
+                    isFavorite={favorites.includes(session.id)}
+                    onToggleFavorite={() => toggleFavorite(session.id)}
+                    isLocked={!!session.premium && !isSubscribed}
+                    allFrequencies={allFrequencies}
+                  />
+                ))}
+              </div>
+            </div>
+          )}
+          {angelContent.angelicFrequencies.length > 0 && (
+            <CategorySection
+              title="Angelic Frequencies"
+              frequencies={angelContent.angelicFrequencies}
+              onSelect={handleSelect}
+              favorites={favorites}
+              toggleFavorite={toggleFavorite}
+            />
+          )}
+        </div>
+      ) : isBrainwaves && brainwavesContent ? (
         <div className="space-y-12">
             {brainwavesContent.mirrorAxisProtocols.length > 0 && (
                 <div className="space-y-4">

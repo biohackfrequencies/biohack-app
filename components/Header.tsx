@@ -44,7 +44,7 @@ export const Header: React.FC = () => {
                 Biohack Frequencies
               </span>
               <span className="font-sans text-xs sm:text-sm uppercase tracking-wider text-slate-600/90 dark:text-dark-text-muted text-center">
-                Wellness Co-pilot
+                Your Harmonic Blueprint
               </span>
             </div>
             <div className="h-16 w-16 sm:h-20 sm:w-20" aria-hidden="true" />

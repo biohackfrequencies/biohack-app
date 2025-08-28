@@ -30,18 +30,18 @@ export const FrequencyCard: React.FC<FrequencyCardProps> = ({ frequency, onSelec
     <div className="relative group h-full">
         <button
           onClick={onSelect}
-          className="w-full h-full p-3 rounded-2xl text-left transition-all duration-300 shadow-lg hover:-translate-y-1 text-white hover:shadow-[0_8px_30px_-5px_var(--glow-color)] flex flex-col justify-start"
+          className="w-full h-full p-4 rounded-2xl text-left transition-all duration-300 shadow-lg hover:-translate-y-1 text-white hover:shadow-[0_8px_30px_-5px_var(--glow-color)] flex flex-col justify-end"
           style={cardStyle}
         >
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent group-hover:from-black/70 transition-all duration-300 rounded-2xl"></div>
+          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent group-hover:from-black/80 transition-all duration-300 rounded-2xl"></div>
           
           <div className="relative z-10">
-            <div className="grid grid-cols-[1fr,auto] items-start gap-2">
-                <h3 className="text-xl sm:text-2xl font-display font-bold text-white tracking-wide drop-shadow-md">{frequency.name}</h3>
-                {isLocked && <ProBadge />}
+            <div className="flex justify-between items-start gap-2">
+                <h3 className="text-lg sm:text-xl font-display font-bold text-white tracking-wide drop-shadow-md line-clamp-2">{frequency.name}</h3>
+                {isLocked && <div className="flex-shrink-0"><ProBadge /></div>}
             </div>
-            <p className="text-sm mt-1" style={{color: frequency.colors.accent}}>{frequency.range}</p>
-            <p className="mt-2 text-white/90 text-xs drop-shadow-sm line-clamp-2">{frequency.description}</p>
+            <p className="text-sm mt-1 font-semibold" style={{color: frequency.colors.accent}}>{frequency.range}</p>
+            <p className="mt-1 text-white/90 text-xs drop-shadow-sm line-clamp-2">{frequency.description}</p>
           </div>
         </button>
         <button 

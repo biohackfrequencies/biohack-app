@@ -133,7 +133,7 @@ const LoginPage: React.FC = () => {
             Biohack Frequencies
           </h1>
           <p className="font-sans text-lg uppercase tracking-wider text-slate-600/90 dark:text-dark-text-muted mt-1">
-            Wellness Co-pilot
+            Your Harmonic Blueprint
           </p>
         </div>
         

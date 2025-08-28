@@ -84,7 +84,7 @@ export const appContentData: AppContentData = {
     },
     "brainwaves": {
       "title": "Brainwave Entrainment",
-      "description": "Use rhythmic sound to guide your brain into states of focus, relaxation, or creativity. Includes advanced protocols for synchronization.",
+      "description": "Frequencies to guide your brain into states like focus or calm. Includes Mirror Axis protocols that play a different frequency in each ear to balance both sides of the brain.",
       "colors": { "primary": "#d8b4fe", "secondary": "#e9d5ff", "accent": "#c084fc" }
     },
     "solfeggio": {
@@ -181,7 +181,7 @@ export const appContentData: AppContentData = {
       "id": "mindful-start", "title": "Mindful Start", "categoryId": "guided", "description": "Begin your day with this session combining gentle Alpha waves and Solfeggio frequencies to clear your mind and set a positive intention.", "steps": [ { "title": "Release & Center", "description": "396 Hz, gentle Theta, and soothing rain to release subconscious blockages and center your being.", "duration": 300, "frequencyId": "solfeggio-396-liberation", "layerFrequencyId": "theta", "layer3FrequencyId": "ambient-rain" }, { "title": "Calm Awareness", "description": "Alpha waves, solar vitality, and invigorating Oxygen to foster a state of relaxed, present-moment awareness.", "duration": 300, "frequencyId": "alpha", "layerFrequencyId": "celestial-sun", "layer3FrequencyId": "oxygen" } ], "colors": { "primary": "#fde047", "secondary": "#fcd34d", "accent": "#facc15" }, "premium": true
     },
     {
-      "id": "deep-relaxation", "title": "Deep Relaxation", "categoryId": "guided", "description": "Unwind completely with this journey from Alpha to Theta brainwaves, perfect for melting away stress and anxiety after a long day.", "steps": [ { "title": "Stress Release", "description": "Start with Alpha waves, calming ocean sounds, and restorative Magnesium to calm the nervous system.", "duration": 600, "frequencyId": "alpha", "layerFrequencyId": "ambient-sea", "layer3FrequencyId": "magnesium" }, { "title": "Enter Deep Calm", "description": "Transition to Theta and Delta waves with grounding Brown Noise for profound mental and physical relaxation.", "duration": 600, "frequencyId": "theta", "layerFrequencyId": "noise-brown", "layer3FrequencyId": "delta" } ], "colors": { "primary": "#c7d2fe", "secondary": "#a5b4fc", "accent": "#818cf8" }, "premium": true
+      "id": "deep-relaxation", "title": "Deep Relaxation", "categoryId": "guided", "description": "Unwind completely with this journey from Alpha to Theta brainwaves, perfect for melting away stress and anxiety after a long day.", "steps": [ { "title": "Stress Release", "description": "Start with Alpha waves, calming ocean sounds, and restorative Magnesium to calm the nervous system.", "duration": 600, "frequencyId": "alpha", "layerFrequencyId": "ambient-sea", "layer3FrequencyId": "magnesium" }, { "title": "Enter Deep Calm", "description": "Transition to Theta waves with grounding Brown Noise for profound mental and physical relaxation.", "duration": 600, "frequencyId": "theta", "layerFrequencyId": "noise-brown", "layer3FrequencyId": "delta" } ], "colors": { "primary": "#c7d2fe", "secondary": "#a5b4fc", "accent": "#818cf8" }, "premium": true
     },
     {
       "id": "yoga-savasana-relaxation", "title": "Yoga & Savasana Relaxation", "categoryId": "guided", "description": "A session to enhance your Savasana or cool-down. Deep Theta waves help integrate your practice and guide you into a state of profound rest.", "steps": [ { "title": "Deep Integration", "description": "Theta waves, healing Solfeggio, and Earth's resonance to deepen relaxation and help the body absorb the benefits of your yoga practice.", "duration": 900, "frequencyId": "theta", "layerFrequencyId": "solfeggio-285-healing", "layer3FrequencyId": "schumann-resonance" } ], "colors": { "primary": "#d8b4fe", "secondary": "#c084fc", "accent": "#a855f7" }, "premium": true
@@ -384,9 +384,58 @@ export const appContentData: AppContentData = {
     { "id": "mirror-axis-solar-lunar", "title": "Solar–Lunar Axis", "categoryId": "brainwaves", "description": "Balances masculine-feminine energetics for emotional flow. A 528 Hz carrier facilitates transformation while a split binaural beat (396 Hz left, 639 Hz right) integrates grounding with heart-centered connection.", "advice": "This protocol uses a stable carrier tone to ground your energy, while playing two distinct frequencies in each ear to encourage brainwave synchronization between the left and right hemispheres. Headphones are required for the intended effect.", "steps": [{ "title": "Yin-Yang Emotional Flow", "description": "Harmonizing action and receptivity.", "duration": 900, "frequencyId": "mirror-binaural-solar-lunar", "layer3FrequencyId": "solfeggio-528-repair" }], "colors": mirrorAxisColors, "premium": true },
     { "id": "mirror-axis-mirror-gate", "title": "Mirror Gate Axis", "categoryId": "brainwaves", "description": "Navigates memory loops and karmic clarity. A 444 Hz carrier offers protection while a reflective split binaural beat (321 Hz left, 123 Hz right) encourages a new perspective on the past.", "advice": "This protocol uses a stable carrier tone to ground your energy, while playing two distinct frequencies in each ear to encourage brainwave synchronization between the left and right hemispheres. Headphones are required for the intended effect.", "steps": [{ "title": "Time Reversal & Reflection", "description": "Clearing the past to open the future.", "duration": 900, "frequencyId": "mirror-binaural-mirror-gate", "layer3FrequencyId": "angel-444" }], "colors": mirrorAxisColors, "premium": true },
     { "id": "mirror-axis-soma-spirit", "title": "Soma–Spirit Axis", "categoryId": "brainwaves", "description": "Integrates bodily and soul awareness for full embodiment. A 432 Hz carrier ensures universal harmony while a split binaural beat (288 Hz left, 864 Hz right) connects physical sensation with higher consciousness.", "advice": "This protocol uses a stable carrier tone to ground your energy, while playing two distinct frequencies in each ear to encourage brainwave synchronization between the left and right hemispheres. Headphones are required for the intended effect.", "steps": [{ "title": "Embodiment of Higher Self", "description": "Uniting body consciousness with soul wisdom.", "duration": 900, "frequencyId": "mirror-binaural-soma-spirit", "layer3FrequencyId": "hz-432-universal-tuning" }], "colors": mirrorAxisColors, "premium": true },
-    { "id": "mirror-axis-golden-tri", "title": "Golden Tri-Mirror", "categoryId": "brainwaves", "description": "Opens creative insight, energy flow & quantum expansion. A 111 Hz angelic carrier tone sets the stage for a Tesla-inspired split binaural beat (369 Hz left, 639 Hz right) that connects insight with heart coherence.", "advice": "This protocol uses a stable carrier tone to ground your energy, while playing two distinct frequencies in each ear to encourage brainwave synchronization between the left and right hemispheres. Headphones are required for the intended effect.", "steps": [{ "title": "Tesla Code Activation", "description": "Unlocking the code of creation.", "duration": 900, "frequencyId": "mirror-binaural-golden-tri", "layer3FrequencyId": "angel-111" }], "colors": mirrorAxisColors, "premium": true }
+    { "id": "mirror-axis-golden-tri", "title": "Golden Tri-Mirror", "categoryId": "brainwaves", "description": "Opens creative insight, energy flow & quantum expansion. A 111 Hz angelic carrier tone sets the stage for a Tesla-inspired split binaural beat (369 Hz left, 639 Hz right) that connects insight with heart coherence.", "advice": "This protocol uses a stable carrier tone to ground your energy, while playing two distinct frequencies in each ear to encourage brainwave synchronization between the left and right hemispheres. Headphones are required for the intended effect.", "steps": [{ "title": "Tesla Code Activation", "description": "Unlocking the code of creation.", "duration": 900, "frequencyId": "mirror-binaural-golden-tri", "layer3FrequencyId": "angel-111" }], "colors": mirrorAxisColors, "premium": true },
+    {
+      "id": "temple-of-breath", "title": "Temple of Breath — Lemurian Toning Sequence", "categoryId": "angel", "subCategory": "Advanced Resonance Protocols", "description": "Reinstates breath-consciousness and activates resonance pathways between voice, chest, and earth field. For emotional processing, grief transmutation, and throat-heart rebalancing.", "steps": [{ "title": "Lemurian Resonance", "description": "A toning sequence to open breath pathways and connect voice with heart.", "duration": 900, "frequencyId": "lemurian-breath-gate", "layerFrequencyId": "solfeggio-741-expression", "layer3FrequencyId": "ambient-sea" }], "colors": { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" }, "premium": true
+    },
+    {
+      "id": "golden-code-of-thoth", "title": "Golden Code of Thoth — Memory Mirror Activation", "categoryId": "angel", "subCategory": "Advanced Resonance Protocols", "description": "Activates subconscious retrieval of soul codes and ancestral missions. For those awakening to deeper timelines.", "steps": [{ "title": "Memory Mirror Activation", "description": "A harmonic blend to unlock soul codes and ancestral memory.", "duration": 900, "frequencyId": "angel-333", "layerFrequencyId": "solfeggio-963-oneness", "layer3FrequencyId": "schumann-resonance" }], "colors": { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" }, "premium": true
+    },
+    {
+      "id": "lyran-dna-harmonics-session", "title": "Lyran DNA Harmonics — 12 Strand Alignment", "categoryId": "angel", "subCategory": "Advanced Resonance Protocols", "description": "Amplifies crystalline coding through the 12 major meridian light strands for cosmic body restoration and light-architecture remembrance.", "steps": [{ "title": "12 Strand Alignment", "description": "A high-frequency sequence to amplify crystalline coding within your light body.", "duration": 900, "frequencyId": "solfeggio-528-repair", "layerFrequencyId": "solfeggio-963-oneness", "layer3FrequencyId": "lyran-dna-harmonics" }], "colors": { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" }, "premium": true
+    },
+    {
+      "id": "amenti-re-entry-code", "title": "Amenti Re-Entry Code", "categoryId": "angel", "subCategory": "Advanced Resonance Protocols", "description": "Reconnects to dormant inner records accessed through vibrational thresholds, for accessing internal knowing.", "steps": [{ "title": "Inner Records Activation", "description": "A sequence to clear past patterns and reconnect with dormant inner knowledge.", "duration": 900, "frequencyId": "solfeggio-417-change", "layerFrequencyId": "angel-777", "layer3FrequencyId": "angel-111" }], "colors": { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" }, "premium": true
+    },
+    {
+      "id": "sirius-light-grid", "title": "Sirius Light Grid — Antahkarana Bridge", "categoryId": "angel", "subCategory": "Advanced Resonance Protocols", "description": "Connects higher mind to heart-field via light-language resonance. For healers, guides, or visionaries.", "steps": [{ "title": "Antahkarana Bridge Construction", "description": "A harmonic sequence to build the light bridge between your higher mind and heart-field.", "duration": 900, "frequencyId": "sirian-soul-path", "layerFrequencyId": "sirian-antahkarana-bridge-288", "layer3FrequencyId": "kabbalah-chokhmah" }], "colors": { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" }, "premium": true
+    },
+    {
+      "id": "solar-templar-alignment", "title": "Solar Templar Alignment", "categoryId": "angel", "subCategory": "Advanced Resonance Protocols", "description": "Reattunes the body to solar wisdom, clarity of will, and internal kingship/queenship. Best for morning rituals or leadership focus.", "steps": [{ "title": "Solar Code Attunement", "description": "A powerful blend to align with solar wisdom and activate your inner sovereignty.", "duration": 900, "frequencyId": "solfeggio-528-repair", "layerFrequencyId": "solar-templar-1111", "layer3FrequencyId": "solar-templar-33" }], "colors": { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" }, "premium": true
+    },
+    {
+      "id": "arcturian-crystal-field-reset", "title": "Arcturian Crystal Field Reset", "categoryId": "angel", "subCategory": "Advanced Resonance Protocols", "description": "Reboots cognitive pathways while clearing artificial grids or overlays. Helpful for tech workers, sensitives, or users exposed to EMF fields.", "steps": [{ "title": "Cognitive Pathway Reboot", "description": "A crystalline sequence to clear energetic interference and reset your cognitive field.", "duration": 900, "frequencyId": "arcturian-crystal-field", "layerFrequencyId": "angel-111", "layer3FrequencyId": "alpha-bridge-8hz" }], "colors": { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" }, "premium": true
+    },
+    {
+      "id": "mu-recollection-chamber", "title": "Mu Recollection Chamber", "categoryId": "angel", "subCategory": "Advanced Resonance Protocols", "description": "Lemurian memory activation through water-temple harmonics. Cellular remembrance and emotional water healing.", "steps": [{ "title": "Water Temple Activation", "description": "A deep, resonant chamber of sound to unlock cellular memory and soothe emotional waters.", "duration": 900, "frequencyId": "lemurian-breath-gate", "layerFrequencyId": "solfeggio-741-expression", "layer3FrequencyId": "mu-theta-wave" }], "colors": { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" }, "premium": true
+    },
+    {
+      "id": "atlantean-frequency-seal", "title": "Atlantean Frequency Seal", "categoryId": "angel", "subCategory": "Advanced Resonance Protocols", "description": "Restores coherence lost during Atlantean collapse. Spiritual gift alignment and timeline clarity.", "steps": [{ "title": "Coherence Restoration", "description": "A powerful sequence to clear timeline distortions and reactivate dormant spiritual gifts from the Atlantean era.", "duration": 900, "frequencyId": "solfeggio-417-change", "layerFrequencyId": "platinum", "layer3FrequencyId": "angel-333" }], "colors": { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" }, "premium": true
+    },
+    {
+      "id": "inner-earth-axis-reset", "title": "Inner Earth Axis Reset", "categoryId": "angel", "subCategory": "Advanced Resonance Protocols", "description": "Crystalline grounding and EMF reset through Agarthan resonant grid.", "steps": [{ "title": "Crystalline Grounding", "description": "A deep, grounding frequency triad to reset your connection to the Earth's crystalline grid and clear EMF interference.", "duration": 900, "frequencyId": "angel-111", "layerFrequencyId": "arcturian-crystal-field", "layer3FrequencyId": "kabbalah-lamed" }], "colors": { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" }, "premium": true
+    },
+    {
+      "id": "sirian-tone-gate", "title": "Sirian Tone Gate — Light Memory Reinstatement", "categoryId": "angel", "subCategory": "Advanced Resonance Protocols", "description": "Reinstates ancient light memory via Sirius B harmonic stellar gate.", "steps": [{ "title": "Stellar Gate Activation", "description": "A high-frequency transmission to open the Sirian tone gate, reinstating ancient light memory and soul path wisdom.", "duration": 900, "frequencyId": "sirian-soul-path", "layerFrequencyId": "kabbalah-chokhmah", "layer3FrequencyId": "sirian-light-memory" }], "colors": { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" }, "premium": true
+    },
+    {
+      "id": "the-scroll-of-mirrors", "title": "The Scroll of Mirrors", "categoryId": "angel", "subCategory": "Advanced Resonance Protocols", "description": "Self-mirroring tone chamber for deep personal reflection and harmonization.", "steps": [
+        { "title": "Reflection Field", "description": "Frequencies of divine support and luck create a safe space for deep inner reflection.", "duration": 420, "frequencyId": "angel-333", "layerFrequencyId": "angel-777" },
+        { "title": "Harmonization Chamber", "description": "A precise mirror-pulse oscillation, centered on the frequency of major life changes, to harmonize dissonant aspects of the self.", "duration": 480, "frequencyId": "mirror-pulse-oscillation", "layerFrequencyId": "angel-555" }
+    ], "colors": { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" }, "premium": true
+    },
+    {
+      "id": "council-of-nine-alignment", "title": "Council of Nine — Resonance Alignment", "categoryId": "angel", "subCategory": "Advanced Resonance Protocols", "description": "Connects to harmonic archetypes of ancient stellar councils. Oversoul recalibration.", "steps": [{ "title": "Oversoul Recalibration", "description": "A sacred triadic resonance to align your consciousness with the wisdom of the Council of Nine, promoting oversoul integration.", "duration": 900, "frequencyId": "angel-999", "layerFrequencyId": "titanium", "layer3FrequencyId": "angel-222" }], "colors": { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" }, "premium": true
+    },
+    {
+      "id": "solar-heart-lattice", "title": "Solar Heart Lattice", "categoryId": "angel", "subCategory": "Advanced Resonance Protocols", "description": "Activates radiant solar pathway to heart coherence.", "steps": [{ "title": "Radiant Heart Activation", "description": "A powerful solar sequence to activate heart coherence, personal sovereignty, and the radiant energy of your inner sun.", "duration": 900, "frequencyId": "solfeggio-528-repair", "layerFrequencyId": "solar-templar-1111", "layer3FrequencyId": "solar-sovereignty" }], "colors": { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" }, "premium": true
+    }
   ],
-  "featured_candidates": [ "vagus-lymph-reset", "metabolic-harmony-protocol", "adhd-focus-protocol", "ultimate-deep-sleep", "chakra-balancing-journey", "solfeggio-528-repair", "beta", "gamma-40hz-precise", "solfeggio-1782-alchemy", "cosmic-thread-alignment", "cosmic-threshold", "phi-axis-harmonic-balance" ],
+  "featured_candidates": [
+    "temple-of-breath", "golden-code-of-thoth", "lyran-dna-harmonics-session", "amenti-re-entry-code", "sirius-light-grid", "solar-templar-alignment", "arcturian-crystal-field-reset",
+    "mu-recollection-chamber", "atlantean-frequency-seal", "inner-earth-axis-reset", "sirian-tone-gate", "the-scroll-of-mirrors", "council-of-nine-alignment", "solar-heart-lattice",
+    "vagus-lymph-reset", "metabolic-harmony-protocol", "adhd-focus-protocol", "ultimate-deep-sleep", "chakra-balancing-journey", "solfeggio-528-repair", "beta", "gamma-40hz-precise", "solfeggio-1782-alchemy", "cosmic-thread-alignment", "cosmic-threshold", "phi-axis-harmonic-balance"
+  ],
   "initial_frequencies": [
     {
       "id": "delta",
@@ -635,6 +684,7 @@ export const appContentData: AppContentData = {
       "description": "The frequency of angelic connection and spiritual guidance. Resonates with the flow of the universe and divine timing.",
       "category": BenefitCategory.SPIRITUAL,
       "categoryId": "angel",
+      "subCategory": "Angelic Frequencies",
       "defaultMode": "PURE",
       "availableModes": ["PURE", "BINAURAL", "ISOCHRONIC"],
       "colors": { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" },
@@ -649,6 +699,7 @@ export const appContentData: AppContentData = {
       "description": "A frequency of trust, balance, and harmony. Encourages you to have faith in your journey and the path you are on.",
       "category": BenefitCategory.SPIRITUAL,
       "categoryId": "angel",
+      "subCategory": "Angelic Frequencies",
       "defaultMode": "PURE",
       "availableModes": ["PURE", "BINAURAL", "ISOCHRONIC"],
       "colors": { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" },
@@ -663,6 +714,7 @@ export const appContentData: AppContentData = {
       "description": "A powerful frequency indicating that your spiritual guides are near, offering love, support, and encouragement.",
       "category": BenefitCategory.SPIRITUAL,
       "categoryId": "angel",
+      "subCategory": "Angelic Frequencies",
       "defaultMode": "PURE",
       "availableModes": ["PURE", "BINAURAL", "ISOCHRONIC"],
       "colors": { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" },
@@ -677,6 +729,7 @@ export const appContentData: AppContentData = {
       "description": "The frequency of protection and spiritual shielding. A sign that you are on the right path and surrounded by divine protection.",
       "category": BenefitCategory.SPIRITUAL,
       "categoryId": "angel",
+      "subCategory": "Angelic Frequencies",
       "defaultMode": "PURE",
       "availableModes": ["PURE", "BINAURAL", "ISOCHRONIC"],
       "colors": { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" },
@@ -691,6 +744,7 @@ export const appContentData: AppContentData = {
       "description": "A frequency that signals major life changes are on the horizon. Encourages you to embrace transformation and release the old.",
       "category": BenefitCategory.SPIRITUAL,
       "categoryId": "angel",
+      "subCategory": "Angelic Frequencies",
       "defaultMode": "PURE",
       "availableModes": ["PURE", "BINAURAL", "ISOCHRONIC"],
       "colors": { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" },
@@ -705,6 +759,7 @@ export const appContentData: AppContentData = {
       "description": "A call to re-examine and realign your thoughts with your spiritual truth. A frequency for finding balance between the material and spiritual.",
       "category": BenefitCategory.SPIRITUAL,
       "categoryId": "angel",
+      "subCategory": "Angelic Frequencies",
       "defaultMode": "PURE",
       "availableModes": ["PURE", "BINAURAL", "ISOCHRONIC"],
       "colors": { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" },
@@ -719,6 +774,7 @@ export const appContentData: AppContentData = {
       "description": "The frequency of luck, miracles, and divine magic. A sign that you are in alignment with the universe and good fortune is on its way.",
       "category": BenefitCategory.SPIRITUAL,
       "categoryId": "angel",
+      "subCategory": "Angelic Frequencies",
       "defaultMode": "PURE",
       "availableModes": ["PURE", "BINAURAL", "ISOCHRONIC"],
       "colors": { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" },
@@ -733,6 +789,7 @@ export const appContentData: AppContentData = {
       "description": "The frequency of infinite abundance and prosperity. Resonates with financial blessings and the flow of universal wealth.",
       "category": BenefitCategory.SPIRITUAL,
       "categoryId": "angel",
+      "subCategory": "Angelic Frequencies",
       "defaultMode": "PURE",
       "availableModes": ["PURE", "BINAURAL", "ISOCHRONIC"],
       "colors": { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" },
@@ -747,10 +804,46 @@ export const appContentData: AppContentData = {
       "description": "The frequency of completion. Signals the end of a chapter in your life, preparing you for a new beginning.",
       "category": BenefitCategory.SPIRITUAL,
       "categoryId": "angel",
+      "subCategory": "Angelic Frequencies",
       "defaultMode": "PURE",
       "availableModes": ["PURE", "BINAURAL", "ISOCHRONIC"],
       "colors": { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" },
       "premium": true
+    },
+    {
+      id: 'lemurian-breath-gate', name: "309 Hz - Breath Gate", range: "309 Hz", baseFrequency: 309, binauralFrequency: 0, description: "A frequency from Lemurian traditions for reinstating breath-consciousness and activating resonance pathways between voice, chest, and earth field.", category: BenefitCategory.SPIRITUAL, categoryId: 'angel', defaultMode: 'PURE', availableModes: ['PURE', 'BINAURAL', 'ISOCHRONIC'], colors: { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" }, premium: true
+    },
+    {
+      id: 'lyran-dna-harmonics', name: "1185 Hz - Lyran DNA Harmonics", range: "1185 Hz", baseFrequency: 1185, binauralFrequency: 0, description: "A high-frequency tone from Lyran traditions for amplifying crystalline coding through the 12 major meridian light strands.", category: BenefitCategory.SPIRITUAL, categoryId: 'angel', defaultMode: 'PURE', availableModes: ['PURE', 'BINAURAL', 'ISOCHRONIC'], colors: { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" }, premium: true
+    },
+    {
+      id: 'sirian-soul-path', name: "144 Hz - Soul Path Resonance", range: "144 Hz", baseFrequency: 144, binauralFrequency: 0, description: "A frequency from Sirian traditions for connecting with one's soul path and higher purpose.", category: BenefitCategory.SPIRITUAL, categoryId: 'angel', defaultMode: 'PURE', availableModes: ['PURE', 'BINAURAL', 'ISOCHRONIC'], colors: { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" }, premium: true
+    },
+    {
+      id: 'sirian-antahkarana-bridge-288', name: "288 Hz - Antahkarana Bridge", range: "288 Hz", baseFrequency: 288, binauralFrequency: 0, description: "A frequency to build the Antahkarana, the energetic bridge between the higher mind and heart-field.", category: BenefitCategory.SPIRITUAL, categoryId: 'angel', defaultMode: 'PURE', availableModes: ['PURE', 'BINAURAL', 'ISOCHRONIC'], colors: { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" }, premium: true
+    },
+    {
+      id: 'solar-templar-1111', name: "1111 Hz - Solar Code Activation", range: "1111 Hz", baseFrequency: 1111, binauralFrequency: 0, description: "A high-frequency code associated with Atlantean Solar Discs for activating solar wisdom and clarity of will.", category: BenefitCategory.SPIRITUAL, categoryId: 'angel', defaultMode: 'PURE', availableModes: ['PURE', 'BINAURAL', 'ISOCHRONIC'], colors: { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" }, premium: true
+    },
+    {
+      id: 'solar-templar-33', name: "33 Hz - Christ Consciousness", range: "33 Hz", baseFrequency: 136.1, binauralFrequency: 33, description: "A Gamma-range frequency associated with Christ consciousness, pyramids, and heightened states of awareness.", category: BenefitCategory.SPIRITUAL, categoryId: 'angel', defaultMode: 'BINAURAL', availableModes: ['BINAURAL', 'ISOCHRONIC'], colors: { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" }, premium: true
+    },
+    {
+      id: 'arcturian-crystal-field', name: "729 Hz - Arcturian Field Reset", range: "729 Hz", baseFrequency: 729, binauralFrequency: 0, description: "A frequency from the Arcturian crystalline network for rebooting cognitive pathways and clearing artificial energetic overlays.", category: BenefitCategory.SPIRITUAL, categoryId: 'angel', defaultMode: 'PURE', availableModes: ['PURE', 'BINAURAL', 'ISOCHRONIC'], colors: { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" }, premium: true
+    },
+    {
+      id: 'mu-theta-wave', name: "12 Hz - Mu Theta Wave", range: "12 Hz", baseFrequency: 136.1, binauralFrequency: 12, description: "A low theta frequency associated with Lemurian water temples, promoting cellular remembrance and deep emotional processing.", category: BenefitCategory.SPIRITUAL, categoryId: 'angel', defaultMode: 'BINAURAL', availableModes: ['BINAURAL', 'ISOCHRONIC'], colors: { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" }, premium: true
+    },
+    {
+      id: 'sirian-light-memory', name: "1188 Hz - Sirian Light Memory", range: "1188 Hz", baseFrequency: 1188, binauralFrequency: 0, description: "A high-frequency tone for reinstating ancient light memory and activating stellar consciousness.", category: BenefitCategory.SPIRITUAL, categoryId: 'angel', defaultMode: 'PURE', availableModes: ['PURE', 'BINAURAL', 'ISOCHRONIC'], colors: { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" }, premium: true
+    },
+    {
+      id: 'mirror-pulse-oscillation', name: 'Mirror Pulse Oscillation', range: '555 Hz ± 1.618 Hz', baseFrequency: 0, binauralFrequency: 0, leftFrequency: 553.382, rightFrequency: 556.618,
+      description: 'A precise split binaural tone based on the golden ratio, creating a self-mirroring effect for deep reflection and harmonization.', category: BenefitCategory.COGNITIVE, categoryId: 'angel',
+      defaultMode: 'SPLIT_BINAURAL', availableModes: ['SPLIT_BINAURAL'], colors: { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" }, premium: true
+    },
+    {
+      id: 'solar-sovereignty', name: "88 Hz - Solar Sovereignty", range: "88 Hz", baseFrequency: 88, binauralFrequency: 0, description: "The Lion's Gate frequency, activating solar power, personal sovereignty, and heart coherence.", category: BenefitCategory.SPIRITUAL, categoryId: 'angel', defaultMode: 'PURE', availableModes: ['PURE', 'BINAURAL', 'ISOCHRONIC'], colors: { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" }, premium: true
     },
     {
       "id": "schumann-resonance",

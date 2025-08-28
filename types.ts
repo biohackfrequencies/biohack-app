@@ -2,6 +2,8 @@
 
 
 
+
+
 export type SoundGenerationMode = 'PURE' | 'BINAURAL' | 'ISOCHRONIC' | 'AMBIENCE' | 'SPLIT_BINAURAL';
 
 export enum BenefitCategory {
@@ -38,6 +40,7 @@ export interface Frequency {
   colors: ColorTheme;
   premium?: boolean;
   isFeatured?: boolean;
+  subCategory?: string;
   // Optional fields for Harmonic Elements
   atomicNumber?: number;
   materialUses?: string;
@@ -76,6 +79,7 @@ export interface GuidedSession {
   premium?: boolean;
   categoryId: CategoryId;
   isFeatured?: boolean;
+  subCategory?: string;
 }
 
 export type CustomStack = {
@@ -88,6 +92,7 @@ export type CustomStack = {
   premium?: boolean;
   isFeatured?: boolean;
   categoryId: 'guided';
+  subCategory?: string;
   isMixture?: boolean; // Flag for Elemental Mixtures
 };
 
