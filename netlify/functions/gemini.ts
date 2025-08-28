@@ -155,6 +155,11 @@ export const handler = async (event: { httpMethod: string, body: string | null, 
 
         if (profileError) throw new Error('Could not retrieve user profile.');
 
+        // FIX: Add null check for profile to handle cases where a user's profile might not exist yet.
+        if (!profile) {
+            return { statusCode: 404, body: JSON.stringify({ error: 'User profile not found.' }) };
+        }
+
         // Rate Limit Check
         const requests = profile.api_requests || [];
         const fiveMinsAgo = Date.now() - 5 * 60 * 1000;
