@@ -153,44 +153,36 @@ export const handler = async (event: { httpMethod: string, body: string | null, 
         const { action, payload } = JSON.parse(event.body || '{}');
 
         // --- Robust "Upsert" User Profile Logic ---
-        let { data: profile, error: profileSelectError } = await supabaseAuthedClient
+        const defaultProfileData: Omit<ProfileInsert, 'id'> = {
+            favorites: [], custom_stacks: [], activity_log: [],
+            tracked_habits: ['session', 'workout', 'meditation', 'sleep', 'supplements', 'rlt', 'mood'],
+            user_goals: { mind: 20, move: 10000 }, custom_activities: [],
+            codex_reflections: [],
+            pro_access_expires_at: null,
+            ai_credits_remaining: 5,
+            ai_credits_reset_at: new Date().toISOString(),
+            api_requests: []
+        };
+
+        const { error: upsertError } = await supabaseAuthedClient
+            .from('profiles')
+            .upsert({ id: user.id, ...defaultProfileData }, { onConflict: 'id' });
+
+        if (upsertError) {
+            console.error("Fatal: Error upserting user profile:", upsertError);
+            throw new Error(`Failed to ensure user profile exists. DB Error: ${upsertError.message}`);
+        }
+
+        const { data: profile, error: selectError } = await supabaseAuthedClient
             .from('profiles')
             .select('api_requests, ai_credits_remaining, pro_access_expires_at, ai_credits_reset_at')
             .eq('id', user.id)
-            .maybeSingle();
+            .single();
 
-        if (profileSelectError) {
-            console.warn(`Could not select profile for user ${user.id}, proceeding to create. Error:`, profileSelectError.message);
-        }
-        
-        if (!profile) {
-            console.log(`Profile for user ${user.id} not found or accessible, creating new profile.`);
-            const newProfileData: ProfileInsert = {
-                id: user.id,
-                favorites: [],
-                custom_stacks: [],
-                activity_log: [],
-                tracked_habits: ['session', 'workout', 'meditation', 'sleep', 'supplements', 'rlt', 'mood'],
-                user_goals: { mind: 20, move: 10000 },
-                custom_activities: [],
-                codex_reflections: [],
-                pro_access_expires_at: null,
-                ai_credits_remaining: 5,
-                ai_credits_reset_at: new Date().toISOString(),
-                api_requests: []
-            };
-
-            const { data: newProfile, error: insertError } = await supabaseAuthedClient
-                .from('profiles')
-                .insert(newProfileData)
-                .select('api_requests, ai_credits_remaining, pro_access_expires_at, ai_credits_reset_at')
-                .single();
-            
-            if (insertError) {
-                console.error("Fatal: Error creating new user profile after select failed:", insertError);
-                throw new Error('Could not create or access user profile. Please try again later.');
-            }
-            profile = newProfile;
+        if (selectError || !profile) {
+            console.error("Error selecting profile after upsert:", selectError);
+            const errorMessage = selectError ? `DB Error: ${selectError.message}` : "Profile not found after upsert.";
+            throw new Error(`Could not retrieve user profile. ${errorMessage}`);
         }
 
         // --- Rate Limiting & Credit Check ---
