@@ -152,42 +152,53 @@ export const handler = async (event: { httpMethod: string, body: string | null, 
         
         const { action, payload } = JSON.parse(event.body || '{}');
 
-        // --- Robust "Upsert" User Profile Logic ---
-        // This default data is used ONLY when creating a brand new profile.
-        // It omits AI/API columns to prevent errors if the user's DB schema is outdated.
-        const defaultProfileData: Omit<ProfileInsert, 'id' | 'ai_credits_remaining' | 'ai_credits_reset_at' | 'api_requests'> = {
-            favorites: [], custom_stacks: [], activity_log: [],
-            tracked_habits: ['session', 'workout', 'meditation', 'sleep', 'supplements', 'rlt', 'mood'],
-            user_goals: { mind: 20, move: 10000 }, custom_activities: [],
-            codex_reflections: [],
-            pro_access_expires_at: null,
-        };
+        // --- Completely Re-engineered User Profile Logic ---
+        let profile;
         
-        // This ensures a profile exists. If it doesn't, it's created with safe defaults.
-        const { error: upsertError } = await supabaseAuthedClient
+        // 1. Try to fetch the existing profile.
+        const { data: existingProfile, error: selectError } = await supabaseAuthedClient
             .from('profiles')
-            .upsert({ id: user.id, ...defaultProfileData }, { onConflict: 'id' });
-
-        if (upsertError) {
-            console.error("Fatal: Error upserting user profile:", upsertError);
-            throw new Error(`Failed to ensure user profile exists. DB Error: ${upsertError.message}`);
-        }
-        
-        // Now, fetch the full, current profile data.
-        const { data: profile, error: selectError } = await supabaseAuthedClient
-            .from('profiles')
-            .select('*') // Select everything to check for optional columns
+            .select('*')
             .eq('id', user.id)
-            .single();
+            .maybeSingle();
 
-        if (selectError || !profile) {
-            console.error("Error selecting profile after upsert:", selectError);
-            const errorMessage = selectError ? `DB Error: ${selectError.message}` : "Profile not found after upsert.";
-            throw new Error(`Could not retrieve user profile. ${errorMessage}`);
+        if (selectError) {
+            console.error("Error fetching user profile:", selectError);
+            throw new Error(`Failed to access user profile. DB Error: ${selectError.message}`);
         }
+        
+        // 2. If no profile exists, create a minimal, safe one.
+        if (!existingProfile) {
+            const newProfileData: ProfileInsert = {
+                id: user.id,
+                favorites: [],
+                custom_stacks: [],
+                activity_log: [],
+                tracked_habits: ['session', 'workout', 'meditation', 'sleep', 'supplements', 'rlt', 'mood'],
+                user_goals: { mind: 20, move: 10000 },
+                custom_activities: [],
+                pro_access_expires_at: null,
+                // Omit all new/optional columns to ensure backwards compatibility with older DB schemas
+            };
+
+            const { data: createdProfile, error: insertError } = await supabaseAuthedClient
+                .from('profiles')
+                .insert(newProfileData)
+                .select()
+                .single();
+
+            if (insertError) {
+                console.error("Fatal: Error creating new user profile:", insertError);
+                throw new Error(`Failed to create user profile. DB Error: ${insertError.message}`);
+            }
+            profile = createdProfile;
+        } else {
+            profile = existingProfile;
+        }
+        
+        // At this point, `profile` is guaranteed to be a valid profile object.
         
         // --- Rate Limiting & Credit Check (with graceful fallback) ---
-        // FIX: Explicitly check if the optional columns exist on the fetched profile before using them.
         const hasApiRequests = profile.hasOwnProperty('api_requests');
         const hasCreditSystem = profile.hasOwnProperty('ai_credits_remaining');
         
