@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
-import { Frequency, CategoryId, CustomStack, GuidedSession, ActivityLogItem, TrackableActivityId, PlayableItem, AppContentData, CodexReflection } from './types';
+import { Frequency, CategoryId, CustomStack, GuidedSession, ActivityLogItem, TrackableActivityId, PlayableItem, AppContentData } from './types';
 import { Header } from './components/Header';
 import { HomePage } from './components/HomePage';
 import { CategoryPage } from './components/CategoryPage';

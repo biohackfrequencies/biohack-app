@@ -3,6 +3,7 @@ import { CustomStack, Frequency, GuidedSession, CodexReflection } from '../types
 import { GuidedSessionIcon, StackIcon, HeartFilledIcon, AlchemyIcon, JournalIcon } from './BohoIcons';
 import { useSubscription } from '../hooks/useSubscription';
 import { getImageUrl } from '../services/imageService';
+import { FrequencyCard } from './FrequencyCard';
 
 interface MyLibraryProps {
   favorites: string[];
