@@ -1,7 +1,7 @@
 
+
 import { GoogleGenAI, Type, GenerateContentResponse } from "@google/genai";
 import { createClient } from '@supabase/supabase-js';
-import type { Frequency, HealthDataSummary, IntegratedDataSummary, PlayableItem, ProfileUpdate as ProfileUpdateType, Database as DatabaseType } from '../../types';
 
 
 
@@ -242,16 +242,17 @@ export interface CodexReflection {
 
 
 // Type for Supabase 'profiles' table row
-// FIX: Changed complex types to `any` to resolve Supabase client type inference issues.
 export type ProfileRow = {
   id: string;
   favorites: string[];
-  custom_stacks: any;
-  activity_log: any;
+  // FIX: Replace `any` with specific types for Supabase to correctly infer table structure.
+  custom_stacks: CustomStack[];
+  activity_log: ActivityLogItem[];
   tracked_habits: TrackableActivityId[];
-  user_goals: any;
-  custom_activities: any;
-  codex_reflections: any;
+  // FIX: Replace `any` with specific types for Supabase to correctly infer table structure.
+  user_goals: UserGoals;
+  custom_activities: TrackableActivityBase[];
+  codex_reflections: CodexReflection[];
   pro_access_expires_at: string | null;
   ai_credits_remaining?: number;
   ai_credits_reset_at?: string | null;
@@ -267,31 +268,33 @@ export interface AppContentData {
 }
 
 
-// FIX: Changed complex types to `any` to resolve Supabase client type inference issues.
 export type ProfileInsert = {
   id: string;
   favorites?: string[];
-  custom_stacks?: any;
-  activity_log?: any;
+  // FIX: Replace `any` with specific types for Supabase to correctly infer table structure.
+  custom_stacks?: CustomStack[];
+  activity_log?: ActivityLogItem[];
   tracked_habits?: TrackableActivityId[];
-  user_goals?: any;
-  custom_activities?: any;
-  codex_reflections?: any;
+  // FIX: Replace `any` with specific types for Supabase to correctly infer table structure.
+  user_goals?: UserGoals;
+  custom_activities?: TrackableActivityBase[];
+  codex_reflections?: CodexReflection[];
   pro_access_expires_at?: string | null;
   ai_credits_remaining?: number;
   ai_credits_reset_at?: string | null;
   api_requests?: number[];
 };
 
-// FIX: Changed complex types to `any` to resolve Supabase client type inference issues.
 export type ProfileUpdate = {
   favorites?: string[];
-  custom_stacks?: any;
-  activity_log?: any;
+  // FIX: Replace `any` with specific types for Supabase to correctly infer table structure.
+  custom_stacks?: CustomStack[];
+  activity_log?: ActivityLogItem[];
   tracked_habits?: TrackableActivityId[];
-  user_goals?: any;
-  custom_activities?: any;
-  codex_reflections?: any;
+  // FIX: Replace `any` with specific types for Supabase to correctly infer table structure.
+  user_goals?: UserGoals;
+  custom_activities?: TrackableActivityBase[];
+  codex_reflections?: CodexReflection[];
   pro_access_expires_at?: string | null;
   ai_credits_remaining?: number;
   ai_credits_reset_at?: string | null;

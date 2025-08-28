@@ -70,7 +70,6 @@ export const ToneGeneratorPage: React.FC<ToneGeneratorPageProps> = ({ onBack, al
         startPlayback, startGuide, activePattern, isPlaying, currentlyPlayingItem, sessionStepIndex, sessionTimeInStep,
         is8dEnabled, setIs8dEnabled, panningSpeed, setPanningSpeed, panningDepth, setPanningDepth,
         mainVolume, setMainVolume, layer2Volume, setLayer2Volume, isLayer2Active, 
-        // FIX: Replaced non-existent 'toggleLayer' with 'toggleLayer2' from the PlayerContext.
         toggleLayer2
     } = player;
     const { isSubscribed } = useSubscription();
