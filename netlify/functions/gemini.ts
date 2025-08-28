@@ -152,15 +152,19 @@ export const handler = async (event: { httpMethod: string, body: string | null, 
         
         const { action, payload } = JSON.parse(event.body || '{}');
 
-        // --- UPSERT User Profile, then Rate Limiting & Credit Check ---
-        let { data: profile, error: profileError } = await supabaseAuthedClient
+        // --- Robust "Upsert" User Profile Logic ---
+        let { data: profile, error: profileSelectError } = await supabaseAuthedClient
             .from('profiles')
             .select('api_requests, ai_credits_remaining, pro_access_expires_at, ai_credits_reset_at')
             .eq('id', user.id)
-            .single();
+            .maybeSingle();
+
+        if (profileSelectError) {
+            console.warn(`Could not select profile for user ${user.id}, proceeding to create. Error:`, profileSelectError.message);
+        }
         
-        // FIX: If profile doesn't exist, create it on the fly. This resolves the "Could not retrieve user profile" error for new users.
-        if (profileError && profileError.code === 'PGRST116') {
+        if (!profile) {
+            console.log(`Profile for user ${user.id} not found or accessible, creating new profile.`);
             const newProfileData: ProfileInsert = {
                 id: user.id,
                 favorites: [],
@@ -183,22 +187,13 @@ export const handler = async (event: { httpMethod: string, body: string | null, 
                 .single();
             
             if (insertError) {
-                console.error("Error creating new user profile:", insertError);
-                throw new Error('Failed to create user profile.');
+                console.error("Fatal: Error creating new user profile after select failed:", insertError);
+                throw new Error('Could not create or access user profile. Please try again later.');
             }
-            
             profile = newProfile;
-        } else if (profileError) {
-            console.error("Error retrieving user profile:", profileError);
-            throw new Error('Could not retrieve user profile.');
         }
 
-        if (!profile) {
-            // This should not be reached, but it's a safeguard.
-            return { statusCode: 404, body: JSON.stringify({ error: 'User profile not found and could not be created.' }) };
-        }
-
-        // Rate Limit Check
+        // --- Rate Limiting & Credit Check ---
         const requests = profile.api_requests || [];
         const fiveMinsAgo = Date.now() - 5 * 60 * 1000;
         const recentRequests = requests.filter(ts => ts > fiveMinsAgo);
@@ -206,7 +201,6 @@ export const handler = async (event: { httpMethod: string, body: string | null, 
             return { statusCode: 429, body: JSON.stringify({ error: 'Too many requests. Please wait a few minutes.' }) };
         }
 
-        // Credit Check & Pro Logic
         let credits = profile.ai_credits_remaining ?? 0;
         let resetAt = profile.ai_credits_reset_at ? new Date(profile.ai_credits_reset_at) : new Date(0);
         const proExpiresAt = profile.pro_access_expires_at ? new Date(profile.pro_access_expires_at) : null;
@@ -223,7 +217,6 @@ export const handler = async (event: { httpMethod: string, body: string | null, 
             }
         }
         
-        // This check is bypassed for cached responses to save credits.
         if (action !== 'generateCreation' || !findCachedResponse(payload.prompt)) {
             if (credits <= 0) {
                 return { statusCode: 402, body: JSON.stringify({ error: "You've used all your AI generations. Please upgrade to Pro for more." }) };
@@ -234,8 +227,6 @@ export const handler = async (event: { httpMethod: string, body: string | null, 
         updatePayload.api_requests = [...recentRequests, Date.now()];
         
         await supabaseAuthedClient.from('profiles').update(updatePayload).eq('id', user.id);
-        // --- End of checks ---
-
 
         switch (action) {
             case 'generateCreation': {
