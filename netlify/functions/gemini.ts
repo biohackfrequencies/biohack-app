@@ -1,6 +1,6 @@
 import { GoogleGenAI, Type, GenerateContentResponse } from "@google/genai";
 import { createClient } from '@supabase/supabase-js';
-import type { Frequency, HealthDataSummary, IntegratedDataSummary, PlayableItem, ProfileUpdate, Database } from '../../types';
+import type { Frequency, HealthDataSummary, IntegratedDataSummary, PlayableItem, ProfileUpdate, Database, ProfileInsert } from '../../types';
 
 // FIX: Hardcoded Supabase credentials to match the frontend client and resolve initialization errors.
 const supabaseUrl = 'https://nabzcphuoxqwiogswuhw.supabase.co';
@@ -136,8 +136,6 @@ export const handler = async (event: { httpMethod: string, body: string | null, 
             return { statusCode: 401, body: JSON.stringify({ error: 'Authentication token is required.' }) };
         }
         
-        // FIX: Create a new Supabase client for this specific request, authenticated as the user.
-        // This allows Row Level Security (RLS) policies to work correctly.
         const supabaseAuthedClient = createClient<Database>(supabaseUrl!, supabaseAnonKey!, {
             global: {
                 headers: {
@@ -154,12 +152,50 @@ export const handler = async (event: { httpMethod: string, body: string | null, 
         
         const { action, payload } = JSON.parse(event.body || '{}');
 
-        // --- Rate Limiting & Credit Check ---
-        const { data: profile, error: profileError } = await supabaseAuthedClient.from('profiles').select('api_requests, ai_credits_remaining, pro_access_expires_at, ai_credits_reset_at').eq('id', user.id).single();
+        // --- UPSERT User Profile, then Rate Limiting & Credit Check ---
+        let { data: profile, error: profileError } = await supabaseAuthedClient
+            .from('profiles')
+            .select('api_requests, ai_credits_remaining, pro_access_expires_at, ai_credits_reset_at')
+            .eq('id', user.id)
+            .single();
+        
+        // FIX: If profile doesn't exist, create it on the fly. This resolves the "Could not retrieve user profile" error for new users.
+        if (profileError && profileError.code === 'PGRST116') {
+            const newProfileData: ProfileInsert = {
+                id: user.id,
+                favorites: [],
+                custom_stacks: [],
+                activity_log: [],
+                tracked_habits: ['session', 'workout', 'meditation', 'sleep', 'supplements', 'rlt', 'mood'],
+                user_goals: { mind: 20, move: 10000 },
+                custom_activities: [],
+                codex_reflections: [],
+                pro_access_expires_at: null,
+                ai_credits_remaining: 5,
+                ai_credits_reset_at: new Date().toISOString(),
+                api_requests: []
+            };
 
-        if (profileError) throw new Error('Could not retrieve user profile.');
+            const { data: newProfile, error: insertError } = await supabaseAuthedClient
+                .from('profiles')
+                .insert(newProfileData)
+                .select('api_requests, ai_credits_remaining, pro_access_expires_at, ai_credits_reset_at')
+                .single();
+            
+            if (insertError) {
+                console.error("Error creating new user profile:", insertError);
+                throw new Error('Failed to create user profile.');
+            }
+            
+            profile = newProfile;
+        } else if (profileError) {
+            console.error("Error retrieving user profile:", profileError);
+            throw new Error('Could not retrieve user profile.');
+        }
+
         if (!profile) {
-            return { statusCode: 404, body: JSON.stringify({ error: 'User profile not found.' }) };
+            // This should not be reached, but it's a safeguard.
+            return { statusCode: 404, body: JSON.stringify({ error: 'User profile not found and could not be created.' }) };
         }
 
         // Rate Limit Check
