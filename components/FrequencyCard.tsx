@@ -37,7 +37,7 @@ export const FrequencyCard: React.FC<FrequencyCardProps> = ({ frequency, onSelec
           
           <div className="relative z-10">
             <div className="flex justify-between items-start gap-2">
-                <h3 className="text-lg sm:text-xl font-display font-bold text-white tracking-wide drop-shadow-md line-clamp-2">{frequency.name}</h3>
+                <h3 className="text-base font-display font-bold text-white tracking-wide drop-shadow-md line-clamp-2">{frequency.name}</h3>
                 {isLocked && <div className="flex-shrink-0"><ProBadge /></div>}
             </div>
             <p className="text-sm mt-1 font-semibold" style={{color: frequency.colors.accent}}>{frequency.range}</p>

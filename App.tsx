@@ -79,6 +79,61 @@ const App: React.FC<{ content: AppContentData }> = ({ content }) => {
   
   const { featuredItem, allFrequencies, allSessions, dailyQuote } = useMemo(() => {
     if (!content) return { featuredItem: null, allFrequencies: [], allSessions: [], dailyQuote: null };
+
+    const processItems = <T extends { id: string; categoryId: CategoryId; subCategory?: string; premium?: boolean; baseFrequency?: number; title?: string; name?: string; }>(items: T[]): T[] => {
+        const itemsByCategory = new Map<CategoryId, T[]>();
+        items.forEach(item => {
+            if (!itemsByCategory.has(item.categoryId)) {
+                itemsByCategory.set(item.categoryId, []);
+            }
+            itemsByCategory.get(item.categoryId)!.push(item);
+        });
+
+        const processedItems: T[] = [];
+
+        itemsByCategory.forEach((categoryItems) => {
+            const itemsBySubCategory = new Map<string, T[]>();
+            const hasSubCategories = categoryItems.some(item => item.subCategory);
+
+            if (hasSubCategories) {
+                categoryItems.forEach(item => {
+                    const subCatKey = item.subCategory || 'uncategorized';
+                    if (!itemsBySubCategory.has(subCatKey)) {
+                        itemsBySubCategory.set(subCatKey, []);
+                    }
+                    itemsBySubCategory.get(subCatKey)!.push(item);
+                });
+            } else {
+                itemsBySubCategory.set('default', categoryItems);
+            }
+
+            itemsBySubCategory.forEach((subCategoryItems) => {
+                const alwaysFree = subCategoryItems.filter(item => item.premium === false);
+                const candidatesForFreeTier = subCategoryItems.filter(item => item.premium !== false);
+
+                candidatesForFreeTier.sort((a, b) => {
+                    if (a.baseFrequency !== undefined && b.baseFrequency !== undefined) {
+                        return a.baseFrequency - b.baseFrequency;
+                    }
+                    const nameA = a.title || a.name || '';
+                    const nameB = b.title || b.name || '';
+                    return nameA.localeCompare(nameB);
+                });
+
+                const dynamicFree = candidatesForFreeTier.slice(0, 2);
+                const premium = candidatesForFreeTier.slice(2);
+
+                alwaysFree.forEach(item => processedItems.push({ ...item, premium: false }));
+                dynamicFree.forEach(item => processedItems.push({ ...item, premium: false }));
+                premium.forEach(item => processedItems.push({ ...item, premium: true }));
+            });
+        });
+        
+        return processedItems;
+    };
+    
+    const allFrequenciesWithDynamicPremium = processItems(content.initial_frequencies);
+    const allSessionsWithDynamicPremium = processItems(content.guided_sessions);
     
     const weekNumber = getWeekNumber(new Date());
     
@@ -86,16 +141,14 @@ const App: React.FC<{ content: AppContentData }> = ({ content }) => {
     const eligibleCandidates = content.featured_candidates.filter(id => !IdsToExclude.includes(id));
     
     if (eligibleCandidates.length === 0) {
-        const frequencies = content.initial_frequencies.map(f => ({...f, isFeatured: false}));
-        const sessions = content.guided_sessions.map(s => ({...s, isFeatured: false}));
-        return { featuredItem: null, allFrequencies: frequencies, allSessions: sessions, dailyQuote: null };
+        return { featuredItem: null, allFrequencies: allFrequenciesWithDynamicPremium, allSessions: allSessionsWithDynamicPremium, dailyQuote: null };
     }
 
     const featuredIndex = weekNumber % eligibleCandidates.length;
     const featuredId = eligibleCandidates[featuredIndex];
     let featuredItem: Frequency | GuidedSession | null = null;
     
-    const frequencies = content.initial_frequencies.map(f => {
+    const frequencies = allFrequenciesWithDynamicPremium.map(f => {
         const isFeatured = f.id === featuredId;
         const item = { ...f, isFeatured, premium: isFeatured ? false : f.premium };
         if (isFeatured) {
@@ -104,7 +157,7 @@ const App: React.FC<{ content: AppContentData }> = ({ content }) => {
         return item;
     });
 
-    const sessions = content.guided_sessions.map(s => {
+    const sessions = allSessionsWithDynamicPremium.map(s => {
         const isFeatured = s.id === featuredId;
         const item = { ...s, isFeatured, premium: isFeatured ? false : s.premium };
         if (isFeatured) {
@@ -322,7 +375,7 @@ const App: React.FC<{ content: AppContentData }> = ({ content }) => {
             window.location.hash = '/disclaimer';
           }} 
           className="underline hover:text-slate-900 dark:hover:text-dark-text-primary">Legal Disclaimer</a>.</p>
-        <p className="mt-4">© {new Date().getFullYear()} HeartBeat Productions BV. All rights reserved.</p>
+        <p className="mt-4">© {new Date().getFullYear()} HeartBeat Productions LLC. All rights reserved.</p>
         <p className="mt-2 text-xs opacity-75">v1.0.0</p>
       </footer>
     </div>

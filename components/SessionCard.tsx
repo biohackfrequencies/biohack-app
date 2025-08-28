@@ -56,7 +56,7 @@ export const SessionCard: React.FC<SessionCardProps> = ({ session, onSelect, isF
           <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent group-hover:from-black/80 transition-all duration-300 rounded-2xl"></div>
           <div className="relative z-10">
             <div className="flex justify-between items-start gap-2">
-                <h3 className="text-lg sm:text-xl font-display font-bold text-white tracking-wide drop-shadow-md line-clamp-2">{session.title}</h3>
+                <h3 className="text-base font-display font-bold text-white tracking-wide drop-shadow-md line-clamp-2">{session.title}</h3>
                 {isLocked && <div className="flex-shrink-0"><ProBadge /></div>}
             </div>
             <p className="text-sm mt-1 font-semibold" style={{color: session.colors.accent}}>{durationInMinutes} min • {frequencyString}</p>

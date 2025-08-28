@@ -9,52 +9,52 @@ const mirrorAxisFrequencies: Frequency[] = [
     {
       id: 'mirror-binaural-root-crown', name: 'Root–Crown Axis Binaural', range: '111 Hz ↔ 999 Hz', baseFrequency: 0, binauralFrequency: 0, leftFrequency: 111, rightFrequency: 999,
       description: 'A split binaural tone balancing primal instincts (111 Hz) with spiritual clarity (999 Hz).', category: BenefitCategory.COGNITIVE, categoryId: 'brainwaves',
-      defaultMode: 'SPLIT_BINAURAL', availableModes: ['SPLIT_BINAURAL'], colors: mirrorAxisColors, premium: true
+      defaultMode: 'SPLIT_BINAURAL', availableModes: ['SPLIT_BINAURAL'], colors: mirrorAxisColors
     },
     {
       id: 'mirror-binaural-shadow-light', name: 'Shadow–Light Axis Binaural', range: '174 Hz ↔ 852 Hz', baseFrequency: 0, binauralFrequency: 0, leftFrequency: 174, rightFrequency: 852,
       description: 'A split binaural tone for clearing subconscious blocks (174 Hz) and activating love resonance (852 Hz).', category: BenefitCategory.COGNITIVE, categoryId: 'brainwaves',
-      defaultMode: 'SPLIT_BINAURAL', availableModes: ['SPLIT_BINAURAL'], colors: mirrorAxisColors, premium: true
+      defaultMode: 'SPLIT_BINAURAL', availableModes: ['SPLIT_BINAURAL'], colors: mirrorAxisColors
     },
     {
       id: 'mirror-binaural-mind-mystic', name: 'Mind–Mystic Axis Binaural', range: '285 Hz ↔ 741 Hz', baseFrequency: 0, binauralFrequency: 0, leftFrequency: 285, rightFrequency: 741,
       description: 'A split binaural tone for cleansing mental fog (285 Hz) and unlocking creative solutions (741 Hz).', category: BenefitCategory.COGNITIVE, categoryId: 'brainwaves',
-      defaultMode: 'SPLIT_BINAURAL', availableModes: ['SPLIT_BINAURAL'], colors: mirrorAxisColors, premium: true
+      defaultMode: 'SPLIT_BINAURAL', availableModes: ['SPLIT_BINAURAL'], colors: mirrorAxisColors
     },
     {
       id: 'mirror-binaural-pineal-thymus', name: 'Pineal–Thymus Axis Binaural', range: '639 Hz ↔ 963 Hz', baseFrequency: 0, binauralFrequency: 0, leftFrequency: 639, rightFrequency: 963,
       description: 'A split binaural tone for supporting intuition (639 Hz) and cellular harmony (963 Hz).', category: BenefitCategory.COGNITIVE, categoryId: 'brainwaves',
-      defaultMode: 'SPLIT_BINAURAL', availableModes: ['SPLIT_BINAURAL'], colors: mirrorAxisColors, premium: true
+      defaultMode: 'SPLIT_BINAURAL', availableModes: ['SPLIT_BINAURAL'], colors: mirrorAxisColors
     },
     {
       id: 'mirror-binaural-inner-outer-vision', name: 'Inner–Outer Vision Axis Binaural', range: '222 Hz ↔ 888 Hz', baseFrequency: 0, binauralFrequency: 0, leftFrequency: 222, rightFrequency: 888,
       description: 'A split binaural tone for enhancing self-awareness (222 Hz) and manifestation (888 Hz).', category: BenefitCategory.COGNITIVE, categoryId: 'brainwaves',
-      defaultMode: 'SPLIT_BINAURAL', availableModes: ['SPLIT_BINAURAL'], colors: mirrorAxisColors, premium: true
+      defaultMode: 'SPLIT_BINAURAL', availableModes: ['SPLIT_BINAURAL'], colors: mirrorAxisColors
     },
     {
       id: 'mirror-binaural-cosmic-earth', name: 'Cosmic–Earth Axis Binaural', range: '333 Hz ↔ 777 Hz', baseFrequency: 0, binauralFrequency: 0, leftFrequency: 333, rightFrequency: 777,
       description: 'A split binaural tone for bridging ethereal visions (333 Hz) with earthly embodiment (777 Hz).', category: BenefitCategory.COGNITIVE, categoryId: 'brainwaves',
-      defaultMode: 'SPLIT_BINAURAL', availableModes: ['SPLIT_BINAURAL'], colors: mirrorAxisColors, premium: true
+      defaultMode: 'SPLIT_BINAURAL', availableModes: ['SPLIT_BINAURAL'], colors: mirrorAxisColors
     },
     {
       id: 'mirror-binaural-solar-lunar', name: 'Solar–Lunar Axis Binaural', range: '396 Hz ↔ 639 Hz', baseFrequency: 0, binauralFrequency: 0, leftFrequency: 396, rightFrequency: 639,
       description: 'A split binaural tone for balancing masculine-feminine energetics.', category: BenefitCategory.COGNITIVE, categoryId: 'brainwaves',
-      defaultMode: 'SPLIT_BINAURAL', availableModes: ['SPLIT_BINAURAL'], colors: mirrorAxisColors, premium: true
+      defaultMode: 'SPLIT_BINAURAL', availableModes: ['SPLIT_BINAURAL'], colors: mirrorAxisColors
     },
     {
       id: 'mirror-binaural-mirror-gate', name: 'Mirror Gate Axis Binaural', range: '321 Hz ↔ 123 Hz', baseFrequency: 0, binauralFrequency: 0, leftFrequency: 321, rightFrequency: 123,
       description: 'A reflective split binaural tone for navigating memory loops and karmic clarity.', category: BenefitCategory.COGNITIVE, categoryId: 'brainwaves',
-      defaultMode: 'SPLIT_BINAURAL', availableModes: ['SPLIT_BINAURAL'], colors: mirrorAxisColors, premium: true
+      defaultMode: 'SPLIT_BINAURAL', availableModes: ['SPLIT_BINAURAL'], colors: mirrorAxisColors
     },
     {
       id: 'mirror-binaural-soma-spirit', name: 'Soma–Spirit Axis Binaural', range: '288 Hz ↔ 864 Hz', baseFrequency: 0, binauralFrequency: 0, leftFrequency: 288, rightFrequency: 864,
       description: 'A split binaural tone for integrating bodily (288 Hz) and soul (864 Hz) awareness.', category: BenefitCategory.COGNITIVE, categoryId: 'brainwaves',
-      defaultMode: 'SPLIT_BINAURAL', availableModes: ['SPLIT_BINAURAL'], colors: mirrorAxisColors, premium: true
+      defaultMode: 'SPLIT_BINAURAL', availableModes: ['SPLIT_BINAURAL'], colors: mirrorAxisColors
     },
     {
       id: 'mirror-binaural-golden-tri', name: 'Golden Tri-Mirror Binaural', range: '369 Hz ↔ 639 Hz', baseFrequency: 0, binauralFrequency: 0, leftFrequency: 369, rightFrequency: 639,
       description: 'A split binaural tone based on the Tesla code to open creative insight and energy flow.', category: BenefitCategory.COGNITIVE, categoryId: 'brainwaves',
-      defaultMode: 'SPLIT_BINAURAL', availableModes: ['SPLIT_BINAURAL'], colors: mirrorAxisColors, premium: true
+      defaultMode: 'SPLIT_BINAURAL', availableModes: ['SPLIT_BINAURAL'], colors: mirrorAxisColors
     }
 ];
 
@@ -115,106 +115,106 @@ export const appContentData: AppContentData = {
   },
   "guided_sessions": [
     {
-      "id": "triad-grounding", "title": "The Grounding Triad", "categoryId": "elements", "description": "An elemental sequence of Carbon, Iron, and Zinc to establish a deep connection to the Earth, fortify your core stability, and protect your energetic field.", "steps": [ { "title": "Foundation: Carbon", "description": "Establish a stable base with the cornerstone of organic life.", "duration": 180, "frequencyId": "carbon" }, { "title": "Strength: Iron", "description": "Build inner strength and magnetic grounding.", "duration": 180, "frequencyId": "iron" }, { "title": "Protection: Zinc", "description": "Fortify your energetic defenses and seal your field.", "duration": 180, "frequencyId": "zinc" } ], "colors": { "primary": "#a7f3d0", "secondary": "#86efac", "accent": "#4ade80" }, "premium": false
+      "id": "triad-grounding", "title": "The Grounding Triad", "categoryId": "elements", "description": "An elemental sequence of Carbon, Iron, and Zinc to establish a deep connection to the Earth, fortify your core stability, and protect your energetic field.", "steps": [ { "title": "Foundation: Carbon", "description": "Establish a stable base with the cornerstone of organic life.", "duration": 180, "frequencyId": "carbon" }, { "title": "Strength: Iron", "description": "Build inner strength and magnetic grounding.", "duration": 180, "frequencyId": "iron" }, { "title": "Protection: Zinc", "description": "Fortify your energetic defenses and seal your field.", "duration": 180, "frequencyId": "zinc" } ], "colors": { "primary": "#a7f3d0", "secondary": "#86efac", "accent": "#4ade80" }
     },
     {
-      "id": "triad-vitality", "title": "The Vitality Triad", "categoryId": "elements", "description": "A sequence of Hydrogen, Oxygen, and Sulphur to spark new potential, purify your system, and energize your entire bio-field with life force.", "steps": [ { "title": "Spark: Hydrogen", "description": "Ignite pure potential and new beginnings.", "duration": 180, "frequencyId": "hydrogen" }, { "title": "Purify: Oxygen", "description": "Cleanse and invigorate with life-sustaining energy.", "duration": 180, "frequencyId": "oxygen" }, { "title": "Energize: Sulphur", "description": "Transmute old energy and catalyze your inner fire.", "duration": 180, "frequencyId": "sulphur" } ], "colors": { "primary": "#fecaca", "secondary": "#fda4af", "accent": "#f87171" }, "premium": true
+      "id": "triad-vitality", "title": "The Vitality Triad", "categoryId": "elements", "description": "A sequence of Hydrogen, Oxygen, and Sulphur to spark new potential, purify your system, and energize your entire bio-field with life force.", "steps": [ { "title": "Spark: Hydrogen", "description": "Ignite pure potential and new beginnings.", "duration": 180, "frequencyId": "hydrogen" }, { "title": "Purify: Oxygen", "description": "Cleanse and invigorate with life-sustaining energy.", "duration": 180, "frequencyId": "oxygen" }, { "title": "Energize: Sulphur", "description": "Transmute old energy and catalyze your inner fire.", "duration": 180, "frequencyId": "sulphur" } ], "colors": { "primary": "#fecaca", "secondary": "#fda4af", "accent": "#f87171" }
     },
     {
-      "id": "triad-alchemical", "title": "The Alchemical Triad", "categoryId": "elements", "description": "An advanced sequence of Silver, Gold, and Platinum to enhance intuition, connect with divine wisdom, and elevate your consciousness to higher states.", "steps": [ { "title": "Intuition: Silver", "description": "Tune into the reflective, intuitive energy of the divine feminine.", "duration": 180, "frequencyId": "silver" }, { "title": "Enlightenment: Gold", "description": "Resonate with solar radiance and the purity of the perfected soul.", "duration": 180, "frequencyId": "gold" }, { "title": "Ascension: Platinum", "description": "Purify the energetic body and attract higher-vibrational experiences.", "duration": 180, "frequencyId": "platinum" } ], "colors": { "primary": "#e7e5e4", "secondary": "#fcd34d", "accent": "#d6d3d1" }, "premium": true
+      "id": "triad-alchemical", "title": "The Alchemical Triad", "categoryId": "elements", "description": "An advanced sequence of Silver, Gold, and Platinum to enhance intuition, connect with divine wisdom, and elevate your consciousness to higher states.", "steps": [ { "title": "Intuition: Silver", "description": "Tune into the reflective, intuitive energy of the divine feminine.", "duration": 180, "frequencyId": "silver" }, { "title": "Enlightenment: Gold", "description": "Resonate with solar radiance and the purity of the perfected soul.", "duration": 180, "frequencyId": "gold" }, { "title": "Ascension: Platinum", "description": "Purify the energetic body and attract higher-vibrational experiences.", "duration": 180, "frequencyId": "platinum" } ], "colors": { "primary": "#e7e5e4", "secondary": "#fcd34d", "accent": "#d6d3d1" }
     },
     {
-      "id": "triad-ethereal", "title": "The Ethereal Bridge", "categoryId": "elements", "description": "A sequence of Helium, Neon, and Argon to lift the spirit, illuminate inner truths, and create a state of profound, stable calm for deep meditation.", "steps": [ { "title": "Levity: Helium", "description": "Lift your spirit with the vibration of joy and lightheartedness.", "duration": 180, "frequencyId": "helium" }, { "title": "Illumination: Neon", "description": "Shine a light on your inner world with radiant brilliance.", "duration": 180, "frequencyId": "neon" }, { "title": "Stillness: Argon", "description": "Settle into a state of noble stability and inner quiet.", "duration": 180, "frequencyId": "argon" } ], "colors": { "primary": "#e0f2fe", "secondary": "#cffafe", "accent": "#22d3ee" }, "premium": true
+      "id": "triad-ethereal", "title": "The Ethereal Bridge", "categoryId": "elements", "description": "A sequence of Helium, Neon, and Argon to lift the spirit, illuminate inner truths, and create a state of profound, stable calm for deep meditation.", "steps": [ { "title": "Levity: Helium", "description": "Lift your spirit with the vibration of joy and lightheartedness.", "duration": 180, "frequencyId": "helium" }, { "title": "Illumination: Neon", "description": "Shine a light on your inner world with radiant brilliance.", "duration": 180, "frequencyId": "neon" }, { "title": "Stillness: Argon", "description": "Settle into a state of noble stability and inner quiet.", "duration": 180, "frequencyId": "argon" } ], "colors": { "primary": "#e0f2fe", "secondary": "#cffafe", "accent": "#22d3ee" }
     },
     {
       "id": "earth-resonance-grounding", "title": "Earth Resonance Grounding", "categoryId": "guided", "description": "A deeply grounding protocol that combines the Earth's Schumann Resonance with calming Alpha waves and gentle rain sounds to align your bio-field.", "steps": [ { "title": "Calm & Settle", "description": "Ease into a state of relaxation with gentle alpha waves, the soothing sound of rain, and grounding brown noise.", "duration": 300, "frequencyId": "alpha", "layerFrequencyId": "ambient-rain", "layer3FrequencyId": "noise-brown" }, { "title": "Earth Attunement", "description": "Tune into the planet's heartbeat with the 7.83Hz Schumann Resonance, layered with the magnetic pulse of Iron and foundational Carbon to deeply anchor your energy.", "duration": 300, "frequencyId": "schumann-resonance", "layerFrequencyId": "iron", "layer3FrequencyId": "carbon" }, { "title": "Harmonize & Integrate", "description": "Combine alpha waves, the Schumann Resonance, and the foundational energy of Carbon to harmonize your energy field and integrate the benefits.", "duration": 300, "frequencyId": "alpha", "layerFrequencyId": "carbon", "layer3FrequencyId": "schumann-resonance" } ], "colors": { "primary": "#86efac", "secondary": "#bbf7d0", "accent": "#4ade80" }, "premium": false
     },
     {
-      "id": "vagus-lymph-reset", "title": "Vagus Nerve & Lymph Flow Reset", "categoryId": "guided", "description": "Stimulate your vagus nerve and support lymphatic flow with this calming protocol designed to activate your body's 'rest and digest' system.", "steps": [ { "title": "Vagal Toning", "description": "Use the Earth's Schumann Resonance, soothed by Lithium, and deepened by Delta waves to gently stimulate the vagus nerve and induce a deep parasympathetic state.", "duration": 300, "frequencyId": "schumann-resonance", "layerFrequencyId": "lithium", "layer3FrequencyId": "delta" }, { "title": "Lymphatic Flow", "description": "A low-frequency pulse, infused with purifying Oxygen and cleansing rain, to encourage gentle movement and drainage within the lymphatic system.", "duration": 300, "frequencyId": "rife-lymph-support", "layerFrequencyId": "oxygen", "layer3FrequencyId": "ambient-rain" }, { "title": "System Reset", "description": "Conclude with deep Delta waves, oceanic sounds, and healing frequencies to allow for profound physical rest and integration.", "duration": 300, "frequencyId": "delta", "layerFrequencyId": "ambient-sea", "layer3FrequencyId": "solfeggio-285-healing" } ], "colors": { "primary": "#cffafe", "secondary": "#a5f3fc", "accent": "#67e8f9" }, "premium": true
+      "id": "vagus-lymph-reset", "title": "Vagus Nerve & Lymph Flow Reset", "categoryId": "guided", "description": "Stimulate your vagus nerve and support lymphatic flow with this calming protocol designed to activate your body's 'rest and digest' system.", "steps": [ { "title": "Vagal Toning", "description": "Use the Earth's Schumann Resonance, soothed by Lithium, and deepened by Delta waves to gently stimulate the vagus nerve and induce a deep parasympathetic state.", "duration": 300, "frequencyId": "schumann-resonance", "layerFrequencyId": "lithium", "layer3FrequencyId": "delta" }, { "title": "Lymphatic Flow", "description": "A low-frequency pulse, infused with purifying Oxygen and cleansing rain, to encourage gentle movement and drainage within the lymphatic system.", "duration": 300, "frequencyId": "rife-lymph-support", "layerFrequencyId": "oxygen", "layer3FrequencyId": "ambient-rain" }, { "title": "System Reset", "description": "Conclude with deep Delta waves, oceanic sounds, and healing frequencies to allow for profound physical rest and integration.", "duration": 300, "frequencyId": "delta", "layerFrequencyId": "ambient-sea", "layer3FrequencyId": "solfeggio-285-healing" } ], "colors": { "primary": "#cffafe", "secondary": "#a5f3fc", "accent": "#67e8f9" }
     },
     {
-      "id": "metabolic-harmony-protocol", "title": "Metabolic Harmony Protocol", "categoryId": "guided", "description": "A session to support a healthy metabolism, reduce stress-related cravings, and encourage a positive mindset towards your wellness goals.", "steps": [ { "title": "Reduce Cortisol", "description": "Begin with calming Alpha waves, restorative Magnesium, and soothing Pink Noise to lower stress—a key factor in metabolic balance.", "duration": 300, "frequencyId": "alpha", "layerFrequencyId": "magnesium", "layer3FrequencyId": "noise-pink" }, { "title": "Metabolic Resonance", "description": "Focus on the 1550 Hz Rife frequency, harmonized with balancing Chromium and grounding Carbon, to support thyroid and adrenal function.", "duration": 300, "frequencyId": "rife-metabolism-support", "layerFrequencyId": "chromium", "layer3FrequencyId": "carbon" }, { "title": "Mindful Motivation", "description": "Conclude with the 417 Hz Solfeggio frequency, energizing Beta waves, and the Sun's vitality to facilitate positive change and reinforce healthy habits.", "duration": 300, "frequencyId": "solfeggio-417-change", "layerFrequencyId": "beta", "layer3FrequencyId": "celestial-sun" } ], "colors": { "primary": "#fed7aa", "secondary": "#fde047", "accent": "#fb923c" }, "premium": true
+      "id": "metabolic-harmony-protocol", "title": "Metabolic Harmony Protocol", "categoryId": "guided", "description": "A session to support a healthy metabolism, reduce stress-related cravings, and encourage a positive mindset towards your wellness goals.", "steps": [ { "title": "Reduce Cortisol", "description": "Begin with calming Alpha waves, restorative Magnesium, and soothing Pink Noise to lower stress—a key factor in metabolic balance.", "duration": 300, "frequencyId": "alpha", "layerFrequencyId": "magnesium", "layer3FrequencyId": "noise-pink" }, { "title": "Metabolic Resonance", "description": "Focus on the 1550 Hz Rife frequency, harmonized with balancing Chromium and grounding Carbon, to support thyroid and adrenal function.", "duration": 300, "frequencyId": "rife-metabolism-support", "layerFrequencyId": "chromium", "layer3FrequencyId": "carbon" }, { "title": "Mindful Motivation", "description": "Conclude with the 417 Hz Solfeggio frequency, energizing Beta waves, and the Sun's vitality to facilitate positive change and reinforce healthy habits.", "duration": 300, "frequencyId": "solfeggio-417-change", "layerFrequencyId": "beta", "layer3FrequencyId": "celestial-sun" } ], "colors": { "primary": "#fed7aa", "secondary": "#fde047", "accent": "#fb923c" }
     },
     {
-      "id": "pre-workout-ignition", "title": "Pre-Workout Ignition", "categoryId": "guided", "description": "An energizing protocol using Beta waves and the driving frequency of Mars to prime your mind and body for peak physical performance.", "steps": [ { "title": "Awaken Focus", "description": "Start with Beta waves, the driving frequency of Mars, and a vitality boost to bring sharp, focused energy to your mind.", "duration": 300, "frequencyId": "beta", "layerFrequencyId": "celestial-mars", "layer3FrequencyId": "rife-633hz-vitality" }, { "title": "Ignite Drive", "description": "Introduce the resonant frequency of Mars, layered with the grounding strength of Iron and focused Beta waves, to boost motivation and physical drive.", "duration": 300, "frequencyId": "celestial-mars", "layerFrequencyId": "iron", "layer3FrequencyId": "beta" } ], "colors": { "primary": "#fecaca", "secondary": "#fca5a5", "accent": "#ef4444" }, "premium": true
+      "id": "pre-workout-ignition", "title": "Pre-Workout Ignition", "categoryId": "guided", "description": "An energizing protocol using Beta waves and the driving frequency of Mars to prime your mind and body for peak physical performance.", "steps": [ { "title": "Awaken Focus", "description": "Start with Beta waves, the driving frequency of Mars, and a vitality boost to bring sharp, focused energy to your mind.", "duration": 300, "frequencyId": "beta", "layerFrequencyId": "celestial-mars", "layer3FrequencyId": "rife-633hz-vitality" }, { "title": "Ignite Drive", "description": "Introduce the resonant frequency of Mars, layered with the grounding strength of Iron and focused Beta waves, to boost motivation and physical drive.", "duration": 300, "frequencyId": "celestial-mars", "layerFrequencyId": "iron", "layer3FrequencyId": "beta" } ], "colors": { "primary": "#fecaca", "secondary": "#fca5a5", "accent": "#ef4444" }
     },
     {
-      "id": "peak-performance-endurance", "title": "Peak Performance Endurance", "categoryId": "guided", "description": "A session for maintaining focus and energy during your workout. Combines Beta and Gamma waves for sustained concentration and peak performance.", "steps": [ { "title": "Sustained Focus", "description": "Lock in with a steady Beta wave protocol, infused with vital Oxygen and radiant solar energy, to maintain alertness and cellular respiration.", "duration": 600, "frequencyId": "beta", "layerFrequencyId": "oxygen", "layer3FrequencyId": "celestial-sun" }, { "title": "Peak Performance", "description": "Layer in 40Hz Gamma waves to sharpen cognitive processing and push your limits.", "duration": 600, "frequencyId": "beta", "layerFrequencyId": "gamma-40hz-precise" } ], "colors": { "primary": "#fdba74", "secondary": "#fb923c", "accent": "#f97316" }, "premium": true
+      "id": "peak-performance-endurance", "title": "Peak Performance Endurance", "categoryId": "guided", "description": "A session for maintaining focus and energy during your workout. Combines Beta and Gamma waves for sustained concentration and peak performance.", "steps": [ { "title": "Sustained Focus", "description": "Lock in with a steady Beta wave protocol, infused with vital Oxygen and radiant solar energy, to maintain alertness and cellular respiration.", "duration": 600, "frequencyId": "beta", "layerFrequencyId": "oxygen", "layer3FrequencyId": "celestial-sun" }, { "title": "Peak Performance", "description": "Layer in 40Hz Gamma waves to sharpen cognitive processing and push your limits.", "duration": 600, "frequencyId": "beta", "layerFrequencyId": "gamma-40hz-precise" } ], "colors": { "primary": "#fdba74", "secondary": "#fb923c", "accent": "#f97316" }
     },
     {
-      "id": "post-workout-recovery", "title": "Post-Workout Recovery", "categoryId": "guided", "description": "A cool-down protocol to ease muscle soreness, reduce inflammation, and shift your nervous system into a restorative state.", "steps": [ { "title": "Inflammation Reduction", "description": "Use a targeted Rife frequency for inflammation, combined with grounding Carbon and healing Solfeggio, to begin the recovery process.", "duration": 480, "frequencyId": "rife-inflammation", "layerFrequencyId": "carbon", "layer3FrequencyId": "solfeggio-285-healing" }, { "title": "Deep Relaxation", "description": "Transition to Theta waves, soothing rain, and calming Magnesium to promote deep physical and mental relaxation, allowing your body to repair.", "duration": 600, "frequencyId": "theta", "layerFrequencyId": "ambient-rain", "layer3FrequencyId": "magnesium" } ], "colors": { "primary": "#93c5fd", "secondary": "#a5b4fc", "accent": "#60a5fa" }, "premium": true
+      "id": "post-workout-recovery", "title": "Post-Workout Recovery", "categoryId": "guided", "description": "A cool-down protocol to ease muscle soreness, reduce inflammation, and shift your nervous system into a restorative state.", "steps": [ { "title": "Inflammation Reduction", "description": "Use a targeted Rife frequency for inflammation, combined with grounding Carbon and healing Solfeggio, to begin the recovery process.", "duration": 480, "frequencyId": "rife-inflammation", "layerFrequencyId": "carbon", "layer3FrequencyId": "solfeggio-285-healing" }, { "title": "Deep Relaxation", "description": "Transition to Theta waves, soothing rain, and calming Magnesium to promote deep physical and mental relaxation, allowing your body to repair.", "duration": 600, "frequencyId": "theta", "layerFrequencyId": "ambient-rain", "layer3FrequencyId": "magnesium" } ], "colors": { "primary": "#93c5fd", "secondary": "#a5b4fc", "accent": "#60a5fa" }
     },
     {
-      "id": "oxygenation-circulation-flow", "title": "Oxygenation & Circulation Flow", "categoryId": "guided", "description": "A session using specific frequencies to support healthy blood flow, oxygenation, and cellular vitality.", "steps": [ { "title": "Circulation Support", "description": "Use the 727 Hz Rife frequency, magnetic Iron, and vital Oxygen to support blood health and circulation.", "duration": 450, "frequencyId": "rife-727", "layerFrequencyId": "iron", "layer3FrequencyId": "oxygen" }, { "title": "Cellular Oxygenation", "description": "Conclude with a blend of Oxygen, vitality, and magnetic Iron to enhance cellular respiration and energy.", "duration": 450, "frequencyId": "oxygen", "layerFrequencyId": "rife-727", "layer3FrequencyId": "iron" } ], "colors": { "primary": "#fecaca", "secondary": "#fda4af", "accent": "#f87171" }, "premium": true
+      "id": "oxygenation-circulation-flow", "title": "Oxygenation & Circulation Flow", "categoryId": "guided", "description": "A session using specific frequencies to support healthy blood flow, oxygenation, and cellular vitality.", "steps": [ { "title": "Circulation Support", "description": "Use the 727 Hz Rife frequency, magnetic Iron, and vital Oxygen to support blood health and circulation.", "duration": 450, "frequencyId": "rife-727", "layerFrequencyId": "iron", "layer3FrequencyId": "oxygen" }, { "title": "Cellular Oxygenation", "description": "Conclude with a blend of Oxygen, vitality, and magnetic Iron to enhance cellular respiration and energy.", "duration": 450, "frequencyId": "oxygen", "layerFrequencyId": "rife-727", "layer3FrequencyId": "iron" } ], "colors": { "primary": "#fecaca", "secondary": "#fda4af", "accent": "#f87171" }
     },
     {
-      "id": "mitochondrial-energy-protocol", "title": "Mitochondrial Energy Protocol", "categoryId": "guided", "description": "A protocol designed to support your cellular powerhouses, the mitochondria, for enhanced energy and vitality.", "steps": [ { "title": "Cellular Resonance", "description": "A combination of a general vitality frequency, an NAD+ booster, and the spark of Hydrogen to stimulate your cellular powerhouses.", "duration": 360, "frequencyId": "rife-880", "layerFrequencyId": "nad-plus-booster", "layer3FrequencyId": "hydrogen" }, { "title": "Energetic Charge", "description": "Combine the 528 Hz 'Miracle Tone' with the vital spark of Hydrogen and a radiant vitality frequency to charge your cells with life force.", "duration": 360, "frequencyId": "solfeggio-528-repair", "layerFrequencyId": "hydrogen", "layer3FrequencyId": "rife-633hz-vitality" } ], "colors": { "primary": "#fde047", "secondary": "#facc15", "accent": "#eab308" }, "premium": true
+      "id": "mitochondrial-energy-protocol", "title": "Mitochondrial Energy Protocol", "categoryId": "guided", "description": "A protocol designed to support your cellular powerhouses, the mitochondria, for enhanced energy and vitality.", "steps": [ { "title": "Cellular Resonance", "description": "A combination of a general vitality frequency, an NAD+ booster, and the spark of Hydrogen to stimulate your cellular powerhouses.", "duration": 360, "frequencyId": "rife-880", "layerFrequencyId": "nad-plus-booster", "layer3FrequencyId": "hydrogen" }, { "title": "Energetic Charge", "description": "Combine the 528 Hz 'Miracle Tone' with the vital spark of Hydrogen and a radiant vitality frequency to charge your cells with life force.", "duration": 360, "frequencyId": "solfeggio-528-repair", "layerFrequencyId": "hydrogen", "layer3FrequencyId": "rife-633hz-vitality" } ], "colors": { "primary": "#fde047", "secondary": "#facc15", "accent": "#eab308" }
     },
     {
-      "id": "red-light-synergy", "title": "Red Light Therapy Synergy", "categoryId": "guided", "description": "An audio protocol to complement your Red Light Therapy sessions, promoting collagen production and enhancing cellular absorption of light.", "steps": [ { "title": "Cellular Repair", "description": "A blend for tissue healing, fascial support, and structural integrity to prepare the cells for light therapy.", "duration": 450, "frequencyId": "solfeggio-285-healing", "layerFrequencyId": "rife-fascia", "layer3FrequencyId": "carbon" }, { "title": "Structural Support", "description": "The Rife frequency for fascia, combined with tissue healing and Carbon's energy, helps support the skin's underlying structural matrix.", "duration": 450, "frequencyId": "rife-fascia", "layerFrequencyId": "solfeggio-285-healing", "layer3FrequencyId": "carbon" } ], "colors": { "primary": "#fca5a5", "secondary": "#f87171", "accent": "#ef4444" }, "premium": true
+      "id": "red-light-synergy", "title": "Red Light Therapy Synergy", "categoryId": "guided", "description": "An audio protocol to complement your Red Light Therapy sessions, promoting collagen production and enhancing cellular absorption of light.", "steps": [ { "title": "Cellular Repair", "description": "A blend for tissue healing, fascial support, and structural integrity to prepare the cells for light therapy.", "duration": 450, "frequencyId": "solfeggio-285-healing", "layerFrequencyId": "rife-fascia", "layer3FrequencyId": "carbon" }, { "title": "Structural Support", "description": "The Rife frequency for fascia, combined with tissue healing and Carbon's energy, helps support the skin's underlying structural matrix.", "duration": 450, "frequencyId": "rife-fascia", "layerFrequencyId": "solfeggio-285-healing", "layer3FrequencyId": "carbon" } ], "colors": { "primary": "#fca5a5", "secondary": "#f87171", "accent": "#ef4444" }
     },
     {
-      "id": "post-procedure-recovery", "title": "Post-Procedure Recovery", "categoryId": "guided", "description": "A gentle session to support the body's natural healing process after cosmetic procedures, helping to reduce inflammation and promote tissue repair.", "steps": [ { "title": "Soothe & Calm", "description": "Begin with a Rife frequency for inflammation, layered with calming Lithium and deep Delta waves, to soothe the system.", "duration": 600, "frequencyId": "rife-inflammation", "layerFrequencyId": "lithium", "layer3FrequencyId": "delta" }, { "title": "Tissue Repair", "description": "Use a combination of tissue healing, fascial support, and Zinc's defensive energy to support cellular regeneration.", "duration": 600, "frequencyId": "solfeggio-285-healing", "layerFrequencyId": "rife-fascia", "layer3FrequencyId": "zinc" } ], "colors": { "primary": "#d8b4fe", "secondary": "#c084fc", "accent": "#a855f7" }, "premium": true
+      "id": "post-procedure-recovery", "title": "Post-Procedure Recovery", "categoryId": "guided", "description": "A gentle session to support the body's natural healing process after cosmetic procedures, helping to reduce inflammation and promote tissue repair.", "steps": [ { "title": "Soothe & Calm", "description": "Begin with a Rife frequency for inflammation, layered with calming Lithium and deep Delta waves, to soothe the system.", "duration": 600, "frequencyId": "rife-inflammation", "layerFrequencyId": "lithium", "layer3FrequencyId": "delta" }, { "title": "Tissue Repair", "description": "Use a combination of tissue healing, fascial support, and Zinc's defensive energy to support cellular regeneration.", "duration": 600, "frequencyId": "solfeggio-285-healing", "layerFrequencyId": "rife-fascia", "layer3FrequencyId": "zinc" } ], "colors": { "primary": "#d8b4fe", "secondary": "#c084fc", "accent": "#a855f7" }
     },
     {
-      "id": "cellular-longevity-protocol", "title": "Cellular Longevity Protocol", "categoryId": "guided", "description": "A session to support graceful aging by targeting NAD+ levels and promoting deep cellular restoration during Delta wave states.", "steps": [ { "title": "NAD+ Boost", "description": "A specialized frequency to support NAD+ production, enhanced by high-vibrational Platinum and restorative Delta waves.", "duration": 720, "frequencyId": "nad-plus-booster", "layerFrequencyId": "platinum", "layer3FrequencyId": "delta" }, { "title": "Deep Restoration", "description": "Enter a deep Delta wave state, reinforced with the NAD+ and Platinum frequencies, for physical repair and cellular cleansing.", "duration": 600, "frequencyId": "delta", "layerFrequencyId": "nad-plus-booster", "layer3FrequencyId": "platinum" } ], "colors": { "primary": "#a5f3fc", "secondary": "#67e8f9", "accent": "#22d3ee" }, "premium": true
+      "id": "cellular-longevity-protocol", "title": "Cellular Longevity Protocol", "categoryId": "guided", "description": "A session to support graceful aging by targeting NAD+ levels and promoting deep cellular restoration during Delta wave states.", "steps": [ { "title": "NAD+ Boost", "description": "A specialized frequency to support NAD+ production, enhanced by high-vibrational Platinum and restorative Delta waves.", "duration": 720, "frequencyId": "nad-plus-booster", "layerFrequencyId": "platinum", "layer3FrequencyId": "delta" }, { "title": "Deep Restoration", "description": "Enter a deep Delta wave state, reinforced with the NAD+ and Platinum frequencies, for physical repair and cellular cleansing.", "duration": 600, "frequencyId": "delta", "layerFrequencyId": "nad-plus-booster", "layer3FrequencyId": "platinum" } ], "colors": { "primary": "#a5f3fc", "secondary": "#67e8f9", "accent": "#22d3ee" }
     },
     {
-      "id": "adhd-focus-protocol", "title": "ADHD Focus Protocol", "categoryId": "guided", "description": "A protocol that starts with calming Theta waves to quiet a busy mind and then transitions to Beta waves to support sustained, focused attention.", "steps": [ { "title": "Calm the Mind", "description": "Begin with Theta waves, balancing Lithium, and grounding Brown Noise to reduce mental chatter and create a state of relaxed awareness.", "duration": 600, "frequencyId": "theta", "layerFrequencyId": "lithium", "layer3FrequencyId": "noise-brown" }, { "title": "Engage Focus", "description": "Transition to a steady Beta wave frequency, sharpened by 40Hz Gamma and fortified by Iron, to promote alertness and concentration.", "duration": 900, "frequencyId": "beta", "layerFrequencyId": "gamma-40hz-precise", "layer3FrequencyId": "iron" } ], "colors": { "primary": "#e0e7ff", "secondary": "#c7d2fe", "accent": "#818cf8" }, "premium": true
+      "id": "adhd-focus-protocol", "title": "ADHD Focus Protocol", "categoryId": "guided", "description": "A protocol that starts with calming Theta waves to quiet a busy mind and then transitions to Beta waves to support sustained, focused attention.", "steps": [ { "title": "Calm the Mind", "description": "Begin with Theta waves, balancing Lithium, and grounding Brown Noise to reduce mental chatter and create a state of relaxed awareness.", "duration": 600, "frequencyId": "theta", "layerFrequencyId": "lithium", "layer3FrequencyId": "noise-brown" }, { "title": "Engage Focus", "description": "Transition to a steady Beta wave frequency, sharpened by 40Hz Gamma and fortified by Iron, to promote alertness and concentration.", "duration": 900, "frequencyId": "beta", "layerFrequencyId": "gamma-40hz-precise", "layer3FrequencyId": "iron" } ], "colors": { "primary": "#e0e7ff", "secondary": "#c7d2fe", "accent": "#818cf8" }
     },
     {
-      "id": "neurogenesis-support-protocol", "title": "Neurogenesis Support Protocol", "categoryId": "guided", "description": "A session combining 40Hz Gamma waves and specific Rife frequencies to support brain health and the creation of new neural pathways.", "steps": [ { "title": "Gamma Stimulation", "description": "A blend of 40Hz Gamma, neural support Rife, and inspirational Phosphorous to stimulate cognitive function and brain activity.", "duration": 600, "frequencyId": "gamma-40hz-precise", "layerFrequencyId": "rife-880", "layer3FrequencyId": "phosphorous" }, { "title": "Neural Support", "description": "A Rife frequency for neural health, enhanced by Gamma and Phosphorous, to support the creation of new pathways.", "duration": 600, "frequencyId": "rife-880", "layerFrequencyId": "gamma-40hz-precise", "layer3FrequencyId": "phosphorous" } ], "colors": { "primary": "#c4b5fd", "secondary": "#a78bfa", "accent": "#8b5cf6" }, "premium": true
+      "id": "neurogenesis-support-protocol", "title": "Neurogenesis Support Protocol", "categoryId": "guided", "description": "A session combining 40Hz Gamma waves and specific Rife frequencies to support brain health and the creation of new neural pathways.", "steps": [ { "title": "Gamma Stimulation", "description": "A blend of 40Hz Gamma, neural support Rife, and inspirational Phosphorous to stimulate cognitive function and brain activity.", "duration": 600, "frequencyId": "gamma-40hz-precise", "layerFrequencyId": "rife-880", "layer3FrequencyId": "phosphorous" }, { "title": "Neural Support", "description": "A Rife frequency for neural health, enhanced by Gamma and Phosphorous, to support the creation of new pathways.", "duration": 600, "frequencyId": "rife-880", "layerFrequencyId": "gamma-40hz-precise", "layer3FrequencyId": "phosphorous" } ], "colors": { "primary": "#c4b5fd", "secondary": "#a78bfa", "accent": "#8b5cf6" }
     },
     {
-      "id": "dopamine-release-protocol", "title": "Dopamine Release Protocol", "categoryId": "guided", "description": "A dynamic session using Beta and Gamma waves to naturally support dopamine, enhancing motivation, focus, and mood.", "steps": [ { "title": "Cognitive Priming", "description": "Beta waves, the driving frequency of Mars, and a vitality boost to sharpen focus and build motivation.", "duration": 450, "frequencyId": "beta", "layerFrequencyId": "celestial-mars", "layer3FrequencyId": "rife-633hz-vitality" }, { "title": "Peak State Activation", "description": "High-frequency Gamma waves, vital solar energy, and the frequency of luck to stimulate reward centers and elevate mood.", "duration": 450, "frequencyId": "gamma", "layerFrequencyId": "celestial-sun", "layer3FrequencyId": "angel-777" } ], "colors": { "primary": "#fde047", "secondary": "#facc15", "accent": "#eab308" }, "premium": true
+      "id": "dopamine-release-protocol", "title": "Dopamine Release Protocol", "categoryId": "guided", "description": "A dynamic session using Beta and Gamma waves to naturally support dopamine, enhancing motivation, focus, and mood.", "steps": [ { "title": "Cognitive Priming", "description": "Beta waves, the driving frequency of Mars, and a vitality boost to sharpen focus and build motivation.", "duration": 450, "frequencyId": "beta", "layerFrequencyId": "celestial-mars", "layer3FrequencyId": "rife-633hz-vitality" }, { "title": "Peak State Activation", "description": "High-frequency Gamma waves, vital solar energy, and the frequency of luck to stimulate reward centers and elevate mood.", "duration": 450, "frequencyId": "gamma", "layerFrequencyId": "celestial-sun", "layer3FrequencyId": "angel-777" } ], "colors": { "primary": "#fde047", "secondary": "#facc15", "accent": "#eab308" }
     },
     {
-      "id": "serotonin-boost-protocol", "title": "Serotonin Boost Protocol", "categoryId": "guided", "description": "A calming session using Alpha waves to create a relaxed, positive mental state conducive to natural serotonin production.", "steps": [ { "title": "Release & Prepare", "description": "Begin with 396 Hz and deep Theta waves to release subconscious stressors, set to the backdrop of gentle rain.", "duration": 600, "frequencyId": "solfeggio-396-liberation", "layerFrequencyId": "ambient-rain", "layer3FrequencyId": "theta" }, { "title": "Cultivate Calm", "description": "A 10 Hz Alpha wave, layered with Lithium's balance and the 639 Hz harmony tone, induces a state of serene positivity.", "duration": 600, "frequencyId": "alpha", "layerFrequencyId": "lithium", "layer3FrequencyId": "solfeggio-639-harmony" } ], "colors": { "primary": "#93c5fd", "secondary": "#60a5fa", "accent": "#3b82f6" }, "premium": true
+      "id": "serotonin-boost-protocol", "title": "Serotonin Boost Protocol", "categoryId": "guided", "description": "A calming session using Alpha waves to create a relaxed, positive mental state conducive to natural serotonin production.", "steps": [ { "title": "Release & Prepare", "description": "Begin with 396 Hz and deep Theta waves to release subconscious stressors, set to the backdrop of gentle rain.", "duration": 600, "frequencyId": "solfeggio-396-liberation", "layerFrequencyId": "ambient-rain", "layer3FrequencyId": "theta" }, { "title": "Cultivate Calm", "description": "A 10 Hz Alpha wave, layered with Lithium's balance and the 639 Hz harmony tone, induces a state of serene positivity.", "duration": 600, "frequencyId": "alpha", "layerFrequencyId": "lithium", "layer3FrequencyId": "solfeggio-639-harmony" } ], "colors": { "primary": "#93c5fd", "secondary": "#60a5fa", "accent": "#3b82f6" }
     },
     {
-      "id": "oxytocin-love-protocol", "title": "Oxytocin 'Love' Protocol", "categoryId": "guided", "description": "A heart-centered session using frequencies for harmony and connection to cultivate feelings of empathy and love.", "steps": [ { "title": "Opening the Heart", "description": "Gentle Alpha waves, the frequency of Venus, and the 639 Hz harmony tone create a receptive state of peace.", "duration": 450, "frequencyId": "alpha", "layerFrequencyId": "celestial-venus", "layer3FrequencyId": "solfeggio-639-harmony" }, { "title": "Deepening Connection", "description": "The 639 Hz frequency, grounded by the Earth's Schumann Resonance and Venus's loving energy, fosters profound connection.", "duration": 450, "frequencyId": "solfeggio-639-harmony", "layerFrequencyId": "schumann-resonance", "layer3FrequencyId": "celestial-venus" } ], "colors": { "primary": "#f9a8d4", "secondary": "#f472b6", "accent": "#ec4899" }, "premium": true
+      "id": "oxytocin-love-protocol", "title": "Oxytocin 'Love' Protocol", "categoryId": "guided", "description": "A heart-centered session using frequencies for harmony and connection to cultivate feelings of empathy and love.", "steps": [ { "title": "Opening the Heart", "description": "Gentle Alpha waves, the frequency of Venus, and the 639 Hz harmony tone create a receptive state of peace.", "duration": 450, "frequencyId": "alpha", "layerFrequencyId": "celestial-venus", "layer3FrequencyId": "solfeggio-639-harmony" }, { "title": "Deepening Connection", "description": "The 639 Hz frequency, grounded by the Earth's Schumann Resonance and Venus's loving energy, fosters profound connection.", "duration": 450, "frequencyId": "solfeggio-639-harmony", "layerFrequencyId": "schumann-resonance", "layer3FrequencyId": "celestial-venus" } ], "colors": { "primary": "#f9a8d4", "secondary": "#f472b6", "accent": "#ec4899" }
     },
     {
-      "id": "endorphin-bliss-protocol", "title": "Endorphin Bliss Protocol", "categoryId": "guided", "description": "A session that uses Alpha-to-Theta transitions to mimic states of deep relaxation and meditation, which can support the natural release of endorphins.", "steps": [ { "title": "Alpha-Theta Bridge", "description": "Gently guide your mind from a relaxed Alpha state to a deeper, meditative Theta state, enhanced by angelic and expansive frequencies for a blissful experience.", "duration": 900, "frequencyId": "theta", "layerFrequencyId": "angel-111", "layer3FrequencyId": "celestial-jupiter" } ], "colors": { "primary": "#a7f3d0", "secondary": "#6ee7b7", "accent": "#34d399" }, "premium": true
+      "id": "endorphin-bliss-protocol", "title": "Endorphin Bliss Protocol", "categoryId": "guided", "description": "A session that uses Alpha-to-Theta transitions to mimic states of deep relaxation and meditation, which can support the natural release of endorphins.", "steps": [ { "title": "Alpha-Theta Bridge", "description": "Gently guide your mind from a relaxed Alpha state to a deeper, meditative Theta state, enhanced by angelic and expansive frequencies for a blissful experience.", "duration": 900, "frequencyId": "theta", "layerFrequencyId": "angel-111", "layer3FrequencyId": "celestial-jupiter" } ], "colors": { "primary": "#a7f3d0", "secondary": "#6ee7b7", "accent": "#34d399" }
     },
     {
-      "id": "mindful-start", "title": "Mindful Start", "categoryId": "guided", "description": "Begin your day with this session combining gentle Alpha waves and Solfeggio frequencies to clear your mind and set a positive intention.", "steps": [ { "title": "Release & Center", "description": "396 Hz, gentle Theta, and soothing rain to release subconscious blockages and center your being.", "duration": 300, "frequencyId": "solfeggio-396-liberation", "layerFrequencyId": "theta", "layer3FrequencyId": "ambient-rain" }, { "title": "Calm Awareness", "description": "Alpha waves, solar vitality, and invigorating Oxygen to foster a state of relaxed, present-moment awareness.", "duration": 300, "frequencyId": "alpha", "layerFrequencyId": "celestial-sun", "layer3FrequencyId": "oxygen" } ], "colors": { "primary": "#fde047", "secondary": "#fcd34d", "accent": "#facc15" }, "premium": true
+      "id": "mindful-start", "title": "Mindful Start", "categoryId": "guided", "description": "Begin your day with this session combining gentle Alpha waves and Solfeggio frequencies to clear your mind and set a positive intention.", "steps": [ { "title": "Release & Center", "description": "396 Hz, gentle Theta, and soothing rain to release subconscious blockages and center your being.", "duration": 300, "frequencyId": "solfeggio-396-liberation", "layerFrequencyId": "theta", "layer3FrequencyId": "ambient-rain" }, { "title": "Calm Awareness", "description": "Alpha waves, solar vitality, and invigorating Oxygen to foster a state of relaxed, present-moment awareness.", "duration": 300, "frequencyId": "alpha", "layerFrequencyId": "celestial-sun", "layer3FrequencyId": "oxygen" } ], "colors": { "primary": "#fde047", "secondary": "#fcd34d", "accent": "#facc15" }
     },
     {
-      "id": "deep-relaxation", "title": "Deep Relaxation", "categoryId": "guided", "description": "Unwind completely with this journey from Alpha to Theta brainwaves, perfect for melting away stress and anxiety after a long day.", "steps": [ { "title": "Stress Release", "description": "Start with Alpha waves, calming ocean sounds, and restorative Magnesium to calm the nervous system.", "duration": 600, "frequencyId": "alpha", "layerFrequencyId": "ambient-sea", "layer3FrequencyId": "magnesium" }, { "title": "Enter Deep Calm", "description": "Transition to Theta waves with grounding Brown Noise for profound mental and physical relaxation.", "duration": 600, "frequencyId": "theta", "layerFrequencyId": "noise-brown", "layer3FrequencyId": "delta" } ], "colors": { "primary": "#c7d2fe", "secondary": "#a5b4fc", "accent": "#818cf8" }, "premium": true
+      "id": "deep-relaxation", "title": "Deep Relaxation", "categoryId": "guided", "description": "Unwind completely with this journey from Alpha to Theta brainwaves, perfect for melting away stress and anxiety after a long day.", "steps": [ { "title": "Stress Release", "description": "Start with Alpha waves, calming ocean sounds, and restorative Magnesium to calm the nervous system.", "duration": 600, "frequencyId": "alpha", "layerFrequencyId": "ambient-sea", "layer3FrequencyId": "magnesium" }, { "title": "Enter Deep Calm", "description": "Transition to Theta waves with grounding Brown Noise for profound mental and physical relaxation.", "duration": 600, "frequencyId": "theta", "layerFrequencyId": "noise-brown", "layer3FrequencyId": "delta" } ], "colors": { "primary": "#c7d2fe", "secondary": "#a5b4fc", "accent": "#818cf8" }
     },
     {
-      "id": "yoga-savasana-relaxation", "title": "Yoga & Savasana Relaxation", "categoryId": "guided", "description": "A session to enhance your Savasana or cool-down. Deep Theta waves help integrate your practice and guide you into a state of profound rest.", "steps": [ { "title": "Deep Integration", "description": "Theta waves, healing Solfeggio, and Earth's resonance to deepen relaxation and help the body absorb the benefits of your yoga practice.", "duration": 900, "frequencyId": "theta", "layerFrequencyId": "solfeggio-285-healing", "layer3FrequencyId": "schumann-resonance" } ], "colors": { "primary": "#d8b4fe", "secondary": "#c084fc", "accent": "#a855f7" }, "premium": true
+      "id": "yoga-savasana-relaxation", "title": "Yoga & Savasana Relaxation", "categoryId": "guided", "description": "A session to enhance your Savasana or cool-down. Deep Theta waves help integrate your practice and guide you into a state of profound rest.", "steps": [ { "title": "Deep Integration", "description": "Theta waves, healing Solfeggio, and Earth's resonance to deepen relaxation and help the body absorb the benefits of your yoga practice.", "duration": 900, "frequencyId": "theta", "layerFrequencyId": "solfeggio-285-healing", "layer3FrequencyId": "schumann-resonance" } ], "colors": { "primary": "#d8b4fe", "secondary": "#c084fc", "accent": "#a855f7" }
     },
     {
-      "id": "ultimate-deep-sleep", "title": "Ultimate Deep Sleep", "categoryId": "guided", "description": "This protocol guides you from a relaxed Theta state into deep, restorative Delta sleep, enhanced by the grounding frequency of Brown Noise.", "steps": [ { "title": "Mind Quieting", "description": "Theta waves, grounding Brown Noise, and relaxing Magnesium to slow down brain activity and prepare for sleep.", "duration": 900, "frequencyId": "theta", "layerFrequencyId": "noise-brown", "layer3FrequencyId": "magnesium" }, { "title": "Restorative Sleep", "description": "Deep Delta waves, Brown Noise, and calming Lithium to promote physical repair and dreamless sleep.", "duration": 900, "frequencyId": "delta", "layerFrequencyId": "noise-brown", "layer3FrequencyId": "lithium" } ], "colors": { "primary": "#a5b4fc", "secondary": "#818cf8", "accent": "#6366f1" }, "premium": true
+      "id": "ultimate-deep-sleep", "title": "Ultimate Deep Sleep", "categoryId": "guided", "description": "This protocol guides you from a relaxed Theta state into deep, restorative Delta sleep, enhanced by the grounding frequency of Brown Noise.", "steps": [ { "title": "Mind Quieting", "description": "Theta waves, grounding Brown Noise, and relaxing Magnesium to slow down brain activity and prepare for sleep.", "duration": 900, "frequencyId": "theta", "layerFrequencyId": "noise-brown", "layer3FrequencyId": "magnesium" }, { "title": "Restorative Sleep", "description": "Deep Delta waves, Brown Noise, and calming Lithium to promote physical repair and dreamless sleep.", "duration": 900, "frequencyId": "delta", "layerFrequencyId": "noise-brown", "layer3FrequencyId": "lithium" } ], "colors": { "primary": "#a5b4fc", "secondary": "#818cf8", "accent": "#6366f1" }
     },
     {
       "id": "focus-10-protocol", "title": "Focus 10 Protocol", "categoryId": "guided", "description": "A protocol inspired by Hemi-Sync to achieve the 'mind awake, body asleep' state, ideal for deep meditation and inner exploration.", "steps": [ { "title": "Relaxation", "description": "Transition from Beta to Alpha with a focused Pink Noise background to calm the body.", "duration": 300, "frequencyId": "alpha", "layerFrequencyId": "noise-pink" }, { "title": "Deepening", "description": "Move into Theta with Pink Noise to maintain focus while achieving profound physical relaxation.", "duration": 300, "frequencyId": "theta", "layerFrequencyId": "noise-pink" }, { "title": "Focus 10 State", "description": "A specific combination of Beta, Theta, and 40Hz Gamma to keep the mind sharp and alert while the body is in a state of deep stillness.", "duration": 600, "frequencyId": "beta", "layerFrequencyId": "theta", "layer3FrequencyId": "gamma-40hz-precise" } ], "colors": { "primary": "#e9d5ff", "secondary": "#c4b5fd", "accent": "#d8b4fe" }, "premium": false
     },
     {
-      "id": "focus-12-protocol", "title": "Focus 12 Protocol", "categoryId": "guided", "description": "A journey to Focus 12, a state of expanded awareness beyond the five physical senses, used for creative problem solving and insight.", "steps": [ { "title": "Enter Focus 10", "description": "Establish the 'mind awake, body asleep' foundation with a powerful blend of Beta, Theta, and Gamma waves.", "duration": 600, "frequencyId": "beta", "layerFrequencyId": "theta", "layer3FrequencyId": "gamma-40hz-precise" }, { "title": "Expanded Awareness", "description": "Introduce Gamma and Alpha waves with the 999 Hz 'completion' frequency to broaden perception and access deeper levels of consciousness.", "duration": 900, "frequencyId": "gamma", "layerFrequencyId": "alpha", "layer3FrequencyId": "angel-999" } ], "colors": { "primary": "#c4b5fd", "secondary": "#a78bfa", "accent": "#a855f7" }, "premium": true
+      "id": "focus-12-protocol", "title": "Focus 12 Protocol", "categoryId": "guided", "description": "A journey to Focus 12, a state of expanded awareness beyond the five physical senses, used for creative problem solving and insight.", "steps": [ { "title": "Enter Focus 10", "description": "Establish the 'mind awake, body asleep' foundation with a powerful blend of Beta, Theta, and Gamma waves.", "duration": 600, "frequencyId": "beta", "layerFrequencyId": "theta", "layer3FrequencyId": "gamma-40hz-precise" }, { "title": "Expanded Awareness", "description": "Introduce Gamma and Alpha waves with the 999 Hz 'completion' frequency to broaden perception and access deeper levels of consciousness.", "duration": 900, "frequencyId": "gamma", "layerFrequencyId": "alpha", "layer3FrequencyId": "angel-999" } ], "colors": { "primary": "#c4b5fd", "secondary": "#a78bfa", "accent": "#a855f7" }
     },
     {
-      "id": "pineal-gland-activation", "title": "Pineal Gland Activation", "categoryId": "guided", "description": "A session using specific Solfeggio frequencies associated with activating the 'third eye' for enhanced intuition and spiritual connection.", "steps": [ { "title": "Intuitive Gateway", "description": "Theta waves, paired with the Moon's frequency and the 888 Hz 'abundance' tone, open the gateway to deep, intuitive states of mind.", "duration": 450, "frequencyId": "theta", "layerFrequencyId": "celestial-moon", "layer3FrequencyId": "angel-888" }, { "title": "Oneness Attunement", "description": "The 963 Hz frequency, layered with 852 Hz and high-vibrational Platinum, works to activate the pineal gland and connect you to unity consciousness.", "duration": 450, "frequencyId": "solfeggio-963-oneness", "layerFrequencyId": "solfeggio-852-intuition", "layer3FrequencyId": "platinum" } ], "colors": { "primary": "#d8b4fe", "secondary": "#c084fc", "accent": "#a855f7" }, "premium": true
+      "id": "pineal-gland-activation", "title": "Pineal Gland Activation", "categoryId": "guided", "description": "A session using specific Solfeggio frequencies associated with activating the 'third eye' for enhanced intuition and spiritual connection.", "steps": [ { "title": "Intuitive Gateway", "description": "Theta waves, paired with the Moon's frequency and the 888 Hz 'abundance' tone, open the gateway to deep, intuitive states of mind.", "duration": 450, "frequencyId": "theta", "layerFrequencyId": "celestial-moon", "layer3FrequencyId": "angel-888" }, { "title": "Oneness Attunement", "description": "The 963 Hz frequency, layered with 852 Hz and high-vibrational Platinum, works to activate the pineal gland and connect you to unity consciousness.", "duration": 450, "frequencyId": "solfeggio-963-oneness", "layerFrequencyId": "solfeggio-852-intuition", "layer3FrequencyId": "platinum" } ], "colors": { "primary": "#d8b4fe", "secondary": "#c084fc", "accent": "#a855f7" }
     },
     {
-      "id": "vision-restoration", "title": "Vision Restoration Protocol", "categoryId": "guided", "description": "A protocol using specific Rife frequencies associated with eye health to support and maintain healthy vision.", "steps": [ { "title": "Relax & Oxygenate", "description": "Calming Alpha waves, purifying Oxygen, and a targeted Rife frequency reduce eye strain and support cellular health in the visual system.", "duration": 600, "frequencyId": "alpha", "layerFrequencyId": "oxygen", "layer3FrequencyId": "rife-eye-health" }, { "title": "Targeted Support", "description": "A targeted Rife frequency for eye wellness, layered with protective Selenium and relaxing Alpha waves, to support visual acuity.", "duration": 600, "frequencyId": "rife-eye-health", "layerFrequencyId": "selenium", "layer3FrequencyId": "alpha" } ], "colors": { "primary": "#93c5fd", "secondary": "#60a5fa", "accent": "#3b82f6" }, "premium": true
+      "id": "vision-restoration", "title": "Vision Restoration Protocol", "categoryId": "guided", "description": "A protocol using specific Rife frequencies associated with eye health to support and maintain healthy vision.", "steps": [ { "title": "Relax & Oxygenate", "description": "Calming Alpha waves, purifying Oxygen, and a targeted Rife frequency reduce eye strain and support cellular health in the visual system.", "duration": 600, "frequencyId": "alpha", "layerFrequencyId": "oxygen", "layer3FrequencyId": "rife-eye-health" }, { "title": "Targeted Support", "description": "A targeted Rife frequency for eye wellness, layered with protective Selenium and relaxing Alpha waves, to support visual acuity.", "duration": 600, "frequencyId": "rife-eye-health", "layerFrequencyId": "selenium", "layer3FrequencyId": "alpha" } ], "colors": { "primary": "#93c5fd", "secondary": "#60a5fa", "accent": "#3b82f6" }
     },
     {
-      "id": "lucid-dream-induction", "title": "Lucid Dream Induction", "categoryId": "guided", "description": "A session combining Theta and Gamma waves to create the ideal brain state for lucid dreaming—deeply relaxed yet consciously aware.", "steps": [ { "title": "Relax into Theta", "description": "Enter the dream-like Theta state with the support of lunar and Neptunian frequencies to enhance subconscious exploration.", "duration": 900, "frequencyId": "theta", "layerFrequencyId": "celestial-moon", "layer3FrequencyId": "celestial-neptune" }, { "title": "Awaken Awareness", "description": "Introduce Gamma waves and a protective angelic frequency to promote conscious awareness within the dream state.", "duration": 600, "frequencyId": "gamma", "layerFrequencyId": "theta", "layer3FrequencyId": "angel-444" } ], "colors": { "primary": "#c4b5fd", "secondary": "#a78bfa", "accent": "#8b5cf6" }, "premium": true
+      "id": "lucid-dream-induction", "title": "Lucid Dream Induction", "categoryId": "guided", "description": "A session combining Theta and Gamma waves to create the ideal brain state for lucid dreaming—deeply relaxed yet consciously aware.", "steps": [ { "title": "Relax into Theta", "description": "Enter the dream-like Theta state with the support of lunar and Neptunian frequencies to enhance subconscious exploration.", "duration": 900, "frequencyId": "theta", "layerFrequencyId": "celestial-moon", "layer3FrequencyId": "celestial-neptune" }, { "title": "Awaken Awareness", "description": "Introduce Gamma waves and a protective angelic frequency to promote conscious awareness within the dream state.", "duration": 600, "frequencyId": "gamma", "layerFrequencyId": "theta", "layer3FrequencyId": "angel-444" } ], "colors": { "primary": "#c4b5fd", "secondary": "#a78bfa", "accent": "#8b5cf6" }
     },
     {
-      "id": "chakra-balancing-journey", "title": "Chakra Balancing Journey", "categoryId": "guided", "description": "A journey through the seven primary Solfeggio frequencies, each corresponding to a major energy center (chakra) for a full-system energetic tune-up.", "steps": [ { "title": "Root Chakra (396 Hz)", "description": "Grounding and releasing fear.", "duration": 300, "frequencyId": "solfeggio-396-liberation" }, { "title": "Sacral Chakra (417 Hz)", "description": "Facilitating positive change.", "duration": 300, "frequencyId": "solfeggio-417-change" }, { "title": "Solar Plexus (528 Hz)", "description": "Transformation and empowerment.", "duration": 300, "frequencyId": "solfeggio-528-repair" }, { "title": "Heart Chakra (639 Hz)", "description": "Connection and love.", "duration": 300, "frequencyId": "solfeggio-639-harmony" }, { "title": "Throat Chakra (741 Hz)", "description": "Expression and truth.", "duration": 300, "frequencyId": "solfeggio-741-expression" }, { "title": "Third Eye Chakra (852 Hz)", "description": "Intuition and inner vision.", "duration": 300, "frequencyId": "solfeggio-852-intuition" }, { "title": "Crown Chakra (963 Hz)", "description": "Spiritual oneness.", "duration": 300, "frequencyId": "solfeggio-963-oneness" } ], "colors": { "primary": "#fde047", "secondary": "#facc15", "accent": "#eab308" }, "premium": true
+      "id": "chakra-balancing-journey", "title": "Chakra Balancing Journey", "categoryId": "guided", "description": "A journey through the seven primary Solfeggio frequencies, each corresponding to a major energy center (chakra) for a full-system energetic tune-up.", "steps": [ { "title": "Root Chakra (396 Hz)", "description": "Grounding and releasing fear.", "duration": 300, "frequencyId": "solfeggio-396-liberation" }, { "title": "Sacral Chakra (417 Hz)", "description": "Facilitating positive change.", "duration": 300, "frequencyId": "solfeggio-417-change" }, { "title": "Solar Plexus (528 Hz)", "description": "Transformation and empowerment.", "duration": 300, "frequencyId": "solfeggio-528-repair" }, { "title": "Heart Chakra (639 Hz)", "description": "Connection and love.", "duration": 300, "frequencyId": "solfeggio-639-harmony" }, { "title": "Throat Chakra (741 Hz)", "description": "Expression and truth.", "duration": 300, "frequencyId": "solfeggio-741-expression" }, { "title": "Third Eye Chakra (852 Hz)", "description": "Intuition and inner vision.", "duration": 300, "frequencyId": "solfeggio-852-intuition" }, { "title": "Crown Chakra (963 Hz)", "description": "Spiritual oneness.", "duration": 300, "frequencyId": "solfeggio-963-oneness" } ], "colors": { "primary": "#fde047", "secondary": "#facc15", "accent": "#eab308" }
     },
     {
-      "id": "abundance-matrix-attunement", "title": "Abundance Matrix Attunement", "categoryId": "guided", "description": "A session using the 777 Hz 'luck' frequency combined with the magnetic properties of Gold to align your energy field with prosperity and abundance.", "steps": [ { "title": "Attune to Abundance", "description": "777 Hz, the frequency of Gold, and Jupiter's expansive energy align your bio-field with luck and prosperity.", "duration": 900, "frequencyId": "angel-777", "layerFrequencyId": "gold", "layer3FrequencyId": "celestial-jupiter" } ], "colors": { "primary": "#fcd34d", "secondary": "#fbbf24", "accent": "#f59e0b" }, "premium": true
+      "id": "abundance-matrix-attunement", "title": "Abundance Matrix Attunement", "categoryId": "guided", "description": "A session using the 777 Hz 'luck' frequency combined with the magnetic properties of Gold to align your energy field with prosperity and abundance.", "steps": [ { "title": "Attune to Abundance", "description": "777 Hz, the frequency of Gold, and Jupiter's expansive energy align your bio-field with luck and prosperity.", "duration": 900, "frequencyId": "angel-777", "layerFrequencyId": "gold", "layer3FrequencyId": "celestial-jupiter" } ], "colors": { "primary": "#fcd34d", "secondary": "#fbbf24", "accent": "#f59e0b" }
     },
     {
-      "id": "astral-projection-gateway", "title": "Astral Projection Gateway", "categoryId": "guided", "description": "An advanced protocol that guides you to the Focus 12 state of expanded awareness, designed to create the ideal conditions for out-of-body experiences.", "steps": [ { "title": "Body Asleep", "description": "Deep Theta relaxation, with frequencies of completion and transformation, to quiet the physical body.", "duration": 900, "frequencyId": "theta", "layerFrequencyId": "angel-999", "layer3FrequencyId": "celestial-pluto" }, { "title": "Mind Awake & Expanded", "description": "A blend of Gamma, Alpha, and Uranian frequencies to enter Focus 12 and encourage breakthroughs in consciousness.", "duration": 900, "frequencyId": "gamma", "layerFrequencyId": "alpha", "layer3FrequencyId": "celestial-uranus" } ], "colors": { "primary": "#e9d5ff", "secondary": "#c4b5fd", "accent": "#d8b4fe" }, "premium": true
+      "id": "astral-projection-gateway", "title": "Astral Projection Gateway", "categoryId": "guided", "description": "An advanced protocol that guides you to the Focus 12 state of expanded awareness, designed to create the ideal conditions for out-of-body experiences.", "steps": [ { "title": "Body Asleep", "description": "Deep Theta relaxation, with frequencies of completion and transformation, to quiet the physical body.", "duration": 900, "frequencyId": "theta", "layerFrequencyId": "angel-999", "layer3FrequencyId": "celestial-pluto" }, { "title": "Mind Awake & Expanded", "description": "A blend of Gamma, Alpha, and Uranian frequencies to enter Focus 12 and encourage breakthroughs in consciousness.", "duration": 900, "frequencyId": "gamma", "layerFrequencyId": "alpha", "layer3FrequencyId": "celestial-uranus" } ], "colors": { "primary": "#e9d5ff", "secondary": "#c4b5fd", "accent": "#d8b4fe" }
     },
     {
-      "id": "heart-coherence-journey", "title": "Heart Coherence Journey", "categoryId": "guided", "description": "A journey combining the 639 Hz 'love' frequency with Alpha waves and the Earth's Schumann resonance to bring your heart and brain into a state of harmonious coherence.", "steps": [ { "title": "Heart-Brain Sync", "description": "Alpha waves, the 639 Hz harmony tone, and the frequency of Venus to bridge heart and mind.", "duration": 450, "frequencyId": "alpha", "layerFrequencyId": "solfeggio-639-harmony", "layer3FrequencyId": "celestial-venus" }, { "title": "Ground in Love", "description": "Combine 639 Hz, the Schumann Resonance, and relaxing Alpha waves to ground your coherent state.", "duration": 450, "frequencyId": "solfeggio-639-harmony", "layerFrequencyId": "schumann-resonance", "layer3FrequencyId": "alpha" } ], "colors": { "primary": "#f9a8d4", "secondary": "#f472b6", "accent": "#ec4899" }, "premium": true
+      "id": "heart-coherence-journey", "title": "Heart Coherence Journey", "categoryId": "guided", "description": "A journey combining the 639 Hz 'love' frequency with Alpha waves and the Earth's Schumann resonance to bring your heart and brain into a state of harmonious coherence.", "steps": [ { "title": "Heart-Brain Sync", "description": "Alpha waves, the 639 Hz harmony tone, and the frequency of Venus to bridge heart and mind.", "duration": 450, "frequencyId": "alpha", "layerFrequencyId": "solfeggio-639-harmony", "layer3FrequencyId": "celestial-venus" }, { "title": "Ground in Love", "description": "Combine 639 Hz, the Schumann Resonance, and relaxing Alpha waves to ground your coherent state.", "duration": 450, "frequencyId": "solfeggio-639-harmony", "layerFrequencyId": "schumann-resonance", "layer3FrequencyId": "alpha" } ], "colors": { "primary": "#f9a8d4", "secondary": "#f472b6", "accent": "#ec4899" }
     },
     {
       "id": "cosmic-thread-alignment",
@@ -226,8 +226,7 @@ export const appContentData: AppContentData = {
         { "title": "The Cosmic Bridge", "description": "Experience the 137 Hz frequency, the 'magic number' of physics. This tone acts as a bridge, aligning your energy with the fundamental structure of the cosmos.", "duration": 480, "frequencyId": "cosmic-constant-137" },
         { "title": "Integration with Oneness", "description": "Finally, integrate the experience with 963 Hz, the frequency of Divine Oneness. This anchors your newfound alignment and connects you to universal consciousness.", "duration": 300, "frequencyId": "solfeggio-963-oneness" }
       ],
-      "colors": { "primary": "#a5b4fc", "secondary": "#93c5fd", "accent": "#a78bfa" },
-      "premium": true
+      "colors": { "primary": "#a5b4fc", "secondary": "#93c5fd", "accent": "#a78bfa" }
     },
     {
       "id": "cosmic-threshold",
@@ -240,8 +239,7 @@ export const appContentData: AppContentData = {
         { "title": "Harmonic Gateway — Divine Constant", "description": "Integrates the fine-structure constant with an 8 Hz alpha wave and high-vibrational Platinum to bridge insight and calm.", "duration": 300, "frequencyId": "cosmic-constant-137", "layerFrequencyId": "alpha-bridge-8hz", "layer3FrequencyId": "platinum" },
         { "title": "Inner Infinity — Return to Silence", "description": "Fades the session back into deep grounding and inner spaciousness, reinforcing the OM resonance.", "duration": 300, "frequencyId": "om-resonance", "layerFrequencyId": "schumann-resonance" }
       ],
-      "colors": { "primary": "#a5b4fc", "secondary": "#93c5fd", "accent": "#a78bfa" },
-      "premium": true
+      "colors": { "primary": "#a5b4fc", "secondary": "#93c5fd", "accent": "#a78bfa" }
     },
     {
       "id": "phi-axis-harmonic-balance",
@@ -271,8 +269,7 @@ export const appContentData: AppContentData = {
           "layer3FrequencyId": "kabbalah-tav"
         }
       ],
-      "colors": { "primary": "#fcd34d", "secondary": "#fdba74", "accent": "#fde047" },
-      "premium": true
+      "colors": { "primary": "#fcd34d", "secondary": "#fdba74", "accent": "#fde047" }
     },
     {
       "id": "beauty-facelift",
@@ -295,8 +292,7 @@ export const appContentData: AppContentData = {
         { "title": "Deep Relaxation & Priming", "description": "Deep Delta waves, tissue healing Solfeggio, and connective Silicon put the body in an optimal restorative state.", "duration": 360, "frequencyId": "delta", "layerFrequencyId": "solfeggio-285-healing", "layer3FrequencyId": "silicon" },
         { "title": "Structural Resonance", "description": "The Rife frequency for fascia, layered with foundational Carbon and structural Silicon, supports the skin's matrix.", "duration": 360, "frequencyId": "rife-fascia", "layerFrequencyId": "carbon", "layer3FrequencyId": "silicon" }
       ],
-      "colors": { "primary": "#fda4af", "secondary": "#fca5a5", "accent": "#f9a8d4" },
-      "premium": true
+      "colors": { "primary": "#fda4af", "secondary": "#fca5a5", "accent": "#f9a8d4" }
     },
     {
       "id": "beauty-hair-growth",
@@ -307,8 +303,7 @@ export const appContentData: AppContentData = {
         { "title": "Scalp Circulation Support", "description": "A Rife vitality frequency, magnetic Iron, and vital Oxygen support healthy blood flow to the scalp.", "duration": 300, "frequencyId": "rife-727", "layerFrequencyId": "iron", "layer3FrequencyId": "oxygen" },
         { "title": "Follicle Energizing", "description": "The 528 Hz 'Miracle Tone', purifying Oxygen, and Sulphur (a key component of keratin) support cellular repair and energize hair follicles.", "duration": 300, "frequencyId": "solfeggio-528-repair", "layerFrequencyId": "oxygen", "layer3FrequencyId": "sulphur" }
       ],
-      "colors": { "primary": "#fda4af", "secondary": "#fca5a5", "accent": "#f9a8d4" },
-      "premium": true
+      "colors": { "primary": "#fda4af", "secondary": "#fca5a5", "accent": "#f9a8d4" }
     },
     {
       "id": "kabbalah-protocol-mother-letters",
@@ -328,7 +323,6 @@ export const appContentData: AppContentData = {
       "title": "Tree of Life Alignment",
       "categoryId": "kabbalah",
       "description": "A 20-minute journey to balance and align the 10 Sefirot, from the Crown's unity to the Earth's grounding. Close with the feeling of your Tree of Life aligned, rooted, and radiant.",
-      "premium": true,
       "colors": { "primary": "#fefce8", "secondary": "#fde68a", "accent": "#f59e0b" },
       "steps": [
         { "title": "Keter (Crown – Unity)", "description": "Open to infinite light above your head. Feel unity.", "duration": 120, "frequencyId": "kabbalah-keter" },
@@ -348,7 +342,6 @@ export const appContentData: AppContentData = {
       "title": "22 Pathways of Resonance",
       "categoryId": "kabbalah",
       "description": "A 22-minute sonic meditation through the Hebrew alphabet. For each letter, see it glowing, breathe in its tone, and let its resonance infuse your body and spirit.",
-      "premium": true,
       "colors": { "primary": "#fefce8", "secondary": "#fde68a", "accent": "#f59e0b" },
       "steps": [
         { "title": "Aleph (א) – Breath of life", "description": "See the letter glowing. Breathe in its sound and resonance.", "duration": 60, "frequencyId": "kabbalah-aleph" },
@@ -375,60 +368,60 @@ export const appContentData: AppContentData = {
         { "title": "Tav (ת) – Completion, seal", "description": "See the letter glowing. Breathe in its sound and resonance.", "duration": 60, "frequencyId": "kabbalah-tav" }
       ]
     },
-    { "id": "mirror-axis-root-crown", "title": "Root–Crown Axis", "categoryId": "brainwaves", "description": "Balances primal instincts with spiritual clarity. A 396 Hz carrier tone grounds the experience while a split binaural beat (111 Hz left, 999 Hz right) stimulates cross-hemispheric balance.", "advice": "This protocol uses a stable carrier tone to ground your energy, while playing two distinct frequencies in each ear to encourage brainwave synchronization between the left and right hemispheres. Headphones are required for the intended effect.", "steps": [{ "title": "Grounding & Ascension", "description": "Balancing the physical and spiritual.", "duration": 900, "frequencyId": "mirror-binaural-root-crown", "layer3FrequencyId": "solfeggio-396-liberation" }], "colors": mirrorAxisColors, "premium": true },
-    { "id": "mirror-axis-shadow-light", "title": "Shadow–Light Axis", "categoryId": "brainwaves", "description": "Clears subconscious blocks and activates love resonance. A 528 Hz carrier tone provides a transformative core while a split binaural beat (174 Hz left, 852 Hz right) bridges the subconscious and superconscious.", "advice": "This protocol uses a stable carrier tone to ground your energy, while playing two distinct frequencies in each ear to encourage brainwave synchronization between the left and right hemispheres. Headphones are required for the intended effect.", "steps": [{ "title": "Emotional Release & Heart Coherence", "description": "Transmuting shadow into light.", "duration": 900, "frequencyId": "mirror-binaural-shadow-light", "layer3FrequencyId": "solfeggio-528-repair" }], "colors": mirrorAxisColors, "premium": true },
-    { "id": "mirror-axis-mind-mystic", "title": "Mind–Mystic Axis", "categoryId": "brainwaves", "description": "Cleanses mental fog and unlocks creative solutions. A 417 Hz carrier facilitates change while a split binaural beat (285 Hz left, 741 Hz right) connects healing with expression.", "advice": "This protocol uses a stable carrier tone to ground your energy, while playing two distinct frequencies in each ear to encourage brainwave synchronization between the left and right hemispheres. Headphones are required for the intended effect.", "steps": [{ "title": "Mental Clarity & Inner Alchemy", "description": "Bridging logic and intuition.", "duration": 900, "frequencyId": "mirror-binaural-mind-mystic", "layer3FrequencyId": "solfeggio-417-change" }], "colors": mirrorAxisColors, "premium": true },
-    { "id": "mirror-axis-pineal-thymus", "title": "Pineal–Thymus Axis", "categoryId": "brainwaves", "description": "Supports DNA activation and inner knowing. A 432 Hz carrier creates universal harmony while a split binaural beat (639 Hz left, 963 Hz right) connects the heart's intuition to divine oneness.", "advice": "This protocol uses a stable carrier tone to ground your energy, while playing two distinct frequencies in each ear to encourage brainwave synchronization between the left and right hemispheres. Headphones are required for the intended effect.", "steps": [{ "title": "Intuition & Cellular Harmony", "description": "Connecting the third eye and high heart.", "duration": 900, "frequencyId": "mirror-binaural-pineal-thymus", "layer3FrequencyId": "hz-432-universal-tuning" }], "colors": mirrorAxisColors, "premium": true },
-    { "id": "mirror-axis-inner-outer-vision", "title": "Inner–Outer Vision Axis", "categoryId": "brainwaves", "description": "Enhances self-awareness and manifestation. A 444 Hz carrier provides energetic protection while a split binaural beat (222 Hz left, 888 Hz right) aligns personal trust with infinite abundance.", "advice": "This protocol uses a stable carrier tone to ground your energy, while playing two distinct frequencies in each ear to encourage brainwave synchronization between the left and right hemispheres. Headphones are required for the intended effect.", "steps": [{ "title": "Perception & Projection", "description": "Aligning what you see with what you create.", "duration": 900, "frequencyId": "mirror-binaural-inner-outer-vision", "layer3FrequencyId": "angel-444" }], "colors": mirrorAxisColors, "premium": true },
-    { "id": "mirror-axis-cosmic-earth", "title": "Cosmic–Earth Axis", "categoryId": "brainwaves", "description": "Bridges ethereal visions with earthly embodiment. A 285 Hz carrier promotes healing while a split binaural beat (333 Hz left, 777 Hz right) channels divine support into tangible luck.", "advice": "This protocol uses a stable carrier tone to ground your energy, while playing two distinct frequencies in each ear to encourage brainwave synchronization between the left and right hemispheres. Headphones are required for the intended effect.", "steps": [{ "title": "Multidimensional Anchoring", "description": "Bringing heavenly insights into physical reality.", "duration": 900, "frequencyId": "mirror-binaural-cosmic-earth", "layer3FrequencyId": "solfeggio-285-healing" }], "colors": mirrorAxisColors, "premium": true },
-    { "id": "mirror-axis-solar-lunar", "title": "Solar–Lunar Axis", "categoryId": "brainwaves", "description": "Balances masculine-feminine energetics for emotional flow. A 528 Hz carrier facilitates transformation while a split binaural beat (396 Hz left, 639 Hz right) integrates grounding with heart-centered connection.", "advice": "This protocol uses a stable carrier tone to ground your energy, while playing two distinct frequencies in each ear to encourage brainwave synchronization between the left and right hemispheres. Headphones are required for the intended effect.", "steps": [{ "title": "Yin-Yang Emotional Flow", "description": "Harmonizing action and receptivity.", "duration": 900, "frequencyId": "mirror-binaural-solar-lunar", "layer3FrequencyId": "solfeggio-528-repair" }], "colors": mirrorAxisColors, "premium": true },
-    { "id": "mirror-axis-mirror-gate", "title": "Mirror Gate Axis", "categoryId": "brainwaves", "description": "Navigates memory loops and karmic clarity. A 444 Hz carrier offers protection while a reflective split binaural beat (321 Hz left, 123 Hz right) encourages a new perspective on the past.", "advice": "This protocol uses a stable carrier tone to ground your energy, while playing two distinct frequencies in each ear to encourage brainwave synchronization between the left and right hemispheres. Headphones are required for the intended effect.", "steps": [{ "title": "Time Reversal & Reflection", "description": "Clearing the past to open the future.", "duration": 900, "frequencyId": "mirror-binaural-mirror-gate", "layer3FrequencyId": "angel-444" }], "colors": mirrorAxisColors, "premium": true },
-    { "id": "mirror-axis-soma-spirit", "title": "Soma–Spirit Axis", "categoryId": "brainwaves", "description": "Integrates bodily and soul awareness for full embodiment. A 432 Hz carrier ensures universal harmony while a split binaural beat (288 Hz left, 864 Hz right) connects physical sensation with higher consciousness.", "advice": "This protocol uses a stable carrier tone to ground your energy, while playing two distinct frequencies in each ear to encourage brainwave synchronization between the left and right hemispheres. Headphones are required for the intended effect.", "steps": [{ "title": "Embodiment of Higher Self", "description": "Uniting body consciousness with soul wisdom.", "duration": 900, "frequencyId": "mirror-binaural-soma-spirit", "layer3FrequencyId": "hz-432-universal-tuning" }], "colors": mirrorAxisColors, "premium": true },
-    { "id": "mirror-axis-golden-tri", "title": "Golden Tri-Mirror", "categoryId": "brainwaves", "description": "Opens creative insight, energy flow & quantum expansion. A 111 Hz angelic carrier tone sets the stage for a Tesla-inspired split binaural beat (369 Hz left, 639 Hz right) that connects insight with heart coherence.", "advice": "This protocol uses a stable carrier tone to ground your energy, while playing two distinct frequencies in each ear to encourage brainwave synchronization between the left and right hemispheres. Headphones are required for the intended effect.", "steps": [{ "title": "Tesla Code Activation", "description": "Unlocking the code of creation.", "duration": 900, "frequencyId": "mirror-binaural-golden-tri", "layer3FrequencyId": "angel-111" }], "colors": mirrorAxisColors, "premium": true },
+    { "id": "mirror-axis-root-crown", "title": "Root–Crown Axis", "categoryId": "brainwaves", "description": "Balances primal instincts with spiritual clarity. A 396 Hz carrier tone grounds the experience while a split binaural beat (111 Hz left, 999 Hz right) stimulates cross-hemispheric balance.", "advice": "This protocol uses a stable carrier tone to ground your energy, while playing two distinct frequencies in each ear to encourage brainwave synchronization between the left and right hemispheres. Headphones are required for the intended effect.", "steps": [{ "title": "Grounding & Ascension", "description": "Balancing the physical and spiritual.", "duration": 900, "frequencyId": "mirror-binaural-root-crown", "layer3FrequencyId": "solfeggio-396-liberation" }], "colors": mirrorAxisColors },
+    { "id": "mirror-axis-shadow-light", "title": "Shadow–Light Axis", "categoryId": "brainwaves", "description": "Clears subconscious blocks and activates love resonance. A 528 Hz carrier tone provides a transformative core while a split binaural beat (174 Hz left, 852 Hz right) bridges the subconscious and superconscious.", "advice": "This protocol uses a stable carrier tone to ground your energy, while playing two distinct frequencies in each ear to encourage brainwave synchronization between the left and right hemispheres. Headphones are required for the intended effect.", "steps": [{ "title": "Emotional Release & Heart Coherence", "description": "Transmuting shadow into light.", "duration": 900, "frequencyId": "mirror-binaural-shadow-light", "layer3FrequencyId": "solfeggio-528-repair" }], "colors": mirrorAxisColors },
+    { "id": "mirror-axis-mind-mystic", "title": "Mind–Mystic Axis", "categoryId": "brainwaves", "description": "Cleanses mental fog and unlocks creative solutions. A 417 Hz carrier facilitates change while a split binaural beat (285 Hz left, 741 Hz right) connects healing with expression.", "advice": "This protocol uses a stable carrier tone to ground your energy, while playing two distinct frequencies in each ear to encourage brainwave synchronization between the left and right hemispheres. Headphones are required for the intended effect.", "steps": [{ "title": "Mental Clarity & Inner Alchemy", "description": "Bridging logic and intuition.", "duration": 900, "frequencyId": "mirror-binaural-mind-mystic", "layer3FrequencyId": "solfeggio-417-change" }], "colors": mirrorAxisColors },
+    { "id": "mirror-axis-pineal-thymus", "title": "Pineal–Thymus Axis", "categoryId": "brainwaves", "description": "Supports DNA activation and inner knowing. A 432 Hz carrier creates universal harmony while a split binaural beat (639 Hz left, 963 Hz right) connects the heart's intuition to divine oneness.", "advice": "This protocol uses a stable carrier tone to ground your energy, while playing two distinct frequencies in each ear to encourage brainwave synchronization between the left and right hemispheres. Headphones are required for the intended effect.", "steps": [{ "title": "Intuition & Cellular Harmony", "description": "Connecting the third eye and high heart.", "duration": 900, "frequencyId": "mirror-binaural-pineal-thymus", "layer3FrequencyId": "hz-432-universal-tuning" }], "colors": mirrorAxisColors },
+    { "id": "mirror-axis-inner-outer-vision", "title": "Inner–Outer Vision Axis", "categoryId": "brainwaves", "description": "Enhances self-awareness and manifestation. A 444 Hz carrier provides energetic protection while a split binaural beat (222 Hz left, 888 Hz right) aligns personal trust with infinite abundance.", "advice": "This protocol uses a stable carrier tone to ground your energy, while playing two distinct frequencies in each ear to encourage brainwave synchronization between the left and right hemispheres. Headphones are required for the intended effect.", "steps": [{ "title": "Perception & Projection", "description": "Aligning what you see with what you create.", "duration": 900, "frequencyId": "mirror-binaural-inner-outer-vision", "layer3FrequencyId": "angel-444" }], "colors": mirrorAxisColors },
+    { "id": "mirror-axis-cosmic-earth", "title": "Cosmic–Earth Axis", "categoryId": "brainwaves", "description": "Bridges ethereal visions with earthly embodiment. A 285 Hz carrier promotes healing while a split binaural beat (333 Hz left, 777 Hz right) channels divine support into tangible luck.", "advice": "This protocol uses a stable carrier tone to ground your energy, while playing two distinct frequencies in each ear to encourage brainwave synchronization between the left and right hemispheres. Headphones are required for the intended effect.", "steps": [{ "title": "Multidimensional Anchoring", "description": "Bringing heavenly insights into physical reality.", "duration": 900, "frequencyId": "mirror-binaural-cosmic-earth", "layer3FrequencyId": "solfeggio-285-healing" }], "colors": mirrorAxisColors },
+    { "id": "mirror-axis-solar-lunar", "title": "Solar–Lunar Axis", "categoryId": "brainwaves", "description": "Balances masculine-feminine energetics for emotional flow. A 528 Hz carrier facilitates transformation while a split binaural beat (396 Hz left, 639 Hz right) integrates grounding with heart-centered connection.", "advice": "This protocol uses a stable carrier tone to ground your energy, while playing two distinct frequencies in each ear to encourage brainwave synchronization between the left and right hemispheres. Headphones are required for the intended effect.", "steps": [{ "title": "Yin-Yang Emotional Flow", "description": "Harmonizing action and receptivity.", "duration": 900, "frequencyId": "mirror-binaural-solar-lunar", "layer3FrequencyId": "solfeggio-528-repair" }], "colors": mirrorAxisColors },
+    { "id": "mirror-axis-mirror-gate", "title": "Mirror Gate Axis", "categoryId": "brainwaves", "description": "Navigates memory loops and karmic clarity. A 444 Hz carrier offers protection while a reflective split binaural beat (321 Hz left, 123 Hz right) encourages a new perspective on the past.", "advice": "This protocol uses a stable carrier tone to ground your energy, while playing two distinct frequencies in each ear to encourage brainwave synchronization between the left and right hemispheres. Headphones are required for the intended effect.", "steps": [{ "title": "Time Reversal & Reflection", "description": "Clearing the past to open the future.", "duration": 900, "frequencyId": "mirror-binaural-mirror-gate", "layer3FrequencyId": "angel-444" }], "colors": mirrorAxisColors },
+    { "id": "mirror-axis-soma-spirit", "title": "Soma–Spirit Axis", "categoryId": "brainwaves", "description": "Integrates bodily and soul awareness for full embodiment. A 432 Hz carrier ensures universal harmony while a split binaural beat (288 Hz left, 864 Hz right) connects physical sensation with higher consciousness.", "advice": "This protocol uses a stable carrier tone to ground your energy, while playing two distinct frequencies in each ear to encourage brainwave synchronization between the left and right hemispheres. Headphones are required for the intended effect.", "steps": [{ "title": "Embodiment of Higher Self", "description": "Uniting body consciousness with soul wisdom.", "duration": 900, "frequencyId": "mirror-binaural-soma-spirit", "layer3FrequencyId": "hz-432-universal-tuning" }], "colors": mirrorAxisColors },
+    { "id": "mirror-axis-golden-tri", "title": "Golden Tri-Mirror", "categoryId": "brainwaves", "description": "Opens creative insight, energy flow & quantum expansion. A 111 Hz angelic carrier tone sets the stage for a Tesla-inspired split binaural beat (369 Hz left, 639 Hz right) that connects insight with heart coherence.", "advice": "This protocol uses a stable carrier tone to ground your energy, while playing two distinct frequencies in each ear to encourage brainwave synchronization between the left and right hemispheres. Headphones are required for the intended effect.", "steps": [{ "title": "Tesla Code Activation", "description": "Unlocking the code of creation.", "duration": 900, "frequencyId": "mirror-binaural-golden-tri", "layer3FrequencyId": "angel-111" }], "colors": mirrorAxisColors },
     {
-      "id": "temple-of-breath", "title": "Temple of Breath — Lemurian Toning Sequence", "categoryId": "angel", "subCategory": "Advanced Resonance Protocols", "description": "Reinstates breath-consciousness and activates resonance pathways between voice, chest, and earth field. For emotional processing, grief transmutation, and throat-heart rebalancing.", "steps": [{ "title": "Lemurian Resonance", "description": "A toning sequence to open breath pathways and connect voice with heart.", "duration": 900, "frequencyId": "lemurian-breath-gate", "layerFrequencyId": "solfeggio-741-expression", "layer3FrequencyId": "ambient-sea" }], "colors": { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" }, "premium": true
+      "id": "temple-of-breath", "title": "Temple of Breath — Lemurian Toning Sequence", "categoryId": "angel", "subCategory": "Advanced Resonance Protocols", "description": "Reinstates breath-consciousness and activates resonance pathways between voice, chest, and earth field. For emotional processing, grief transmutation, and throat-heart rebalancing.", "steps": [{ "title": "Lemurian Resonance", "description": "A toning sequence to open breath pathways and connect voice with heart.", "duration": 900, "frequencyId": "lemurian-breath-gate", "layerFrequencyId": "solfeggio-741-expression", "layer3FrequencyId": "ambient-sea" }], "colors": { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" }
     },
     {
-      "id": "golden-code-of-thoth", "title": "Golden Code of Thoth — Memory Mirror Activation", "categoryId": "angel", "subCategory": "Advanced Resonance Protocols", "description": "Activates subconscious retrieval of soul codes and ancestral missions. For those awakening to deeper timelines.", "steps": [{ "title": "Memory Mirror Activation", "description": "A harmonic blend to unlock soul codes and ancestral memory.", "duration": 900, "frequencyId": "angel-333", "layerFrequencyId": "solfeggio-963-oneness", "layer3FrequencyId": "schumann-resonance" }], "colors": { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" }, "premium": true
+      "id": "golden-code-of-thoth", "title": "Golden Code of Thoth — Memory Mirror Activation", "categoryId": "angel", "subCategory": "Advanced Resonance Protocols", "description": "Activates subconscious retrieval of soul codes and ancestral missions. For those awakening to deeper timelines.", "steps": [{ "title": "Memory Mirror Activation", "description": "A harmonic blend to unlock soul codes and ancestral memory.", "duration": 900, "frequencyId": "angel-333", "layerFrequencyId": "solfeggio-963-oneness", "layer3FrequencyId": "schumann-resonance" }], "colors": { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" }
     },
     {
-      "id": "lyran-dna-harmonics-session", "title": "Lyran DNA Harmonics — 12 Strand Alignment", "categoryId": "angel", "subCategory": "Advanced Resonance Protocols", "description": "Amplifies crystalline coding through the 12 major meridian light strands for cosmic body restoration and light-architecture remembrance.", "steps": [{ "title": "12 Strand Alignment", "description": "A high-frequency sequence to amplify crystalline coding within your light body.", "duration": 900, "frequencyId": "solfeggio-528-repair", "layerFrequencyId": "solfeggio-963-oneness", "layer3FrequencyId": "lyran-dna-harmonics" }], "colors": { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" }, "premium": true
+      "id": "lyran-dna-harmonics-session", "title": "Lyran DNA Harmonics — 12 Strand Alignment", "categoryId": "angel", "subCategory": "Advanced Resonance Protocols", "description": "Amplifies crystalline coding through the 12 major meridian light strands for cosmic body restoration and light-architecture remembrance.", "steps": [{ "title": "12 Strand Alignment", "description": "A high-frequency sequence to amplify crystalline coding within your light body.", "duration": 900, "frequencyId": "solfeggio-528-repair", "layerFrequencyId": "solfeggio-963-oneness", "layer3FrequencyId": "lyran-dna-harmonics" }], "colors": { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" }
     },
     {
-      "id": "amenti-re-entry-code", "title": "Amenti Re-Entry Code", "categoryId": "angel", "subCategory": "Advanced Resonance Protocols", "description": "Reconnects to dormant inner records accessed through vibrational thresholds, for accessing internal knowing.", "steps": [{ "title": "Inner Records Activation", "description": "A sequence to clear past patterns and reconnect with dormant inner knowledge.", "duration": 900, "frequencyId": "solfeggio-417-change", "layerFrequencyId": "angel-777", "layer3FrequencyId": "angel-111" }], "colors": { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" }, "premium": true
+      "id": "amenti-re-entry-code", "title": "Amenti Re-Entry Code", "categoryId": "angel", "subCategory": "Advanced Resonance Protocols", "description": "Reconnects to dormant inner records accessed through vibrational thresholds, for accessing internal knowing.", "steps": [{ "title": "Inner Records Activation", "description": "A sequence to clear past patterns and reconnect with dormant inner knowledge.", "duration": 900, "frequencyId": "solfeggio-417-change", "layerFrequencyId": "angel-777", "layer3FrequencyId": "angel-111" }], "colors": { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" }
     },
     {
-      "id": "sirius-light-grid", "title": "Sirius Light Grid — Antahkarana Bridge", "categoryId": "angel", "subCategory": "Advanced Resonance Protocols", "description": "Connects higher mind to heart-field via light-language resonance. For healers, guides, or visionaries.", "steps": [{ "title": "Antahkarana Bridge Construction", "description": "A harmonic sequence to build the light bridge between your higher mind and heart-field.", "duration": 900, "frequencyId": "sirian-soul-path", "layerFrequencyId": "sirian-antahkarana-bridge-288", "layer3FrequencyId": "kabbalah-chokhmah" }], "colors": { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" }, "premium": true
+      "id": "sirius-light-grid", "title": "Sirius Light Grid — Antahkarana Bridge", "categoryId": "angel", "subCategory": "Advanced Resonance Protocols", "description": "Connects higher mind to heart-field via light-language resonance. For healers, guides, or visionaries.", "steps": [{ "title": "Antahkarana Bridge Construction", "description": "A harmonic sequence to build the light bridge between your higher mind and heart-field.", "duration": 900, "frequencyId": "sirian-soul-path", "layerFrequencyId": "sirian-antahkarana-bridge-288", "layer3FrequencyId": "kabbalah-chokhmah" }], "colors": { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" }
     },
     {
-      "id": "solar-templar-alignment", "title": "Solar Templar Alignment", "categoryId": "angel", "subCategory": "Advanced Resonance Protocols", "description": "Reattunes the body to solar wisdom, clarity of will, and internal kingship/queenship. Best for morning rituals or leadership focus.", "steps": [{ "title": "Solar Code Attunement", "description": "A powerful blend to align with solar wisdom and activate your inner sovereignty.", "duration": 900, "frequencyId": "solfeggio-528-repair", "layerFrequencyId": "solar-templar-1111", "layer3FrequencyId": "solar-templar-33" }], "colors": { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" }, "premium": true
+      "id": "solar-templar-alignment", "title": "Solar Templar Alignment", "categoryId": "angel", "subCategory": "Advanced Resonance Protocols", "description": "Reattunes the body to solar wisdom, clarity of will, and internal kingship/queenship. Best for morning rituals or leadership focus.", "steps": [{ "title": "Solar Code Attunement", "description": "A powerful blend to align with solar wisdom and activate your inner sovereignty.", "duration": 900, "frequencyId": "solfeggio-528-repair", "layerFrequencyId": "solar-templar-1111", "layer3FrequencyId": "solar-templar-33" }], "colors": { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" }
     },
     {
-      "id": "arcturian-crystal-field-reset", "title": "Arcturian Crystal Field Reset", "categoryId": "angel", "subCategory": "Advanced Resonance Protocols", "description": "Reboots cognitive pathways while clearing artificial grids or overlays. Helpful for tech workers, sensitives, or users exposed to EMF fields.", "steps": [{ "title": "Cognitive Pathway Reboot", "description": "A crystalline sequence to clear energetic interference and reset your cognitive field.", "duration": 900, "frequencyId": "arcturian-crystal-field", "layerFrequencyId": "angel-111", "layer3FrequencyId": "alpha-bridge-8hz" }], "colors": { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" }, "premium": true
+      "id": "arcturian-crystal-field-reset", "title": "Arcturian Crystal Field Reset", "categoryId": "angel", "subCategory": "Advanced Resonance Protocols", "description": "Reboots cognitive pathways while clearing artificial grids or overlays. Helpful for tech workers, sensitives, or users exposed to EMF fields.", "steps": [{ "title": "Cognitive Pathway Reboot", "description": "A crystalline sequence to clear energetic interference and reset your cognitive field.", "duration": 900, "frequencyId": "arcturian-crystal-field", "layerFrequencyId": "angel-111", "layer3FrequencyId": "alpha-bridge-8hz" }], "colors": { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" }
     },
     {
-      "id": "mu-recollection-chamber", "title": "Mu Recollection Chamber", "categoryId": "angel", "subCategory": "Advanced Resonance Protocols", "description": "Lemurian memory activation through water-temple harmonics. Cellular remembrance and emotional water healing.", "steps": [{ "title": "Water Temple Activation", "description": "A deep, resonant chamber of sound to unlock cellular memory and soothe emotional waters.", "duration": 900, "frequencyId": "lemurian-breath-gate", "layerFrequencyId": "solfeggio-741-expression", "layer3FrequencyId": "mu-theta-wave" }], "colors": { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" }, "premium": true
+      "id": "mu-recollection-chamber", "title": "Mu Recollection Chamber", "categoryId": "angel", "subCategory": "Advanced Resonance Protocols", "description": "Lemurian memory activation through water-temple harmonics. Cellular remembrance and emotional water healing.", "steps": [{ "title": "Water Temple Activation", "description": "A deep, resonant chamber of sound to unlock cellular memory and soothe emotional waters.", "duration": 900, "frequencyId": "lemurian-breath-gate", "layerFrequencyId": "solfeggio-741-expression", "layer3FrequencyId": "mu-theta-wave" }], "colors": { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" }
     },
     {
-      "id": "atlantean-frequency-seal", "title": "Atlantean Frequency Seal", "categoryId": "angel", "subCategory": "Advanced Resonance Protocols", "description": "Restores coherence lost during Atlantean collapse. Spiritual gift alignment and timeline clarity.", "steps": [{ "title": "Coherence Restoration", "description": "A powerful sequence to clear timeline distortions and reactivate dormant spiritual gifts from the Atlantean era.", "duration": 900, "frequencyId": "solfeggio-417-change", "layerFrequencyId": "platinum", "layer3FrequencyId": "angel-333" }], "colors": { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" }, "premium": true
+      "id": "atlantean-frequency-seal", "title": "Atlantean Frequency Seal", "categoryId": "angel", "subCategory": "Advanced Resonance Protocols", "description": "Restores coherence lost during Atlantean collapse. Spiritual gift alignment and timeline clarity.", "steps": [{ "title": "Coherence Restoration", "description": "A powerful sequence to clear timeline distortions and reactivate dormant spiritual gifts from the Atlantean era.", "duration": 900, "frequencyId": "solfeggio-417-change", "layerFrequencyId": "platinum", "layer3FrequencyId": "angel-333" }], "colors": { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" }
     },
     {
-      "id": "inner-earth-axis-reset", "title": "Inner Earth Axis Reset", "categoryId": "angel", "subCategory": "Advanced Resonance Protocols", "description": "Crystalline grounding and EMF reset through Agarthan resonant grid.", "steps": [{ "title": "Crystalline Grounding", "description": "A deep, grounding frequency triad to reset your connection to the Earth's crystalline grid and clear EMF interference.", "duration": 900, "frequencyId": "angel-111", "layerFrequencyId": "arcturian-crystal-field", "layer3FrequencyId": "kabbalah-lamed" }], "colors": { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" }, "premium": true
+      "id": "inner-earth-axis-reset", "title": "Inner Earth Axis Reset", "categoryId": "angel", "subCategory": "Advanced Resonance Protocols", "description": "Crystalline grounding and EMF reset through Agarthan resonant grid.", "steps": [{ "title": "Crystalline Grounding", "description": "A deep, grounding frequency triad to reset your connection to the Earth's crystalline grid and clear EMF interference.", "duration": 900, "frequencyId": "angel-111", "layerFrequencyId": "arcturian-crystal-field", "layer3FrequencyId": "kabbalah-lamed" }], "colors": { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" }
     },
     {
-      "id": "sirian-tone-gate", "title": "Sirian Tone Gate — Light Memory Reinstatement", "categoryId": "angel", "subCategory": "Advanced Resonance Protocols", "description": "Reinstates ancient light memory via Sirius B harmonic stellar gate.", "steps": [{ "title": "Stellar Gate Activation", "description": "A high-frequency transmission to open the Sirian tone gate, reinstating ancient light memory and soul path wisdom.", "duration": 900, "frequencyId": "sirian-soul-path", "layerFrequencyId": "kabbalah-chokhmah", "layer3FrequencyId": "sirian-light-memory" }], "colors": { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" }, "premium": true
+      "id": "sirian-tone-gate", "title": "Sirian Tone Gate — Light Memory Reinstatement", "categoryId": "angel", "subCategory": "Advanced Resonance Protocols", "description": "Reinstates ancient light memory via Sirius B harmonic stellar gate.", "steps": [{ "title": "Stellar Gate Activation", "description": "A high-frequency transmission to open the Sirian tone gate, reinstating ancient light memory and soul path wisdom.", "duration": 900, "frequencyId": "sirian-soul-path", "layerFrequencyId": "kabbalah-chokhmah", "layer3FrequencyId": "sirian-light-memory" }], "colors": { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" }
     },
     {
       "id": "the-scroll-of-mirrors", "title": "The Scroll of Mirrors", "categoryId": "angel", "subCategory": "Advanced Resonance Protocols", "description": "Self-mirroring tone chamber for deep personal reflection and harmonization.", "steps": [
         { "title": "Reflection Field", "description": "Frequencies of divine support and luck create a safe space for deep inner reflection.", "duration": 420, "frequencyId": "angel-333", "layerFrequencyId": "angel-777" },
         { "title": "Harmonization Chamber", "description": "A precise mirror-pulse oscillation, centered on the frequency of major life changes, to harmonize dissonant aspects of the self.", "duration": 480, "frequencyId": "mirror-pulse-oscillation", "layerFrequencyId": "angel-555" }
-    ], "colors": { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" }, "premium": true
+    ], "colors": { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" }
     },
     {
-      "id": "council-of-nine-alignment", "title": "Council of Nine — Resonance Alignment", "categoryId": "angel", "subCategory": "Advanced Resonance Protocols", "description": "Connects to harmonic archetypes of ancient stellar councils. Oversoul recalibration.", "steps": [{ "title": "Oversoul Recalibration", "description": "A sacred triadic resonance to align your consciousness with the wisdom of the Council of Nine, promoting oversoul integration.", "duration": 900, "frequencyId": "angel-999", "layerFrequencyId": "titanium", "layer3FrequencyId": "angel-222" }], "colors": { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" }, "premium": true
+      "id": "council-of-nine-alignment", "title": "Council of Nine — Resonance Alignment", "categoryId": "angel", "subCategory": "Advanced Resonance Protocols", "description": "Connects to harmonic archetypes of ancient stellar councils. Oversoul recalibration.", "steps": [{ "title": "Oversoul Recalibration", "description": "A sacred triadic resonance to align your consciousness with the wisdom of the Council of Nine, promoting oversoul integration.", "duration": 900, "frequencyId": "angel-999", "layerFrequencyId": "titanium", "layer3FrequencyId": "angel-222" }], "colors": { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" }
     },
     {
-      "id": "solar-heart-lattice", "title": "Solar Heart Lattice", "categoryId": "angel", "subCategory": "Advanced Resonance Protocols", "description": "Activates radiant solar pathway to heart coherence.", "steps": [{ "title": "Radiant Heart Activation", "description": "A powerful solar sequence to activate heart coherence, personal sovereignty, and the radiant energy of your inner sun.", "duration": 900, "frequencyId": "solfeggio-528-repair", "layerFrequencyId": "solar-templar-1111", "layer3FrequencyId": "solar-sovereignty" }], "colors": { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" }, "premium": true
+      "id": "solar-heart-lattice", "title": "Solar Heart Lattice", "categoryId": "angel", "subCategory": "Advanced Resonance Protocols", "description": "Activates radiant solar pathway to heart coherence.", "steps": [{ "title": "Radiant Heart Activation", "description": "A powerful solar sequence to activate heart coherence, personal sovereignty, and the radiant energy of your inner sun.", "duration": 900, "frequencyId": "solfeggio-528-repair", "layerFrequencyId": "solar-templar-1111", "layer3FrequencyId": "solar-sovereignty" }], "colors": { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" }
     }
   ],
   "featured_candidates": [
@@ -476,8 +469,7 @@ export const appContentData: AppContentData = {
       "categoryId": "brainwaves",
       "defaultMode": "BINAURAL",
       "availableModes": ["BINAURAL", "ISOCHRONIC"],
-      "colors": { "primary": "#d8b4fe", "secondary": "#e9d5ff", "accent": "#c084fc" },
-      "premium": true
+      "colors": { "primary": "#d8b4fe", "secondary": "#e9d5ff", "accent": "#c084fc" }
     },
     {
       "id": "beta",
@@ -490,8 +482,7 @@ export const appContentData: AppContentData = {
       "categoryId": "brainwaves",
       "defaultMode": "BINAURAL",
       "availableModes": ["BINAURAL", "ISOCHRONIC"],
-      "colors": { "primary": "#d8b4fe", "secondary": "#e9d5ff", "accent": "#c084fc" },
-      "premium": true
+      "colors": { "primary": "#d8b4fe", "secondary": "#e9d5ff", "accent": "#c084fc" }
     },
     {
       "id": "gamma",
@@ -504,8 +495,7 @@ export const appContentData: AppContentData = {
       "categoryId": "brainwaves",
       "defaultMode": "BINAURAL",
       "availableModes": ["BINAURAL", "ISOCHRONIC"],
-      "colors": { "primary": "#d8b4fe", "secondary": "#e9d5ff", "accent": "#c084fc" },
-      "premium": true
+      "colors": { "primary": "#d8b4fe", "secondary": "#e9d5ff", "accent": "#c084fc" }
     },
     {
       "id": "gamma-40hz-precise",
@@ -518,8 +508,7 @@ export const appContentData: AppContentData = {
       "categoryId": "brainwaves",
       "defaultMode": "ISOCHRONIC",
       "availableModes": ["BINAURAL", "ISOCHRONIC"],
-      "colors": { "primary": "#d8b4fe", "secondary": "#e9d5ff", "accent": "#c084fc" },
-      "premium": true
+      "colors": { "primary": "#d8b4fe", "secondary": "#e9d5ff", "accent": "#c084fc" }
     },
     {
       "id": "solfeggio-174-pain-relief",
@@ -560,8 +549,7 @@ export const appContentData: AppContentData = {
       "categoryId": "solfeggio",
       "defaultMode": "PURE",
       "availableModes": ["PURE", "BINAURAL", "ISOCHRONIC"],
-      "colors": { "primary": "#fcd34d", "secondary": "#fdba74", "accent": "#fde047" },
-      "premium": true
+      "colors": { "primary": "#fcd34d", "secondary": "#fdba74", "accent": "#fde047" }
     },
     {
       "id": "solfeggio-417-change",
@@ -574,8 +562,7 @@ export const appContentData: AppContentData = {
       "categoryId": "solfeggio",
       "defaultMode": "PURE",
       "availableModes": ["PURE", "BINAURAL", "ISOCHRONIC"],
-      "colors": { "primary": "#fcd34d", "secondary": "#fdba74", "accent": "#fde047" },
-      "premium": true
+      "colors": { "primary": "#fcd34d", "secondary": "#fdba74", "accent": "#fde047" }
     },
     {
       "id": "hz-432-universal-tuning",
@@ -602,8 +589,7 @@ export const appContentData: AppContentData = {
       "categoryId": "solfeggio",
       "defaultMode": "PURE",
       "availableModes": ["PURE", "BINAURAL", "ISOCHRONIC"],
-      "colors": { "primary": "#fcd34d", "secondary": "#fdba74", "accent": "#fde047" },
-      "premium": true
+      "colors": { "primary": "#fcd34d", "secondary": "#fdba74", "accent": "#fde047" }
     },
     {
       "id": "solfeggio-639-harmony",
@@ -616,8 +602,7 @@ export const appContentData: AppContentData = {
       "categoryId": "solfeggio",
       "defaultMode": "PURE",
       "availableModes": ["PURE", "BINAURAL", "ISOCHRONIC"],
-      "colors": { "primary": "#fcd34d", "secondary": "#fdba74", "accent": "#fde047" },
-      "premium": true
+      "colors": { "primary": "#fcd34d", "secondary": "#fdba74", "accent": "#fde047" }
     },
     {
       "id": "solfeggio-741-expression",
@@ -630,8 +615,7 @@ export const appContentData: AppContentData = {
       "categoryId": "solfeggio",
       "defaultMode": "PURE",
       "availableModes": ["PURE", "BINAURAL", "ISOCHRONIC"],
-      "colors": { "primary": "#fcd34d", "secondary": "#fdba74", "accent": "#fde047" },
-      "premium": true
+      "colors": { "primary": "#fcd34d", "secondary": "#fdba74", "accent": "#fde047" }
     },
     {
       "id": "solfeggio-852-intuition",
@@ -644,8 +628,7 @@ export const appContentData: AppContentData = {
       "categoryId": "solfeggio",
       "defaultMode": "PURE",
       "availableModes": ["PURE", "BINAURAL", "ISOCHRONIC"],
-      "colors": { "primary": "#fcd34d", "secondary": "#fdba74", "accent": "#fde047" },
-      "premium": true
+      "colors": { "primary": "#fcd34d", "secondary": "#fdba74", "accent": "#fde047" }
     },
     {
       "id": "solfeggio-963-oneness",
@@ -658,8 +641,7 @@ export const appContentData: AppContentData = {
       "categoryId": "solfeggio",
       "defaultMode": "PURE",
       "availableModes": ["PURE", "BINAURAL", "ISOCHRONIC"],
-      "colors": { "primary": "#fcd34d", "secondary": "#fdba74", "accent": "#fde047" },
-      "premium": true
+      "colors": { "primary": "#fcd34d", "secondary": "#fdba74", "accent": "#fde047" }
     },
     {
       "id": "solfeggio-1782-alchemy",
@@ -672,8 +654,7 @@ export const appContentData: AppContentData = {
       "categoryId": "solfeggio",
       "defaultMode": "PURE",
       "availableModes": ["PURE", "BINAURAL", "ISOCHRONIC"],
-      "colors": { "primary": "#fcd34d", "secondary": "#fdba74", "accent": "#fde047" },
-      "premium": true
+      "colors": { "primary": "#fcd34d", "secondary": "#fdba74", "accent": "#fde047" }
     },
     {
       "id": "angel-111",
@@ -717,8 +698,7 @@ export const appContentData: AppContentData = {
       "subCategory": "Angelic Frequencies",
       "defaultMode": "PURE",
       "availableModes": ["PURE", "BINAURAL", "ISOCHRONIC"],
-      "colors": { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" },
-      "premium": true
+      "colors": { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" }
     },
     {
       "id": "angel-444",
@@ -732,8 +712,7 @@ export const appContentData: AppContentData = {
       "subCategory": "Angelic Frequencies",
       "defaultMode": "PURE",
       "availableModes": ["PURE", "BINAURAL", "ISOCHRONIC"],
-      "colors": { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" },
-      "premium": true
+      "colors": { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" }
     },
     {
       "id": "angel-555",
@@ -747,8 +726,7 @@ export const appContentData: AppContentData = {
       "subCategory": "Angelic Frequencies",
       "defaultMode": "PURE",
       "availableModes": ["PURE", "BINAURAL", "ISOCHRONIC"],
-      "colors": { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" },
-      "premium": true
+      "colors": { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" }
     },
     {
       "id": "angel-666",
@@ -762,8 +740,7 @@ export const appContentData: AppContentData = {
       "subCategory": "Angelic Frequencies",
       "defaultMode": "PURE",
       "availableModes": ["PURE", "BINAURAL", "ISOCHRONIC"],
-      "colors": { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" },
-      "premium": true
+      "colors": { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" }
     },
     {
       "id": "angel-777",
@@ -777,8 +754,7 @@ export const appContentData: AppContentData = {
       "subCategory": "Angelic Frequencies",
       "defaultMode": "PURE",
       "availableModes": ["PURE", "BINAURAL", "ISOCHRONIC"],
-      "colors": { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" },
-      "premium": true
+      "colors": { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" }
     },
     {
       "id": "angel-888",
@@ -792,8 +768,7 @@ export const appContentData: AppContentData = {
       "subCategory": "Angelic Frequencies",
       "defaultMode": "PURE",
       "availableModes": ["PURE", "BINAURAL", "ISOCHRONIC"],
-      "colors": { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" },
-      "premium": true
+      "colors": { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" }
     },
     {
       "id": "angel-999",
@@ -807,43 +782,42 @@ export const appContentData: AppContentData = {
       "subCategory": "Angelic Frequencies",
       "defaultMode": "PURE",
       "availableModes": ["PURE", "BINAURAL", "ISOCHRONIC"],
-      "colors": { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" },
-      "premium": true
+      "colors": { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" }
     },
     {
-      id: 'lemurian-breath-gate', name: "309 Hz - Breath Gate", range: "309 Hz", baseFrequency: 309, binauralFrequency: 0, description: "A frequency from Lemurian traditions for reinstating breath-consciousness and activating resonance pathways between voice, chest, and earth field.", category: BenefitCategory.SPIRITUAL, categoryId: 'angel', defaultMode: 'PURE', availableModes: ['PURE', 'BINAURAL', 'ISOCHRONIC'], colors: { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" }, premium: true
+      id: 'lemurian-breath-gate', name: "309 Hz - Breath Gate", range: "309 Hz", baseFrequency: 309, binauralFrequency: 0, description: "A frequency from Lemurian traditions for reinstating breath-consciousness and activating resonance pathways between voice, chest, and earth field.", category: BenefitCategory.SPIRITUAL, categoryId: 'angel', defaultMode: 'PURE', availableModes: ['PURE', 'BINAURAL', 'ISOCHRONIC'], colors: { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" }
     },
     {
-      id: 'lyran-dna-harmonics', name: "1185 Hz - Lyran DNA Harmonics", range: "1185 Hz", baseFrequency: 1185, binauralFrequency: 0, description: "A high-frequency tone from Lyran traditions for amplifying crystalline coding through the 12 major meridian light strands.", category: BenefitCategory.SPIRITUAL, categoryId: 'angel', defaultMode: 'PURE', availableModes: ['PURE', 'BINAURAL', 'ISOCHRONIC'], colors: { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" }, premium: true
+      id: 'lyran-dna-harmonics', name: "1185 Hz - Lyran DNA Harmonics", range: "1185 Hz", baseFrequency: 1185, binauralFrequency: 0, description: "A high-frequency tone from Lyran traditions for amplifying crystalline coding through the 12 major meridian light strands.", category: BenefitCategory.SPIRITUAL, categoryId: 'angel', defaultMode: 'PURE', availableModes: ['PURE', 'BINAURAL', 'ISOCHRONIC'], colors: { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" }
     },
     {
-      id: 'sirian-soul-path', name: "144 Hz - Soul Path Resonance", range: "144 Hz", baseFrequency: 144, binauralFrequency: 0, description: "A frequency from Sirian traditions for connecting with one's soul path and higher purpose.", category: BenefitCategory.SPIRITUAL, categoryId: 'angel', defaultMode: 'PURE', availableModes: ['PURE', 'BINAURAL', 'ISOCHRONIC'], colors: { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" }, premium: true
+      id: 'sirian-soul-path', name: "144 Hz - Soul Path Resonance", range: "144 Hz", baseFrequency: 144, binauralFrequency: 0, description: "A frequency from Sirian traditions for connecting with one's soul path and higher purpose.", category: BenefitCategory.SPIRITUAL, categoryId: 'angel', defaultMode: 'PURE', availableModes: ['PURE', 'BINAURAL', 'ISOCHRONIC'], colors: { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" }
     },
     {
-      id: 'sirian-antahkarana-bridge-288', name: "288 Hz - Antahkarana Bridge", range: "288 Hz", baseFrequency: 288, binauralFrequency: 0, description: "A frequency to build the Antahkarana, the energetic bridge between the higher mind and heart-field.", category: BenefitCategory.SPIRITUAL, categoryId: 'angel', defaultMode: 'PURE', availableModes: ['PURE', 'BINAURAL', 'ISOCHRONIC'], colors: { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" }, premium: true
+      id: 'sirian-antahkarana-bridge-288', name: "288 Hz - Antahkarana Bridge", range: "288 Hz", baseFrequency: 288, binauralFrequency: 0, description: "A frequency to build the Antahkarana, the energetic bridge between the higher mind and heart-field.", category: BenefitCategory.SPIRITUAL, categoryId: 'angel', defaultMode: 'PURE', availableModes: ['PURE', 'BINAURAL', 'ISOCHRONIC'], colors: { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" }
     },
     {
-      id: 'solar-templar-1111', name: "1111 Hz - Solar Code Activation", range: "1111 Hz", baseFrequency: 1111, binauralFrequency: 0, description: "A high-frequency code associated with Atlantean Solar Discs for activating solar wisdom and clarity of will.", category: BenefitCategory.SPIRITUAL, categoryId: 'angel', defaultMode: 'PURE', availableModes: ['PURE', 'BINAURAL', 'ISOCHRONIC'], colors: { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" }, premium: true
+      id: 'solar-templar-1111', name: "1111 Hz - Solar Code Activation", range: "1111 Hz", baseFrequency: 1111, binauralFrequency: 0, description: "A high-frequency code associated with Atlantean Solar Discs for activating solar wisdom and clarity of will.", category: BenefitCategory.SPIRITUAL, categoryId: 'angel', defaultMode: 'PURE', availableModes: ['PURE', 'BINAURAL', 'ISOCHRONIC'], colors: { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" }
     },
     {
-      id: 'solar-templar-33', name: "33 Hz - Christ Consciousness", range: "33 Hz", baseFrequency: 136.1, binauralFrequency: 33, description: "A Gamma-range frequency associated with Christ consciousness, pyramids, and heightened states of awareness.", category: BenefitCategory.SPIRITUAL, categoryId: 'angel', defaultMode: 'BINAURAL', availableModes: ['BINAURAL', 'ISOCHRONIC'], colors: { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" }, premium: true
+      id: 'solar-templar-33', name: "33 Hz - Christ Consciousness", range: "33 Hz", baseFrequency: 136.1, binauralFrequency: 33, description: "A Gamma-range frequency associated with Christ consciousness, pyramids, and heightened states of awareness.", category: BenefitCategory.SPIRITUAL, categoryId: 'angel', defaultMode: 'BINAURAL', availableModes: ['BINAURAL', 'ISOCHRONIC'], colors: { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" }
     },
     {
-      id: 'arcturian-crystal-field', name: "729 Hz - Arcturian Field Reset", range: "729 Hz", baseFrequency: 729, binauralFrequency: 0, description: "A frequency from the Arcturian crystalline network for rebooting cognitive pathways and clearing artificial energetic overlays.", category: BenefitCategory.SPIRITUAL, categoryId: 'angel', defaultMode: 'PURE', availableModes: ['PURE', 'BINAURAL', 'ISOCHRONIC'], colors: { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" }, premium: true
+      id: 'arcturian-crystal-field', name: "729 Hz - Arcturian Field Reset", range: "729 Hz", baseFrequency: 729, binauralFrequency: 0, description: "A frequency from the Arcturian crystalline network for rebooting cognitive pathways and clearing artificial energetic overlays.", category: BenefitCategory.SPIRITUAL, categoryId: 'angel', defaultMode: 'PURE', availableModes: ['PURE', 'BINAURAL', 'ISOCHRONIC'], colors: { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" }
     },
     {
-      id: 'mu-theta-wave', name: "12 Hz - Mu Theta Wave", range: "12 Hz", baseFrequency: 136.1, binauralFrequency: 12, description: "A low theta frequency associated with Lemurian water temples, promoting cellular remembrance and deep emotional processing.", category: BenefitCategory.SPIRITUAL, categoryId: 'angel', defaultMode: 'BINAURAL', availableModes: ['BINAURAL', 'ISOCHRONIC'], colors: { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" }, premium: true
+      id: 'mu-theta-wave', name: "12 Hz - Mu Theta Wave", range: "12 Hz", baseFrequency: 136.1, binauralFrequency: 12, description: "A low theta frequency associated with Lemurian water temples, promoting cellular remembrance and deep emotional processing.", category: BenefitCategory.SPIRITUAL, categoryId: 'angel', defaultMode: 'BINAURAL', availableModes: ['BINAURAL', 'ISOCHRONIC'], colors: { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" }
     },
     {
-      id: 'sirian-light-memory', name: "1188 Hz - Sirian Light Memory", range: "1188 Hz", baseFrequency: 1188, binauralFrequency: 0, description: "A high-frequency tone for reinstating ancient light memory and activating stellar consciousness.", category: BenefitCategory.SPIRITUAL, categoryId: 'angel', defaultMode: 'PURE', availableModes: ['PURE', 'BINAURAL', 'ISOCHRONIC'], colors: { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" }, premium: true
+      id: 'sirian-light-memory', name: "1188 Hz - Sirian Light Memory", range: "1188 Hz", baseFrequency: 1188, binauralFrequency: 0, description: "A high-frequency tone for reinstating ancient light memory and activating stellar consciousness.", category: BenefitCategory.SPIRITUAL, categoryId: 'angel', defaultMode: 'PURE', availableModes: ['PURE', 'BINAURAL', 'ISOCHRONIC'], colors: { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" }
     },
     {
       id: 'mirror-pulse-oscillation', name: 'Mirror Pulse Oscillation', range: '555 Hz ± 1.618 Hz', baseFrequency: 0, binauralFrequency: 0, leftFrequency: 553.382, rightFrequency: 556.618,
       description: 'A precise split binaural tone based on the golden ratio, creating a self-mirroring effect for deep reflection and harmonization.', category: BenefitCategory.COGNITIVE, categoryId: 'angel',
-      defaultMode: 'SPLIT_BINAURAL', availableModes: ['SPLIT_BINAURAL'], colors: { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" }, premium: true
+      defaultMode: 'SPLIT_BINAURAL', availableModes: ['SPLIT_BINAURAL'], colors: { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" }
     },
     {
-      id: 'solar-sovereignty', name: "88 Hz - Solar Sovereignty", range: "88 Hz", baseFrequency: 88, binauralFrequency: 0, description: "The Lion's Gate frequency, activating solar power, personal sovereignty, and heart coherence.", category: BenefitCategory.SPIRITUAL, categoryId: 'angel', defaultMode: 'PURE', availableModes: ['PURE', 'BINAURAL', 'ISOCHRONIC'], colors: { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" }, premium: true
+      id: 'solar-sovereignty', name: "88 Hz - Solar Sovereignty", range: "88 Hz", baseFrequency: 88, binauralFrequency: 0, description: "The Lion's Gate frequency, activating solar power, personal sovereignty, and heart coherence.", category: BenefitCategory.SPIRITUAL, categoryId: 'angel', defaultMode: 'PURE', availableModes: ['PURE', 'BINAURAL', 'ISOCHRONIC'], colors: { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" }
     },
     {
       "id": "schumann-resonance",
@@ -884,8 +858,7 @@ export const appContentData: AppContentData = {
       "categoryId": "celestial",
       "defaultMode": "BINAURAL",
       "availableModes": ["PURE", "BINAURAL", "ISOCHRONIC"],
-      "colors": { "primary": "#a5b4fc", "secondary": "#93c5fd", "accent": "#a78bfa" },
-      "premium": true
+      "colors": { "primary": "#a5b4fc", "secondary": "#93c5fd", "accent": "#a78bfa" }
     },
     {
       "id": "celestial-venus",
@@ -898,8 +871,7 @@ export const appContentData: AppContentData = {
       "categoryId": "celestial",
       "defaultMode": "BINAURAL",
       "availableModes": ["PURE", "BINAURAL", "ISOCHRONIC"],
-      "colors": { "primary": "#a5b4fc", "secondary": "#93c5fd", "accent": "#a78bfa" },
-      "premium": true
+      "colors": { "primary": "#a5b4fc", "secondary": "#93c5fd", "accent": "#a78bfa" }
     },
     {
       "id": "celestial-mars",
@@ -912,8 +884,7 @@ export const appContentData: AppContentData = {
       "categoryId": "celestial",
       "defaultMode": "BINAURAL",
       "availableModes": ["PURE", "BINAURAL", "ISOCHRONIC"],
-      "colors": { "primary": "#a5b4fc", "secondary": "#93c5fd", "accent": "#a78bfa" },
-      "premium": true
+      "colors": { "primary": "#a5b4fc", "secondary": "#93c5fd", "accent": "#a78bfa" }
     },
     {
       "id": "celestial-jupiter",
@@ -926,8 +897,7 @@ export const appContentData: AppContentData = {
       "categoryId": "celestial",
       "defaultMode": "BINAURAL",
       "availableModes": ["PURE", "BINAURAL", "ISOCHRONIC"],
-      "colors": { "primary": "#a5b4fc", "secondary": "#93c5fd", "accent": "#a78bfa" },
-      "premium": true
+      "colors": { "primary": "#a5b4fc", "secondary": "#93c5fd", "accent": "#a78bfa" }
     },
     {
       "id": "celestial-saturn",
@@ -940,8 +910,7 @@ export const appContentData: AppContentData = {
       "categoryId": "celestial",
       "defaultMode": "BINAURAL",
       "availableModes": ["PURE", "BINAURAL", "ISOCHRONIC"],
-      "colors": { "primary": "#a5b4fc", "secondary": "#93c5fd", "accent": "#a78bfa" },
-      "premium": true
+      "colors": { "primary": "#a5b4fc", "secondary": "#93c5fd", "accent": "#a78bfa" }
     },
     {
       "id": "celestial-uranus",
@@ -954,8 +923,7 @@ export const appContentData: AppContentData = {
       "categoryId": "celestial",
       "defaultMode": "BINAURAL",
       "availableModes": ["PURE", "BINAURAL", "ISOCHRONIC"],
-      "colors": { "primary": "#a5b4fc", "secondary": "#93c5fd", "accent": "#a78bfa" },
-      "premium": true
+      "colors": { "primary": "#a5b4fc", "secondary": "#93c5fd", "accent": "#a78bfa" }
     },
     {
       "id": "celestial-pluto",
@@ -968,8 +936,7 @@ export const appContentData: AppContentData = {
       "categoryId": "celestial",
       "defaultMode": "BINAURAL",
       "availableModes": ["PURE", "BINAURAL", "ISOCHRONIC"],
-      "colors": { "primary": "#a5b4fc", "secondary": "#93c5fd", "accent": "#a78bfa" },
-      "premium": true
+      "colors": { "primary": "#a5b4fc", "secondary": "#93c5fd", "accent": "#a78bfa" }
     },
     {
       "id": "celestial-mercury",
@@ -982,8 +949,7 @@ export const appContentData: AppContentData = {
       "categoryId": "celestial",
       "defaultMode": "BINAURAL",
       "availableModes": ["PURE", "BINAURAL", "ISOCHRONIC"],
-      "colors": { "primary": "#a5b4fc", "secondary": "#93c5fd", "accent": "#a78bfa" },
-      "premium": true
+      "colors": { "primary": "#a5b4fc", "secondary": "#93c5fd", "accent": "#a78bfa" }
     },
     {
       "id": "celestial-neptune",
@@ -996,8 +962,7 @@ export const appContentData: AppContentData = {
       "categoryId": "celestial",
       "defaultMode": "BINAURAL",
       "availableModes": ["PURE", "BINAURAL", "ISOCHRONIC"],
-      "colors": { "primary": "#a5b4fc", "secondary": "#93c5fd", "accent": "#a78bfa" },
-      "premium": true
+      "colors": { "primary": "#a5b4fc", "secondary": "#93c5fd", "accent": "#a78bfa" }
     },
     {
       "id": "cosmic-constant-137",
@@ -1010,8 +975,7 @@ export const appContentData: AppContentData = {
       "categoryId": "celestial",
       "defaultMode": "PURE",
       "availableModes": ["PURE", "BINAURAL", "ISOCHRONIC"],
-      "colors": { "primary": "#a5b4fc", "secondary": "#93c5fd", "accent": "#a78bfa" },
-      "premium": true
+      "colors": { "primary": "#a5b4fc", "secondary": "#93c5fd", "accent": "#a78bfa" }
     },
     {
       "id": "om-resonance",
@@ -1024,8 +988,7 @@ export const appContentData: AppContentData = {
       "categoryId": "celestial",
       "defaultMode": "PURE",
       "availableModes": ["PURE", "BINAURAL", "ISOCHRONIC"],
-      "colors": { "primary": "#a5b4fc", "secondary": "#93c5fd", "accent": "#a78bfa" },
-      "premium": true
+      "colors": { "primary": "#a5b4fc", "secondary": "#93c5fd", "accent": "#a78bfa" }
     },
     {
       "id": "alpha-bridge-8hz",
@@ -1038,8 +1001,7 @@ export const appContentData: AppContentData = {
       "categoryId": "brainwaves",
       "defaultMode": "BINAURAL",
       "availableModes": ["BINAURAL", "ISOCHRONIC"],
-      "colors": { "primary": "#d8b4fe", "secondary": "#e9d5ff", "accent": "#c084fc" },
-      "premium": true
+      "colors": { "primary": "#d8b4fe", "secondary": "#e9d5ff", "accent": "#c084fc" }
     },
     {
       "id": "golden-mean-phi",
@@ -1052,8 +1014,7 @@ export const appContentData: AppContentData = {
       "categoryId": "celestial",
       "defaultMode": "PURE",
       "availableModes": ["PURE", "BINAURAL", "ISOCHRONIC"],
-      "colors": { "primary": "#fcd34d", "secondary": "#fdba74", "accent": "#fde047" },
-      "premium": true
+      "colors": { "primary": "#fcd34d", "secondary": "#fdba74", "accent": "#fde047" }
     },
     {
       "id": "mirror-axis-phi",
@@ -1066,8 +1027,7 @@ export const appContentData: AppContentData = {
       "categoryId": "brainwaves",
       "defaultMode": "BINAURAL",
       "availableModes": ["BINAURAL"],
-      "colors": { "primary": "#d8b4fe", "secondary": "#e9d5ff", "accent": "#c084fc" },
-      "premium": true
+      "colors": { "primary": "#d8b4fe", "secondary": "#e9d5ff", "accent": "#c084fc" }
     },
     {
       "id": "harmonic-grounding-81hz",
@@ -1080,8 +1040,7 @@ export const appContentData: AppContentData = {
       "categoryId": "celestial",
       "defaultMode": "PURE",
       "availableModes": ["PURE", "BINAURAL", "ISOCHRONIC"],
-      "colors": { "primary": "#a5b4fc", "secondary": "#93c5fd", "accent": "#a78bfa" },
-      "premium": true
+      "colors": { "primary": "#a5b4fc", "secondary": "#93c5fd", "accent": "#a78bfa" }
     },
     {
       "id": "rife-727",
@@ -1122,8 +1081,7 @@ export const appContentData: AppContentData = {
       "categoryId": "rife",
       "defaultMode": "BINAURAL",
       "availableModes": ["BINAURAL", "ISOCHRONIC"],
-      "colors": { "primary": "#a7f3d0", "secondary": "#bbf7d0", "accent": "#6ee7b7" },
-      "premium": true
+      "colors": { "primary": "#a7f3d0", "secondary": "#bbf7d0", "accent": "#6ee7b7" }
     },
     {
       "id": "rife-pain-relief",
@@ -1136,8 +1094,7 @@ export const appContentData: AppContentData = {
       "categoryId": "rife",
       "defaultMode": "PURE",
       "availableModes": ["PURE", "BINAURAL", "ISOCHRONIC"],
-      "colors": { "primary": "#a7f3d0", "secondary": "#bbf7d0", "accent": "#6ee7b7" },
-      "premium": true
+      "colors": { "primary": "#a7f3d0", "secondary": "#bbf7d0", "accent": "#6ee7b7" }
     },
     {
       "id": "rife-eye-health",
@@ -1150,8 +1107,7 @@ export const appContentData: AppContentData = {
       "categoryId": "rife",
       "defaultMode": "BINAURAL",
       "availableModes": ["PURE", "BINAURAL", "ISOCHRONIC"],
-      "colors": { "primary": "#a7f3d0", "secondary": "#bbf7d0", "accent": "#6ee7b7" },
-      "premium": true
+      "colors": { "primary": "#a7f3d0", "secondary": "#bbf7d0", "accent": "#6ee7b7" }
     },
     {
       "id": "rife-fascia",
@@ -1164,8 +1120,7 @@ export const appContentData: AppContentData = {
       "categoryId": "rife",
       "defaultMode": "BINAURAL",
       "availableModes": ["PURE", "BINAURAL", "ISOCHRONIC"],
-      "colors": { "primary": "#a7f3d0", "secondary": "#bbf7d0", "accent": "#6ee7b7" },
-      "premium": true
+      "colors": { "primary": "#a7f3d0", "secondary": "#bbf7d0", "accent": "#6ee7b7" }
     },
     {
       "id": "rife-633hz-vitality",
@@ -1178,8 +1133,7 @@ export const appContentData: AppContentData = {
       "categoryId": "rife",
       "defaultMode": "PURE",
       "availableModes": ["PURE", "BINAURAL", "ISOCHRONIC"],
-      "colors": { "primary": "#a7f3d0", "secondary": "#bbf7d0", "accent": "#6ee7b7" },
-      "premium": true
+      "colors": { "primary": "#a7f3d0", "secondary": "#bbf7d0", "accent": "#6ee7b7" }
     },
     {
       "id": "rife-metabolism-support",
@@ -1192,8 +1146,7 @@ export const appContentData: AppContentData = {
       "categoryId": "rife",
       "defaultMode": "BINAURAL",
       "availableModes": ["PURE", "BINAURAL", "ISOCHRONIC"],
-      "colors": { "primary": "#a7f3d0", "secondary": "#bbf7d0", "accent": "#6ee7b7" },
-      "premium": true
+      "colors": { "primary": "#a7f3d0", "secondary": "#bbf7d0", "accent": "#6ee7b7" }
     },
     {
       "id": "rife-lymph-support",
@@ -1206,8 +1159,7 @@ export const appContentData: AppContentData = {
       "categoryId": "rife",
       "defaultMode": "ISOCHRONIC",
       "availableModes": ["BINAURAL", "ISOCHRONIC"],
-      "colors": { "primary": "#a7f3d0", "secondary": "#bbf7d0", "accent": "#6ee7b7" },
-      "premium": true
+      "colors": { "primary": "#a7f3d0", "secondary": "#bbf7d0", "accent": "#6ee7b7" }
     },
     {
       "id": "rife-parasite-cleanse",
@@ -1220,8 +1172,7 @@ export const appContentData: AppContentData = {
       "categoryId": "rife",
       "defaultMode": "BINAURAL",
       "availableModes": ["BINAURAL", "ISOCHRONIC"],
-      "colors": { "primary": "#a7f3d0", "secondary": "#bbf7d0", "accent": "#6ee7b7" },
-      "premium": true
+      "colors": { "primary": "#a7f3d0", "secondary": "#bbf7d0", "accent": "#6ee7b7" }
     },
     {
       "id": "nad-plus-booster",
@@ -1234,8 +1185,7 @@ export const appContentData: AppContentData = {
       "categoryId": "rife",
       "defaultMode": "BINAURAL",
       "availableModes": ["BINAURAL", "ISOCHRONIC"],
-      "colors": { "primary": "#a7f3d0", "secondary": "#bbf7d0", "accent": "#6ee7b7" },
-      "premium": true
+      "colors": { "primary": "#a7f3d0", "secondary": "#bbf7d0", "accent": "#6ee7b7" }
     },
     {
       "id": "noise-white",
@@ -1276,8 +1226,7 @@ export const appContentData: AppContentData = {
       "categoryId": "noise",
       "defaultMode": "AMBIENCE",
       "availableModes": ["AMBIENCE"],
-      "colors": { "primary": "#e7e5e4", "secondary": "#d6d3d1", "accent": "#cbd5e1" },
-      "premium": true
+      "colors": { "primary": "#e7e5e4", "secondary": "#d6d3d1", "accent": "#cbd5e1" }
     },
     {
       "id": "noise-brown",
@@ -1290,8 +1239,7 @@ export const appContentData: AppContentData = {
       "categoryId": "noise",
       "defaultMode": "AMBIENCE",
       "availableModes": ["AMBIENCE"],
-      "colors": { "primary": "#e7e5e4", "secondary": "#d6d3d1", "accent": "#cbd5e1" },
-      "premium": true
+      "colors": { "primary": "#e7e5e4", "secondary": "#d6d3d1", "accent": "#cbd5e1" }
     },
     {
       "id": "ambient-sea",
@@ -1304,8 +1252,7 @@ export const appContentData: AppContentData = {
       "categoryId": "noise",
       "defaultMode": "AMBIENCE",
       "availableModes": ["AMBIENCE"],
-      "colors": { "primary": "#e7e5e4", "secondary": "#d6d3d1", "accent": "#cbd5e1" },
-      "premium": true
+      "colors": { "primary": "#e7e5e4", "secondary": "#d6d3d1", "accent": "#cbd5e1" }
     }
   ],
   "inspirational_quotes": [
@@ -1324,41 +1271,41 @@ export const appContentData: AppContentData = {
 const kabbalahColors = appContentData.categories.kabbalah.colors;
 const kabbalahFrequencies: Frequency[] = [
     // Sephirot
-    { id: "kabbalah-keter", name: "Keter (Crown – Unity)", range: "972 Hz", baseFrequency: 972, binauralFrequency: 0, description: "The frequency of unity and the unmanifest potential of the Crown.", category: BenefitCategory.SPIRITUAL, categoryId: "kabbalah", defaultMode: "PURE", availableModes: ["PURE"], colors: kabbalahColors, premium: true },
-    { id: "kabbalah-chokhmah", name: "Chokhmah (Wisdom – Expansion)", range: "864 Hz", baseFrequency: 864, binauralFrequency: 0, description: "Expansive Sound, associated with dynamic bursts of inspiration.", category: BenefitCategory.SPIRITUAL, categoryId: "kabbalah", defaultMode: "PURE", availableModes: ["PURE"], colors: kabbalahColors, premium: true },
-    { id: "kabbalah-binah", name: "Binah (Understanding – Structure)", range: "792 Hz", baseFrequency: 792, binauralFrequency: 0, description: "The frequency of structure and form, where wisdom becomes order.", category: BenefitCategory.SPIRITUAL, categoryId: "kabbalah", defaultMode: "PURE", availableModes: ["PURE"], colors: kabbalahColors, premium: true },
-    { id: "kabbalah-chesed", name: "Chesed (Loving-Kindness)", range: "672 Hz", baseFrequency: 672, binauralFrequency: 0, description: "A warm tone representing flow, expansion, and generosity.", category: BenefitCategory.SPIRITUAL, categoryId: "kabbalah", defaultMode: "PURE", availableModes: ["PURE"], colors: kabbalahColors, premium: true },
-    { id: "kabbalah-gevurah", name: "Gevurah (Strength, Boundaries)", range: "648 Hz", baseFrequency: 648, binauralFrequency: 0, description: "A sharp, resonant frequency of power and discipline.", category: BenefitCategory.SPIRITUAL, categoryId: "kabbalah", defaultMode: "PURE", availableModes: ["PURE"], colors: kabbalahColors, premium: true },
-    { id: "kabbalah-tiferet", name: "Tiferet (Harmony, Beauty)", range: "594 Hz", baseFrequency: 594, binauralFrequency: 0, description: "The balance point and heart center, resonating with harmony.", category: BenefitCategory.SPIRITUAL, categoryId: "kabbalah", defaultMode: "PURE", availableModes: ["PURE"], colors: kabbalahColors, premium: true },
-    { id: "kabbalah-netzach", name: "Netzach (Endurance, Flow)", range: "528 Hz", baseFrequency: 528, binauralFrequency: 0, description: "A frequency linked to perseverance, passion, and drive.", category: BenefitCategory.SPIRITUAL, categoryId: "kabbalah", defaultMode: "PURE", availableModes: ["PURE"], colors: kabbalahColors, premium: true },
-    { id: "kabbalah-hod", name: "Hod (Splendor, Intellect)", range: "504 Hz", baseFrequency: 504, binauralFrequency: 0, description: "The resonance of precision, analysis, and intellectual clarity.", category: BenefitCategory.SPIRITUAL, categoryId: "kabbalah", defaultMode: "PURE", availableModes: ["PURE"], colors: kabbalahColors, premium: true },
-    { id: "kabbalah-yesod", name: "Yesod (Foundation)", range: "444 Hz", baseFrequency: 444, binauralFrequency: 0, description: "The frequency of the subconscious and the foundation of manifestation.", category: BenefitCategory.SPIRITUAL, categoryId: "kabbalah", defaultMode: "PURE", availableModes: ["PURE"], colors: kabbalahColors, premium: true },
-    { id: "kabbalah-malkuth", name: "Malkhut (Kingdom – Earth)", range: "396 Hz", baseFrequency: 396, binauralFrequency: 0, description: "A grounding frequency that connects to the physical world.", category: BenefitCategory.SPIRITUAL, categoryId: "kabbalah", defaultMode: "PURE", availableModes: ["PURE"], colors: kabbalahColors, premium: true },
+    { id: "kabbalah-keter", name: "Keter (Crown – Unity)", range: "972 Hz", baseFrequency: 972, binauralFrequency: 0, description: "The frequency of unity and the unmanifest potential of the Crown.", category: BenefitCategory.SPIRITUAL, categoryId: "kabbalah", defaultMode: "PURE", availableModes: ["PURE"], colors: kabbalahColors },
+    { id: "kabbalah-chokhmah", name: "Chokhmah (Wisdom – Expansion)", range: "864 Hz", baseFrequency: 864, binauralFrequency: 0, description: "Expansive Sound, associated with dynamic bursts of inspiration.", category: BenefitCategory.SPIRITUAL, categoryId: "kabbalah", defaultMode: "PURE", availableModes: ["PURE"], colors: kabbalahColors },
+    { id: "kabbalah-binah", name: "Binah (Understanding – Structure)", range: "792 Hz", baseFrequency: 792, binauralFrequency: 0, description: "The frequency of structure and form, where wisdom becomes order.", category: BenefitCategory.SPIRITUAL, categoryId: "kabbalah", defaultMode: "PURE", availableModes: ["PURE"], colors: kabbalahColors },
+    { id: "kabbalah-chesed", name: "Chesed (Loving-Kindness)", range: "672 Hz", baseFrequency: 672, binauralFrequency: 0, description: "A warm tone representing flow, expansion, and generosity.", category: BenefitCategory.SPIRITUAL, categoryId: "kabbalah", defaultMode: "PURE", availableModes: ["PURE"], colors: kabbalahColors },
+    { id: "kabbalah-gevurah", name: "Gevurah (Strength, Boundaries)", range: "648 Hz", baseFrequency: 648, binauralFrequency: 0, description: "A sharp, resonant frequency of power and discipline.", category: BenefitCategory.SPIRITUAL, categoryId: "kabbalah", defaultMode: "PURE", availableModes: ["PURE"], colors: kabbalahColors },
+    { id: "kabbalah-tiferet", name: "Tiferet (Harmony, Beauty)", range: "594 Hz", baseFrequency: 594, binauralFrequency: 0, description: "The balance point and heart center, resonating with harmony.", category: BenefitCategory.SPIRITUAL, categoryId: "kabbalah", defaultMode: "PURE", availableModes: ["PURE"], colors: kabbalahColors },
+    { id: "kabbalah-netzach", name: "Netzach (Endurance, Flow)", range: "528 Hz", baseFrequency: 528, binauralFrequency: 0, description: "A frequency linked to perseverance, passion, and drive.", category: BenefitCategory.SPIRITUAL, categoryId: "kabbalah", defaultMode: "PURE", availableModes: ["PURE"], colors: kabbalahColors },
+    { id: "kabbalah-hod", name: "Hod (Splendor, Intellect)", range: "504 Hz", baseFrequency: 504, binauralFrequency: 0, description: "The resonance of precision, analysis, and intellectual clarity.", category: BenefitCategory.SPIRITUAL, categoryId: "kabbalah", defaultMode: "PURE", availableModes: ["PURE"], colors: kabbalahColors },
+    { id: "kabbalah-yesod", name: "Yesod (Foundation)", range: "444 Hz", baseFrequency: 444, binauralFrequency: 0, description: "The frequency of the subconscious and the foundation of manifestation.", category: BenefitCategory.SPIRITUAL, categoryId: "kabbalah", defaultMode: "PURE", availableModes: ["PURE"], colors: kabbalahColors },
+    { id: "kabbalah-malkuth", name: "Malkhut (Kingdom – Earth)", range: "396 Hz", baseFrequency: 396, binauralFrequency: 0, description: "A grounding frequency that connects to the physical world.", category: BenefitCategory.SPIRITUAL, categoryId: "kabbalah", defaultMode: "PURE", availableModes: ["PURE"], colors: kabbalahColors },
     // Mother Letters
     { id: "kabbalah-aleph", name: "Aleph (א) - Breath of life", range: "432 Hz", baseFrequency: 432, binauralFrequency: 0, description: "Element: Air/Spirit. Symbolic Meaning: Balance, mediation, life force.", category: BenefitCategory.SPIRITUAL, categoryId: "kabbalah", defaultMode: "PURE", availableModes: ["PURE"], colors: kabbalahColors, premium: false },
     { id: "kabbalah-mem", name: "Mem (מ) - Water, renewal", range: "315 Hz", baseFrequency: 315, binauralFrequency: 0, description: "Element: Water. Symbolic Meaning: Flow, womb, gestation, subconscious.", category: BenefitCategory.SPIRITUAL, categoryId: "kabbalah", defaultMode: "PURE", availableModes: ["PURE"], colors: kabbalahColors, premium: false },
     { id: "kabbalah-shin", name: "Shin (ש) - Fire, transformation", range: "285 Hz", baseFrequency: 285, binauralFrequency: 0, description: "Element: Fire. Symbolic Meaning: Energy, transformation, purification.", category: BenefitCategory.SPIRITUAL, categoryId: "kabbalah", defaultMode: "PURE", availableModes: ["PURE"], colors: kabbalahColors, premium: false },
     // Double Letters
-    { id: "kabbalah-bet", name: "Bet (ב) - House, structure", range: "360 Hz", baseFrequency: 360, binauralFrequency: 0, description: "Planet: Saturn. Dual Aspect: Wisdom / Foolishness.", category: BenefitCategory.SPIRITUAL, categoryId: "kabbalah", defaultMode: "PURE", availableModes: ["PURE"], colors: kabbalahColors, premium: true },
-    { id: "kabbalah-gimel", name: "Gimel (ג) - Giving, generosity", range: "342 Hz", baseFrequency: 342, binauralFrequency: 0, description: "Planet: Jupiter. Dual Aspect: Wealth / Poverty.", category: BenefitCategory.SPIRITUAL, categoryId: "kabbalah", defaultMode: "PURE", availableModes: ["PURE"], colors: kabbalahColors, premium: true },
-    { id: "kabbalah-dalet", name: "Dalet (ד) - Door, opening", range: "324 Hz", baseFrequency: 324, binauralFrequency: 0, description: "Planet: Mars. Dual Aspect: Peace / War.", category: BenefitCategory.SPIRITUAL, categoryId: "kabbalah", defaultMode: "PURE", availableModes: ["PURE"], colors: kabbalahColors, premium: true },
-    { id: "kabbalah-kaf", name: "Kaf (כ) - Palm, potential", range: "234 Hz", baseFrequency: 234, binauralFrequency: 0, description: "Planet: Sun. Dual Aspect: Life / Death.", category: BenefitCategory.SPIRITUAL, categoryId: "kabbalah", defaultMode: "PURE", availableModes: ["PURE"], colors: kabbalahColors, premium: true },
-    { id: "kabbalah-pe", name: "Pe (פ) - Speech, expression", range: "180 Hz", baseFrequency: 180, binauralFrequency: 0, description: "Planet: Venus. Dual Aspect: Grace / Ugliness.", category: BenefitCategory.SPIRITUAL, categoryId: "kabbalah", defaultMode: "PURE", availableModes: ["PURE"], colors: kabbalahColors, premium: true },
-    { id: "kabbalah-resh", name: "Resh (ר) - Head, renewal", range: "153 Hz", baseFrequency: 153, binauralFrequency: 0, description: "Planet: Mercury. Dual Aspect: Dominion / Servitude.", category: BenefitCategory.SPIRITUAL, categoryId: "kabbalah", defaultMode: "PURE", availableModes: ["PURE"], colors: kabbalahColors, premium: true },
-    { id: "kabbalah-tav", name: "Tav (ת) - Completion, seal", range: "126 Hz", baseFrequency: 126, binauralFrequency: 0, description: "Planet: Moon. Dual Aspect: Grace / Ugliness.", category: BenefitCategory.SPIRITUAL, categoryId: "kabbalah", defaultMode: "PURE", availableModes: ["PURE"], colors: kabbalahColors, premium: true },
+    { id: "kabbalah-bet", name: "Bet (ב) - House, structure", range: "360 Hz", baseFrequency: 360, binauralFrequency: 0, description: "Planet: Saturn. Dual Aspect: Wisdom / Foolishness.", category: BenefitCategory.SPIRITUAL, categoryId: "kabbalah", defaultMode: "PURE", availableModes: ["PURE"], colors: kabbalahColors },
+    { id: "kabbalah-gimel", name: "Gimel (ג) - Giving, generosity", range: "342 Hz", baseFrequency: 342, binauralFrequency: 0, description: "Planet: Jupiter. Dual Aspect: Wealth / Poverty.", category: BenefitCategory.SPIRITUAL, categoryId: "kabbalah", defaultMode: "PURE", availableModes: ["PURE"], colors: kabbalahColors },
+    { id: "kabbalah-dalet", name: "Dalet (ד) - Door, opening", range: "324 Hz", baseFrequency: 324, binauralFrequency: 0, description: "Planet: Mars. Dual Aspect: Peace / War.", category: BenefitCategory.SPIRITUAL, categoryId: "kabbalah", defaultMode: "PURE", availableModes: ["PURE"], colors: kabbalahColors },
+    { id: "kabbalah-kaf", name: "Kaf (כ) - Palm, potential", range: "234 Hz", baseFrequency: 234, binauralFrequency: 0, description: "Planet: Sun. Dual Aspect: Life / Death.", category: BenefitCategory.SPIRITUAL, categoryId: "kabbalah", defaultMode: "PURE", availableModes: ["PURE"], colors: kabbalahColors },
+    { id: "kabbalah-pe", name: "Pe (פ) - Speech, expression", range: "180 Hz", baseFrequency: 180, binauralFrequency: 0, description: "Planet: Venus. Dual Aspect: Grace / Ugliness.", category: BenefitCategory.SPIRITUAL, categoryId: "kabbalah", defaultMode: "PURE", availableModes: ["PURE"], colors: kabbalahColors },
+    { id: "kabbalah-resh", name: "Resh (ר) - Head, renewal", range: "153 Hz", baseFrequency: 153, binauralFrequency: 0, description: "Planet: Mercury. Dual Aspect: Dominion / Servitude.", category: BenefitCategory.SPIRITUAL, categoryId: "kabbalah", defaultMode: "PURE", availableModes: ["PURE"], colors: kabbalahColors },
+    { id: "kabbalah-tav", name: "Tav (ת) - Completion, seal", range: "126 Hz", baseFrequency: 126, binauralFrequency: 0, description: "Planet: Moon. Dual Aspect: Grace / Ugliness.", category: BenefitCategory.SPIRITUAL, categoryId: "kabbalah", defaultMode: "PURE", availableModes: ["PURE"], colors: kabbalahColors },
     // Simple Letters
-    { id: "kabbalah-he", name: "He (ה) - Expansion, divine breath", range: "117 Hz", baseFrequency: 117, binauralFrequency: 0, description: "Zodiac: Aries. Faculty: Speech.", category: BenefitCategory.SPIRITUAL, categoryId: "kabbalah", defaultMode: "PURE", availableModes: ["PURE"], colors: kabbalahColors, premium: true },
-    { id: "kabbalah-vav", name: "Vav (ו) - Connection, bridge", range: "108 Hz", baseFrequency: 108, binauralFrequency: 0, description: "Zodiac: Taurus. Faculty: Thought.", category: BenefitCategory.SPIRITUAL, categoryId: "kabbalah", defaultMode: "PURE", availableModes: ["PURE"], colors: kabbalahColors, premium: true },
-    { id: "kabbalah-zayin", name: "Zayin (ז) - Spark, movement", range: "99 Hz", baseFrequency: 99, binauralFrequency: 0, description: "Zodiac: Gemini. Faculty: Movement.", category: BenefitCategory.SPIRITUAL, categoryId: "kabbalah", defaultMode: "PURE", availableModes: ["PURE"], colors: kabbalahColors, premium: true },
-    { id: "kabbalah-chet", name: "Chet (ח) - Life force", range: "90 Hz", baseFrequency: 90, binauralFrequency: 0, description: "Zodiac: Cancer. Faculty: Sight.", category: BenefitCategory.SPIRITUAL, categoryId: "kabbalah", defaultMode: "PURE", availableModes: ["PURE"], colors: kabbalahColors, premium: true },
-    { id: "kabbalah-tet", name: "Tet (ט) - Hidden good", range: "81 Hz", baseFrequency: 81, binauralFrequency: 0, description: "Zodiac: Leo. Faculty: Hearing.", category: BenefitCategory.SPIRITUAL, categoryId: "kabbalah", defaultMode: "PURE", availableModes: ["PURE"], colors: kabbalahColors, premium: true },
-    { id: "kabbalah-yod", name: "Yod (י) - Point of creation", range: "72 Hz", baseFrequency: 72, binauralFrequency: 0, description: "Zodiac: Virgo. Faculty: Action.", category: BenefitCategory.SPIRITUAL, categoryId: "kabbalah", defaultMode: "PURE", availableModes: ["PURE"], colors: kabbalahColors, premium: true },
-    { id: "kabbalah-lamed", name: "Lamed (ל) - Learning, ascent", range: "63 Hz", baseFrequency: 63, binauralFrequency: 0, description: "Zodiac: Libra. Faculty: Desire.", category: BenefitCategory.SPIRITUAL, categoryId: "kabbalah", defaultMode: "PURE", availableModes: ["PURE"], colors: kabbalahColors, premium: true },
-    { id: "kabbalah-nun", name: "Nun (נ) - Continuity, humility", range: "54 Hz", baseFrequency: 54, binauralFrequency: 0, description: "Zodiac: Scorpio. Faculty: Smell.", category: BenefitCategory.SPIRITUAL, categoryId: "kabbalah", defaultMode: "PURE", availableModes: ["PURE"], colors: kabbalahColors, premium: true },
-    { id: "kabbalah-samekh", name: "Samekh (ס) - Support, circle", range: "45 Hz", baseFrequency: 45, binauralFrequency: 0, description: "Zodiac: Sagittarius. Faculty: Sleep.", category: BenefitCategory.SPIRITUAL, categoryId: "kabbalah", defaultMode: "PURE", availableModes: ["PURE"], colors: kabbalahColors, premium: true },
-    { id: "kabbalah-ayin", name: "Ayin (ע) - Vision, seeing", range: "36 Hz", baseFrequency: 36, binauralFrequency: 0, description: "Zodiac: Capricorn. Faculty: Anger.", category: BenefitCategory.SPIRITUAL, categoryId: "kabbalah", defaultMode: "PURE", availableModes: ["PURE"], colors: kabbalahColors, premium: true },
-    { id: "kabbalah-tzade", name: "Tsade (צ) - Righteousness", range: "27 Hz", baseFrequency: 27, binauralFrequency: 0, description: "Zodiac: Aquarius. Faculty: Taste/Eating.", category: BenefitCategory.SPIRITUAL, categoryId: "kabbalah", defaultMode: "PURE", availableModes: ["PURE"], colors: kabbalahColors, premium: true },
-    { id: "kabbalah-qof", name: "Qof (ק) - Holiness, cycles", range: "18 Hz", baseFrequency: 18, binauralFrequency: 0, description: "Zodiac: Pisces. Faculty: Laughter.", category: BenefitCategory.SPIRITUAL, categoryId: "kabbalah", defaultMode: "PURE", availableModes: ["PURE"], colors: kabbalahColors, premium: true }
+    { id: "kabbalah-he", name: "He (ה) - Expansion, divine breath", range: "117 Hz", baseFrequency: 117, binauralFrequency: 0, description: "Zodiac: Aries. Faculty: Speech.", category: BenefitCategory.SPIRITUAL, categoryId: "kabbalah", defaultMode: "PURE", availableModes: ["PURE"], colors: kabbalahColors },
+    { id: "kabbalah-vav", name: "Vav (ו) - Connection, bridge", range: "108 Hz", baseFrequency: 108, binauralFrequency: 0, description: "Zodiac: Taurus. Faculty: Thought.", category: BenefitCategory.SPIRITUAL, categoryId: "kabbalah", defaultMode: "PURE", availableModes: ["PURE"], colors: kabbalahColors },
+    { id: "kabbalah-zayin", name: "Zayin (ז) - Spark, movement", range: "99 Hz", baseFrequency: 99, binauralFrequency: 0, description: "Zodiac: Gemini. Faculty: Movement.", category: BenefitCategory.SPIRITUAL, categoryId: "kabbalah", defaultMode: "PURE", availableModes: ["PURE"], colors: kabbalahColors },
+    { id: "kabbalah-chet", name: "Chet (ח) - Life force", range: "90 Hz", baseFrequency: 90, binauralFrequency: 0, description: "Zodiac: Cancer. Faculty: Sight.", category: BenefitCategory.SPIRITUAL, categoryId: "kabbalah", defaultMode: "PURE", availableModes: ["PURE"], colors: kabbalahColors },
+    { id: "kabbalah-tet", name: "Tet (ט) - Hidden good", range: "81 Hz", baseFrequency: 81, binauralFrequency: 0, description: "Zodiac: Leo. Faculty: Hearing.", category: BenefitCategory.SPIRITUAL, categoryId: "kabbalah", defaultMode: "PURE", availableModes: ["PURE"], colors: kabbalahColors },
+    { id: "kabbalah-yod", name: "Yod (י) - Point of creation", range: "72 Hz", baseFrequency: 72, binauralFrequency: 0, description: "Zodiac: Virgo. Faculty: Action.", category: BenefitCategory.SPIRITUAL, categoryId: "kabbalah", defaultMode: "PURE", availableModes: ["PURE"], colors: kabbalahColors },
+    { id: "kabbalah-lamed", name: "Lamed (ל) - Learning, ascent", range: "63 Hz", baseFrequency: 63, binauralFrequency: 0, description: "Zodiac: Libra. Faculty: Desire.", category: BenefitCategory.SPIRITUAL, categoryId: "kabbalah", defaultMode: "PURE", availableModes: ["PURE"], colors: kabbalahColors },
+    { id: "kabbalah-nun", name: "Nun (נ) - Continuity, humility", range: "54 Hz", baseFrequency: 54, binauralFrequency: 0, description: "Zodiac: Scorpio. Faculty: Smell.", category: BenefitCategory.SPIRITUAL, categoryId: "kabbalah", defaultMode: "PURE", availableModes: ["PURE"], colors: kabbalahColors },
+    { id: "kabbalah-samekh", name: "Samekh (ס) - Support, circle", range: "45 Hz", baseFrequency: 45, binauralFrequency: 0, description: "Zodiac: Sagittarius. Faculty: Sleep.", category: BenefitCategory.SPIRITUAL, categoryId: "kabbalah", defaultMode: "PURE", availableModes: ["PURE"], colors: kabbalahColors },
+    { id: "kabbalah-ayin", name: "Ayin (ע) - Vision, seeing", range: "36 Hz", baseFrequency: 36, binauralFrequency: 0, description: "Zodiac: Capricorn. Faculty: Anger.", category: BenefitCategory.SPIRITUAL, categoryId: "kabbalah", defaultMode: "PURE", availableModes: ["PURE"], colors: kabbalahColors },
+    { id: "kabbalah-tzade", name: "Tsade (צ) - Righteousness", range: "27 Hz", baseFrequency: 27, binauralFrequency: 0, description: "Zodiac: Aquarius. Faculty: Taste/Eating.", category: BenefitCategory.SPIRITUAL, categoryId: "kabbalah", defaultMode: "PURE", availableModes: ["PURE"], colors: kabbalahColors },
+    { id: "kabbalah-qof", name: "Qof (ק) - Holiness, cycles", range: "18 Hz", baseFrequency: 18, binauralFrequency: 0, description: "Zodiac: Pisces. Faculty: Laughter.", category: BenefitCategory.SPIRITUAL, categoryId: "kabbalah", defaultMode: "PURE", availableModes: ["PURE"], colors: kabbalahColors }
 ];
 
 const codexFrequencies: Frequency[] = codexData.map(node => ({
@@ -1373,7 +1320,6 @@ const codexFrequencies: Frequency[] = codexData.map(node => ({
     defaultMode: 'PURE',
     availableModes: ['PURE', 'BINAURAL', 'ISOCHRONIC'],
     colors: { primary: node.color, secondary: node.color, accent: node.color },
-    premium: true,
 }));
 
 
@@ -1389,7 +1335,6 @@ const harmonicElementFrequencies: Frequency[] = harmonicElements.map(element => 
   defaultMode: 'PURE',
   availableModes: ['PURE', 'BINAURAL', 'ISOCHRONIC'],
   colors: { primary: "#a5f3fc", secondary: "#e0f2fe", accent: "#22d3ee" },
-  premium: true, // Assuming elements are premium
   atomicNumber: element.atomicNumber,
   materialUses: element.materialUses,
   biologicalAssociation: element.biologicalAssociation,

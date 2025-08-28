@@ -194,21 +194,18 @@ const PricingPage: React.FC<PricingPageProps> = ({ onBack }) => {
   ];
 
   const features = [
-    { name: 'Sound Library', free: '2 Free/Category', pro: 'Unlimited' },
-    { name: 'Harmonic Elements', free: true, pro: true },
-    { name: 'Schumann Resonance Protocol', free: true, pro: true },
-    { name: 'Guided Protocols', free: 'Limited Selection', pro: 'All Protocols' },
+    { name: 'Sound Library Access', free: '2 Free per Category/Sub-category', pro: 'Unlimited Access' },
+    { name: 'Featured Protocol of the Week', free: true, pro: true },
     { name: 'Interactive Breathwork Guide', free: true, pro: true },
-    { name: 'AI Personal Insights', free: false, pro: true },
-    { name: 'HealthKit / Health Connect', free: true, pro: 'Sync + AI Insights' },
-    { name: 'Creator Studio', free: false, pro: true },
-    { name: 'Codex Mod-24 Harmonics', free: false, pro: true },
-    { name: 'Kabbalah Tree of Life', free: false, pro: true },
+    { name: 'Habit Tracking', free: 'Up to 3 Habits', pro: 'Unlimited Habits' },
+    { name: 'Daily Logging', free: '5 Entries per Day', pro: 'Unlimited Entries' },
     { name: '8D Spatial Audio', free: false, pro: true },
-    { name: 'Habit Tracking', free: '3 Habits', pro: 'Unlimited' },
-    { name: 'Daily Logging', free: '5 Entries/Day', pro: 'Unlimited' },
-    { name: 'Advanced Analytics', free: false, pro: true },
-    { name: 'Oura, Calendar & CGM Integrations', free: false, pro: true },
+    { name: 'Creator Studio (Custom Sessions)', free: false, pro: true },
+    { name: 'Codex Alchemist (AI Generator)', free: false, pro: true },
+    { name: 'Codex Universalis (Harmonic Map)', free: false, pro: true },
+    { name: 'AI Personal Insights', free: false, pro: true },
+    { name: 'Advanced Analytics & Trends', free: false, pro: true },
+    { name: 'All Health & Calendar Integrations', free: 'Basic Sync', pro: 'Full Sync + Insights' },
   ];
   
   const faqData = [

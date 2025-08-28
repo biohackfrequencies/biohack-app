@@ -17,6 +17,27 @@ interface CategoryPageProps {
   categories: Record<CategoryId, { title: string; description:string; colors: ColorTheme; }>;
 }
 
+const sortFreeFirst = <T extends { premium?: boolean, baseFrequency?: number, title?: string, name?: string }>(
+  items: T[],
+  secondarySortKey: 'frequency' | 'title' | 'default'
+): T[] => {
+  return [...items].sort((a, b) => {
+    if (a.premium !== b.premium) {
+      return a.premium ? 1 : -1; // false (free) comes first
+    }
+    // If premium status is the same, sort by the secondary key
+    if (secondarySortKey === 'frequency' && a.baseFrequency !== undefined && b.baseFrequency !== undefined) {
+      return a.baseFrequency - b.baseFrequency;
+    }
+    if (secondarySortKey === 'title') {
+      const nameA = a.title || a.name || '';
+      const nameB = b.title || b.name || '';
+      return nameA.localeCompare(nameB);
+    }
+    return 0; // default order
+  });
+};
+
 const CategorySection: React.FC<{ title: string; frequencies: Frequency[]; onSelect: (item: Frequency) => void; favorites: string[]; toggleFavorite: (id: string) => void; }> = ({ title, frequencies, onSelect, favorites, toggleFavorite }) => (
     <div className="space-y-4">
         <h3 className="text-2xl font-display font-bold text-slate-800 dark:text-dark-text-primary">{title}</h3>
@@ -60,13 +81,15 @@ export const CategoryPage: React.FC<CategoryPageProps> = ({ categoryId, frequenc
   const angelContent = useMemo(() => {
     if (!isAngel) return null;
 
-    const advancedProtocols = relevantSessions
-      .filter(s => s.subCategory === 'Advanced Resonance Protocols')
-      .sort((a, b) => a.title.localeCompare(b.title));
+    const advancedProtocols = sortFreeFirst(
+      relevantSessions.filter(s => s.subCategory === 'Advanced Resonance Protocols'),
+      'title'
+    );
 
-    const angelicFrequencies = frequenciesInCategory
-      .filter(f => f.subCategory === 'Angelic Frequencies')
-      .sort((a, b) => a.baseFrequency - b.baseFrequency);
+    const angelicFrequencies = sortFreeFirst(
+      frequenciesInCategory.filter(f => f.subCategory === 'Angelic Frequencies'),
+      'frequency'
+    );
 
     return { advancedProtocols, angelicFrequencies };
   }, [isAngel, relevantSessions, frequenciesInCategory]);
@@ -78,29 +101,31 @@ export const CategoryPage: React.FC<CategoryPageProps> = ({ categoryId, frequenc
       const doubleLetterIds = ['kabbalah-bet', 'kabbalah-gimel', 'kabbalah-dalet', 'kabbalah-kaf', 'kabbalah-pe', 'kabbalah-resh', 'kabbalah-tav'];
       const simpleLetterIds = ['kabbalah-he', 'kabbalah-vav', 'kabbalah-zayin', 'kabbalah-chet', 'kabbalah-tet', 'kabbalah-yod', 'kabbalah-lamed', 'kabbalah-nun', 'kabbalah-samekh', 'kabbalah-ayin', 'kabbalah-tzade', 'kabbalah-qof'];
 
-      const getSortedFrequenciesByIds = (ids: string[]) => ids.map(id => frequenciesInCategory.find(f => f.id === id)).filter((f): f is Frequency => !!f);
+      const getFrequenciesByIds = (ids: string[]) => ids.map(id => frequenciesInCategory.find(f => f.id === id)).filter((f): f is Frequency => !!f);
 
       const sections = [
-        { title: "The Three Mother Letters (Primordial Forces)", frequencies: getSortedFrequenciesByIds(motherLetterIds) },
-        { title: "The Seven Double Letters (Planets / Polarities)", frequencies: getSortedFrequenciesByIds(doubleLetterIds) },
-        { title: "The Twelve Simple Letters (Zodiac / Human Faculties)", frequencies: getSortedFrequenciesByIds(simpleLetterIds) },
-        { title: "The Tree of Life (10 Sephirot)", frequencies: getSortedFrequenciesByIds(sephirotIds) },
+        { title: "The Three Mother Letters (Primordial Forces)", frequencies: sortFreeFirst(getFrequenciesByIds(motherLetterIds), 'frequency') },
+        { title: "The Seven Double Letters (Planets / Polarities)", frequencies: sortFreeFirst(getFrequenciesByIds(doubleLetterIds), 'frequency') },
+        { title: "The Twelve Simple Letters (Zodiac / Human Faculties)", frequencies: sortFreeFirst(getFrequenciesByIds(simpleLetterIds), 'frequency') },
+        { title: "The Tree of Life (10 Sephirot)", frequencies: sortFreeFirst(getFrequenciesByIds(sephirotIds), 'frequency') },
       ];
 
-      const sortedSessions = [...relevantSessions].sort((a, b) => (a.premium ? 1 : 0) - (b.premium ? 1 : 0));
+      const sortedSessions = sortFreeFirst(relevantSessions, 'title');
       return { sections, sortedSessions };
   }, [isKabbalah, frequenciesInCategory, relevantSessions]);
 
   const brainwavesContent = useMemo(() => {
     if (!isBrainwaves) return null;
     
-    const mirrorAxisProtocols = relevantSessions
-        .filter(s => s.id.startsWith('mirror-axis-') || s.id === 'phi-axis-harmonic-balance')
-        .sort((a, b) => a.title.localeCompare(b.title));
+    const mirrorAxisProtocols = sortFreeFirst(
+        relevantSessions.filter(s => s.id.startsWith('mirror-axis-') || s.id === 'phi-axis-harmonic-balance'),
+        'title'
+    );
 
-    const singleFrequencies = frequenciesInCategory
-        .filter(f => f.defaultMode !== 'SPLIT_BINAURAL')
-        .sort((a,b) => a.baseFrequency - b.baseFrequency); // Sort from low to high freq
+    const singleFrequencies = sortFreeFirst(
+        frequenciesInCategory.filter(f => f.defaultMode !== 'SPLIT_BINAURAL'),
+        'frequency'
+    );
         
     return { mirrorAxisProtocols, singleFrequencies };
   }, [isBrainwaves, relevantSessions, frequenciesInCategory]);
@@ -108,19 +133,12 @@ export const CategoryPage: React.FC<CategoryPageProps> = ({ categoryId, frequenc
 
   const otherContent = useMemo(() => {
       if (isAngel || isKabbalah || isBrainwaves) return null;
-      const getSortScore = (item: { premium?: boolean; isFeatured?: boolean }) => {
-          if (item.isFeatured) return -1;
-          if (!item.premium) return 0;
-          return 1;
-      };
-      const sortedFrequencies = [...frequenciesInCategory].sort((a, b) => {
-          const scoreA = getSortScore(a);
-          const scoreB = getSortScore(b);
-          if (scoreA !== scoreB) return scoreA - scoreB;
-          if (categoryId === 'solfeggio' || categoryId === 'elements') return a.baseFrequency - b.baseFrequency;
-          return a.name.localeCompare(b.name);
-      });
-      const sortedSessions = [...relevantSessions].sort((a, b) => getSortScore(a) - getSortScore(b));
+      
+      const freqSortKey = (categoryId === 'solfeggio' || categoryId === 'elements') ? 'frequency' : 'title';
+      
+      const sortedFrequencies = sortFreeFirst([...frequenciesInCategory], freqSortKey);
+      const sortedSessions = sortFreeFirst([...relevantSessions], 'title');
+
       return { sortedFrequencies, sortedSessions };
   }, [isAngel, isKabbalah, isBrainwaves, frequenciesInCategory, relevantSessions, categoryId]);
 

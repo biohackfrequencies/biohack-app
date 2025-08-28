@@ -58,7 +58,7 @@ const CategoryCard: React.FC<{
       </div>
       
       <div className="absolute inset-0 z-20 p-4 flex flex-col items-center justify-center bg-white/80 dark:bg-dark-surface/80 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-        <p className="text-sm text-slate-800 dark:text-dark-text-secondary">{details.description}</p>
+        <p className="text-sm text-slate-800 dark:text-dark-text-secondary line-clamp-5">{details.description}</p>
       </div>
     </button>
   );
@@ -110,7 +110,7 @@ const ActionCard: React.FC<{
       </div>
       
       <div className="absolute inset-0 z-20 p-4 flex flex-col items-center justify-center bg-white/80 dark:bg-dark-surface/80 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-        <p className="text-sm text-slate-800 dark:text-dark-text-secondary">{description}</p>
+        <p className="text-sm text-slate-800 dark:text-dark-text-secondary line-clamp-5">{description}</p>
       </div>
     </button>
   );
