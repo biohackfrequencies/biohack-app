@@ -12,7 +12,6 @@ if (!apiKey || !supabaseUrl || !supabaseAnonKey) {
 }
 
 const ai = new GoogleGenAI({ apiKey: apiKey || "" });
-const supabase = createClient<Database>(supabaseUrl!, supabaseAnonKey!);
 
 // --- Schemas for structured responses from Gemini ---
 
@@ -137,7 +136,18 @@ export const handler = async (event: { httpMethod: string, body: string | null, 
             return { statusCode: 401, body: JSON.stringify({ error: 'Authentication token is required.' }) };
         }
         
-        const { data: { user }, error: userError } = await supabase.auth.getUser(token);
+        // FIX: Create a new Supabase client for this specific request, authenticated as the user.
+        // This allows Row Level Security (RLS) policies to work correctly.
+        const supabaseAuthedClient = createClient<Database>(supabaseUrl!, supabaseAnonKey!, {
+            global: {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }
+        });
+        
+        const { data: { user }, error: userError } = await supabaseAuthedClient.auth.getUser();
+
         if (userError || !user) {
             return { statusCode: 401, body: JSON.stringify({ error: 'Invalid or expired token.' }) };
         }
@@ -145,7 +155,7 @@ export const handler = async (event: { httpMethod: string, body: string | null, 
         const { action, payload } = JSON.parse(event.body || '{}');
 
         // --- Rate Limiting & Credit Check ---
-        const { data: profile, error: profileError } = await supabase.from('profiles').select('api_requests, ai_credits_remaining, pro_access_expires_at, ai_credits_reset_at').eq('id', user.id).single();
+        const { data: profile, error: profileError } = await supabaseAuthedClient.from('profiles').select('api_requests, ai_credits_remaining, pro_access_expires_at, ai_credits_reset_at').eq('id', user.id).single();
 
         if (profileError) throw new Error('Could not retrieve user profile.');
         if (!profile) {
@@ -187,7 +197,7 @@ export const handler = async (event: { httpMethod: string, body: string | null, 
         
         updatePayload.api_requests = [...recentRequests, Date.now()];
         
-        await supabase.from('profiles').update(updatePayload).eq('id', user.id);
+        await supabaseAuthedClient.from('profiles').update(updatePayload).eq('id', user.id);
         // --- End of checks ---
 
 
