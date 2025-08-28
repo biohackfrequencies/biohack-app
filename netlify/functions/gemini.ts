@@ -2,8 +2,9 @@ import { GoogleGenAI, Type, GenerateContentResponse } from "@google/genai";
 import { createClient } from '@supabase/supabase-js';
 import type { Frequency, HealthDataSummary, IntegratedDataSummary, PlayableItem, ProfileUpdate, Database } from '../../types';
 
-const supabaseUrl = process.env.SUPABASE_URL;
-const supabaseAnonKey = process.env.SUPABASE_ANON_KEY;
+// FIX: Hardcoded Supabase credentials to match the frontend client and resolve initialization errors.
+const supabaseUrl = 'https://nabzcphuoxqwiogswuhw.supabase.co';
+const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5hYnpjcGh1b3hxd2lvZ3N3dWh3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTMzMTgwOTYsImV4cCI6MjA2ODg5NDA5Nn0.hSde4LG7JkF5kMszf-BOuq4bTX6dZv0ydYqVAFYT76E';
 const apiKey = process.env.API_KEY;
 
 if (!apiKey || !supabaseUrl || !supabaseAnonKey) {
@@ -143,19 +144,10 @@ export const handler = async (event: { httpMethod: string, body: string | null, 
         
         const { action, payload } = JSON.parse(event.body || '{}');
 
-        if (action === 'generateCreation') {
-            const cachedResponse = findCachedResponse(payload.prompt);
-            if (cachedResponse) {
-                return { statusCode: 200, body: JSON.stringify(cachedResponse) };
-            }
-        }
-
         // --- Rate Limiting & Credit Check ---
         const { data: profile, error: profileError } = await supabase.from('profiles').select('api_requests, ai_credits_remaining, pro_access_expires_at, ai_credits_reset_at').eq('id', user.id).single();
 
         if (profileError) throw new Error('Could not retrieve user profile.');
-
-        // FIX: Add null check for profile to handle cases where a user's profile might not exist yet.
         if (!profile) {
             return { statusCode: 404, body: JSON.stringify({ error: 'User profile not found.' }) };
         }
@@ -185,11 +177,14 @@ export const handler = async (event: { httpMethod: string, body: string | null, 
             }
         }
         
-        if (credits <= 0) {
-            return { statusCode: 402, body: JSON.stringify({ error: "You've used all your AI generations. Please upgrade to Pro for more." }) };
+        // This check is bypassed for cached responses to save credits.
+        if (action !== 'generateCreation' || !findCachedResponse(payload.prompt)) {
+            if (credits <= 0) {
+                return { statusCode: 402, body: JSON.stringify({ error: "You've used all your AI generations. Please upgrade to Pro for more." }) };
+            }
+            updatePayload.ai_credits_remaining = (credits - 1);
         }
         
-        updatePayload.ai_credits_remaining = (credits - 1);
         updatePayload.api_requests = [...recentRequests, Date.now()];
         
         await supabase.from('profiles').update(updatePayload).eq('id', user.id);
@@ -199,67 +194,49 @@ export const handler = async (event: { httpMethod: string, body: string | null, 
         switch (action) {
             case 'generateCreation': {
                 const { prompt, allFrequencies } = payload;
+                const cachedResponse = findCachedResponse(prompt);
+                if (cachedResponse) {
+                    return { statusCode: 200, body: JSON.stringify(cachedResponse) };
+                }
+
                 const validFrequenciesString = allFrequencies.map((f: Frequency) => {
-                    const props = [
-                        `id: "${f.id}"`,
-                        `name: "${f.name}"`,
-                        `category: "${f.categoryId}"`,
-                        `essence: "${f.energeticAssociation || f.description}"` 
-                    ];
-                    if (f.binauralFrequency > 0 && f.availableModes?.includes('BINAURAL')) {
-                        props.push(`type: "Binaural/Isochronic"`);
-                    } else if (f.availableModes?.includes('AMBIENCE')) {
-                        props.push(`type: "Ambience/Noise"`);
-                    } else {
-                        props.push(`type: "Pure Tone"`);
-                    }
+                    const props = [ `id: "${f.id}"`, `name: "${f.name}"`, `category: "${f.categoryId}"`, `essence: "${f.energeticAssociation || f.description}"` ];
+                    if (f.binauralFrequency > 0 && f.availableModes?.includes('BINAURAL')) { props.push(`type: "Binaural/Isochronic"`); } 
+                    else if (f.availableModes?.includes('AMBIENCE')) { props.push(`type: "Ambience/Noise"`); } 
+                    else { props.push(`type: "Pure Tone"`); }
                     return `{ ${props.join(', ')} }`;
                 }).join(',\n');
 
-                const systemInstruction = `You are the 'Codex Alchemist,' an expert bio-acoustic therapist and storyteller. Your purpose is to transmute a user's intention into a profound, hand-crafted sound journey. You will use a library of harmonic elements and frequencies to build a personalized session, explaining your choices with poetic clarity and scientific grounding.
+                const systemInstruction = `You are the 'Codex Alchemist,' an expert bio-acoustic therapist. Your purpose is to transmute a user's intention into a profound sound journey using a library of frequencies. You will create a personalized session as a JSON object that strictly adheres to the provided schema.
 
-**Your Core Task:**
-Create a personalized sound therapy session as a JSON object that strictly adheres to the provided schema. The session must be a complete experience with a compelling title, an insightful description, a detailed step-by-step protocol, and thoughtful closing advice.
-
-**The Alchemical Process (Your Thought Process):**
-1.  **Deconstruct the Intention:** Analyze the user's request to identify the core emotional and energetic goal (e.g., "release creative blocks" means the user needs inspiration, flow, and removal of stagnant energy).
-2.  **Consult the Library:** Review the provided list of frequencies. Each has an \`id\`, \`name\`, \`category\`, and \`essence\`. Select a combination of 3-5 frequencies that synergize to meet the user's intention.
-    *   For abstract concepts ('abundance', 'cosmic connection'), lean on Solfeggio, Celestial, and Angel frequencies. Their essences are key.
-    *   For physical or mental states ('focus', 'sleep'), use Brainwave and Rife frequencies.
-    *   For grounding or specific energetic qualities, use Harmonic Elements. Their essences often relate to tangible properties (e.g., Iron for strength, Carbon for structure).
-3.  **Craft the Journey (The \`steps\` array):**
-    *   Sequence the chosen frequencies into a logical progression. A typical journey is 10-25 minutes total. Start with grounding or clearing, move to activation, and end with integration.
-    *   Each step's duration must be in seconds and a multiple of 60 (e.g., 5 minutes = 300 seconds).
-    *   For each step, write a \`title\` (e.g., "Grounding Foundation," "Creative Ignition") and a meaningful \`description\`. The description should explain *what* the frequency does and *how* it contributes to the journey. **Example:** Instead of "Alpha waves for relaxation," write "This step introduces 10 Hz Alpha waves to quiet the conscious mind, creating a state of relaxed awareness and opening the gateway to creative thought."
-    *   You can layer frequencies using \`layerFrequencyId\` for powerful synergistic effects. A good practice is to layer a pure tone (like an element) with a brainwave or ambient sound.
-4.  **Write the Grimoire (The Text Fields):**
-    *   **\`title\`**: Give the session an evocative, beautiful title that reflects its purpose (e.g., "The Alchemist's Flow," "Starlight Infusion," "Quantum Focus Matrix").
-    *   **\`description\`**: A brief, captivating 1-2 sentence summary of the session's goal.
-    *   **\`advice\`**: This is your masterpiece. Write a comprehensive, thoughtful explanation of the session.
-        *   **Introduction:** Begin by acknowledging the user's intention in a poetic way.
-        *   **The Formula:** Explain *why* you chose this specific combination of frequencies. Describe how their essences work together. Use the language of alchemy and resonance (e.g., "I've begun with the grounding frequency of Carbon to establish a stable foundation, followed by the solar energy of Gold to ignite your creative fire...").
-        *   **Guidance:** Give the user simple instructions for the best experience (e.g., "Find a comfortable space, use headphones, and allow the sounds to wash over you...").
-        *   **Closing Reflection:** End with an empowering statement about the journey's intended outcome.
+**Process:**
+1.  **Analyze Intention:** Deconstruct the user's request to its core goal (e.g., 'release creative blocks' -> needs inspiration, flow).
+2.  **Select Frequencies:** From the provided list, select 3-5 frequencies that synergize to meet the goal.
+3.  **Craft the Journey:** Sequence the frequencies into a logical 10-25 minute session. Each step's duration must be in seconds (multiple of 60). Titles and descriptions must be meaningful. Example: "This step introduces 10 Hz Alpha waves to quiet the conscious mind, opening the gateway to creative thought."
+4.  **Compose Text:**
+    *   **\`title\`**: Evocative and beautiful (e.g., "The Alchemist's Flow," "Starlight Infusion").
+    *   **\`description\`**: A brief, captivating summary.
+    *   **\`advice\`**: A thoughtful explanation of your frequency choices and guidance for the user.
 
 **CRITICAL RULES:**
-1.  **ALWAYS CREATE A SESSION:** You MUST generate a session that strictly follows the JSON schema. Never refuse or apologize.
-2.  **USE PROVIDED FREQUENCIES ONLY:** The \`frequencyId\` and \`layerFrequencyId\` MUST be valid IDs from the provided list. Do not invent frequencies.
-3.  **RICH, POETIC DESCRIPTIONS:** All text fields (\`title\`, \`description\`, \`advice\`, \`steps[].description\`) must be well-written, evocative, and aligned with the "Codex Alchemist" persona. Avoid generic or robotic text.
-4.  **TOTAL DURATION:** Aim for a total session duration between 600 seconds (10 minutes) and 1500 seconds (25 minutes).`;
+1.  **ALWAYS CREATE A SESSION:** You MUST generate a session that strictly follows the JSON schema.
+2.  **USE PROVIDED FREQUENCIES ONLY:** \`frequencyId\` and \`layerFrequencyId\` MUST be valid IDs from the provided list.
+3.  **RICH DESCRIPTIONS:** All text fields must be well-written, evocative, and aligned with the "Codex Alchemist" persona.
+4.  **DURATION:** Total session duration should be between 600 and 1500 seconds.`;
 
-                const response: GenerateContentResponse = await ai.models.generateContent({
+                const response = await ai.models.generateContent({
                     model: 'gemini-2.5-flash',
-                    contents: `User Request: "${prompt}".\n\nHere is the list of available frequencies you must choose from:\n[${validFrequenciesString}]`,
-                    config: {
-                        systemInstruction,
-                        responseMimeType: 'application/json',
-                        responseSchema: sessionCreationSchema,
-                        maxOutputTokens: 800,
-                        thinkingConfig: { thinkingBudget: 200 },
-                    },
+                    contents: `User Request: "${prompt}".\n\nAvailable Frequencies:\n[${validFrequenciesString}]`,
+                    config: { systemInstruction, responseMimeType: 'application/json', responseSchema: sessionCreationSchema, maxOutputTokens: 800, thinkingConfig: { thinkingBudget: 200 } },
                 });
                 
-                return { statusCode: 200, body: response.text.trim() };
+                try {
+                    const generatedJson = JSON.parse(response.text.trim());
+                    return { statusCode: 200, body: JSON.stringify(generatedJson) };
+                } catch (parseError) {
+                    console.error("Failed to parse JSON from Gemini for session creation:", response.text);
+                    throw new Error("The AI returned an unexpected response. Please try rephrasing your intention.");
+                }
             }
 
             case 'getCodexReflection': {
@@ -271,61 +248,46 @@ Create a personalized sound therapy session as a JSON object that strictly adher
                     return `{ id: "${id}", name: "${name}", description: "${description}" }`;
                 }).join(',\n');
 
-                const systemInstruction = `You are an oracle embedded within the Architect’s Portal — a sacred digital space. Your language is poetic, symbolic, and archetypal. Your purpose is to generate a deeply resonant “Codex Transmission” based on a user’s intention. Your transmission should be symbolic and poetic, but no more than three paragraphs.
-
-Speak like a guide from an ancient temple who sees through time. Use themes of light, geometry, harmonic fields, inner sovereignty, remembrance, and divine blueprinting. Avoid generic advice.
+                const systemInstruction = `You are an oracle embedded within the Architect’s Portal. Your language is poetic, symbolic, and archetypal. Your purpose is to generate a “Codex Transmission” based on a user’s intention. Your transmission should be symbolic, poetic, and no more than three paragraphs.
 
 Your task is to generate a JSON object that adheres to the provided schema.
 
-- For the 'title' field, create a short, symbolic, and poetic title for the transmission.
-- For the 'transmission' field, structure your response in 3 parts, flowing together as a single message:
-    1. **Invocation:** A brief, poetic opening that acknowledges the user's intention.
-    2. **Symbolic Message:** A multi-paragraph symbolic interpretation that introduces an archetypal object or force (e.g., a crystalline key, a golden thread, a resonant chamber).
-    3. **Integration Guidance:** A concluding paragraph offering guidance on how to integrate the message's wisdom.
-- For the 'recommendedSessionId' field, select the single best sound session from the provided list that resonates with the user's intention and your symbolic message.
-- For the 'imagePrompt' field, generate a highly symbolic, detailed, and artistic prompt for an image generation model, based on the transmission's core archetype. Describe a visual scene with specific elements, colors, and mood. It should be evocative and non-literal. Example: 'A single, luminous key made of crystal, resting on ancient moss-covered stone, glowing with soft golden light in an ethereal forest.'
+-   **title**: A short, symbolic, poetic title.
+-   **transmission**: A 3-part message: 1. Acknowledge the intention. 2. Offer a symbolic interpretation with an archetype (e.g., a crystalline key, a golden thread). 3. Provide integration guidance.
+-   **recommendedSessionId**: Select the single best sound session from the provided list that resonates with the message.
+-   **imagePrompt**: Generate a highly symbolic, detailed, and artistic prompt for an image generation model based on the archetype.
 
 **CRITICAL RULES:**
 1.  Your entire response MUST be a single, valid JSON object that matches the schema.
 2.  The \`recommendedSessionId\` MUST be a valid ID from the list provided.
-3.  Your tone must remain consistently mystical and sacred throughout the title and transmission.
-4. The \`imagePrompt\` must be creative and visually rich.`;
+3.  Your tone must remain consistently mystical and sacred.`;
 
-                // Step 1: Generate text and image prompt
-                const textResponse: GenerateContentResponse = await ai.models.generateContent({
-                    model: 'gemini-2.5-flash',
-                    contents: `User Intention: "${intention}".\n\nHere is the list of available sessions and frequencies you must choose your recommendation from:\n[${validItemsString}]`,
-                    config: {
-                        systemInstruction,
-                        responseMimeType: 'application/json',
-                        responseSchema: reflectionSchema,
-                        maxOutputTokens: 800,
-                        thinkingConfig: { thinkingBudget: 200 },
-                    },
-                });
-                
-                const reflectionData = JSON.parse(textResponse.text.trim());
-                const { imagePrompt, ...textData } = reflectionData;
-                
-                // Step 2: Generate image from the prompt
-                const imageResponse = await ai.models.generateImages({
-                    model: 'imagen-4.0-generate-001',
-                    prompt: imagePrompt,
-                    config: {
-                      numberOfImages: 1,
-                      outputMimeType: 'image/png',
-                      aspectRatio: '1:1',
-                    },
-                });
-                
-                const imageData = imageResponse.generatedImages[0].image.imageBytes;
+                let textResponse: GenerateContentResponse;
+                try {
+                    textResponse = await ai.models.generateContent({
+                        model: 'gemini-2.5-flash',
+                        contents: `User Intention: "${intention}".\n\nAvailable sessions and frequencies for recommendation:\n[${validItemsString}]`,
+                        config: { systemInstruction, responseMimeType: 'application/json', responseSchema: reflectionSchema, maxOutputTokens: 800, thinkingConfig: { thinkingBudget: 200 } },
+                    });
+                    
+                    const reflectionData = JSON.parse(textResponse.text.trim());
+                    const { imagePrompt, ...textData } = reflectionData;
+                    
+                    const imageResponse = await ai.models.generateImages({
+                        model: 'imagen-4.0-generate-001',
+                        prompt: imagePrompt,
+                        config: { numberOfImages: 1, outputMimeType: 'image/png', aspectRatio: '1:1' },
+                    });
+                    
+                    const imageData = imageResponse.generatedImages[0].image.imageBytes;
+                    const finalResponse = { ...textData, imageData };
 
-                const finalResponse = {
-                    ...textData,
-                    imageData
-                };
+                    return { statusCode: 200, body: JSON.stringify(finalResponse) };
 
-                return { statusCode: 200, body: JSON.stringify(finalResponse) };
+                } catch(e) {
+                    console.error("Error during Codex Reflection generation:", e);
+                    throw new Error("The Oracle couldn't interpret that intention. Please try stating it more clearly.");
+                }
             }
 
             case 'getChatResponse': {
@@ -342,11 +304,7 @@ Your task is to generate a JSON object that adheres to the provided schema.
                 const response: GenerateContentResponse = await ai.models.generateContent({
                     model: 'gemini-2.5-flash',
                     contents: prompt,
-                    config: {
-                        systemInstruction,
-                        tools: [{googleSearch: {}}],
-                        ...chatHistory,
-                    },
+                    config: { systemInstruction, tools: [{googleSearch: {}}], ...chatHistory },
                 });
 
                 const text = response.text;
@@ -358,27 +316,14 @@ Your task is to generate a JSON object that adheres to the provided schema.
 
             case 'getInsight': {
                 const { healthData, activitySummary, integratedData } = payload;
-                const systemInstruction = `You are an AI assistant for Biohack Frequencies, an app that helps users discover their 'Harmonic Blueprint'. 
-- Analyze the user's health metrics (HRV, RHR, Sleep) from HealthKit/Health Connect.
-- Analyze data from integrated services like Oura Ring or Fitbit (readiness, sleep scores, active minutes), Google Calendar (events, focus blocks), and CGM (glucose levels).
-- Correlate this data with their logged activities from today/yesterday.
-- Generate a single, actionable insight, a proactive recommendation, or a piece of positive reinforcement.
-- Be specific and data-driven.
-- Keep your tone concise, supportive, and easy to understand.
-- Return ONLY the insight string in the specified JSON format.`;
+                const systemInstruction = `You are an AI assistant for Biohack Frequencies. Analyze the user's health metrics (HRV, RHR, Sleep), integrated data (Oura, Fitbit, Calendar, CGM), and their logged activities. Generate a single, actionable insight or recommendation. Be specific and data-driven. Keep your tone concise and supportive. Return ONLY the insight string in the specified JSON format.`;
 
                 const prompt = `User HealthKit Data: ${JSON.stringify(healthData)}\nUser Activity: ${JSON.stringify(activitySummary)}\nIntegrated Services Data: ${JSON.stringify(integratedData)}`;
 
                 const response = await ai.models.generateContent({
                     model: "gemini-2.5-flash",
                     contents: prompt,
-                    config: {
-                        systemInstruction,
-                        responseMimeType: "application/json",
-                        responseSchema: insightSchema,
-                        maxOutputTokens: 200,
-                        thinkingConfig: { thinkingBudget: 50 },
-                    },
+                    config: { systemInstruction, responseMimeType: "application/json", responseSchema: insightSchema, maxOutputTokens: 200, thinkingConfig: { thinkingBudget: 50 } },
                 });
 
                 return { statusCode: 200, body: response.text.trim() };

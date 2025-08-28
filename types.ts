@@ -1,5 +1,6 @@
 
 
+
 export type SoundGenerationMode = 'PURE' | 'BINAURAL' | 'ISOCHRONIC' | 'AMBIENCE' | 'SPLIT_BINAURAL';
 
 export enum BenefitCategory {
@@ -301,6 +302,9 @@ export interface Database {
         Row: ProfileRow;
         Insert: ProfileInsert;
         Update: ProfileUpdate;
+        // FIX: Add missing 'Relationships' property to satisfy Supabase's generic type constraints.
+        // This resolves incorrect 'never' type inferences for table operations.
+        Relationships: [];
       }
     }
     Views: {
