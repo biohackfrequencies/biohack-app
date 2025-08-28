@@ -153,17 +153,18 @@ export const handler = async (event: { httpMethod: string, body: string | null, 
         const { action, payload } = JSON.parse(event.body || '{}');
 
         // --- Robust "Upsert" User Profile Logic ---
-        const defaultProfileData: Omit<ProfileInsert, 'id'> = {
+        // This default data is used ONLY when creating a brand new profile.
+        // It omits AI credit columns to prevent errors if the user's DB schema is outdated.
+        const defaultProfileData: Omit<ProfileInsert, 'id' | 'ai_credits_remaining' | 'ai_credits_reset_at'> = {
             favorites: [], custom_stacks: [], activity_log: [],
             tracked_habits: ['session', 'workout', 'meditation', 'sleep', 'supplements', 'rlt', 'mood'],
             user_goals: { mind: 20, move: 10000 }, custom_activities: [],
             codex_reflections: [],
             pro_access_expires_at: null,
-            ai_credits_remaining: 5,
-            ai_credits_reset_at: new Date().toISOString(),
             api_requests: []
         };
-
+        
+        // This ensures a profile exists. If it doesn't, it's created with safe defaults.
         const { error: upsertError } = await supabaseAuthedClient
             .from('profiles')
             .upsert({ id: user.id, ...defaultProfileData }, { onConflict: 'id' });
@@ -172,10 +173,11 @@ export const handler = async (event: { httpMethod: string, body: string | null, 
             console.error("Fatal: Error upserting user profile:", upsertError);
             throw new Error(`Failed to ensure user profile exists. DB Error: ${upsertError.message}`);
         }
-
+        
+        // Now, fetch the full, current profile data.
         const { data: profile, error: selectError } = await supabaseAuthedClient
             .from('profiles')
-            .select('api_requests, ai_credits_remaining, pro_access_expires_at, ai_credits_reset_at')
+            .select('*') // Select everything to check for optional columns
             .eq('id', user.id)
             .single();
 
@@ -184,39 +186,54 @@ export const handler = async (event: { httpMethod: string, body: string | null, 
             const errorMessage = selectError ? `DB Error: ${selectError.message}` : "Profile not found after upsert.";
             throw new Error(`Could not retrieve user profile. ${errorMessage}`);
         }
-
-        // --- Rate Limiting & Credit Check ---
-        const requests = profile.api_requests || [];
+        
+        // --- Rate Limiting & Credit Check (with graceful fallback) ---
+        const hasCreditSystem = profile.hasOwnProperty('ai_credits_remaining');
+        
+        // Rate limiting is independent of credit system
+        const requests = (profile.api_requests as number[] | null) || [];
         const fiveMinsAgo = Date.now() - 5 * 60 * 1000;
         const recentRequests = requests.filter(ts => ts > fiveMinsAgo);
         if (recentRequests.length >= 10) {
             return { statusCode: 429, body: JSON.stringify({ error: 'Too many requests. Please wait a few minutes.' }) };
         }
+        
+        const updatePayload: ProfileUpdate = {
+            api_requests: [...recentRequests, Date.now()]
+        };
 
-        let credits = profile.ai_credits_remaining ?? 0;
-        let resetAt = profile.ai_credits_reset_at ? new Date(profile.ai_credits_reset_at) : new Date(0);
-        const proExpiresAt = profile.pro_access_expires_at ? new Date(profile.pro_access_expires_at) : null;
-        const isPro = proExpiresAt && proExpiresAt > new Date();
-        const updatePayload: ProfileUpdate = {};
-
-        if (isPro) {
-            const oneMonthAgo = new Date();
-            oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
-            if (resetAt < oneMonthAgo) {
-                credits = 50;
-                updatePayload.ai_credits_remaining = 50;
+        if (hasCreditSystem) {
+            let credits = (profile.ai_credits_remaining as number | null);
+            let resetAt = profile.ai_credits_reset_at ? new Date(profile.ai_credits_reset_at) : null;
+            const proExpiresAt = profile.pro_access_expires_at ? new Date(profile.pro_access_expires_at) : null;
+            const isPro = proExpiresAt && proExpiresAt > new Date();
+            
+            // If credits column exists but is null (e.g., old user, new feature), initialize it.
+            if (credits === null) {
+                credits = isPro ? 50 : 5;
+                updatePayload.ai_credits_remaining = credits;
                 updatePayload.ai_credits_reset_at = new Date().toISOString();
+                resetAt = new Date();
+            }
+
+            if (isPro && resetAt) {
+                const oneMonthAgo = new Date();
+                oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
+                if (resetAt < oneMonthAgo) {
+                    credits = 50;
+                    updatePayload.ai_credits_remaining = 50;
+                    updatePayload.ai_credits_reset_at = new Date().toISOString();
+                }
+            }
+            
+            // Only decrement if it's not a cached response
+            if (action !== 'generateCreation' || !findCachedResponse(payload.prompt)) {
+                if (credits <= 0) {
+                    return { statusCode: 402, body: JSON.stringify({ error: "You've used all your AI generations. Please upgrade to Pro for more." }) };
+                }
+                updatePayload.ai_credits_remaining = (credits - 1);
             }
         }
-        
-        if (action !== 'generateCreation' || !findCachedResponse(payload.prompt)) {
-            if (credits <= 0) {
-                return { statusCode: 402, body: JSON.stringify({ error: "You've used all your AI generations. Please upgrade to Pro for more." }) };
-            }
-            updatePayload.ai_credits_remaining = (credits - 1);
-        }
-        
-        updatePayload.api_requests = [...recentRequests, Date.now()];
         
         await supabaseAuthedClient.from('profiles').update(updatePayload).eq('id', user.id);
 
