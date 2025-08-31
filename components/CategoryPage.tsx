@@ -64,6 +64,7 @@ export const CategoryPage: React.FC<CategoryPageProps> = ({ categoryId, frequenc
   const isAngel = categoryId === 'angel';
   const isKabbalah = categoryId === 'kabbalah';
   const isBrainwaves = categoryId === 'brainwaves';
+  const isGuided = categoryId === 'guided';
   const showScienceLink = ['elements', 'codex', 'kabbalah'].includes(categoryId);
 
   const handleSelect = (item: Frequency | GuidedSession) => {
@@ -78,6 +79,22 @@ export const CategoryPage: React.FC<CategoryPageProps> = ({ categoryId, frequenc
     }
   };
 
+  const guidedContent = useMemo(() => {
+    if (!isGuided) return null;
+
+    const mindAndSpirit = sortFreeFirst(
+        relevantSessions.filter(s => s.subCategory === 'Mind & Spirit'),
+        'title'
+    );
+    
+    const bodyAndWellness = sortFreeFirst(
+        relevantSessions.filter(s => s.subCategory === 'Body & Wellness'),
+        'title'
+    );
+
+    return { mindAndSpirit, bodyAndWellness };
+  }, [isGuided, relevantSessions]);
+  
   const angelContent = useMemo(() => {
     if (!isAngel) return null;
 
@@ -142,7 +159,7 @@ export const CategoryPage: React.FC<CategoryPageProps> = ({ categoryId, frequenc
 
 
   const otherContent = useMemo(() => {
-      if (isAngel || isKabbalah || isBrainwaves) return null;
+      if (isAngel || isKabbalah || isBrainwaves || isGuided) return null;
       
       const freqSortKey = (categoryId === 'solfeggio' || categoryId === 'elements') ? 'frequency' : 'title';
       
@@ -150,7 +167,7 @@ export const CategoryPage: React.FC<CategoryPageProps> = ({ categoryId, frequenc
       const sortedSessions = sortFreeFirst([...relevantSessions], 'title');
 
       return { sortedFrequencies, sortedSessions };
-  }, [isAngel, isKabbalah, isBrainwaves, frequenciesInCategory, relevantSessions, categoryId]);
+  }, [isAngel, isKabbalah, isBrainwaves, isGuided, frequenciesInCategory, relevantSessions, categoryId]);
 
 
   const headerStyle = { background: `linear-gradient(135deg, ${categoryDetails.colors.primary}60, ${categoryDetails.colors.secondary}60)`, borderColor: `${categoryDetails.colors.accent}80` };
@@ -198,8 +215,47 @@ export const CategoryPage: React.FC<CategoryPageProps> = ({ categoryId, frequenc
             )}
         </div>
       </div>
-
-      {isAngel && angelContent ? (
+      
+      {isGuided && guidedContent ? (
+        <div className="space-y-12">
+            {guidedContent.mindAndSpirit.length > 0 && (
+                <div className="space-y-4">
+                    <h3 className="text-2xl font-display font-bold text-slate-800 dark:text-dark-text-primary">Mind & Spirit</h3>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {guidedContent.mindAndSpirit.map(session => (
+                            <SessionCard
+                                key={session.id}
+                                session={session}
+                                onSelect={() => handleSelect(session)}
+                                isFavorite={favorites.includes(session.id)}
+                                onToggleFavorite={() => toggleFavorite(session.id)}
+                                isLocked={!!session.premium && !isSubscribed}
+                                allFrequencies={allFrequencies}
+                            />
+                        ))}
+                    </div>
+                </div>
+            )}
+            {guidedContent.bodyAndWellness.length > 0 && (
+                <div className="space-y-4">
+                    <h3 className="text-2xl font-display font-bold text-slate-800 dark:text-dark-text-primary">Body & Wellness</h3>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {guidedContent.bodyAndWellness.map(session => (
+                            <SessionCard
+                                key={session.id}
+                                session={session}
+                                onSelect={() => handleSelect(session)}
+                                isFavorite={favorites.includes(session.id)}
+                                onToggleFavorite={() => toggleFavorite(session.id)}
+                                isLocked={!!session.premium && !isSubscribed}
+                                allFrequencies={allFrequencies}
+                            />
+                        ))}
+                    </div>
+                </div>
+            )}
+        </div>
+      ) : isAngel && angelContent ? (
         <div className="space-y-12">
            {angelContent.fibonacciProtocols.length > 0 && (
                 <div className="space-y-4">
