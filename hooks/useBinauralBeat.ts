@@ -21,7 +21,7 @@ type AudioSource = {
 // Re-engineered for a JavaScript-driven, mathematically perfect circular orbit
 type PanningControl = {
     panner: PannerNode;
-    panningIntervalId: React.MutableRefObject<number | null>;
+    panningIntervalId: React.MutableRefObject<ReturnType<typeof setInterval> | null>;
     settings: React.MutableRefObject<{ enabled: boolean; speed: number; depth: number; audioStartTime: number }>;
 };
 
