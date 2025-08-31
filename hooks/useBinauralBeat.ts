@@ -21,7 +21,7 @@ type AudioSource = {
 // Re-engineered for a JavaScript-driven, mathematically perfect circular orbit
 type PanningControl = {
     panner: PannerNode;
-    animationFrameId: React.MutableRefObject<number | null>;
+    panningIntervalId: React.MutableRefObject<number | null>;
     settings: React.MutableRefObject<{ enabled: boolean; speed: number; depth: number; audioStartTime: number }>;
 };
 
@@ -304,7 +304,7 @@ export const useBinauralBeat = () => {
     
     const panningControl: PanningControl = {
         panner,
-        animationFrameId: { current: null },
+        panningIntervalId: { current: null },
         settings: { current: { enabled: false, speed: 0, depth: 0, audioStartTime: 0 } }
     };
     
@@ -312,13 +312,13 @@ export const useBinauralBeat = () => {
   }, []);
 
   const teardown = useCallback(async (fullReset = false) => {
-    if (mainPanningControlRef.current && mainPanningControlRef.current.animationFrameId.current) {
-        cancelAnimationFrame(mainPanningControlRef.current.animationFrameId.current);
-        mainPanningControlRef.current.animationFrameId.current = null;
+    if (mainPanningControlRef.current && mainPanningControlRef.current.panningIntervalId.current) {
+        clearInterval(mainPanningControlRef.current.panningIntervalId.current);
+        mainPanningControlRef.current.panningIntervalId.current = null;
     }
-    if (layer2PanningControlRef.current && layer2PanningControlRef.current.animationFrameId.current) {
-        cancelAnimationFrame(layer2PanningControlRef.current.animationFrameId.current);
-        layer2PanningControlRef.current.animationFrameId.current = null;
+    if (layer2PanningControlRef.current && layer2PanningControlRef.current.panningIntervalId.current) {
+        clearInterval(layer2PanningControlRef.current.panningIntervalId.current);
+        layer2PanningControlRef.current.panningIntervalId.current = null;
     }
 
     if (sourceNodeRef.current) {
@@ -443,50 +443,50 @@ export const useBinauralBeat = () => {
 
     const control = controlRef.current;
     
+    // Always clear any existing interval before starting a new one or stopping.
+    if (control.panningIntervalId.current) {
+        clearInterval(control.panningIntervalId.current);
+        control.panningIntervalId.current = null;
+    }
+
     control.settings.current = { ...control.settings.current, enabled, speed, depth };
     
     const SMOOTHING_TIME_CONSTANT = 0.05;
 
-    const loop = () => {
-        const currentControl = controlRef.current;
-        if (!audioContextRef.current || !currentControl || !currentControl.settings.current.enabled) {
-            if (currentControl && audioContextRef.current) {
-                const panner = currentControl.panner;
-                const resetTime = audioContextRef.current.currentTime;
-                panner.positionX.setTargetAtTime(0, resetTime, SMOOTHING_TIME_CONSTANT);
-                panner.positionY.setTargetAtTime(0, resetTime, SMOOTHING_TIME_CONSTANT);
-                panner.positionZ.setTargetAtTime(0, resetTime, SMOOTHING_TIME_CONSTANT);
-                currentControl.animationFrameId.current = null;
-            }
-            return;
-        }
-
-        const { speed: currentSpeed, depth: currentDepth, audioStartTime } = currentControl.settings.current;
-        const nowInSeconds = audioContextRef.current.currentTime;
-        // Remapped speed to prevent distortion at very slow speeds.
-        // The new minimum speed is 0.1 Hz (10s rotation), up from 0.05 Hz (20s rotation).
-        const speedHz = 0.1 + (currentSpeed / 100) * 0.2;
-        const radius = Math.pow(currentDepth / 100, 2) * 8 + 2;
-        
-        const elapsedTime = nowInSeconds - audioStartTime;
-        const angle = elapsedTime * 2 * Math.PI * speedHz;
-
-        // Smoother, horizontal circle path for a more stable experience.
-        const x = radius * Math.cos(angle);
-        const z = radius * Math.sin(angle);
-        const y = 0; // No vertical movement
-
-        const panner = currentControl.panner;
-        panner.positionX.setTargetAtTime(x, nowInSeconds, SMOOTHING_TIME_CONSTANT);
-        panner.positionY.setTargetAtTime(y, nowInSeconds, SMOOTHING_TIME_CONSTANT);
-        panner.positionZ.setTargetAtTime(z, nowInSeconds, SMOOTHING_TIME_CONSTANT);
-
-        currentControl.animationFrameId.current = requestAnimationFrame(loop);
-    };
-
-    if (enabled && control.animationFrameId.current === null) {
+    if (enabled) {
         control.settings.current.audioStartTime = audioContextRef.current.currentTime;
-        control.animationFrameId.current = requestAnimationFrame(loop);
+
+        const loop = () => {
+            const currentControl = controlRef.current;
+            // The interval will be cleared by the outer function, so we just check for context existence.
+            if (!audioContextRef.current || !currentControl) return;
+
+            const { speed: currentSpeed, depth: currentDepth, audioStartTime } = currentControl.settings.current;
+            const nowInSeconds = audioContextRef.current.currentTime;
+            const speedHz = 0.1 + (currentSpeed / 100) * 0.2;
+            const radius = Math.pow(currentDepth / 100, 2) * 8 + 2;
+            
+            const elapsedTime = nowInSeconds - audioStartTime;
+            const angle = elapsedTime * 2 * Math.PI * speedHz;
+
+            const x = radius * Math.cos(angle);
+            const z = radius * Math.sin(angle);
+            const y = 0;
+
+            const panner = currentControl.panner;
+            panner.positionX.setTargetAtTime(x, nowInSeconds, SMOOTHING_TIME_CONSTANT);
+            panner.positionY.setTargetAtTime(y, nowInSeconds, SMOOTHING_TIME_CONSTANT);
+            panner.positionZ.setTargetAtTime(z, nowInSeconds, SMOOTHING_TIME_CONSTANT);
+        };
+
+        control.panningIntervalId.current = setInterval(loop, 50); // Use setInterval for background operation
+    } else {
+        // Reset panner to center if panning is disabled
+        const panner = control.panner;
+        const resetTime = audioContextRef.current.currentTime;
+        panner.positionX.setTargetAtTime(0, resetTime, SMOOTHING_TIME_CONSTANT);
+        panner.positionY.setTargetAtTime(0, resetTime, SMOOTHING_TIME_CONSTANT);
+        panner.positionZ.setTargetAtTime(0, resetTime, SMOOTHING_TIME_CONSTANT);
     }
   }, []);
   
@@ -725,9 +725,9 @@ export const useBinauralBeat = () => {
     breathPannerStateRef.current = { enabled: true, channel, radius };
     if (controlRef.current) {
         controlRef.current.settings.current.enabled = false;
-        if(controlRef.current.animationFrameId.current) {
-            cancelAnimationFrame(controlRef.current.animationFrameId.current);
-            controlRef.current.animationFrameId.current = null;
+        if(controlRef.current.panningIntervalId.current) {
+            clearInterval(controlRef.current.panningIntervalId.current);
+            controlRef.current.panningIntervalId.current = null;
         }
     }
   }, []);

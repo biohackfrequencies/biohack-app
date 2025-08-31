@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { Frequency, CategoryId, GuidedSession, ColorTheme } from '../types';
+import { CategoryId, Frequency, GuidedSession, ColorTheme } from '../types';
 import { BackIcon, InfoIcon, SparklesIcon, PathfinderIcon } from './BohoIcons';
 import { FrequencyCard } from './FrequencyCard';
 import { useSubscription } from '../hooks/useSubscription';
@@ -85,13 +85,23 @@ export const CategoryPage: React.FC<CategoryPageProps> = ({ categoryId, frequenc
       relevantSessions.filter(s => s.subCategory === 'Advanced Resonance Protocols'),
       'title'
     );
+    
+    const fibonacciProtocols = sortFreeFirst(
+      relevantSessions.filter(s => s.subCategory === 'Fibonacci Protocols'),
+      'title'
+    );
 
     const angelicFrequencies = sortFreeFirst(
       frequenciesInCategory.filter(f => f.subCategory === 'Angelic Frequencies'),
       'frequency'
     );
 
-    return { advancedProtocols, angelicFrequencies };
+    const fibonacciFrequencies = sortFreeFirst(
+      frequenciesInCategory.filter(f => f.subCategory === 'Fibonacci Protocols'),
+      'frequency'
+    );
+
+    return { advancedProtocols, angelicFrequencies, fibonacciProtocols, fibonacciFrequencies };
   }, [isAngel, relevantSessions, frequenciesInCategory]);
 
   const kabbalahContent = useMemo(() => {
@@ -191,6 +201,33 @@ export const CategoryPage: React.FC<CategoryPageProps> = ({ categoryId, frequenc
 
       {isAngel && angelContent ? (
         <div className="space-y-12">
+           {angelContent.fibonacciProtocols.length > 0 && (
+                <div className="space-y-4">
+                    <h3 className="text-2xl font-display font-bold text-slate-800 dark:text-dark-text-primary">Fibonacci Protocols</h3>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {angelContent.fibonacciProtocols.map(session => (
+                            <SessionCard
+                                key={session.id}
+                                session={session}
+                                onSelect={() => handleSelect(session)}
+                                isFavorite={favorites.includes(session.id)}
+                                onToggleFavorite={() => toggleFavorite(session.id)}
+                                isLocked={!!session.premium && !isSubscribed}
+                                allFrequencies={allFrequencies}
+                            />
+                        ))}
+                    </div>
+                </div>
+            )}
+            {angelContent.fibonacciFrequencies.length > 0 && (
+                <CategorySection
+                    title="Fibonacci Frequencies"
+                    frequencies={angelContent.fibonacciFrequencies}
+                    onSelect={handleSelect}
+                    favorites={favorites}
+                    toggleFavorite={toggleFavorite}
+                />
+            )}
           {angelContent.advancedProtocols.length > 0 && (
             <div className="space-y-4">
               <h3 className="text-2xl font-display font-bold text-slate-800 dark:text-dark-text-primary">Advanced Resonance Protocols</h3>

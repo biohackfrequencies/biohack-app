@@ -1,5 +1,3 @@
-
-
 import React, { useState, useEffect } from 'react';
 import { BackIcon, BrainwaveIcon, SolfeggioIcon, RifeIcon, NoiseIcon, SpatialAudioIcon, CelestialIcon, LungsIcon, UserCircleIcon, AtomIcon, PathfinderIcon, InfoIcon, TreeOfLifeIcon } from './BohoIcons';
 import { CategoryId, ColorTheme } from '../types';
@@ -176,13 +174,29 @@ export const SciencePage: React.FC<SciencePageProps> = ({ categories }) => {
           icon={<LungsIcon className="w-10 h-10 text-slate-700 dark:text-dark-text-secondary" />} 
           color="#96CDB0"
         >
-            <p>Breath is a direct lever on the autonomic nervous system.</p>
+            <h4><span role="img" aria-label="Box icon">🔲</span> Box Breathing (4-4-4-4)</h4>
             <ul>
-                <li><strong>Box breathing (4-4-4-4):</strong> stabilizes attention under pressure.</li>
-                <li><strong>4-7-8:</strong> elongates exhale → parasympathetic shift, useful before sleep.</li>
-                <li><strong>Coherent breathing (~5–6 breaths/min):</strong> supports heart-rate variability and calm alertness.</li>
+                <li><strong>Ideal For:</strong> Centering, grounding, nervous system reset.</li>
+                <li><strong>Energetic Signature:</strong> Equilibrium – creates coherence between hemispheres, ideal before or after high-frequency sessions.</li>
+                <li><strong>Use with Frequencies:</strong> 81 Hz (Harmonic Grounding), 136.1 Hz (OM Resonance), 285 Hz (Stabilization & safety tones).</li>
+                <li><strong><span role="img" aria-label="Spiral icon">🌀</span> Best for:</strong> “Return to center” protocols, or after emotionally intense transmissions.</li>
             </ul>
-            <p>Our player syncs isochronic pulses / 8D panning with breath cues for an embodied experience.</p>
+
+            <h4><span role="img" aria-label="Wind icon">🌬️</span> 4-7-8 Relax</h4>
+            <ul>
+                <li><strong>Ideal For:</strong> Parasympathetic activation, sleep prep, emotional release.</li>
+                <li><strong>Energetic Signature:</strong> Dissolution – allows inner walls to soften, body to drop into stillness.</li>
+                <li><strong>Use with Frequencies:</strong> 417 Hz (Emotional clearing), 528 Hz (DNA repair), 741 Hz (Cellular detox).</li>
+                <li><strong><span role="img" aria-label="Sleep icon">💤</span> Best for:</strong> Sleep sessions, trauma release, grief-toning, inner child repair.</li>
+            </ul>
+            
+            <h4><span role="img" aria-label="Infinity icon">♾️</span> Coherent Breathing (5.5-5.5 or 6-6)</h4>
+            <ul>
+                <li><strong>Ideal For:</strong> Heart-brain resonance, peak performance, intuitive clarity.</li>
+                <li><strong>Energetic Signature:</strong> Integration – allows higher frequencies to fully embody.</li>
+                <li><strong>Use with Frequencies:</strong> 111 Hz (Angelic tone), 963 Hz (Crown activation), 1111 Hz (Solar consciousness).</li>
+                <li><strong><span role="img" aria-label="Sun icon">🌞</span> Best for:</strong> Morning protocols, visionary work, pineal activation, or intention setting.</li>
+            </ul>
         </ScienceSection>
 
         <ScienceSection 

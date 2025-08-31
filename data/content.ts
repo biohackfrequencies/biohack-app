@@ -115,6 +115,23 @@ export const appContentData: AppContentData = {
   },
   "guided_sessions": [
     {
+      "id": "fibonacci-spiral-attunement",
+      "title": "Fibonacci Spiral Attunement",
+      "categoryId": "angel",
+      "subCategory": "Fibonacci Protocols",
+      "description": "A deeply resonant journey through the harmonic ratios of nature. This protocol uses frequencies from the Fibonacci sequence to align the body, mind, and spirit, mirroring the spiral geometries found in DNA, plant growth, and galaxies.",
+      "advice": "This session guides you upward through six key Fibonacci frequencies, starting with grounding and culminating in transcendence. Each step builds on the last, creating a coherent harmonic spiral. For best results, find a quiet space, use headphones, and allow the sounds to resonate throughout your being.",
+      "steps": [
+        { "title": "Grounding Spiral", "description": "89 Hz establishes a connection to the body and earthly harmony.", "duration": 180, "frequencyId": "fibonacci-89" },
+        { "title": "Heart Resonance", "description": "144 Hz opens the heart field to emotional balance and flow.", "duration": 180, "frequencyId": "fibonacci-144" },
+        { "title": "Intuitive Focus", "description": "233 Hz sharpens mental clarity and awakens inner knowing.", "duration": 180, "frequencyId": "fibonacci-233" },
+        { "title": "Spiritual Alignment", "description": "377 Hz aligns your energy with your higher self and soul purpose.", "duration": 180, "frequencyId": "fibonacci-377" },
+        { "title": "Deep Field Access", "description": "610 Hz opens gateways to deeper consciousness and memory.", "duration": 180, "frequencyId": "fibonacci-610" },
+        { "title": "Transcendence", "description": "987 Hz connects you to higher states of awareness and universal consciousness.", "duration": 180, "frequencyId": "fibonacci-987" }
+      ],
+      "colors": { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" }
+    },
+    {
       "id": "triad-grounding", "title": "The Grounding Triad", "categoryId": "elements", "description": "An elemental sequence of Carbon, Iron, and Zinc to establish a deep connection to the Earth, fortify your core stability, and protect your energetic field.", "steps": [ { "title": "Foundation: Carbon", "description": "Establish a stable base with the cornerstone of organic life.", "duration": 180, "frequencyId": "carbon" }, { "title": "Strength: Iron", "description": "Build inner strength and magnetic grounding.", "duration": 180, "frequencyId": "iron" }, { "title": "Protection: Zinc", "description": "Fortify your energetic defenses and seal your field.", "duration": 180, "frequencyId": "zinc" } ], "colors": { "primary": "#a7f3d0", "secondary": "#86efac", "accent": "#4ade80" }
     },
     {
@@ -205,7 +222,20 @@ export const appContentData: AppContentData = {
       "id": "lucid-dream-induction", "title": "Lucid Dream Induction", "categoryId": "guided", "description": "A session combining Theta and Gamma waves to create the ideal brain state for lucid dreaming—deeply relaxed yet consciously aware.", "steps": [ { "title": "Relax into Theta", "description": "Enter the dream-like Theta state with the support of lunar and Neptunian frequencies to enhance subconscious exploration.", "duration": 900, "frequencyId": "theta", "layerFrequencyId": "celestial-moon", "layer3FrequencyId": "celestial-neptune" }, { "title": "Awaken Awareness", "description": "Introduce Gamma waves and a protective angelic frequency to promote conscious awareness within the dream state.", "duration": 600, "frequencyId": "gamma", "layerFrequencyId": "theta", "layer3FrequencyId": "angel-444" } ], "colors": { "primary": "#c4b5fd", "secondary": "#a78bfa", "accent": "#8b5cf6" }
     },
     {
-      "id": "chakra-balancing-journey", "title": "Chakra Balancing Journey", "categoryId": "guided", "description": "A journey through the seven primary Solfeggio frequencies, each corresponding to a major energy center (chakra) for a full-system energetic tune-up.", "steps": [ { "title": "Root Chakra (396 Hz)", "description": "Grounding and releasing fear.", "duration": 300, "frequencyId": "solfeggio-396-liberation" }, { "title": "Sacral Chakra (417 Hz)", "description": "Facilitating positive change.", "duration": 300, "frequencyId": "solfeggio-417-change" }, { "title": "Solar Plexus (528 Hz)", "description": "Transformation and empowerment.", "duration": 300, "frequencyId": "solfeggio-528-repair" }, { "title": "Heart Chakra (639 Hz)", "description": "Connection and love.", "duration": 300, "frequencyId": "solfeggio-639-harmony" }, { "title": "Throat Chakra (741 Hz)", "description": "Expression and truth.", "duration": 300, "frequencyId": "solfeggio-741-expression" }, { "title": "Third Eye Chakra (852 Hz)", "description": "Intuition and inner vision.", "duration": 300, "frequencyId": "solfeggio-852-intuition" }, { "title": "Crown Chakra (963 Hz)", "description": "Spiritual oneness.", "duration": 300, "frequencyId": "solfeggio-963-oneness" } ], "colors": { "primary": "#fde047", "secondary": "#facc15", "accent": "#eab308" }
+      "id": "chakra-balancing-journey",
+      "title": "Chakra Balancing Journey",
+      "categoryId": "solfeggio",
+      "description": "A journey through the seven primary Solfeggio frequencies, each corresponding to a major energy center (chakra) for a full-system energetic tune-up.",
+      "steps": [
+        { "title": "Root Chakra (396 Hz)", "description": "Grounding and releasing fear.", "duration": 300, "frequencyId": "solfeggio-396-liberation" },
+        { "title": "Sacral Chakra (417 Hz)", "description": "Facilitating positive change.", "duration": 300, "frequencyId": "solfeggio-417-change" },
+        { "title": "Solar Plexus (528 Hz)", "description": "Transformation and empowerment.", "duration": 300, "frequencyId": "solfeggio-528-repair" },
+        { "title": "Heart Chakra (639 Hz)", "description": "Connection and love.", "duration": 300, "frequencyId": "solfeggio-639-harmony" },
+        { "title": "Throat Chakra (741 Hz)", "description": "Expression and truth.", "duration": 300, "frequencyId": "solfeggio-741-expression" },
+        { "title": "Third Eye Chakra (852 Hz)", "description": "Intuition and inner vision.", "duration": 300, "frequencyId": "solfeggio-852-intuition" },
+        { "title": "Crown Chakra (963 Hz)", "description": "Spiritual oneness.", "duration": 300, "frequencyId": "solfeggio-963-oneness" }
+      ],
+      "colors": { "primary": "#fde047", "secondary": "#facc15", "accent": "#eab308" }
     },
     {
       "id": "abundance-matrix-attunement", "title": "Abundance Matrix Attunement", "categoryId": "guided", "description": "A session using the 777 Hz 'luck' frequency combined with the magnetic properties of Gold to align your energy field with prosperity and abundance.", "steps": [ { "title": "Attune to Abundance", "description": "777 Hz, the frequency of Gold, and Jupiter's expansive energy align your bio-field with luck and prosperity.", "duration": 900, "frequencyId": "angel-777", "layerFrequencyId": "gold", "layer3FrequencyId": "celestial-jupiter" } ], "colors": { "primary": "#fcd34d", "secondary": "#fbbf24", "accent": "#f59e0b" }
@@ -425,7 +455,7 @@ export const appContentData: AppContentData = {
     }
   ],
   "featured_candidates": [
-    "temple-of-breath", "golden-code-of-thoth", "lyran-dna-harmonics-session", "amenti-re-entry-code", "sirius-light-grid", "solar-templar-alignment", "arcturian-crystal-field-reset",
+    "fibonacci-spiral-attunement", "temple-of-breath", "golden-code-of-thoth", "lyran-dna-harmonics-session", "amenti-re-entry-code", "sirius-light-grid", "solar-templar-alignment", "arcturian-crystal-field-reset",
     "mu-recollection-chamber", "atlantean-frequency-seal", "inner-earth-axis-reset", "sirian-tone-gate", "the-scroll-of-mirrors", "council-of-nine-alignment", "solar-heart-lattice",
     "vagus-lymph-reset", "metabolic-harmony-protocol", "adhd-focus-protocol", "ultimate-deep-sleep", "chakra-balancing-journey", "solfeggio-528-repair", "beta", "gamma-40hz-precise", "solfeggio-1782-alchemy", "cosmic-thread-alignment", "cosmic-threshold", "phi-axis-harmonic-balance"
   ],
@@ -1253,6 +1283,42 @@ export const appContentData: AppContentData = {
       "defaultMode": "AMBIENCE",
       "availableModes": ["AMBIENCE"],
       "colors": { "primary": "#e7e5e4", "secondary": "#d6d3d1", "accent": "#cbd5e1" }
+    },
+    {
+      id: 'fibonacci-89', name: "89 Hz - Fibonacci Grounding", range: "89 Hz", baseFrequency: 89, binauralFrequency: 5.5,
+      description: "A grounding frequency from the Fibonacci sequence, associated with body harmony and physical presence.",
+      category: BenefitCategory.SPIRITUAL, categoryId: 'angel', subCategory: 'Fibonacci Protocols', defaultMode: 'PURE',
+      availableModes: ['PURE', 'BINAURAL', 'ISOCHRONIC'], colors: { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" }
+    },
+    {
+      id: 'fibonacci-144', name: "144 Hz - Fibonacci Heart Resonance", range: "144 Hz", baseFrequency: 144, binauralFrequency: 7,
+      description: "A key Fibonacci tone associated with emotional balance and heart resonance, bridging structure with flow.",
+      category: BenefitCategory.SPIRITUAL, categoryId: 'angel', subCategory: 'Fibonacci Protocols', defaultMode: 'PURE',
+      availableModes: ['PURE', 'BINAURAL', 'ISOCHRONIC'], colors: { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" }
+    },
+    {
+      id: 'fibonacci-233', name: "233 Hz - Fibonacci Clarity", range: "233 Hz", baseFrequency: 233, binauralFrequency: 8,
+      description: "A Fibonacci tone linked to mental clarity and intuitive focus, helping to clear the mind and sharpen perception.",
+      category: BenefitCategory.SPIRITUAL, categoryId: 'angel', subCategory: 'Fibonacci Protocols', defaultMode: 'PURE',
+      availableModes: ['PURE', 'BINAURAL', 'ISOCHRONIC'], colors: { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" }
+    },
+    {
+      id: 'fibonacci-377', name: "377 Hz - Fibonacci Alignment", range: "377 Hz", baseFrequency: 377, binauralFrequency: 10,
+      description: "Resonating with spiritual alignment, this Fibonacci frequency is used for tuning into one's higher self or Oversoul.",
+      category: BenefitCategory.SPIRITUAL, categoryId: 'angel', subCategory: 'Fibonacci Protocols', defaultMode: 'PURE',
+      availableModes: ['PURE', 'BINAURAL', 'ISOCHRONIC'], colors: { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" }
+    },
+    {
+      id: 'fibonacci-610', name: "610 Hz - Fibonacci Access", range: "610 Hz", baseFrequency: 610, binauralFrequency: 12,
+      description: "A higher Fibonacci frequency for accessing deep energetic fields and facilitating memory recall or inner exploration.",
+      category: BenefitCategory.SPIRITUAL, categoryId: 'angel', subCategory: 'Fibonacci Protocols', defaultMode: 'PURE',
+      availableModes: ['PURE', 'BINAURAL', 'ISOCHRONIC'], colors: { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" }
+    },
+    {
+      id: 'fibonacci-987', name: "987 Hz - Fibonacci Transcendence", range: "987 Hz", baseFrequency: 987, binauralFrequency: 15,
+      description: "A transcendent tone from the Fibonacci sequence, used for mirror field tuning and reaching states of higher consciousness.",
+      category: BenefitCategory.SPIRITUAL, categoryId: 'angel', subCategory: 'Fibonacci Protocols', defaultMode: 'PURE',
+      availableModes: ['PURE', 'BINAURAL', 'ISOCHRONIC'], colors: { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" }
     }
   ],
   "inspirational_quotes": [

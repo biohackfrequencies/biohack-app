@@ -31,6 +31,32 @@ const getScienceLink = (categoryId: CategoryId) => {
     }
 };
 
+const breathingRecommendations: Record<string, string> = {
+    'harmonic-grounding-81hz': 'Box Breathing',
+    'om-resonance': 'Box Breathing',
+    'solfeggio-285-healing': 'Box Breathing',
+    'solfeggio-417-change': '4-7-8 Relax',
+    'solfeggio-528-repair': '4-7-8 Relax',
+    'solfeggio-741-expression': '4-7-8 Relax',
+    'angel-111': 'Coherent Breathing',
+    'solar-templar-1111': 'Coherent Breathing',
+    'solfeggio-963-oneness': 'Coherent Breathing',
+};
+
+const sessionRecommendations: Record<string, string> = {
+    'earth-resonance-grounding': 'Box Breathing',
+    'ultimate-deep-sleep': '4-7-8 Relax',
+    'vagus-lymph-reset': '4-7-8 Relax',
+    'post-workout-recovery': '4-7-8 Relax',
+    'adhd-focus-protocol': 'Box Breathing',
+    'metabolic-harmony-protocol': 'Coherent Breathing',
+    'pineal-gland-activation': 'Coherent Breathing',
+    'chakra-balancing-journey': 'Coherent Breathing',
+    'heart-coherence-journey': 'Coherent Breathing',
+    'kabbalah-protocol-mother-letters': '4-7-8 Relax',
+    'fibonacci-spiral-attunement': 'Coherent Breathing',
+};
+
 interface PlayerPageProps {
   item: PlayableItem;
   allFrequencies: Frequency[];
@@ -215,6 +241,31 @@ export const PlayerPage: React.FC<PlayerPageProps> = ({
     elapsed += sessionTimeInStep;
     return elapsed;
   }, [sessionStepIndex, sessionTimeInStep, sessionData, isCurrentItemPlaying]);
+  
+  const recommendedPattern = useMemo(() => {
+      let patternName: string | undefined;
+
+      if (isSession) {
+          // Prioritize session-level recommendation
+          patternName = sessionRecommendations[item.id];
+      }
+      
+      // If no session recommendation, or if it's not a session, check the frequency
+      if (!patternName && mainFrequencyForPlayback) {
+          patternName = breathingRecommendations[mainFrequencyForPlayback.id];
+      }
+      
+      return patternName ? BREATHING_PATTERNS.find(p => p.name === patternName) : undefined;
+  }, [isSession, item.id, mainFrequencyForPlayback]);
+  
+  const handleSelectRecommendation = () => {
+      if (recommendedPattern) {
+          setSelectedPattern(recommendedPattern);
+          if (activePattern) {
+              startGuide(recommendedPattern);
+          }
+      }
+  };
 
   useEffect(() => {
     if (currentlyPlayingItem && currentlyPlayingItem.id !== item.id) {
@@ -316,7 +367,7 @@ export const PlayerPage: React.FC<PlayerPageProps> = ({
   };
   const handleRemoveLayer3 = () => {
     setLayer3Freq(null);
-    toggleLayer3(null, 'BINAURAL');
+    toggleLayer3(null, 'PURE');
   };
 
   const handleNavigateToScience = (e: React.MouseEvent, categoryId: CategoryId) => {
@@ -583,6 +634,20 @@ export const PlayerPage: React.FC<PlayerPageProps> = ({
       
        <div className="w-full max-w-lg my-6 p-6 rounded-2xl bg-white/50 dark:bg-dark-surface/50 border border-slate-200/50 dark:border-dark-border/50 shadow-inner space-y-4">
             <h3 className="font-display text-xl font-bold text-center text-slate-700 dark:text-dark-text-primary mb-2">Sound Options</h3>
+            
+            {recommendedPattern && (
+                <div className="mb-4 text-center p-3 rounded-xl bg-slate-900/5 dark:bg-black/20 animate-fade-in">
+                    <p className="text-sm font-semibold text-slate-600 dark:text-dark-text-secondary">Recommended Breathing</p>
+                    <button
+                        onClick={handleSelectRecommendation}
+                        className="mt-1 px-4 py-1.5 rounded-full font-bold text-white shadow-md transition-transform hover:scale-105"
+                        style={{ backgroundColor: colors.accent }}
+                    >
+                        {recommendedPattern.name}
+                    </button>
+                </div>
+            )}
+
              {!isSession && singleFrequency && singleFrequency.availableModes && singleFrequency.availableModes.length > 1 && (
                 <div className="flex items-center justify-center flex-wrap gap-2">
                     <ModeButton mode="PURE">Pure Tone</ModeButton>

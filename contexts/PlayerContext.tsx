@@ -245,16 +245,16 @@ export const PlayerProvider: React.FC<{ children: ReactNode }> = ({ children }) 
           const layer2Freq = nextStep.layerFrequencyId ? allFrequenciesRef.current.find(f => f.id === nextStep.layerFrequencyId) ?? null : null;
           const layer3Freq = nextStep.layer3FrequencyId ? allFrequenciesRef.current.find(f => f.id === nextStep.layer3FrequencyId) ?? null : null;
           
-          if (mainFreq) {
-            const panningConfig = is8dEnabled && !isBreathPanningActive 
-                ? { isEnabled: true, speed: panningSpeed, depth: panningDepth }
-                : { isEnabled: false, speed: 0, depth: 0 };
-
-            audioHook.startPlayback(
-              mainFreq, mainFreq.defaultMode,
-              layer2Freq, layer2Freq?.defaultMode || 'BINAURAL',
-              layer3Freq, layer3Freq?.defaultMode || 'PURE',
-              panningConfig
+          if (mainFreq && currentlyPlayingItem) {
+            startPlayback(
+              currentlyPlayingItem,
+              allFrequenciesRef.current,
+              mainFreq,
+              mainFreq.defaultMode,
+              layer2Freq,
+              layer2Freq?.defaultMode || 'BINAURAL',
+              layer3Freq,
+              layer3Freq?.defaultMode || 'PURE'
             );
             setSessionStepIndex(nextStepIndex);
             setSessionTimeInStep(0);
@@ -275,7 +275,7 @@ export const PlayerProvider: React.FC<{ children: ReactNode }> = ({ children }) 
     } else {
       if (intervalRef.current) clearInterval(intervalRef.current);
     }
-  }, [audioHook.isPlaying, currentlyPlayingItem, sessionStepIndex, audioHook, stop, is8dEnabled, panningSpeed, panningDepth, sessionTimeInStep, isBreathPanningActive]);
+  }, [audioHook.isPlaying, currentlyPlayingItem, sessionStepIndex, stop, sessionTimeInStep, startPlayback]);
 
 
   useEffect(() => {
