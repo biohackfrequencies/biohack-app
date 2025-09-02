@@ -74,7 +74,7 @@ const modeDescriptions: Record<string, React.ReactNode> = {
 };
 
 const ElementInfoTabs: React.FC<{ element: Frequency, accentColor: string }> = ({ element, accentColor }) => {
-  const [activeTab, setActiveTab] = useState<'symbolism' | 'science' | 'cosmos'>('symbolism');
+  const [activeTab, setActiveTab] = useState<'symbolism' | 'science' | 'medical' | 'cosmos'>('symbolism');
 
   return (
     <div className="w-full max-w-2xl mx-auto my-6">
@@ -102,6 +102,17 @@ const ElementInfoTabs: React.FC<{ element: Frequency, accentColor: string }> = (
           Science
         </button>
         <button
+          onClick={() => setActiveTab('medical')}
+          role="tab"
+          aria-selected={activeTab === 'medical'}
+          aria-controls="tab-medical"
+          id="tab-btn-medical"
+          className={`px-4 py-2 font-semibold text-sm transition-colors ${activeTab === 'medical' ? 'border-b-2 text-slate-800 dark:text-dark-text-primary' : 'text-slate-500 dark:text-dark-text-muted hover:text-slate-700 dark:hover:text-dark-text-secondary'}`}
+          style={{ borderColor: activeTab === 'medical' ? accentColor : 'transparent' }}
+        >
+          Medical Reference
+        </button>
+        <button
           onClick={() => setActiveTab('cosmos')}
           role="tab"
           aria-selected={activeTab === 'cosmos'}
@@ -122,10 +133,6 @@ const ElementInfoTabs: React.FC<{ element: Frequency, accentColor: string }> = (
               <p className="font-bold text-sm uppercase tracking-wider text-slate-500 dark:text-dark-text-muted">Energetic Association</p>
               <p>{element.energeticAssociation}</p>
             </div>
-            <div>
-              <p className="font-bold text-sm uppercase tracking-wider text-slate-500 dark:text-dark-text-muted">Biological Association</p>
-              <p>{element.biologicalAssociation}</p>
-            </div>
              <div>
               <p className="font-bold text-sm uppercase tracking-wider text-slate-500 dark:text-dark-text-muted">Sacred Geometry</p>
               <p>{element.sacredGeometry}</p>
@@ -144,6 +151,14 @@ const ElementInfoTabs: React.FC<{ element: Frequency, accentColor: string }> = (
             </div>
           </div>
         )}
+        {activeTab === 'medical' && (
+          <div role="tabpanel" id="tab-medical" aria-labelledby="tab-btn-medical" className="space-y-4">
+            <div>
+              <p className="font-bold text-sm uppercase tracking-wider text-slate-500 dark:text-dark-text-muted">Biological Association</p>
+              <p>{element.biologicalAssociation}</p>
+            </div>
+          </div>
+        )}
         {activeTab === 'cosmos' && (
             <div role="tabpanel" id="tab-cosmos" aria-labelledby="tab-btn-cosmos" className="space-y-4">
                 <div>
@@ -157,6 +172,49 @@ const ElementInfoTabs: React.FC<{ element: Frequency, accentColor: string }> = (
             </div>
         )}
       </div>
+    </div>
+  );
+};
+
+const HeadphoneAdvice: React.FC<{
+  mode: SoundGenerationMode;
+  isSession: boolean;
+  is8dEnabled: boolean;
+  requiresHeadphonesInSession: boolean;
+}> = ({ mode, isSession, is8dEnabled, requiresHeadphonesInSession }) => {
+  let advice = '';
+  let level: 'required' | 'recommended' | 'none' = 'none';
+
+  if (is8dEnabled) {
+    advice = 'Headphones are required for 8D Spatial Audio.';
+    level = 'required';
+  } else if (!isSession && (mode === 'BINAURAL' || mode === 'SPLIT_BINAURAL')) {
+    advice = 'Headphones are required for this binaural protocol.';
+    level = 'required';
+  } else if (isSession) {
+    if (requiresHeadphonesInSession) {
+      advice = 'Headphones are required for some parts of this session.';
+      level = 'required';
+    } else {
+      advice = 'Headphones are recommended for the best experience.';
+      level = 'recommended';
+    }
+  } else if (mode === 'ISOCHRONIC' || mode === 'AMBIENCE') {
+    advice = 'Headphones are recommended for a more immersive experience.';
+    level = 'recommended';
+  }
+
+  if (level === 'none') {
+    return null;
+  }
+
+  const baseClasses = "mt-4 p-3 max-w-xl mx-auto rounded-xl border text-sm text-center animate-fade-in";
+  const requiredClasses = "bg-amber-100/50 dark:bg-amber-900/20 border-amber-200/50 dark:border-amber-500/30 text-amber-800 dark:text-amber-200";
+  const recommendedClasses = "bg-sky-100/50 dark:bg-sky-900/20 border-sky-200/50 dark:border-sky-500/30 text-sky-800 dark:text-sky-200";
+
+  return (
+    <div className={`${baseClasses} ${level === 'required' ? requiredClasses : recommendedClasses}`}>
+      <p>{advice}</p>
     </div>
   );
 };
@@ -242,6 +300,18 @@ export const PlayerPage: React.FC<PlayerPageProps> = ({
     return elapsed;
   }, [sessionStepIndex, sessionTimeInStep, sessionData, isCurrentItemPlaying]);
   
+    const requiresHeadphonesInSession = useMemo(() => {
+        if (!isSession || !sessionData) return false;
+        return sessionData.steps.some(step => {
+            const mainFreq = allFrequencies.find(f => f.id === step.frequencyId);
+            const layerFreq = allFrequencies.find(f => f.id === step.layerFrequencyId);
+            const layer3Freq = allFrequencies.find(f => f.id === step.layer3FrequencyId);
+            
+            const modes = [mainFreq?.defaultMode, layerFreq?.defaultMode, layer3Freq?.defaultMode];
+            return modes.some(mode => mode === 'BINAURAL' || mode === 'SPLIT_BINAURAL');
+        });
+    }, [isSession, sessionData, allFrequencies]);
+    
   const recommendedPattern = useMemo(() => {
       let patternName: string | undefined;
 
@@ -341,10 +411,6 @@ export const PlayerPage: React.FC<PlayerPageProps> = ({
   };
   
   const openLayerModal = (layer: 2 | 3) => {
-    if (!isSubscribed && !isSession) {
-      window.location.hash = '#/pricing';
-      return;
-    }
     setEditingLayer(layer);
     setIsLayerModalOpen(true);
   };
@@ -526,6 +592,28 @@ export const PlayerPage: React.FC<PlayerPageProps> = ({
             </p>
         </div>
 
+        <HeadphoneAdvice 
+            mode={selectedMode} 
+            isSession={isSession} 
+            is8dEnabled={is8dEnabled}
+            requiresHeadphonesInSession={requiresHeadphonesInSession}
+        />
+
+        {isElement ? (
+            <ElementInfoTabs element={item as Frequency} accentColor={colors.accent} />
+        ) : descriptionText ? (
+            <div className="w-full max-w-2xl text-center text-slate-700 dark:text-dark-text-secondary my-4 drop-shadow-sm">
+                <p className={!isDescriptionExpanded && isLongDescription ? 'line-clamp-3' : ''}>
+                    {descriptionText}
+                </p>
+                {isLongDescription && (
+                    <button onClick={() => setIsDescriptionExpanded(!isDescriptionExpanded)} className="text-sm font-bold mt-2 ml-1" style={{color: colors.accent}}>
+                        {isDescriptionExpanded ? 'Show Less' : 'Read More'}
+                    </button>
+                )}
+            </div>
+        ) : null}
+
         <div className="w-full max-w-lg h-80 sm:h-96 my-4 md:my-0 relative">
           <Visualizer 
             analyser={analyser} 
@@ -579,21 +667,6 @@ export const PlayerPage: React.FC<PlayerPageProps> = ({
                 </div>
             </>
         )}
-
-        {isElement ? (
-            <ElementInfoTabs element={item as Frequency} accentColor={colors.accent} />
-        ) : descriptionText ? (
-            <p className="max-w-2xl text-center text-slate-700 dark:text-dark-text-secondary my-6 drop-shadow-sm">
-                <span className={!isDescriptionExpanded && isLongDescription ? 'line-clamp-3' : ''}>
-                    {descriptionText}
-                </span>
-                {isLongDescription && (
-                    <button onClick={() => setIsDescriptionExpanded(!isDescriptionExpanded)} className="text-sm font-bold mt-2 ml-1" style={{color: colors.accent}}>
-                        {isDescriptionExpanded ? 'Show Less' : 'Read More'}
-                    </button>
-                )}
-            </p>
-        ) : null}
 
         <div className="w-full max-w-sm flex flex-col items-center gap-6">
             <div className="flex items-center gap-2">
