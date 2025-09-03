@@ -229,7 +229,7 @@ export const PlayerPage: React.FC<PlayerPageProps> = ({
   const { 
     currentlyPlayingItem, isPlaying, isLayer2Active, isLayer3Active, analyser, 
     mainVolume, layer2Volume, layer3Volume, setMainVolume, setLayer2Volume, setLayer3Volume,
-    setTimer, startPlayback, pause, resume, toggleLayer2, toggleLayer3, stop,
+    setTimer, activeTimer, timeRemaining, startPlayback, pause, resume, toggleLayer2, toggleLayer3, stop,
     activePattern, currentPhase, phaseProgress, phaseTime, startGuide, stopGuide,
     sessionStepIndex, sessionTimeInStep,
     is8dEnabled, setIs8dEnabled, panningSpeed, setPanningSpeed, panningDepth, setPanningDepth
@@ -268,15 +268,11 @@ export const PlayerPage: React.FC<PlayerPageProps> = ({
   const [layer3Freq, setLayer3Freq] = useState<Frequency | null>(null);
 
   const [isTimerMenuOpen, setIsTimerMenuOpen] = useState(false);
-  const [activeTimer, setActiveTimer] = useState(0);
-  const [timeRemaining, setTimeRemaining] = useState(0);
   const [isLayerModalOpen, setIsLayerModalOpen] = useState(false);
   const [editingLayer, setEditingLayer] = useState<2 | 3 | null>(null);
   const [isBreathingMenuOpen, setIsBreathingMenuOpen] = useState(false);
   const [selectedPattern, setSelectedPattern] = useLocalStorage<BreathingPattern>('biohack_breathing_pattern', BREATHING_PATTERNS[0]);
 
-  const timerEndTimeRef = useRef<number | null>(null);
-  
   const isSession = 'steps' in item;
   const isCurrentItemPlaying = currentlyPlayingItem?.id === item.id;
   const singleFrequency = isSession ? null : item as Frequency;
@@ -381,32 +377,12 @@ export const PlayerPage: React.FC<PlayerPageProps> = ({
     if (currentlyPlayingItem?.id !== item.id) {
         setSelectedMode(('defaultMode' in item) ? item.defaultMode : 'PURE');
         setIsTimerMenuOpen(false);
-        setActiveTimer(0);
-        setTimeRemaining(0);
         stopGuide();
     }
   }, [item, currentlyPlayingItem, stopGuide]);
-  
-  useEffect(() => {
-    let intervalId: ReturnType<typeof setInterval> | null = null;
-    if (isCurrentItemPlaying && isPlaying && activeTimer > 0 && timerEndTimeRef.current) {
-        const updateRemaining = () => {
-            const remaining = Math.max(0, (timerEndTimeRef.current! - Date.now()) / 1000);
-            setTimeRemaining(remaining);
-            if (remaining <= 0 && intervalId) {
-                clearInterval(intervalId);
-            }
-        };
-        updateRemaining();
-        intervalId = setInterval(updateRemaining, 1000);
-    }
-    return () => { if (intervalId) clearInterval(intervalId); };
-  }, [isCurrentItemPlaying, isPlaying, activeTimer]);
 
   const handleSetTimer = (duration: number) => {
     setTimer(duration);
-    setActiveTimer(duration);
-    timerEndTimeRef.current = duration > 0 ? Date.now() + duration * 1000 : null;
     setIsTimerMenuOpen(false);
   };
   

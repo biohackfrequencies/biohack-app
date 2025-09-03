@@ -4,6 +4,7 @@ const newPrompt = "Cinematic%20underwater%20scene.%20Sun%20rays%20filtering%20th
 const baseUrl = "https://image.pollinations.ai/prompt/";
 
 export const imageData: Record<string, string> = {
+  "heart-of-gratitude": `${baseUrl}${newPrompt}?width=500&height=500&seed=22383287`,
   "delta": `${baseUrl}${newPrompt}?width=500&height=500&seed=95454129`,
   "theta": `${baseUrl}${newPrompt}?width=500&height=500&seed=110333221`,
   "alpha": `${baseUrl}${newPrompt}?width=500&height=500&seed=92716330`,

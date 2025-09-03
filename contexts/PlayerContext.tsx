@@ -9,7 +9,7 @@ export type PlayableItem = Frequency | GuidedSession | CustomStack;
 type UseBinauralBeatReturn = ReturnType<typeof useBinauralBeat>;
 type UseBreathingGuideReturn = ReturnType<typeof useBreathingGuide>;
 
-interface PlayerContextType extends Omit<UseBinauralBeatReturn, 'startPlayback' | 'pause' | 'resume' | 'stop' | 'toggleLayer2' | 'toggleLayer3'>, UseBreathingGuideReturn {
+interface PlayerContextType extends Omit<UseBinauralBeatReturn, 'startPlayback' | 'pause' | 'resume' | 'stop' | 'toggleLayer2' | 'toggleLayer3' | 'setTimer'>, UseBreathingGuideReturn {
   currentlyPlayingItem: PlayableItem | null;
   lastCompletedSession: { id: string; name: string } | null;
   clearLastCompletedSession: () => void;
@@ -27,6 +27,9 @@ interface PlayerContextType extends Omit<UseBinauralBeatReturn, 'startPlayback' 
   pause: () => void;
   resume: () => void;
   stop: () => void;
+  setTimer: (duration: number) => void;
+  activeTimer: number;
+  timeRemaining: number;
   toggleLayer2: (freq: Frequency | null, mode: SoundGenerationMode) => void;
   toggleLayer3: (freq: Frequency | null, mode: SoundGenerationMode) => void;
   sessionStepIndex: number;
@@ -47,12 +50,15 @@ export const PlayerProvider: React.FC<{ children: ReactNode }> = ({ children }) 
   const [sessionTimeInStep, setSessionTimeInStep] = useState(0);
   const [activeLogItem, setActiveLogItem] = useState<ActivityLogItem | null>(null);
   const [lastCompletedSession, setLastCompletedSession] = useState<{ id: string; name: string } | null>(null);
+  const [activeTimer, setActiveTimer] = useState(0);
+  const [timeRemaining, setTimeRemaining] = useState(0);
 
   const [is8dEnabled, setIs8dEnabled] = useState(false);
   const [panningSpeed, setPanningSpeed] = useState(30);
   const [panningDepth, setPanningDepth] = useState(50);
   const [isBreathPanningActive, setIsBreathPanningActive] = useState(false);
-
+  
+  const timerEndTimeRef = useRef<number | null>(null);
   const audioHook = useBinauralBeat();
   const breathingHook = useBreathingGuide();
   const { setActivityLog } = useUserData();
@@ -63,6 +69,7 @@ export const PlayerProvider: React.FC<{ children: ReactNode }> = ({ children }) 
     stop: stopAudio,
     pause: pauseAudio,
     resume: resumeAudio,
+    setTimer: setAudioHookTimer,
     startPlayback: startAudioPlayback,
     toggleLayer2: toggleAudioLayer2,
     toggleLayer3: toggleAudioLayer3,
@@ -120,8 +127,20 @@ export const PlayerProvider: React.FC<{ children: ReactNode }> = ({ children }) 
       setActiveLogItem(null);
     }
   }, [currentlyPlayingItem, updateActivityLogItem]);
+  
+  const setTimer = useCallback((duration: number) => {
+    setAudioHookTimer(duration);
+    setActiveTimer(duration);
+    if (duration > 0) {
+        setTimeRemaining(duration);
+        timerEndTimeRef.current = Date.now() + duration * 1000;
+    } else {
+        setTimeRemaining(0);
+        timerEndTimeRef.current = null;
+    }
+  }, [setAudioHookTimer]);
 
-    const stopGuide = useCallback(() => {
+  const stopGuide = useCallback(() => {
       stopBreathingGuideInternal();
       if (isBreathPanningActive) {
           disableBreathPanner();
@@ -147,11 +166,12 @@ export const PlayerProvider: React.FC<{ children: ReactNode }> = ({ children }) 
     finalizeLogItem();
     stopAudio();
     stopGuide();
+    setTimer(0);
     setCurrentlyPlayingItem(null);
     setSessionStepIndex(0);
     setSessionTimeInStep(0);
     totalSessionTimeElapsedRef.current = 0;
-  }, [stopAudio, finalizeLogItem, stopGuide, currentlyPlayingItem]);
+  }, [stopAudio, finalizeLogItem, stopGuide, currentlyPlayingItem, setTimer]);
 
   const pause = useCallback(() => {
     finalizeLogItem();
@@ -308,6 +328,23 @@ export const PlayerProvider: React.FC<{ children: ReactNode }> = ({ children }) 
   // making it robust against high-frequency UI re-renders from the breathing guide.
   }, [isPlaying, currentlyPlayingItem, sessionStepIndex, stop, startPlayback]);
 
+  // Countdown timer effect
+  useEffect(() => {
+    let intervalId: ReturnType<typeof setInterval> | null = null;
+    if (isPlaying && activeTimer > 0 && timerEndTimeRef.current) {
+        const updateRemaining = () => {
+            const remaining = Math.max(0, (timerEndTimeRef.current! - Date.now()) / 1000);
+            setTimeRemaining(remaining);
+            if (remaining <= 0 && intervalId) {
+                clearInterval(intervalId);
+            }
+        };
+        updateRemaining();
+        intervalId = setInterval(updateRemaining, 1000);
+    }
+    return () => { if (intervalId) clearInterval(intervalId); };
+  }, [isPlaying, activeTimer]);
+
 
   useEffect(() => {
     if (isPlaying && !isBreathPanningActive) {
@@ -336,6 +373,9 @@ export const PlayerProvider: React.FC<{ children: ReactNode }> = ({ children }) 
     pause,
     resume,
     stop,
+    setTimer,
+    activeTimer,
+    timeRemaining,
     toggleLayer2,
     toggleLayer3,
     // Add breathing hook state and stabilized controls

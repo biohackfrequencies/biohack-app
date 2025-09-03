@@ -115,6 +115,21 @@ export const appContentData: AppContentData = {
   },
   "guided_sessions": [
     {
+      "id": "heart-of-gratitude",
+      "title": "Heart of Gratitude — Frequency Alignment",
+      "categoryId": "guided",
+      "subCategory": "Mind & Spirit",
+      "description": "A 15-minute journey of cellular upliftment and emotional coherence, using frequencies of love, harmony, and Earth's resonance to cultivate a deep sense of gratitude.",
+      "advice": "This session is designed to open and align the heart's energy field. It begins with grounding Schumann Resonance, moves into frequencies for relational harmony and cellular repair, and culminates in a high-vibrational tone for divine remembrance. Use this protocol to transform your state through the power of gratitude.",
+      "steps": [
+        { "title": "Grounding in Gratitude", "description": "Connect with the Earth's field using the Schumann Resonance to anchor your intention of gratitude in the body.", "duration": 180, "frequencyId": "schumann-resonance" },
+        { "title": "Harmonizing Connections", "description": "The 639 Hz frequency opens the heart to forgiveness, empathy, and harmonious relationships.", "duration": 240, "frequencyId": "solfeggio-639-harmony", "layerFrequencyId": "alpha" },
+        { "title": "Cellular Love & Harmony", "description": "The core 528 Hz frequency resonates with unconditional love, supporting cellular harmony and DNA repair.", "duration": 300, "frequencyId": "solfeggio-528-repair", "layerFrequencyId": "celestial-venus" },
+        { "title": "Quantum Unity Remembrance", "description": "The advanced 1111 Hz frequency activates the higher heart, connecting you to quantum unity and divine remembrance.", "duration": 180, "frequencyId": "solar-templar-1111", "layerFrequencyId": "solfeggio-963-oneness" }
+      ],
+      "colors": { "primary": "#f9a8d4", "secondary": "#f472b6", "accent": "#ec4899" }
+    },
+    {
       "id": "fibonacci-spiral-attunement",
       "title": "Fibonacci Spiral Attunement",
       "categoryId": "angel",
