@@ -60,19 +60,19 @@ export const OnboardingFlow: React.FC<OnboardingFlowProps> = ({ onFinish }) => {
                 
                 <OnboardingStep currentStep={currentStep} stepNumber={2} title="Your Harmonic Dashboard" description="This is your daily snapshot. Track your goals with Activity Rings, log habits with a single tap, and discover personalized AI insights.">
                     <div className="p-4 bg-white/50 dark:bg-dark-surface/50 rounded-xl shadow-lg border border-white/50 dark:border-dark-border/50">
-                        <img src="https://i.imgur.com/w9O8fJv.png" alt="Dashboard preview" className="rounded-lg" />
+                        <img src="https://i.imgur.com/v1h3j3A.png" alt="Dashboard preview" className="rounded-lg" />
                     </div>
                 </OnboardingStep>
 
                 <OnboardingStep currentStep={currentStep} stepNumber={3} title="The Sound Library" description="Explore 140+ protocols. From scientifically-backed Brainwave Entrainment to ancient Solfeggio tones, find the perfect frequency for any intention.">
                      <div className="p-4 bg-white/50 dark:bg-dark-surface/50 rounded-xl shadow-lg border border-white/50 dark:border-dark-border/50">
-                        <img src="https://i.imgur.com/vH1Zf2e.png" alt="Library preview" className="rounded-lg" />
+                        <img src="https://i.imgur.com/4l35b2W.png" alt="Library preview" className="rounded-lg" />
                     </div>
                 </OnboardingStep>
                 
                 <OnboardingStep currentStep={currentStep} stepNumber={4} title="The Player Experience" description="Customize sessions with frequency layering, our signature 8D Spatial Audio, and a built-in breathing guide. Headphones recommended!">
                     <div className="p-4 bg-white/50 dark:bg-dark-surface/50 rounded-xl shadow-lg border border-white/50 dark:border-dark-border/50">
-                        <img src="https://i.imgur.com/gK4Y5fT.png" alt="Player preview" className="rounded-lg" />
+                        <img src="https://i.imgur.com/0dYt9bZ.png" alt="Player preview" className="rounded-lg" />
                     </div>
                 </OnboardingStep>
 

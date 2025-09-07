@@ -1,9 +1,3 @@
-
-
-
-
-
-
 import React, { createContext, useContext, useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { supabase } from '../services/supabaseClient';
 import { useAuth } from './AuthContext';
@@ -55,6 +49,7 @@ interface UserDataContextType {
   setAiCreditsRemaining: React.Dispatch<React.SetStateAction<number>>;
   hasCompletedOnboarding: boolean;
   setHasCompletedOnboarding: React.Dispatch<React.SetStateAction<boolean>>;
+  completeOnboarding: () => Promise<void>;
 }
 
 const UserDataContext = createContext<UserDataContextType | null>(null);
@@ -217,6 +212,8 @@ export const UserDataProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   useDebouncedSync('custom_activities', customActivities, syncEnabled, user?.id);
   useDebouncedSync('codex_reflections', codexReflections, syncEnabled, user?.id);
   useDebouncedSync('ai_credits_remaining', aiCreditsRemaining, syncEnabled, user?.id);
+  // Debounced sync is not ideal for the onboarding flag, but we'll leave it for background consistency.
+  // The immediate sync will be handled by the new `completeOnboarding` function.
   useDebouncedSync('has_completed_onboarding', hasCompletedOnboarding, syncEnabled, user?.id);
   
   const proAccessExpiresAtIso = useMemo(() => proAccessExpiresAt ? new Date(proAccessExpiresAt).toISOString() : null, [proAccessExpiresAt]);
@@ -224,6 +221,20 @@ export const UserDataProvider: React.FC<{ children: React.ReactNode }> = ({ chil
 
   const aiCreditsResetAtIso = useMemo(() => aiCreditsResetAt ? new Date(aiCreditsResetAt).toISOString() : null, [aiCreditsResetAt]);
   useDebouncedSync('ai_credits_reset_at', aiCreditsResetAtIso, syncEnabled, user?.id);
+  
+  const completeOnboarding = useCallback(async () => {
+    // 1. Optimistically update local state & localStorage for instant UI feedback.
+    setHasCompletedOnboarding(true);
+    // 2. Immediately push the update to Supabase to prevent race conditions on reload.
+    if (user && isOnline) {
+        try {
+            const { error } = await supabase.from('profiles').update({ has_completed_onboarding: true }).eq('id', user.id);
+            if (error) console.warn('Immediate sync for onboarding status failed:', error.message);
+        } catch (e: any) {
+            console.warn('Could not sync onboarding status. User might be offline.', e.message);
+        }
+    }
+  }, [user, isOnline, setHasCompletedOnboarding]);
 
   const addCustomActivity = useCallback((name: string): TrackableActivityBase | undefined => {
     if (!name.trim()) return;
@@ -255,6 +266,7 @@ export const UserDataProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     codexReflections, setCodexReflections,
     aiCreditsRemaining, setAiCreditsRemaining,
     hasCompletedOnboarding, setHasCompletedOnboarding,
+    completeOnboarding,
   };
 
   return <UserDataContext.Provider value={value}>{children}</UserDataContext.Provider>;

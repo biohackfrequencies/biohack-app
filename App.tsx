@@ -415,7 +415,7 @@ const App: React.FC<{ content: AppContentData }> = ({ content }) => {
 
 const AppInitializer: React.FC = () => {
     const { isAuthenticated, isAuthInitializing, isPasswordRecovery } = useAuth();
-    const { isUserDataLoading, hasCompletedOnboarding, setHasCompletedOnboarding } = useUserData();
+    const { isUserDataLoading, hasCompletedOnboarding, completeOnboarding } = useUserData();
     const { isInitializing: isSubscriptionInitializing } = useSubscription();
     
     const isAppInitializing = isAuthInitializing;
@@ -435,9 +435,8 @@ const AppInitializer: React.FC = () => {
             return <LoadingScreen />;
         }
         if (!hasCompletedOnboarding) {
-            const handleOnboardingFinish = () => {
-                setHasCompletedOnboarding(true);
-                // Explicitly navigate to the dashboard to ensure the user lands there.
+            const handleOnboardingFinish = async () => {
+                await completeOnboarding();
                 window.location.hash = '#/dashboard';
             };
             return <OnboardingFlow onFinish={handleOnboardingFinish} />;
