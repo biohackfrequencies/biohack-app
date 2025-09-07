@@ -152,13 +152,14 @@ export const UserDataProvider: React.FC<{ children: React.ReactNode }> = ({ chil
           const defaultHabits = ['session', 'workout', 'meditation', 'sleep', 'supplements', 'rlt', 'mood'];
           const defaultGoals = { mind: 20, move: 10000 };
           const newProfileData: ProfileInsert = {
-              id: user.id, favorites: [], custom_stacks: [], activity_log: [],
-              tracked_habits: defaultHabits, user_goals: defaultGoals, custom_activities: [],
-              codex_reflections: [],
+              id: user.id,
+              favorites: [],
+              custom_stacks: [],
+              activity_log: [],
+              tracked_habits: defaultHabits,
+              user_goals: defaultGoals,
+              custom_activities: [],
               pro_access_expires_at: null,
-              ai_credits_remaining: 5,
-              ai_credits_reset_at: new Date().toISOString(),
-              api_requests: [],
               has_completed_onboarding: false,
             };
           const { data: newProfile, error: insertError } = await supabase.from('profiles').insert(newProfileData).select().single();
@@ -183,17 +184,9 @@ export const UserDataProvider: React.FC<{ children: React.ReactNode }> = ({ chil
             setHasCompletedOnboarding(profile.has_completed_onboarding ?? false);
         }
       } catch (e) {
-        // This catch block is for network failures or other errors when fetching from Supabase.
-        // The previous implementation reset the user's state to empty arrays, which could
-        // wipe out locally-stored data if the user was temporarily offline.
-        // This fix improves the error logging and, crucially, REMOVES the state-clearing calls.
-        // Now, if the sync fails, the app will continue to run with the data already
-        // loaded from localStorage by the `useSyncedState` hooks, ensuring a robust offline experience.
         const error = e as (Error & { details?: string; hint?: string; message: string });
         console.error("Failed to bootstrap user data from Supabase. App will continue with locally-stored data.");
-        console.error("Error details:", { message: error.message, details: error.details, hint: error.hint, fullError: e });
-        
-        // DO NOT reset state here. Let the app use the data loaded from localStorage.
+        console.error("Error details:", error.message ? `${error.message} (Details: ${error.details || 'N/A'})` : JSON.stringify(e));
       } finally {
         setIsUserDataLoading(false);
         bootstrapInProgress.current = false;

@@ -393,55 +393,10 @@ export const appContentData: AppContentData = {
     { "id": "mirror-axis-soma-spirit", "title": "Soma–Spirit Axis", "categoryId": "brainwaves", "description": "Integrates bodily and soul awareness for full embodiment. A 432 Hz carrier ensures universal harmony while a split binaural beat (288 Hz left, 864 Hz right) connects physical sensation with higher consciousness.", "advice": "This protocol uses a stable carrier tone to ground your energy, while playing two distinct frequencies in each ear to encourage brainwave synchronization between the left and right hemispheres. Headphones are required for the intended effect.", "steps": [{ "title": "Embodiment of Higher Self", "description": "Uniting body consciousness with soul wisdom.", "duration": 900, "frequencyId": "mirror-binaural-soma-spirit", "layer3FrequencyId": "hz-432-universal-tuning" }], "colors": mirrorAxisColors },
     { "id": "mirror-axis-golden-tri", "title": "Golden Tri-Mirror", "categoryId": "brainwaves", "description": "Opens creative insight, energy flow & quantum expansion. A 111 Hz angelic carrier tone sets the stage for a Tesla-inspired split binaural beat (369 Hz left, 639 Hz right) that connects insight with heart coherence.", "advice": "This protocol uses a stable carrier tone to ground your energy, while playing two distinct frequencies in each ear to encourage brainwave synchronization between the left and right hemispheres. Headphones are required for the intended effect.", "steps": [{ "title": "Tesla Code Activation", "description": "Unlocking the code of creation.", "duration": 900, "frequencyId": "mirror-binaural-golden-tri", "layer3FrequencyId": "angel-111" }], "colors": mirrorAxisColors },
     {
-      "id": "temple-of-breath", "title": "Temple of Breath — Lemurian Toning Sequence", "categoryId": "angel", "subCategory": "Advanced Resonance Protocols", "description": "Reinstates breath-consciousness and activates resonance pathways between voice, chest, and earth field. For emotional processing, grief transmutation, and throat-heart rebalancing.", "steps": [{ "title": "Lemurian Resonance", "description": "A toning sequence to open breath pathways and connect voice with heart.", "duration": 900, "frequencyId": "lemurian-breath-gate", "layerFrequencyId": "solfeggio-741-expression", "layer3FrequencyId": "ambient-sea" }], "colors": { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" }
-    },
-    {
-      "id": "golden-code-of-thoth", "title": "Golden Code of Thoth — Memory Mirror Activation", "categoryId": "angel", "subCategory": "Advanced Resonance Protocols", "description": "Activates subconscious retrieval of soul codes and ancestral missions. For those awakening to deeper timelines.", "steps": [{ "title": "Memory Mirror Activation", "description": "A harmonic blend to unlock soul codes and ancestral memory.", "duration": 900, "frequencyId": "angel-333", "layerFrequencyId": "solfeggio-963-oneness", "layer3FrequencyId": "schumann-resonance" }], "colors": { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" }
-    },
-    {
-      "id": "lyran-dna-harmonics-session", "title": "Lyran DNA Harmonics — 12 Strand Alignment", "categoryId": "angel", "subCategory": "Advanced Resonance Protocols", "description": "Amplifies crystalline coding through the 12 major meridian light strands for cosmic body restoration and light-architecture remembrance.", "steps": [{ "title": "12 Strand Alignment", "description": "A high-frequency sequence to amplify crystalline coding within your light body.", "duration": 900, "frequencyId": "solfeggio-528-repair", "layerFrequencyId": "solfeggio-963-oneness", "layer3FrequencyId": "lyran-dna-harmonics" }], "colors": { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" }
-    },
-    {
-      "id": "amenti-re-entry-code", "title": "Amenti Re-Entry Code", "categoryId": "angel", "subCategory": "Advanced Resonance Protocols", "description": "Reconnects to dormant inner records accessed through vibrational thresholds, for accessing internal knowing.", "steps": [{ "title": "Inner Records Activation", "description": "A sequence to clear past patterns and reconnect with dormant inner knowledge.", "duration": 900, "frequencyId": "solfeggio-417-change", "layerFrequencyId": "angel-777", "layer3FrequencyId": "angel-111" }], "colors": { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" }
-    },
-    {
-      "id": "sirius-light-grid", "title": "Sirius Light Grid — Antahkarana Bridge", "categoryId": "angel", "subCategory": "Advanced Resonance Protocols", "description": "Connects higher mind to heart-field via light-language resonance. For healers, guides, or visionaries.", "steps": [{ "title": "Antahkarana Bridge Construction", "description": "A harmonic sequence to build the light bridge between your higher mind and heart-field.", "duration": 900, "frequencyId": "sirian-soul-path", "layerFrequencyId": "sirian-antahkarana-bridge-288", "layer3FrequencyId": "kabbalah-chokhmah" }], "colors": { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" }
-    },
-    {
-      "id": "solar-templar-alignment", "title": "Solar Templar Alignment", "categoryId": "angel", "subCategory": "Advanced Resonance Protocols", "description": "Reattunes the body to solar wisdom, clarity of will, and internal kingship/queenship. Best for morning rituals or leadership focus.", "steps": [{ "title": "Solar Code Attunement", "description": "A powerful blend to align with solar wisdom and activate your inner sovereignty.", "duration": 900, "frequencyId": "solfeggio-528-repair", "layerFrequencyId": "solar-templar-1111", "layer3FrequencyId": "solar-templar-33" }], "colors": { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" }
-    },
-    {
-      "id": "arcturian-crystal-field-reset", "title": "Arcturian Crystal Field Reset", "categoryId": "angel", "subCategory": "Advanced Resonance Protocols", "description": "Reboots cognitive pathways while clearing artificial grids or overlays. Helpful for tech workers, sensitives, or users exposed to EMF fields.", "steps": [{ "title": "Cognitive Pathway Reboot", "description": "A crystalline sequence to clear energetic interference and reset your cognitive field.", "duration": 900, "frequencyId": "arcturian-crystal-field", "layerFrequencyId": "angel-111", "layer3FrequencyId": "alpha-bridge-8hz" }], "colors": { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" }
-    },
-    {
-      "id": "mu-recollection-chamber", "title": "Mu Recollection Chamber", "categoryId": "angel", "subCategory": "Advanced Resonance Protocols", "description": "Lemurian memory activation through water-temple harmonics. Cellular remembrance and emotional water healing.", "steps": [{ "title": "Water Temple Activation", "description": "A deep, resonant chamber of sound to unlock cellular memory and soothe emotional waters.", "duration": 900, "frequencyId": "lemurian-breath-gate", "layerFrequencyId": "solfeggio-741-expression", "layer3FrequencyId": "mu-theta-wave" }], "colors": { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" }
-    },
-    {
-      "id": "atlantean-frequency-seal", "title": "Atlantean Frequency Seal", "categoryId": "angel", "subCategory": "Advanced Resonance Protocols", "description": "Restores coherence lost during Atlantean collapse. Spiritual gift alignment and timeline clarity.", "steps": [{ "title": "Coherence Restoration", "description": "A powerful sequence to clear timeline distortions and reactivate dormant spiritual gifts from the Atlantean era.", "duration": 900, "frequencyId": "solfeggio-417-change", "layerFrequencyId": "platinum", "layer3FrequencyId": "angel-333" }], "colors": { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" }
-    },
-    {
-      "id": "inner-earth-axis-reset", "title": "Inner Earth Axis Reset", "categoryId": "angel", "subCategory": "Advanced Resonance Protocols", "description": "Crystalline grounding and EMF reset through Agarthan resonant grid.", "steps": [{ "title": "Crystalline Grounding", "description": "A deep, grounding frequency triad to reset your connection to the Earth's crystalline grid and clear EMF interference.", "duration": 900, "frequencyId": "angel-111", "layerFrequencyId": "arcturian-crystal-field", "layer3FrequencyId": "kabbalah-lamed" }], "colors": { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" }
-    },
-    {
-      "id": "sirian-tone-gate", "title": "Sirian Tone Gate — Light Memory Reinstatement", "categoryId": "angel", "subCategory": "Advanced Resonance Protocols", "description": "Reinstates ancient light memory via Sirius B harmonic stellar gate.", "steps": [{ "title": "Stellar Gate Activation", "description": "A high-frequency transmission to open the Sirian tone gate, reinstating ancient light memory and soul path wisdom.", "duration": 900, "frequencyId": "sirian-soul-path", "layerFrequencyId": "kabbalah-chokhmah", "layer3FrequencyId": "sirian-light-memory" }], "colors": { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" }
-    },
-    {
-      "id": "the-scroll-of-mirrors", "title": "The Scroll of Mirrors", "categoryId": "angel", "subCategory": "Advanced Resonance Protocols", "description": "Self-mirroring tone chamber for deep personal reflection and harmonization.", "steps": [
-        { "title": "Reflection Field", "description": "Frequencies of divine support and luck create a safe space for deep inner reflection.", "duration": 420, "frequencyId": "angel-333", "layerFrequencyId": "angel-777" },
-        { "title": "Harmonization Chamber", "description": "A precise mirror-pulse oscillation, centered on the frequency of major life changes, to harmonize dissonant aspects of the self.", "duration": 480, "frequencyId": "mirror-pulse-oscillation", "layerFrequencyId": "angel-555" }
-    ], "colors": { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" }
-    },
-    {
-      "id": "council-of-nine-alignment", "title": "Council of Nine — Resonance Alignment", "categoryId": "angel", "subCategory": "Advanced Resonance Protocols", "description": "Connects to harmonic archetypes of ancient stellar councils. Oversoul recalibration.", "steps": [{ "title": "Oversoul Recalibration", "description": "A sacred triadic resonance to align your consciousness with the wisdom of the Council of Nine, promoting oversoul integration.", "duration": 900, "frequencyId": "angel-999", "layerFrequencyId": "titanium", "layer3FrequencyId": "angel-222" }], "colors": { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" }
-    },
-    {
-      "id": "solar-heart-lattice", "title": "Solar Heart Lattice", "categoryId": "angel", "subCategory": "Advanced Resonance Protocols", "description": "Activates radiant solar pathway to heart coherence.", "steps": [{ "title": "Radiant Heart Activation", "description": "A powerful solar sequence to activate heart coherence, personal sovereignty, and the radiant energy of your inner sun.", "duration": 900, "frequencyId": "solfeggio-528-repair", "layerFrequencyId": "solar-templar-1111", "layer3FrequencyId": "solar-sovereignty" }], "colors": { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" }
-    },
-    {
       "id": "orion-convergence-field",
       "title": "Orion Convergence Field",
       "categoryId": "angel",
-      "subCategory": "Advanced Resonance Protocols",
+      "subCategory": "Starseed Origins",
       "description": "A 15-minute protocol for Orion memory access and DNA alignment, using a blend of harmonic tuning and activation frequencies.",
       "advice": "This session is designed for deep subconscious exploration and connection to stellar consciousness. Start with 2 minutes of Coherent Breathing to prepare your nervous system. The protocol will then guide you through layers of sound to settle your energy, expand your heart field, and activate dormant memories. Use headphones for the best experience and allow any visions or impressions to emerge without judgment.",
       "steps": [
@@ -451,10 +406,185 @@ export const appContentData: AppContentData = {
       ],
       "colors": { "primary": "#a5b4fc", "secondary": "#93c5fd", "accent": "#a78bfa" },
       "premium": true
+    },
+    {
+      "id": "orion-fractal-remembrance", "title": "Orion Fractal Remembrance", "categoryId": "angel", "subCategory": "Starseed Origins",
+      "description": "Recalling ancient star-based templates and restoring inner alignment through cosmic precision.",
+      "advice": "Recalling ancient star-based templates and restoring inner alignment through cosmic precision.",
+      "steps": [{ "title": "Orion Remembrance", "description": "A combination of 444Hz and 888Hz to recall star templates.", "duration": 900, "frequencyId": "angel-444", "layerFrequencyId": "angel-888" }],
+      "colors": { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" }, "premium": true
+    },
+    {
+      "id": "lemurian-grief-temple", "title": "Lemurian Grief Temple", "categoryId": "angel", "subCategory": "Ancient Civilizations",
+      "description": "Transmute emotional residue through cellular water memory and voice resonance.",
+      "advice": "Transmute emotional residue through cellular water memory and voice resonance.",
+      "steps": [{ "title": "Grief Transmutation", "description": "A blend of 309Hz, 741Hz and 963Hz for emotional transmutation.", "duration": 900, "frequencyId": "lemurian-breath-gate", "layerFrequencyId": "solfeggio-741-expression", "layer3FrequencyId": "solfeggio-963-oneness" }],
+      "colors": { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" }, "premium": true
+    },
+    {
+      "id": "golden-kether-circuit", "title": "Golden Kether Circuit", "categoryId": "angel", "subCategory": "Divine Harmonics",
+      "description": "Activate high-frequency cognition and soul-identity coherence through divine crown infusion.",
+      "advice": "Activate high-frequency cognition and soul-identity coherence through divine crown infusion.",
+      "steps": [{ "title": "Crown Infusion", "description": "A powerful combination of 999Hz and 1111Hz for soul-identity coherence.", "duration": 900, "frequencyId": "angel-999", "layerFrequencyId": "solar-templar-1111" }],
+      "colors": { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" }, "premium": true
+    },
+    {
+      "id": "atlantean-spiral-recalibration", "title": "Atlantean Spiral Recalibration", "categoryId": "angel", "subCategory": "Ancient Civilizations",
+      "description": "Reconstruct original energetic templates lost in collapse and reintegrate soul contracts.",
+      "advice": "Reconstruct original energetic templates lost in collapse and reintegrate soul contracts.",
+      "steps": [{ "title": "Template Reconstruction", "description": "A blend of 417Hz and 936Hz to reconstruct energetic templates.", "duration": 900, "frequencyId": "solfeggio-417-change", "layerFrequencyId": "platinum" }],
+      "colors": { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" }, "premium": true
+    },
+    {
+      "id": "venusian-heart-mirror", "title": "Venusian Heart Mirror", "categoryId": "angel", "subCategory": "Divine Harmonics",
+      "description": "Restore vibrational love field and amplify relational harmony via harmonic resonance.",
+      "advice": "Restore vibrational love field and amplify relational harmony via harmonic resonance.",
+      "steps": [{ "title": "Love Field Restoration", "description": "A harmonious blend of 528Hz and 639Hz to restore the love field.", "duration": 900, "frequencyId": "solfeggio-528-repair", "layerFrequencyId": "solfeggio-639-harmony" }],
+      "colors": { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" }, "premium": true
+    },
+    {
+      "id": "sirian-mind-cleanse", "title": "Sirian Mind Cleanse", "categoryId": "angel", "subCategory": "Starseed Origins",
+      "description": "Clear mental fog, psychic interference, and stabilize upper mental field with light-gate coherence.",
+      "advice": "Clear mental fog, psychic interference, and stabilize upper mental field with light-gate coherence.",
+      "steps": [{ "title": "Mental Field Stabilization", "description": "A combination of 144Hz and 864Hz to clear the mental field.", "duration": 900, "frequencyId": "sirian-soul-path", "layerFrequencyId": "tantalum" }],
+      "colors": { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" }, "premium": true
+    },
+    {
+      "id": "temple-of-breath-solar-axis", "title": "Temple of Breath – Solar Axis", "categoryId": "angel", "subCategory": "Divine Harmonics",
+      "description": "Align life-force rhythm with solar harmonics and restore radiant embodiment.",
+      "advice": "Align life-force rhythm with solar harmonics and restore radiant embodiment.",
+      "steps": [{ "title": "Solar Harmonic Alignment", "description": "A powerful tri-blend of 222Hz, 528Hz, and 1111Hz to restore radiant embodiment.", "duration": 900, "frequencyId": "angel-222", "layerFrequencyId": "solfeggio-528-repair", "layer3FrequencyId": "solar-templar-1111" }],
+      "colors": { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" }, "premium": true
+    },
+    {
+      id: 'amenti-re-entry-code', title: 'Amenti Re-Entry Code', categoryId: 'angel', subCategory: 'Ancient Civilizations', premium: true, colors: { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" },
+      description: "Reconnects to dormant inner records accessed through vibrational thresholds, for soul retrieval and integration.",
+      advice: "This 15-minute protocol is designed to unlock dormant soul memories by resonating with frequencies of change and divine magic.",
+      steps: [
+        { title: "Clearing the Path", description: "417 Hz clears negative energy, preparing the way for deeper connection.", duration: 450, frequencyId: "solfeggio-417-change" },
+        { title: "Accessing Records", description: "777 Hz opens a gateway to divine magic, helping to access inner records.", duration: 450, frequencyId: "angel-777" }
+      ]
+    },
+    {
+      id: 'arcturian-crystal-field-reset', title: 'Arcturian Crystal Field Reset', categoryId: 'angel', subCategory: 'Starseed Origins', premium: true, colors: { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" },
+      description: "Reboots cognitive pathways while clearing artificial grids or overlays. Helpful for tech fatigue and energetic sovereignty.",
+      advice: "A 15-minute session to reset cognitive pathways using Arcturian frequencies combined with an angelic activation tone.",
+      steps: [
+        { title: "Field Reset", description: "729 Hz, the Arcturian field reset frequency, clears energetic overlays.", duration: 450, frequencyId: "arcturian-crystal-field" },
+        { title: "Angelic Integration", description: "111 Hz helps integrate the reset and connect with spiritual guidance.", duration: 450, frequencyId: "angel-111" }
+      ]
+    },
+    {
+      id: 'atlantean-frequency-seal', title: 'Atlantean Frequency Seal', categoryId: 'angel', subCategory: 'Ancient Civilizations', premium: true, colors: { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" },
+      description: "Restores coherence lost during Atlantean collapse. Spiritual gift alignment and timeline repair.",
+      advice: "This 15-minute session aims to restore energetic coherence using frequencies associated with change and high-vibrational connection.",
+      steps: [
+        { title: "Facilitating Change", description: "417 Hz clears traumatic influences and facilitates positive change.", duration: 450, frequencyId: "solfeggio-417-change" },
+        { title: "Divine Connection", description: "936 Hz Platinum frequency purifies and connects to higher wisdom.", duration: 450, frequencyId: "platinum" }
+      ]
+    },
+    {
+      id: 'council-of-nine-alignment', title: 'Council of Nine — Resonance Alignment', categoryId: 'angel', subCategory: 'Divine Harmonics', premium: true, colors: { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" },
+      description: "Connects to harmonic archetypes of ancient stellar councils. Oversoul recalibration.",
+      advice: "A 15-minute alignment with stellar archetypes, using frequencies of completion and divine strength.",
+      steps: [
+        { title: "Completion", description: "999 Hz signals the completion of old cycles, preparing for recalibration.", duration: 450, frequencyId: "angel-999" },
+        { title: "Divine Strength", description: "369 Hz Titanium frequency provides strength for the new alignment.", duration: 450, frequencyId: "titanium" }
+      ]
+    },
+    {
+      id: 'golden-code-of-thoth', title: 'Golden Code of Thoth — Memory Mirror Activation', categoryId: 'angel', subCategory: 'Ancient Civilizations', premium: true, colors: { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" },
+      description: "Activates subconscious retrieval of soul codes and ancestral missions. For those with Egyptian/Amenti timeline connections.",
+      advice: "This 15-minute session activates deep soul memory using frequencies of divine support and oneness.",
+      steps: [
+        { title: "Divine Support", description: "333 Hz indicates that spiritual guides are near, offering support.", duration: 450, frequencyId: "angel-333" },
+        { title: "Oneness Attunement", description: "963 Hz connects to divine oneness, helping retrieve soul codes.", duration: 450, frequencyId: "solfeggio-963-oneness" }
+      ]
+    },
+    {
+      id: 'inner-earth-axis-reset', title: 'Inner Earth Axis Reset', categoryId: 'angel', subCategory: 'Divine Harmonics', premium: true, colors: { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" },
+      description: "Crystalline grounding and EMF reset through Agarthan resonant grid.",
+      advice: "A 15-minute reset for crystalline grounding, combining angelic connection with Arcturian field clearing.",
+      steps: [
+        { title: "Angelic Connection", description: "111 Hz opens the connection to spiritual guidance and the flow of the universe.", duration: 450, frequencyId: "angel-111" },
+        { title: "Field Reset", description: "729 Hz reboots cognitive pathways and clears energetic interference.", duration: 450, frequencyId: "arcturian-crystal-field" }
+      ]
+    },
+    {
+      id: 'lyran-dna-harmonics-session', title: 'Lyran DNA Harmonics — 12 Strand', categoryId: 'angel', subCategory: 'Starseed Origins', premium: true, colors: { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" },
+      description: "Amplifies crystalline coding through the 12 major meridian light strands for cosmic body alignment.",
+      advice: "This 15-minute protocol uses frequencies of transformation and oneness to amplify crystalline coding in your energetic body.",
+      steps: [
+        { title: "Transformation & Repair", description: "528 Hz, the 'miracle' tone, initiates transformation and DNA repair.", duration: 450, frequencyId: "solfeggio-528-repair" },
+        { title: "Attunement to Oneness", description: "963 Hz connects to divine oneness, aligning the crystalline strands.", duration: 450, frequencyId: "solfeggio-963-oneness" }
+      ]
+    },
+    {
+      id: 'mu-recollection-chamber', title: 'Mu Recollection Chamber', categoryId: 'angel', subCategory: 'Ancient Civilizations', premium: true, colors: { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" },
+      description: "Lemurian memory activation through water-temple harmonics. Cellular remembrance.",
+      advice: "Activate cellular memories of Lemuria with this 15-minute session, combining frequencies of breath and expression.",
+      steps: [
+        { title: "Breath Gate", description: "309 Hz, the Lemurian breath gate, activates resonance pathways.", duration: 450, frequencyId: "lemurian-breath-gate" },
+        { title: "Awakening Expression", description: "741 Hz awakens intuition and cleanses cells to allow memories to surface.", duration: 450, frequencyId: "solfeggio-741-expression" }
+      ]
+    },
+    {
+      id: 'sirian-tone-gate', title: 'Sirian Tone Gate — Light Memory Reinstatement', categoryId: 'angel', subCategory: 'Starseed Origins', premium: true, colors: { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" },
+      description: "Reinstates ancient light memory via Sirius B harmonic stellar gate.",
+      advice: "A 15-minute session to reinstate ancient light memory using frequencies for soul path resonance and unwavering endurance.",
+      steps: [
+        { title: "Soul Path Resonance", description: "144 Hz connects you to your soul path and purpose.", duration: 450, frequencyId: "sirian-soul-path" },
+        { title: "Unwavering Endurance", description: "864 Hz Tantalum provides the strength to hold and integrate the reinstated light memory.", duration: 450, frequencyId: "tantalum" }
+      ]
+    },
+    {
+      id: 'sirius-light-grid', title: 'Sirius Light Grid — Antahkarana Bridge', categoryId: 'angel', subCategory: 'Starseed Origins', premium: true, colors: { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" },
+      description: "Connects higher mind to heart-field via light-language resonance. For healers, guides, or channels.",
+      advice: "This 15-minute session builds the Antahkarana bridge, connecting mind and heart with Sirian frequencies.",
+      steps: [
+        { title: "Soul Path Resonance", description: "144 Hz connects with your soul path to begin building the bridge.", duration: 450, frequencyId: "sirian-soul-path" },
+        { title: "Antahkarana Bridge", description: "288 Hz helps to build the energetic bridge between higher mind and heart-field.", duration: 450, frequencyId: "sirian-antahkarana-bridge-288" }
+      ]
+    },
+    {
+      id: 'solar-heart-lattice', title: 'Solar Heart Lattice', categoryId: 'angel', subCategory: 'Divine Harmonics', premium: true, colors: { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" },
+      description: "Activates radiant solar pathway to heart coherence.",
+      advice: "A 15-minute protocol to activate your solar heart, combining the 'miracle' tone with a high-frequency solar code.",
+      steps: [
+        { title: "Transformation & Miracles", description: "528 Hz initiates transformation and activates the heart's potential.", duration: 450, frequencyId: "solfeggio-528-repair" },
+        { title: "Solar Code Activation", description: "1111 Hz activates solar wisdom and connects the heart to a radiant solar pathway.", duration: 450, frequencyId: "solar-templar-1111" }
+      ]
+    },
+    {
+      id: 'solar-templar-alignment', title: 'Solar Templar Alignment', categoryId: 'angel', subCategory: 'Divine Harmonics', premium: true, colors: { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" },
+      description: "Reattunes the body to solar wisdom, clarity of will, and internal kingship/queenship. Benevolent leadership.",
+      advice: "Reattune to solar wisdom with this 15-minute session, blending frequencies of transformation and solar activation.",
+      steps: [
+        { title: "Heart Transformation", description: "528 Hz opens the heart and prepares the body for reattunement.", duration: 450, frequencyId: "solfeggio-528-repair" },
+        { title: "Solar Wisdom", description: "1111 Hz activates solar codes for clarity of will and benevolent leadership.", duration: 450, frequencyId: "solar-templar-1111" }
+      ]
+    },
+    {
+      id: 'temple-of-breath-lemurian', title: 'Temple of Breath — Lemurian Toning Sequence', categoryId: 'angel', subCategory: 'Ancient Civilizations', premium: true, colors: { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" },
+      description: "Reinstates breath-consciousness and activates resonance pathways between voice, chest, and earth field.",
+      advice: "A 15-minute sequence to reactivate breath-consciousness using Lemurian frequencies for resonance and expression.",
+      steps: [
+        { title: "Breath Gate Activation", description: "309 Hz reinstates breath-consciousness and opens resonance pathways.", duration: 450, frequencyId: "lemurian-breath-gate" },
+        { title: "Intuitive Expression", description: "741 Hz cleanses the cells and awakens intuition for authentic expression.", duration: 450, frequencyId: "solfeggio-741-expression" }
+      ]
+    },
+    {
+      id: 'the-scroll-of-mirrors', title: 'The Scroll of Mirrors', categoryId: 'angel', subCategory: 'Divine Harmonics', premium: true, colors: { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" },
+      description: "Self-mirroring tone chamber for deep personal reflection and harmonization.",
+      advice: "This 15-minute session creates a self-mirroring sound chamber using frequencies of divine support and luck.",
+      steps: [
+        { title: "Divine Support", description: "333 Hz brings in the energy of spiritual guides for support during reflection.", duration: 450, frequencyId: "angel-333" },
+        { title: "Divine Magic", description: "777 Hz reflects your own divine magic back to you for deep harmonization.", duration: 450, frequencyId: "angel-777" }
+      ]
     }
   ],
   "featured_candidates": [
-    "fibonacci-spiral-attunement", "temple-of-breath", "golden-code-of-thoth", "lyran-dna-harmonics-session", "amenti-re-entry-code", "sirius-light-grid", "solar-templar-alignment", "arcturian-crystal-field-reset",
+    "fibonacci-spiral-attunement", "golden-code-of-thoth", "lyran-dna-harmonics-session", "amenti-re-entry-code", "sirius-light-grid", "solar-templar-alignment", "arcturian-crystal-field-reset",
     "mu-recollection-chamber", "atlantean-frequency-seal", "inner-earth-axis-reset", "sirian-tone-gate", "the-scroll-of-mirrors", "council-of-nine-alignment", "solar-heart-lattice",
     "vagus-lymph-reset", "metabolic-harmony-protocol", "adhd-focus-protocol", "ultimate-deep-sleep", "chakra-balancing-journey", "solfeggio-528-repair", "beta", "gamma-40hz-precise", "solfeggio-1782-alchemy", "cosmic-thread-alignment", "cosmic-threshold", "phi-axis-harmonic-balance"
   ],

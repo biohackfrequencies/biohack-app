@@ -27,7 +27,7 @@ export const ElementIcon = AtomIcon;
 
 
 export const ShareIcon: React.FC<IconProps> = ({ className, style }) => (
-    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5" className={className} style={style} aria-hidden="true">
+    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.0" className={className} style={style} aria-hidden="true">
         <path strokeLinecap="round" strokeLinejoin="round" d="M7.217 10.907a2.25 2.25 0 100 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186l9.566-5.314m-9.566 7.5l9.566 5.314m0 0a2.25 2.25 0 100-2.186m0 2.186c-.18-.324-.283-.696-.283-1.093s.103-.77.283 1.093m0 2.186l-9.566-5.314" />
     </svg>
 );
@@ -41,7 +41,7 @@ export const SettingsIcon: React.FC<IconProps> = ({ className, style }) => (
 );
 
 export const InfoIcon: React.FC<IconProps> = ({ className, style }) => (
-    <svg fill="none" viewBox="0 0 48 48" stroke="currentColor" strokeWidth="2.5" className={className} style={style} aria-hidden="true">
+    <svg fill="none" viewBox="0 0 48 48" stroke="currentColor" strokeWidth="1.5" className={className} style={style} aria-hidden="true">
         <circle cx="24" cy="24" r="18" />
         <path strokeLinecap="round" strokeLinejoin="round" d="M24 18v12" />
         <circle cx="24" cy="14" r="1.5" fill="currentColor" />
@@ -266,7 +266,7 @@ export const HeartFilledIcon: React.FC<IconProps> = ({ className, style }) => (
 );
   
 export const HeartIcon: React.FC<IconProps> = ({ className, style }) => (
-    <svg fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={className} style={style}>
+    <svg fill="none" viewBox="0 0 24 24" strokeWidth={1.0} stroke="currentColor" className={className} style={style}>
       <path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
     </svg>
 );
@@ -288,7 +288,7 @@ export const GoogleHealthIcon: React.FC<IconProps> = ({ className, style }) => (
 
 
 export const ClockIcon: React.FC<IconProps> = ({ className, style }) => (
-    <svg fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={className} style={style}>
+    <svg fill="none" viewBox="0 0 24 24" strokeWidth={1.0} stroke="currentColor" className={className} style={style}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
     </svg>
 );
@@ -306,37 +306,37 @@ export const PauseIcon: React.FC<IconProps> = ({ className, style }) => (
 );
 
 export const BackIcon: React.FC<IconProps> = ({ className, style }) => (
-    <svg fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className={className} style={style}>
+    <svg fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={className} style={style}>
       <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
     </svg>
 );
 
 export const VolumeIcon: React.FC<IconProps> = ({ className, style }) => (
-    <svg fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={className} style={style}>
+    <svg fill="none" viewBox="0 0 24 24" strokeWidth={1.0} stroke="currentColor" className={className} style={style}>
       <path strokeLinecap="round" strokeLinejoin="round" d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z" />
     </svg>
 );
 
 export const LayersIcon: React.FC<IconProps> = ({ className, style }) => (
-    <svg fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={className} style={style}>
+    <svg fill="none" viewBox="0 0 24 24" strokeWidth={1.0} stroke="currentColor" className={className} style={style}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 7.5l3 2.25-3 2.25m4.5 0h3m-9 8.25h13.5A2.25 2.25 0 0021 18V6a2.25 2.25 0 00-2.25-2.25H5.25A2.25 2.25 0 003 6v12a2.25 2.25 0 002.25 2.25z" />
     </svg>
 );
 
 export const CheckmarkCircleIcon: React.FC<IconProps> = ({ className, style }) => (
-    <svg fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={className} style={style}>
+    <svg fill="none" viewBox="0 0 24 24" strokeWidth={1.0} stroke="currentColor" className={className} style={style}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
     </svg>
 );
 
 export const XCircleIcon: React.FC<IconProps> = ({ className, style }) => (
-    <svg fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={className} style={style}>
+    <svg fill="none" viewBox="0 0 24 24" strokeWidth={1.0} stroke="currentColor" className={className} style={style}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
     </svg>
 );
 
 export const CreditCardIcon: React.FC<IconProps> = ({ className, style }) => (
-    <svg fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={className} style={style} aria-hidden="true">
+    <svg fill="none" viewBox="0 0 24 24" strokeWidth={1.0} stroke="currentColor" className={className} style={style} aria-hidden="true">
         <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15A2.25 2.25 0 002.25 6.75v10.5A2.25 2.25 0 004.5 21z" />
     </svg>
 );
@@ -397,7 +397,7 @@ export const YouTubeIcon: React.FC<IconProps> = ({ className, style }) => (
 );
 
 export const InstagramIcon: React.FC<IconProps> = ({ className, style }) => (
-    <svg fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className={className} style={style} aria-hidden="true">
+    <svg fill="none" viewBox="0 0 24 24" strokeWidth="1.0" stroke="currentColor" className={className} style={style} aria-hidden="true">
         <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
         <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
         <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
@@ -405,7 +405,7 @@ export const InstagramIcon: React.FC<IconProps> = ({ className, style }) => (
 );
 
 export const GlobeIcon: React.FC<IconProps> = ({ className, style }) => (
-    <svg fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className={className} style={style} aria-hidden="true">
+    <svg fill="none" viewBox="0 0 24 24" strokeWidth="1.0" stroke="currentColor" className={className} style={style} aria-hidden="true">
         <path strokeLinecap="round" strokeLinejoin="round" d="M12 21a9 9 0 100-18 9 9 0 000 18z" />
         <path strokeLinecap="round" strokeLinejoin="round" d="M3.25 12H20.75" />
         <path strokeLinecap="round" strokeLinejoin="round" d="M12 2.25c-2.485 3-2.485 13.5 0 16.5 2.485-3 2.485-13.5 0-16.5z" />
@@ -414,75 +414,75 @@ export const GlobeIcon: React.FC<IconProps> = ({ className, style }) => (
 
 // UI Icons
 export const HomeIcon: React.FC<IconProps> = ({ className, style }) => (
-    <svg fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={className} style={style}>
+    <svg fill="none" viewBox="0 0 24 24" strokeWidth={1.0} stroke="currentColor" className={className} style={style}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h7.5" />
     </svg>
 );
 
 export const XMarkIcon: React.FC<IconProps> = ({ className, style }) => (
-    <svg fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className={className} style={style} aria-hidden="true">
+    <svg fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={className} style={style} aria-hidden="true">
         <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
     </svg>
 );
 
 export const ChevronDownIcon: React.FC<IconProps> = ({ className, style }) => (
-    <svg fill="none" viewBox="0 0 24 24" strokeWidth={3} stroke="currentColor" className={className} style={style} aria-hidden="true">
+    <svg fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={className} style={style} aria-hidden="true">
         <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
     </svg>
 );
 
 export const CheckmarkIcon: React.FC<IconProps> = ({ className, style }) => (
-    <svg fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className={className} style={style} aria-hidden="true">
+    <svg fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={className} style={style} aria-hidden="true">
         <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
     </svg>
 );
 
 export const SearchIcon: React.FC<IconProps> = ({ className, style }) => (
-    <svg fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" className={className} style={style} aria-hidden="true">
+    <svg fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className={className} style={style} aria-hidden="true">
         <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
     </svg>
 );
 
 export const LockIcon: React.FC<IconProps> = ({ className, style }) => (
-    <svg fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={className} style={style} aria-hidden="true">
+    <svg fill="none" viewBox="0 0 24 24" strokeWidth={1.0} stroke="currentColor" className={className} style={style} aria-hidden="true">
         <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 00-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
     </svg>
 );
 
 export const UserCircleIcon: React.FC<IconProps> = ({ className, style }) => (
-    <svg fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className={className} style={style} aria-hidden="true">
+    <svg fill="none" viewBox="0 0 24 24" strokeWidth="1.0" stroke="currentColor" className={className} style={style} aria-hidden="true">
         <path strokeLinecap="round" strokeLinejoin="round" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
     </svg>
 );
 
 export const OuraRingIcon: React.FC<IconProps> = ({ className, style }) => (
-    <svg fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className={className} style={style} aria-hidden="true">
+    <svg fill="none" viewBox="0 0 24 24" strokeWidth="1.0" stroke="currentColor" className={className} style={style} aria-hidden="true">
         <path strokeLinecap="round" strokeLinejoin="round" d="M12 21a9 9 0 100-18 9 9 0 000 18z" />
         <path strokeLinecap="round" strokeLinejoin="round" d="M12 15a3 3 0 100-6 3 3 0 000 6z" />
     </svg>
 );
 
 export const CalendarIcon: React.FC<IconProps> = ({ className, style }) => (
-    <svg fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className={className} style={style} aria-hidden="true">
+    <svg fill="none" viewBox="0 0 24 24" strokeWidth="1.0" stroke="currentColor" className={className} style={style} aria-hidden="true">
         <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0h18M12 12.75h.008v.008H12v-.008z" />
     </svg>
 );
 
 export const CGMIcon: React.FC<IconProps> = ({ className, style }) => (
-    <svg fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className={className} style={style} aria-hidden="true">
+    <svg fill="none" viewBox="0 0 24 24" strokeWidth="1.0" stroke="currentColor" className={className} style={style} aria-hidden="true">
         <path strokeLinecap="round" strokeLinejoin="round" d="M12 21.75c-3.75 0-7.5-3.04-7.5-7.146 0-3.15 1.5-6.57 5.25-11.25C10.5 2.25 12 1.5 12 1.5s1.5.75 2.25 1.854c3.75 4.68 5.25 8.1 5.25 11.25C19.5 18.71 15.75 21.75 12 21.75z" />
         <path strokeLinecap="round" strokeLinejoin="round" d="M9 13.5l1.5 1.5L15 9" />
     </svg>
 );
 
 export const ChatIcon: React.FC<IconProps> = ({ className, style }) => (
-    <svg fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className={className} style={style} aria-hidden="true">
+    <svg fill="none" viewBox="0 0 24 24" strokeWidth="1.0" stroke="currentColor" className={className} style={style} aria-hidden="true">
         <path strokeLinecap="round" strokeLinejoin="round" d="M21 12c0 4.556-4.03 8.25-9 8.25a9.76 9.76 0 01-2.53-.372A.75.75 0 019 19.5v-.013c0-.387.195-.724.488-1.121a.75.75 0 01.67-.318H18a2.25 2.25 0 002.25-2.25V6.521a2.25 2.25 0 00-2.25-2.25h-4.818a.75.75 0 01-.67-.318l-1.32-2.285A.75.75 0 0010.292 1.5H9c-4.97 0-9 3.694-9 8.25z" />
     </svg>
 );
 
 export const DuplicateIcon: React.FC<IconProps> = ({ className, style }) => (
-    <svg fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className={className} style={style} aria-hidden="true">
+    <svg fill="none" viewBox="0 0 24 24" strokeWidth="1.0" stroke="currentColor" className={className} style={style} aria-hidden="true">
         <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 01-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 011.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 00-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 01-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5a3.375 3.375 0 00-3.375-3.375H9.75" />
     </svg>
 );
@@ -498,49 +498,49 @@ export const FitbitIcon: React.FC<IconProps> = ({ className, style }) => (
 );
 
 export const PencilIcon: React.FC<IconProps> = ({ className, style }) => (
-    <svg fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className={className} style={style} aria-hidden="true">
+    <svg fill="none" viewBox="0 0 24 24" strokeWidth="1.0" stroke="currentColor" className={className} style={style} aria-hidden="true">
         <path strokeLinecap="round" strokeLinejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
     </svg>
 );
 
 export const CustomizeIcon: React.FC<IconProps> = ({ className, style }) => (
-    <svg fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className={className} style={style} aria-hidden="true">
+    <svg fill="none" viewBox="0 0 24 24" strokeWidth="1.0" stroke="currentColor" className={className} style={style} aria-hidden="true">
         <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 11-3 0m3 0a1.5 1.5 0 10-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-9.75 0h9.75" />
     </svg>
 );
 
 export const PlusCircleIcon: React.FC<IconProps> = ({ className, style }) => (
-    <svg fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className={className} style={style} aria-hidden="true">
+    <svg fill="none" viewBox="0 0 24 24" strokeWidth="1.0" stroke="currentColor" className={className} style={style} aria-hidden="true">
         <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
     </svg>
 );
 
 export const FlameIcon: React.FC<IconProps> = ({ className, style }) => (
-    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5" className={className} style={style} aria-hidden="true">
+    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.0" className={className} style={style} aria-hidden="true">
         <path strokeLinecap="round" strokeLinejoin="round" d="M15.362 5.214A8.252 8.252 0 0112 21 8.25 8.25 0 016.038 7.048 8.287 8.287 0 009 9.6a8.983 8.983 0 013.362-3.797A8.33 8.33 0 0112 2.25c1.153 0 2.243.3 3.224.862z" />
     </svg>
 );
 
 export const StarIcon: React.FC<IconProps> = ({ className, style }) => (
-    <svg fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className={className} style={style} aria-hidden="true">
+    <svg fill="none" viewBox="0 0 24 24" strokeWidth="1.0" stroke="currentColor" className={className} style={style} aria-hidden="true">
         <path strokeLinecap="round" strokeLinejoin="round" d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z" />
     </svg>
 );
 
 export const JournalIcon: React.FC<IconProps> = ({ className, style }) => (
-    <svg fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className={className} style={style} aria-hidden="true">
+    <svg fill="none" viewBox="0 0 24 24" strokeWidth="1.0" stroke="currentColor" className={className} style={style} aria-hidden="true">
         <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
     </svg>
 );
 
 export const LightbulbIcon: React.FC<IconProps> = ({ className, style }) => (
-    <svg fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className={className} style={style} aria-hidden="true">
+    <svg fill="none" viewBox="0 0 24 24" strokeWidth="1.0" stroke="currentColor" className={className} style={style} aria-hidden="true">
         <path strokeLinecap="round" strokeLinejoin="round" d="M12 18v-5.25m0 0a6.01 6.01 0 001.5-.189m-1.5.189a6.01 6.01 0 01-1.5-.189m3.75 7.478a12.06 12.06 0 01-4.5 0m3.75 2.311a.75.75 0 01-1.5 0c0-1.09.9-1.97 1.97-1.97s1.97.88 1.97 1.97a.75.75 0 01-1.5 0zM12 6.75A2.25 2.25 0 009.75 9v1.076c0 .54.166 1.057.465 1.498a2.25 2.25 0 013.57 0c.299-.441.465-.958.465-1.498V9A2.25 2.25 0 0012 6.75z" />
     </svg>
 );
 
 export const GiftIcon: React.FC<IconProps> = ({ className, style }) => (
-    <svg fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className={className} style={style} aria-hidden="true">
+    <svg fill="none" viewBox="0 0 24 24" strokeWidth="1.0" stroke="currentColor" className={className} style={style} aria-hidden="true">
         <path strokeLinecap="round" strokeLinejoin="round" d="M21 11.25v8.25a2.25 2.25 0 01-2.25 2.25H5.25a2.25 2.25 0 01-2.25-2.25v-8.25M12 4.875A2.625 2.625 0 1012 9.75a2.625 2.625 0 000-4.875zM12 4.875c-1.373 0-2.522.69-3.235 1.765M12 4.875c1.373 0 2.522.69 3.235 1.765" />
         <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v1.875m-3.235 1.765L6.44 3.75m11.12 1.815l2.325-1.765" />
     </svg>
@@ -548,14 +548,14 @@ export const GiftIcon: React.FC<IconProps> = ({ className, style }) => (
 
 // Activity Icons
 export const WorkoutIcon: React.FC<IconProps> = ({ className, style }) => (
-    <svg fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className={className} style={style} aria-hidden="true">
+    <svg fill="none" viewBox="0 0 24 24" strokeWidth="1.0" stroke="currentColor" className={className} style={style} aria-hidden="true">
         <path strokeLinecap="round" strokeLinejoin="round" d="M5.25 7.5h13.5m-13.5 9h13.5" />
         <path strokeLinecap="round" strokeLinejoin="round" d="M5.25 7.5a2.25 2.25 0 01-2.25-2.25v-1.5A2.25 2.25 0 015.25 1.5h0A2.25 2.25 0 017.5 3.75v1.5A2.25 2.25 0 015.25 7.5zM18.75 7.5a2.25 2.25 0 01-2.25-2.25v-1.5A2.25 2.25 0 0118.75 1.5h0A2.25 2.25 0 0121 3.75v1.5A2.25 2.25 0 0118.75 7.5zM5.25 16.5a2.25 2.25 0 002.25 2.25h0a2.25 2.25 0 002.25-2.25v-1.5A2.25 2.25 0 005.25 10.5h0A2.25 2.25 0 003 12.75v1.5A2.25 2.25 0 005.25 16.5zM18.75 16.5a2.25 2.25 0 002.25 2.25h0a2.25 2.25 0 002.25-2.25v-1.5a2.25 2.25 0 00-2.25-2.25h0a2.25 2.25 0 00-2.25 2.25v1.5z" />
     </svg>
 );
 
 export const YogaIcon: React.FC<IconProps> = ({ className, style }) => (
-    <svg fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className={className} style={style} aria-hidden="true">
+    <svg fill="none" viewBox="0 0 24 24" strokeWidth="1.0" stroke="currentColor" className={className} style={style} aria-hidden="true">
         <path strokeLinecap="round" strokeLinejoin="round" d="M12 6a2 2 0 100-4 2 2 0 000 4z" />
         <path strokeLinecap="round" strokeLinejoin="round" d="M4 21c3-3 5-3 8-3s5 0 8 3" />
         <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v6m-4 2h8" />
@@ -564,20 +564,20 @@ export const YogaIcon: React.FC<IconProps> = ({ className, style }) => (
 );
 
 export const RLTIcon: React.FC<IconProps> = ({ className, style }) => (
-    <svg fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className={className} style={style} aria-hidden="true">
+    <svg fill="none" viewBox="0 0 24 24" strokeWidth="1.0" stroke="currentColor" className={className} style={style} aria-hidden="true">
         <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M12 18a6 6 0 100-12 6 6 0 000 12z" />
     </svg>
 );
 
 export const SupplementIcon: React.FC<IconProps> = ({ className, style }) => (
-    <svg fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className={className} style={style} aria-hidden="true">
+    <svg fill="none" viewBox="0 0 24 24" strokeWidth="1.0" stroke="currentColor" className={className} style={style} aria-hidden="true">
       <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 7.5h7.5m-7.5 3h7.5m-7.5 3h7.5m3-9l-3.375-3.375a1.125 1.125 0 00-1.591 0L4.5 12.5l-1.5 6 6-1.5 9.375-9.375a1.125 1.125 0 000-1.591z" />
     </svg>
 );
 
 
 export const MeditationIcon: React.FC<IconProps> = ({ className, style }) => (
-    <svg fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className={className} style={style} aria-hidden="true">
+    <svg fill="none" viewBox="0 0 24 24" strokeWidth="1.0" stroke="currentColor" className={className} style={style} aria-hidden="true">
       <path strokeLinecap="round" strokeLinejoin="round" d="M12 8a3 3 0 100-6 3 3 0 000 6zM9 12c-3.333 0-5 2.667-5 4v1h16v-1c0-1.333-1.667-4-5-4h-6z" />
       <path strokeLinecap="round" strokeLinejoin="round" d="M5 20h14" />
       <path strokeLinecap="round" strokeLinejoin="round" d="M7 17l-2 3M17 17l2 3" />
@@ -585,13 +585,13 @@ export const MeditationIcon: React.FC<IconProps> = ({ className, style }) => (
 );
 
 export const ColdIcon: React.FC<IconProps> = ({ className, style }) => (
-    <svg fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className={className} style={style} aria-hidden="true">
+    <svg fill="none" viewBox="0 0 24 24" strokeWidth="1.0" stroke="currentColor" className={className} style={style} aria-hidden="true">
         <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v18M12 12l7-7M12 12l-7 7m7-7l-7-7m7 7l7 7m-7-14h.01M19.07 4.93h.01M4.93 19.07h.01M19.07 19.07h.01M4.93 4.93h.01" />
     </svg>
 );
 
 export const SaunaIcon: React.FC<IconProps> = ({ className, style }) => (
-    <svg fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className={className} style={style} aria-hidden="true">
+    <svg fill="none" viewBox="0 0 24 24" strokeWidth="1.0" stroke="currentColor" className={className} style={style} aria-hidden="true">
         <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l7.5-7.5 7.5 7.5" />
         <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 18.75l7.5-7.5 7.5 7.5" />
         <path strokeLinecap="round" strokeLinejoin="round" d="M3 21h18" />
@@ -599,14 +599,14 @@ export const SaunaIcon: React.FC<IconProps> = ({ className, style }) => (
 );
 
 export const FastingIcon: React.FC<IconProps> = ({ className, style }) => (
-    <svg fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className={className} style={style} aria-hidden="true">
+    <svg fill="none" viewBox="0 0 24 24" strokeWidth="1.0" stroke="currentColor" className={className} style={style} aria-hidden="true">
         <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6l4 2M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
         <path strokeLinecap="round" strokeLinejoin="round" d="M3.5 9h17M3.5 15h17" />
     </svg>
 );
 
 export const SunlightIcon: React.FC<IconProps> = ({ className, style }) => (
-    <svg fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className={className} style={style} aria-hidden="true">
+    <svg fill="none" viewBox="0 0 24 24" strokeWidth="1.0" stroke="currentColor" className={className} style={style} aria-hidden="true">
         <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M12 18a6 6 0 100-12 6 6 0 000 12z" />
     </svg>
 );
@@ -614,37 +614,37 @@ export const SunlightIcon: React.FC<IconProps> = ({ className, style }) => (
 export const SessionIcon: React.FC<IconProps> = GuidedSessionIcon;
 
 export const SleepIcon: React.FC<IconProps> = ({ className, style }) => (
-    <svg fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className={className} style={style} aria-hidden="true">
+    <svg fill="none" viewBox="0 0 24 24" strokeWidth="1.0" stroke="currentColor" className={className} style={style} aria-hidden="true">
         <path strokeLinecap="round" strokeLinejoin="round" d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z" />
     </svg>
 );
 
 export const DietIcon: React.FC<IconProps> = ({ className, style }) => (
-    <svg fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className={className} style={style} aria-hidden="true">
+    <svg fill="none" viewBox="0 0 24 24" strokeWidth="1.0" stroke="currentColor" className={className} style={style} aria-hidden="true">
         <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456zM16.898 20.572L16.25 22.5l-.648-1.928a2.25 2.25 0 01-1.47-1.47l-1.928-.648 1.928-.648a2.25 2.25 0 011.47-1.47l.648-1.928.648 1.928a2.25 2.25 0 011.47 1.47l1.928.648-1.928.648a2.25 2.25 0 01-1.47 1.47z" />
     </svg>
 );
 
 export const MoodIcon: React.FC<IconProps> = ({ className, style }) => (
-    <svg fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className={className} style={style} aria-hidden="true">
+    <svg fill="none" viewBox="0 0 24 24" strokeWidth="1.0" stroke="currentColor" className={className} style={style} aria-hidden="true">
         <path strokeLinecap="round" strokeLinejoin="round" d="M12 21a9 9 0 100-18 9 9 0 000 18zM9 9h.01M15 9h.01M9 15h6" />
     </svg>
 );
 
 export const MoodHappyIcon: React.FC<IconProps> = ({ className, style }) => (
-    <svg fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className={className} style={style} aria-hidden="true">
+    <svg fill="none" viewBox="0 0 24 24" strokeWidth="1.0" stroke="currentColor" className={className} style={style} aria-hidden="true">
         <path strokeLinecap="round" strokeLinejoin="round" d="M12 21a9 9 0 100-18 9 9 0 000 18zM9 9h.01M15 9h.01M8.25 15a4.5 4.5 0 017.5 0" />
     </svg>
 );
 
 export const MoodNeutralIcon: React.FC<IconProps> = ({ className, style }) => (
-    <svg fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className={className} style={style} aria-hidden="true">
+    <svg fill="none" viewBox="0 0 24 24" strokeWidth="1.0" stroke="currentColor" className={className} style={style} aria-hidden="true">
         <path strokeLinecap="round" strokeLinejoin="round" d="M12 21a9 9 0 100-18 9 9 0 000 18zM9 9h.01M15 9h.01M9 15h6" />
     </svg>
 );
 
 export const MoodSadIcon: React.FC<IconProps> = ({ className, style }) => (
-    <svg fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className={className} style={style} aria-hidden="true">
+    <svg fill="none" viewBox="0 0 24 24" strokeWidth="1.0" stroke="currentColor" className={className} style={style} aria-hidden="true">
         <path strokeLinecap="round" strokeLinejoin="round" d="M12 21a9 9 0 100-18 9 9 0 000 18zM9 9h.01M15 9h.01M15.75 15a4.5 4.5 0 01-7.5 0" />
     </svg>
 );

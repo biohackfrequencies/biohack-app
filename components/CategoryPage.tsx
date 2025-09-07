@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
-import { CategoryId, Frequency, GuidedSession, ColorTheme } from '../types';
+// FIX: Import CustomStack type.
+import { CategoryId, Frequency, GuidedSession, ColorTheme, CustomStack } from '../types';
 import { BackIcon, InfoIcon, SparklesIcon, PathfinderIcon } from './BohoIcons';
 import { FrequencyCard } from './FrequencyCard';
 import { useSubscription } from '../hooks/useSubscription';
@@ -55,6 +56,27 @@ const CategorySection: React.FC<{ title: string; frequencies: Frequency[]; onSel
     </div>
 );
 
+// FIX: Update onSelect prop to accept CustomStack
+const SessionSection: React.FC<{ title: string; sessions: (GuidedSession | CustomStack)[]; onSelect: (item: GuidedSession | CustomStack) => void; favorites: string[]; toggleFavorite: (id: string) => void; isSubscribed: boolean; allFrequencies: Frequency[]; }> = ({ title, sessions, onSelect, favorites, toggleFavorite, isSubscribed, allFrequencies }) => (
+    <div className="space-y-4">
+        <h3 className="text-2xl font-display font-bold text-slate-800 dark:text-dark-text-primary">{title}</h3>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {sessions.map(session => (
+                <SessionCard
+                    key={session.id}
+                    session={session}
+                    onSelect={() => onSelect(session)}
+                    isFavorite={favorites.includes(session.id)}
+                    onToggleFavorite={() => toggleFavorite(session.id)}
+                    isLocked={!!session.premium && !isSubscribed}
+                    allFrequencies={allFrequencies}
+                />
+            ))}
+        </div>
+    </div>
+);
+
+
 export const CategoryPage: React.FC<CategoryPageProps> = ({ categoryId, frequenciesInCategory, allFrequencies, sessions, onBack, favorites, toggleFavorite, categories }) => {
   const categoryDetails = categories[categoryId];
   const { isSubscribed } = useSubscription();
@@ -67,11 +89,12 @@ export const CategoryPage: React.FC<CategoryPageProps> = ({ categoryId, frequenc
   const isGuided = categoryId === 'guided';
   const showScienceLink = ['elements', 'codex', 'kabbalah'].includes(categoryId);
 
-  const handleSelect = (item: Frequency | GuidedSession) => {
+  // FIX: Update handleSelect signature to accept CustomStack for type correctness with SessionSection
+  const handleSelect = (item: Frequency | GuidedSession | CustomStack) => {
     if (item.premium && !isSubscribed) {
       window.location.hash = '#/pricing';
     } else {
-      if ('steps' in item) { // GuidedSession
+      if ('steps' in item) { // GuidedSession or CustomStack
         window.location.hash = `#/session/${item.id}`;
       } else { // Frequency
         window.location.hash = `#/player/${item.id}`;
@@ -95,30 +118,17 @@ export const CategoryPage: React.FC<CategoryPageProps> = ({ categoryId, frequenc
     return { mindAndSpirit, bodyAndWellness };
   }, [isGuided, relevantSessions]);
   
-  const angelContent = useMemo(() => {
+  const ascensionContent = useMemo(() => {
     if (!isAngel) return null;
 
-    const advancedProtocols = sortFreeFirst(
-      relevantSessions.filter(s => s.subCategory === 'Advanced Resonance Protocols'),
-      'title'
-    );
-    
-    const fibonacciProtocols = sortFreeFirst(
-      relevantSessions.filter(s => s.subCategory === 'Fibonacci Protocols'),
-      'title'
-    );
-
-    const angelicFrequencies = sortFreeFirst(
-      frequenciesInCategory.filter(f => f.subCategory === 'Angelic Frequencies'),
-      'frequency'
-    );
-
-    const fibonacciFrequencies = sortFreeFirst(
-      frequenciesInCategory.filter(f => f.subCategory === 'Fibonacci Protocols'),
-      'frequency'
-    );
-
-    return { advancedProtocols, angelicFrequencies, fibonacciProtocols, fibonacciFrequencies };
+    return {
+      starseedOrigins: sortFreeFirst(relevantSessions.filter(s => s.subCategory === 'Starseed Origins'), 'title'),
+      ancientCivilizations: sortFreeFirst(relevantSessions.filter(s => s.subCategory === 'Ancient Civilizations'), 'title'),
+      divineHarmonics: sortFreeFirst(relevantSessions.filter(s => s.subCategory === 'Divine Harmonics'), 'title'),
+      fibonacciProtocols: sortFreeFirst(relevantSessions.filter(s => s.subCategory === 'Fibonacci Protocols'), 'title'),
+      angelicFrequencies: sortFreeFirst(frequenciesInCategory.filter(f => f.subCategory === 'Angelic Frequencies'), 'frequency'),
+      fibonacciFrequencies: sortFreeFirst(frequenciesInCategory.filter(f => f.subCategory === 'Fibonacci Protocols'), 'frequency'),
+    };
   }, [isAngel, relevantSessions, frequenciesInCategory]);
 
   const kabbalahContent = useMemo(() => {
@@ -219,118 +229,37 @@ export const CategoryPage: React.FC<CategoryPageProps> = ({ categoryId, frequenc
       {isGuided && guidedContent ? (
         <div className="space-y-12">
             {guidedContent.mindAndSpirit.length > 0 && (
-                <div className="space-y-4">
-                    <h3 className="text-2xl font-display font-bold text-slate-800 dark:text-dark-text-primary">Mind & Spirit</h3>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                        {guidedContent.mindAndSpirit.map(session => (
-                            <SessionCard
-                                key={session.id}
-                                session={session}
-                                onSelect={() => handleSelect(session)}
-                                isFavorite={favorites.includes(session.id)}
-                                onToggleFavorite={() => toggleFavorite(session.id)}
-                                isLocked={!!session.premium && !isSubscribed}
-                                allFrequencies={allFrequencies}
-                            />
-                        ))}
-                    </div>
-                </div>
+                <SessionSection title="Mind & Spirit" sessions={guidedContent.mindAndSpirit} onSelect={handleSelect} favorites={favorites} toggleFavorite={toggleFavorite} isSubscribed={isSubscribed} allFrequencies={allFrequencies} />
             )}
             {guidedContent.bodyAndWellness.length > 0 && (
-                <div className="space-y-4">
-                    <h3 className="text-2xl font-display font-bold text-slate-800 dark:text-dark-text-primary">Body & Wellness</h3>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                        {guidedContent.bodyAndWellness.map(session => (
-                            <SessionCard
-                                key={session.id}
-                                session={session}
-                                onSelect={() => handleSelect(session)}
-                                isFavorite={favorites.includes(session.id)}
-                                onToggleFavorite={() => toggleFavorite(session.id)}
-                                isLocked={!!session.premium && !isSubscribed}
-                                allFrequencies={allFrequencies}
-                            />
-                        ))}
-                    </div>
-                </div>
+                <SessionSection title="Body & Wellness" sessions={guidedContent.bodyAndWellness} onSelect={handleSelect} favorites={favorites} toggleFavorite={toggleFavorite} isSubscribed={isSubscribed} allFrequencies={allFrequencies} />
             )}
         </div>
-      ) : isAngel && angelContent ? (
+      ) : isAngel && ascensionContent ? (
         <div className="space-y-12">
-           {angelContent.fibonacciProtocols.length > 0 && (
-                <div className="space-y-4">
-                    <h3 className="text-2xl font-display font-bold text-slate-800 dark:text-dark-text-primary">Fibonacci Protocols</h3>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                        {angelContent.fibonacciProtocols.map(session => (
-                            <SessionCard
-                                key={session.id}
-                                session={session}
-                                onSelect={() => handleSelect(session)}
-                                isFavorite={favorites.includes(session.id)}
-                                onToggleFavorite={() => toggleFavorite(session.id)}
-                                isLocked={!!session.premium && !isSubscribed}
-                                allFrequencies={allFrequencies}
-                            />
-                        ))}
-                    </div>
-                </div>
-            )}
-            {angelContent.fibonacciFrequencies.length > 0 && (
-                <CategorySection
-                    title="Fibonacci Frequencies"
-                    frequencies={angelContent.fibonacciFrequencies}
-                    onSelect={handleSelect}
-                    favorites={favorites}
-                    toggleFavorite={toggleFavorite}
-                />
-            )}
-          {angelContent.advancedProtocols.length > 0 && (
-            <div className="space-y-4">
-              <h3 className="text-2xl font-display font-bold text-slate-800 dark:text-dark-text-primary">Advanced Resonance Protocols</h3>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                {angelContent.advancedProtocols.map(session => (
-                  <SessionCard
-                    key={session.id}
-                    session={session}
-                    onSelect={() => handleSelect(session)}
-                    isFavorite={favorites.includes(session.id)}
-                    onToggleFavorite={() => toggleFavorite(session.id)}
-                    isLocked={!!session.premium && !isSubscribed}
-                    allFrequencies={allFrequencies}
-                  />
-                ))}
-              </div>
-            </div>
+          {ascensionContent.starseedOrigins.length > 0 && (
+            <SessionSection title="Starseed Origins" sessions={ascensionContent.starseedOrigins} onSelect={handleSelect} favorites={favorites} toggleFavorite={toggleFavorite} isSubscribed={isSubscribed} allFrequencies={allFrequencies} />
           )}
-          {angelContent.angelicFrequencies.length > 0 && (
-            <CategorySection
-              title="Angelic Frequencies"
-              frequencies={angelContent.angelicFrequencies}
-              onSelect={handleSelect}
-              favorites={favorites}
-              toggleFavorite={toggleFavorite}
-            />
+          {ascensionContent.ancientCivilizations.length > 0 && (
+            <SessionSection title="Ancient Civilizations" sessions={ascensionContent.ancientCivilizations} onSelect={handleSelect} favorites={favorites} toggleFavorite={toggleFavorite} isSubscribed={isSubscribed} allFrequencies={allFrequencies} />
+          )}
+          {ascensionContent.divineHarmonics.length > 0 && (
+            <SessionSection title="Divine Harmonics" sessions={ascensionContent.divineHarmonics} onSelect={handleSelect} favorites={favorites} toggleFavorite={toggleFavorite} isSubscribed={isSubscribed} allFrequencies={allFrequencies} />
+          )}
+          {ascensionContent.fibonacciProtocols.length > 0 && (
+            <SessionSection title="Fibonacci Protocols" sessions={ascensionContent.fibonacciProtocols} onSelect={handleSelect} favorites={favorites} toggleFavorite={toggleFavorite} isSubscribed={isSubscribed} allFrequencies={allFrequencies} />
+          )}
+          {ascensionContent.angelicFrequencies.length > 0 && (
+            <CategorySection title="Angelic Frequencies" frequencies={ascensionContent.angelicFrequencies} onSelect={handleSelect} favorites={favorites} toggleFavorite={toggleFavorite} />
+          )}
+          {ascensionContent.fibonacciFrequencies.length > 0 && (
+            <CategorySection title="Fibonacci Frequencies" frequencies={ascensionContent.fibonacciFrequencies} onSelect={handleSelect} favorites={favorites} toggleFavorite={toggleFavorite} />
           )}
         </div>
       ) : isBrainwaves && brainwavesContent ? (
         <div className="space-y-12">
             {brainwavesContent.mirrorAxisProtocols.length > 0 && (
-                <div className="space-y-4">
-                    <h3 className="text-2xl font-display font-bold text-slate-800 dark:text-dark-text-primary">Mirror Axis & Guided Protocols</h3>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                        {brainwavesContent.mirrorAxisProtocols.map(session => (
-                            <SessionCard
-                                key={session.id}
-                                session={session}
-                                onSelect={() => handleSelect(session)}
-                                isFavorite={favorites.includes(session.id)}
-                                onToggleFavorite={() => toggleFavorite(session.id)}
-                                isLocked={!!session.premium && !isSubscribed}
-                                allFrequencies={allFrequencies}
-                            />
-                        ))}
-                    </div>
-                </div>
+                <SessionSection title="Mirror Axis & Guided Protocols" sessions={brainwavesContent.mirrorAxisProtocols} onSelect={handleSelect} favorites={favorites} toggleFavorite={toggleFavorite} isSubscribed={isSubscribed} allFrequencies={allFrequencies} />
             )}
             {brainwavesContent.singleFrequencies.length > 0 && (
                 <CategorySection 
@@ -345,22 +274,7 @@ export const CategoryPage: React.FC<CategoryPageProps> = ({ categoryId, frequenc
       ) : isKabbalah && kabbalahContent ? (
         <div className="space-y-12">
             {kabbalahContent.sortedSessions.length > 0 && (
-                <div className="space-y-4">
-                    <h3 className="text-2xl font-display font-bold text-slate-800 dark:text-dark-text-primary">Guided Protocols</h3>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                        {kabbalahContent.sortedSessions.map(session => (
-                            <SessionCard
-                                key={session.id}
-                                session={session}
-                                onSelect={() => handleSelect(session)}
-                                isFavorite={favorites.includes(session.id)}
-                                onToggleFavorite={() => toggleFavorite(session.id)}
-                                isLocked={!!session.premium && !isSubscribed}
-                                allFrequencies={allFrequencies}
-                            />
-                        ))}
-                    </div>
-                </div>
+                <SessionSection title="Guided Protocols" sessions={kabbalahContent.sortedSessions} onSelect={handleSelect} favorites={favorites} toggleFavorite={toggleFavorite} isSubscribed={isSubscribed} allFrequencies={allFrequencies} />
             )}
             {kabbalahContent.sections.map(section => (
                 <CategorySection 
@@ -376,22 +290,7 @@ export const CategoryPage: React.FC<CategoryPageProps> = ({ categoryId, frequenc
       ) : otherContent ? (
         <>
             {categoryId === 'elements' && otherContent.sortedSessions.length > 0 && (
-                <div className="space-y-4">
-                    <h3 className="text-2xl font-display font-bold text-slate-800 dark:text-dark-text-primary">Elemental Triads</h3>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                        {otherContent.sortedSessions.map(session => (
-                            <SessionCard
-                                key={session.id}
-                                session={session}
-                                onSelect={() => handleSelect(session)}
-                                isFavorite={favorites.includes(session.id)}
-                                onToggleFavorite={() => toggleFavorite(session.id)}
-                                isLocked={!!session.premium && !isSubscribed}
-                                allFrequencies={allFrequencies}
-                            />
-                        ))}
-                    </div>
-                </div>
+                <SessionSection title="Elemental Triads" sessions={otherContent.sortedSessions} onSelect={handleSelect} favorites={favorites} toggleFavorite={toggleFavorite} isSubscribed={isSubscribed} allFrequencies={allFrequencies} />
             )}
 
             {frequenciesInCategory.length > 0 && (
