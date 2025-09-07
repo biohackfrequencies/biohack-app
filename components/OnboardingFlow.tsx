@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { CelestialBrandIcon, BrainwaveIcon, LayersIcon, SparklesIcon } from './BohoIcons';
+import { CelestialBrandIcon, SparklesIcon } from './BohoIcons';
 
 interface OnboardingFlowProps {
     onFinish: () => void;
