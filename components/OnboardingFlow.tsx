@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { CelestialBrandIcon, SparklesIcon } from './BohoIcons';
+import { CelestialBrandIcon, SparklesIcon, BrainwaveIcon, LayersIcon, SpatialAudioIcon, LungsIcon, SolfeggioIcon, GuidedSessionIcon, RLTIcon, WorkoutIcon, MeditationIcon } from './BohoIcons';
 
 interface OnboardingFlowProps {
     onFinish: () => void;
@@ -59,20 +59,33 @@ export const OnboardingFlow: React.FC<OnboardingFlowProps> = ({ onFinish }) => {
                 </OnboardingStep>
                 
                 <OnboardingStep currentStep={currentStep} stepNumber={2} title="Your Harmonic Dashboard" description="This is your daily snapshot. Track your goals with Activity Rings, log habits with a single tap, and discover personalized AI insights.">
-                    <div className="p-4 bg-white/50 dark:bg-dark-surface/50 rounded-xl shadow-lg border border-white/50 dark:border-dark-border/50">
-                        <img src="https://i.imgur.com/9q1y1sP.png" alt="Dashboard preview" className="rounded-lg" />
+                    <div className="w-56 h-56 flex items-center justify-center bg-white/10 dark:bg-dark-surface/30 rounded-full shadow-lg border border-white/20 dark:border-dark-border/50 relative p-4">
+                       <div className="absolute w-full h-full rounded-full border-4 border-dashed border-brand-sage/50 animate-spin-slow"></div>
+                       <div className="relative grid grid-cols-2 gap-4">
+                            <div className="p-3 bg-white/20 dark:bg-dark-bg/40 rounded-xl backdrop-blur-sm shadow-md"><WorkoutIcon className="w-10 h-10 text-rose-400"/></div>
+                            <div className="p-3 bg-white/20 dark:bg-dark-bg/40 rounded-xl backdrop-blur-sm shadow-md"><MeditationIcon className="w-10 h-10 text-purple-400"/></div>
+                            <div className="p-3 bg-white/20 dark:bg-dark-bg/40 rounded-xl backdrop-blur-sm shadow-md"><RLTIcon className="w-10 h-10 text-pink-400"/></div>
+                            <div className="p-3 bg-white/20 dark:bg-dark-bg/40 rounded-xl backdrop-blur-sm shadow-md"><BrainwaveIcon className="w-10 h-10 text-teal-400"/></div>
+                       </div>
                     </div>
                 </OnboardingStep>
 
                 <OnboardingStep currentStep={currentStep} stepNumber={3} title="The Sound Library" description="Explore 140+ protocols. From scientifically-backed Brainwave Entrainment to ancient Solfeggio tones, find the perfect frequency for any intention.">
-                     <div className="p-4 bg-white/50 dark:bg-dark-surface/50 rounded-xl shadow-lg border border-white/50 dark:border-dark-border/50">
-                        <img src="https://i.imgur.com/8i9bZ5m.png" alt="Library preview" className="rounded-lg" />
+                     <div className="w-56 h-56 p-4 bg-white/10 dark:bg-dark-surface/30 rounded-xl shadow-lg border border-white/20 dark:border-dark-border/50 grid grid-cols-2 gap-4">
+                        <div className="flex items-center justify-center rounded-lg bg-white/20 dark:bg-dark-bg/40 backdrop-blur-sm shadow-inner"><BrainwaveIcon className="w-10 h-10 text-purple-400"/></div>
+                        <div className="flex items-center justify-center rounded-lg bg-white/20 dark:bg-dark-bg/40 backdrop-blur-sm shadow-inner"><SolfeggioIcon className="w-10 h-10 text-amber-400"/></div>
+                        <div className="flex items-center justify-center rounded-lg bg-white/20 dark:bg-dark-bg/40 backdrop-blur-sm shadow-inner"><GuidedSessionIcon className="w-10 h-10 text-emerald-400"/></div>
+                        <div className="flex items-center justify-center rounded-lg bg-white/20 dark:bg-dark-bg/40 backdrop-blur-sm shadow-inner"><LayersIcon className="w-10 h-10 text-sky-400"/></div>
                     </div>
                 </OnboardingStep>
                 
                 <OnboardingStep currentStep={currentStep} stepNumber={4} title="The Player Experience" description="Customize sessions with frequency layering, our signature 8D Spatial Audio, and a built-in breathing guide. Headphones recommended!">
-                    <div className="p-4 bg-white/50 dark:bg-dark-surface/50 rounded-xl shadow-lg border border-white/50 dark:border-dark-border/50">
-                        <img src="https://i.imgur.com/bO6b2gH.png" alt="Player preview" className="rounded-lg" />
+                    <div className="w-56 h-56 p-4 bg-white/10 dark:bg-dark-surface/30 rounded-full shadow-lg border border-white/20 dark:border-dark-border/50 flex items-center justify-center">
+                        <div className="relative flex items-center justify-center w-40 h-40">
+                            <LayersIcon className="w-16 h-16 text-sky-400 animate-pulse" style={{animationDelay: '0.5s'}} />
+                            <SpatialAudioIcon className="absolute w-28 h-28 text-purple-400 animate-pulse" />
+                            <LungsIcon className="absolute w-10 h-10 text-cyan-300 animate-pulse" style={{animationDelay: '1s'}} />
+                        </div>
                     </div>
                 </OnboardingStep>
 
