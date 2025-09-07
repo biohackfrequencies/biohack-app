@@ -7,7 +7,7 @@ const MissionSection: React.FC<{
 }> = ({ title, children }) => (
   <div className="pt-4 mt-4 border-t border-slate-200 dark:border-slate-700">
     <h3 className="text-xl font-display font-bold text-slate-800 dark:text-dark-text-primary">{title}</h3>
-    <div className="prose prose-slate dark:prose-invert max-w-none text-slate-700 dark:text-dark-text-secondary leading-relaxed space-y-3 mt-2">
+    <div className="prose prose-slate dark:prose-invert max-w-none leading-relaxed space-y-3 mt-2">
       {children}
     </div>
   </div>

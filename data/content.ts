@@ -436,6 +436,21 @@ export const appContentData: AppContentData = {
     },
     {
       "id": "solar-heart-lattice", "title": "Solar Heart Lattice", "categoryId": "angel", "subCategory": "Advanced Resonance Protocols", "description": "Activates radiant solar pathway to heart coherence.", "steps": [{ "title": "Radiant Heart Activation", "description": "A powerful solar sequence to activate heart coherence, personal sovereignty, and the radiant energy of your inner sun.", "duration": 900, "frequencyId": "solfeggio-528-repair", "layerFrequencyId": "solar-templar-1111", "layer3FrequencyId": "solar-sovereignty" }], "colors": { "primary": "#fbcfe8", "secondary": "#fda4af", "accent": "#f9a8d4" }
+    },
+    {
+      "id": "orion-convergence-field",
+      "title": "Orion Convergence Field",
+      "categoryId": "angel",
+      "subCategory": "Advanced Resonance Protocols",
+      "description": "A 15-minute protocol for Orion memory access and DNA alignment, using a blend of harmonic tuning and activation frequencies.",
+      "advice": "This session is designed for deep subconscious exploration and connection to stellar consciousness. Start with 2 minutes of Coherent Breathing to prepare your nervous system. The protocol will then guide you through layers of sound to settle your energy, expand your heart field, and activate dormant memories. Use headphones for the best experience and allow any visions or impressions to emerge without judgment.",
+      "steps": [
+        { "title": "Settle into the Field", "description": "432 Hz Universal Tuning combined with a Theta wave layer to create a receptive, trance-like state and prepare for DNA alignment.", "duration": 300, "frequencyId": "hz-432-universal-tuning", "layerFrequencyId": "theta" },
+        { "title": "Expand & Activate Memory", "description": "Layers of 639 Hz for heart coherence and 852 Hz for pineal resonance are added to expand the emotional field and access Orion star memories.", "duration": 420, "frequencyId": "hz-432-universal-tuning", "layerFrequencyId": "solfeggio-639-harmony", "layer3FrequencyId": "solfeggio-852-intuition" },
+        { "title": "Light Code Integration", "description": "A pure 111 Hz gateway frequency to activate cellular light codes and integrate higher dimensional contact.", "duration": 180, "frequencyId": "angel-111" }
+      ],
+      "colors": { "primary": "#a5b4fc", "secondary": "#93c5fd", "accent": "#a78bfa" },
+      "premium": true
     }
   ],
   "featured_candidates": [

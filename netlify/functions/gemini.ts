@@ -178,6 +178,7 @@ export const handler = async (event: { httpMethod: string, body: string | null, 
                 user_goals: { mind: 20, move: 10000 },
                 custom_activities: [],
                 pro_access_expires_at: null,
+                has_completed_onboarding: false,
                 // Omit all new/optional columns to ensure backwards compatibility with older DB schemas
             };
 

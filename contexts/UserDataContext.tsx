@@ -53,6 +53,8 @@ interface UserDataContextType {
   setCodexReflections: React.Dispatch<React.SetStateAction<CodexReflection[]>>;
   aiCreditsRemaining: number;
   setAiCreditsRemaining: React.Dispatch<React.SetStateAction<number>>;
+  hasCompletedOnboarding: boolean;
+  setHasCompletedOnboarding: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const UserDataContext = createContext<UserDataContextType | null>(null);
@@ -114,6 +116,8 @@ export const UserDataProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   const [codexReflections, setCodexReflections] = useSyncedState<CodexReflection[]>('biohack_reflections', [], !!user);
   const [aiCreditsRemaining, setAiCreditsRemaining] = useSyncedState<number>('biohack_ai_credits', 5, !!user);
   const [aiCreditsResetAt, setAiCreditsResetAt] = useSyncedState<string | null>('biohack_ai_credits_reset', null, !!user);
+  const [hasCompletedOnboarding, setHasCompletedOnboarding] = useSyncedState<boolean>('biohack_onboarding', false, !!user);
+
 
   const bootstrapInProgress = useRef(false);
 
@@ -134,6 +138,7 @@ export const UserDataProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         setProAccessExpiresAt(null);
         setAiCreditsRemaining(5);
         setAiCreditsResetAt(null);
+        setHasCompletedOnboarding(false);
         setIsUserDataLoading(false);
         return;
       }
@@ -159,6 +164,7 @@ export const UserDataProvider: React.FC<{ children: React.ReactNode }> = ({ chil
               ai_credits_remaining: 5,
               ai_credits_reset_at: new Date().toISOString(),
               api_requests: [],
+              has_completed_onboarding: false,
             };
           const { data: newProfile, error: insertError } = await supabase.from('profiles').insert(newProfileData).select().single();
           if (insertError) throw insertError;
@@ -179,6 +185,7 @@ export const UserDataProvider: React.FC<{ children: React.ReactNode }> = ({ chil
             setProAccessExpiresAt(profile.pro_access_expires_at ? new Date(profile.pro_access_expires_at).getTime() : null);
             setAiCreditsRemaining(profile.ai_credits_remaining ?? 5);
             setAiCreditsResetAt(profile.ai_credits_reset_at ?? null);
+            setHasCompletedOnboarding(profile.has_completed_onboarding ?? false);
         }
       } catch (e) {
         // This catch block is for network failures or other errors when fetching from Supabase.
@@ -210,6 +217,7 @@ export const UserDataProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   useDebouncedSync('custom_activities', customActivities, syncEnabled, user?.id);
   useDebouncedSync('codex_reflections', codexReflections, syncEnabled, user?.id);
   useDebouncedSync('ai_credits_remaining', aiCreditsRemaining, syncEnabled, user?.id);
+  useDebouncedSync('has_completed_onboarding', hasCompletedOnboarding, syncEnabled, user?.id);
   
   const proAccessExpiresAtIso = useMemo(() => proAccessExpiresAt ? new Date(proAccessExpiresAt).toISOString() : null, [proAccessExpiresAt]);
   useDebouncedSync('pro_access_expires_at', proAccessExpiresAtIso, syncEnabled, user?.id);
@@ -246,6 +254,7 @@ export const UserDataProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     customActivities, addCustomActivity, removeCustomActivity,
     codexReflections, setCodexReflections,
     aiCreditsRemaining, setAiCreditsRemaining,
+    hasCompletedOnboarding, setHasCompletedOnboarding,
   };
 
   return <UserDataContext.Provider value={value}>{children}</UserDataContext.Provider>;

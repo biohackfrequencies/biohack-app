@@ -29,6 +29,7 @@ import AIWellnessAgent from './components/AIWellnessAgent';
 import { ToneGeneratorPage } from './components/ToneGeneratorPage';
 import { CodexOraclePage } from './components/CodexOraclePage';
 import { OraclePromptModal } from './components/OraclePromptModal';
+import { OnboardingFlow } from './components/OnboardingFlow';
 
 const getWeekNumber = (date: Date): number => {
     const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
@@ -414,7 +415,7 @@ const App: React.FC<{ content: AppContentData }> = ({ content }) => {
 
 const AppInitializer: React.FC = () => {
     const { isAuthenticated, isAuthInitializing, isPasswordRecovery } = useAuth();
-    const { isUserDataLoading } = useUserData();
+    const { isUserDataLoading, hasCompletedOnboarding, setHasCompletedOnboarding } = useUserData();
     const { isInitializing: isSubscriptionInitializing } = useSubscription();
     
     const isAppInitializing = isAuthInitializing;
@@ -432,6 +433,14 @@ const AppInitializer: React.FC = () => {
         const isUserSpecificDataLoading = isUserDataLoading || isSubscriptionInitializing;
         if (isUserSpecificDataLoading) {
             return <LoadingScreen />;
+        }
+        if (!hasCompletedOnboarding) {
+            const handleOnboardingFinish = () => {
+                setHasCompletedOnboarding(true);
+                // Explicitly navigate to the dashboard to ensure the user lands there.
+                window.location.hash = '#/dashboard';
+            };
+            return <OnboardingFlow onFinish={handleOnboardingFinish} />;
         }
         return <App content={processedAppContent} />;
     }

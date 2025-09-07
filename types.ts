@@ -1,6 +1,8 @@
 
 
 
+
+
 export type SoundGenerationMode = 'PURE' | 'BINAURAL' | 'ISOCHRONIC' | 'AMBIENCE' | 'SPLIT_BINAURAL';
 
 export enum BenefitCategory {
@@ -250,6 +252,7 @@ export type ProfileRow = {
   ai_credits_remaining?: number;
   ai_credits_reset_at?: string | null;
   api_requests?: number[];
+  has_completed_onboarding: boolean | null;
 };
 
 export interface AppContentData {
@@ -276,6 +279,7 @@ export type ProfileInsert = {
   ai_credits_remaining?: number;
   ai_credits_reset_at?: string | null;
   api_requests?: number[];
+  has_completed_onboarding?: boolean | null;
 };
 
 export type ProfileUpdate = {
@@ -292,6 +296,7 @@ export type ProfileUpdate = {
   ai_credits_remaining?: number;
   ai_credits_reset_at?: string | null;
   api_requests?: number[];
+  has_completed_onboarding?: boolean | null;
 };
 
 // FIX: Moved Database type from supabaseClient.ts to be shared.

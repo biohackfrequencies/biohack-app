@@ -14,7 +14,7 @@ const ScienceSection: React.FC<{
       {icon}
       <h3 className="text-2xl font-display font-bold text-slate-800 dark:text-dark-text-primary">{title}</h3>
     </div>
-    <div className="prose prose-slate dark:prose-invert max-w-none text-slate-700 dark:text-dark-text-secondary leading-relaxed space-y-3">
+    <div className="prose prose-slate dark:prose-invert max-w-none leading-relaxed space-y-3 mt-2">
       {children}
     </div>
   </div>
