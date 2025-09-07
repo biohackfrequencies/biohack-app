@@ -417,6 +417,7 @@ const AppInitializer: React.FC = () => {
     const { isAuthenticated, isAuthInitializing, isPasswordRecovery } = useAuth();
     const { isUserDataLoading, hasCompletedOnboarding, completeOnboarding } = useUserData();
     const { isInitializing: isSubscriptionInitializing } = useSubscription();
+    const [onboardingJustFinished, setOnboardingJustFinished] = useState(false);
     
     const isAppInitializing = isAuthInitializing;
 
@@ -434,10 +435,10 @@ const AppInitializer: React.FC = () => {
         if (isUserSpecificDataLoading) {
             return <LoadingScreen />;
         }
-        if (!hasCompletedOnboarding) {
+        if (!hasCompletedOnboarding && !onboardingJustFinished) {
             const handleOnboardingFinish = async () => {
                 await completeOnboarding();
-                window.location.hash = '#/dashboard';
+                setOnboardingJustFinished(true);
             };
             return <OnboardingFlow onFinish={handleOnboardingFinish} />;
         }
